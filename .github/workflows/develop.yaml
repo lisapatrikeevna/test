@@ -1,0 +1,29 @@
+name: Deploy to DEV Plesk
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Deploy to dev Plesk
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.PLESK_DEV_HOST }}
+        username: ${{ secrets.PLESK_DEV_USERNAME }}
+        password: ${{ secrets.PLESK_DEV_PASSWORD }}
+        source: "dist/"
+        target: "/httpdocs"
