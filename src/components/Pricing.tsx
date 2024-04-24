@@ -6,6 +6,7 @@ import {
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import StarIcon from '@mui/icons-material/StarBorder';
 
+
 function Copyright(props: React.PropsWithChildren<object>) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
