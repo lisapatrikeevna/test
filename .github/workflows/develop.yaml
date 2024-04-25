@@ -26,4 +26,4 @@ jobs:
         username: ${{ secrets.PLESK_DEV_USERNAME }}
         password: ${{ secrets.PLESK_DEV_PASSWORD }}
         source: "dist/*"
-        target: "httpdocs"
+        target: "/httpdocs"
