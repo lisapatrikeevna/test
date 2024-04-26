@@ -49,7 +49,7 @@ jobs:
         host: ${{ secrets.PLESK_TEST_HOST }}
         username: ${{ secrets.PLESK_TEST_PROD_USERNAME }}
         password: ${{ secrets.PLESK_TEST_PROD_PASSWORD }}
-        source: "dist/**/*"
+        source: "dist/**,dist/*.*"  # Копирование всех файлов и поддиректорий из dist
         target: "/var/www/vhosts/festive-shirley.212-132-99-188.plesk.page/httpdocs"
         strip_components: 1
         debug: true
