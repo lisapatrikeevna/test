@@ -52,4 +52,3 @@ jobs:
         source: "dist/**,dist/*.*"  # Копирование всех файлов и поддиректорий из dist
         target: "/var/www/vhosts/festive-shirley.212-132-99-188.plesk.page/httpdocs"
         strip_components: 1
-        debug: true
