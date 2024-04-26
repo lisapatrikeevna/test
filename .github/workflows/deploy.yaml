@@ -1,4 +1,4 @@
-name: Deploy to DEV and PROD Plesk
+name: Deploy to Plesk
 
 on:
   push:
