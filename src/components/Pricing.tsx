@@ -19,7 +19,7 @@ function Copyright(props: React.PropsWithChildren<object>) {
         </Typography>
     );
 }
-//
+
 const tiers = [
     {
         title: 'Free',
