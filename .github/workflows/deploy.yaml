@@ -20,14 +20,14 @@ jobs:
     - name: Build
       run: npm run build
 
-    # - name: Clear old assets in dev
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ secrets.PLESK_TEST_HOST }}
-    #     username: ${{ secrets.PLESK_TEST_DEV_USERNAME }}
-    #     password: ${{ secrets.PLESK_TEST_DEV_PASSWORD }}
-    #     script: |
-    #       rm -rf /var/www/vhosts/hungry-bouman.212-132-99-188.plesk.page/httpdocs/assets/*
+    - name: Clear old assets in dev
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.PLESK_TEST_HOST }}
+        username: ${{ secrets.PLESK_TEST_DEV_USERNAME }}
+        password: ${{ secrets.PLESK_TEST_DEV_PASSWORD }}
+        script: |
+          rm -rf /var/www/vhosts/hungry-bouman.212-132-99-188.plesk.page/httpdocs/assets/*
 
     - name: Deploy to dev Plesk
       uses: appleboy/scp-action@master
