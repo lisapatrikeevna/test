@@ -23,11 +23,11 @@ jobs:
     - name: Deploy to dev Plesk
       uses: appleboy/scp-action@master
       with:
-        host: ${{ secrets.PLESK_DEV_HOST }}
-        username: ${{ secrets.PLESK_DEV_USERNAME }}
-        password: ${{ secrets.PLESK_DEV_PASSWORD }}
+        host: ${{ secrets.PLESK_TEST_HOST }}
+        username: ${{ secrets.PLESK_TEST_DEV_USERNAME }}
+        password: ${{ secrets.PLESK_TEST_DEV_PASSWORD }}
         source: "dist/*"
-        target: "/var/www/vhosts/212-132-99-188.plesk.page/silly-bhaskara/httpdocs/"
+        target: "/var/www/vhosts/silly-bhaskara.212-132-99-188.plesk.page/httpdocs"
 
   deploy-prod:
     if: github.ref == 'refs/heads/release'
@@ -45,8 +45,8 @@ jobs:
     - name: Deploy to prod Plesk
       uses: appleboy/scp-action@master
       with:
-        host: ${{ secrets.PLESK_DEV_HOST }}
-        username: ${{ secrets.PLESK_DEV_USERNAME }}
-        password: ${{ secrets.PLESK_DEV_PASSWORD }}
+        host: ${{ secrets.PLESK_TEST_HOST }}
+        username: ${{ secrets.PLESK_TEST_PROD_USERNAME }}
+        password: ${{ secrets.PLESK_TEST_PROD_PASSWORD }}
         source: "dist/*"
-        target: "/var/www/vhosts/212-132-99-188.plesk.page/festive-shirley/httpdocs/"
+        target: "/var/www/vhosts/festive-shirley.212-132-99-188.plesk.page/httpdocs"
