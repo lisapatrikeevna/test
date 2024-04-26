@@ -28,6 +28,7 @@ jobs:
         password: ${{ secrets.PLESK_TEST_DEV_PASSWORD }}
         source: "dist/*"
         target: "/var/www/vhosts/silly-bhaskara.212-132-99-188.plesk.page/httpdocs"
+        debug: true
 
   deploy-prod:
     if: github.ref == 'refs/heads/release'
@@ -50,3 +51,4 @@ jobs:
         password: ${{ secrets.PLESK_TEST_PROD_PASSWORD }}
         source: "dist/*"
         target: "/var/www/vhosts/festive-shirley.212-132-99-188.plesk.page/httpdocs"
+        debug: true
