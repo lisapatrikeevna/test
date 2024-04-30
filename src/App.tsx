@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import "bootstrap/dist/css/bootstrap.min.css";
-import { ThemeProvider } from "./components/ThemeContext";
 import ActiveSectionContext from "./contexts/ActiveSectionContext";
 import { useEffect, useState } from "react";
 import AuthContext from "./contexts/AuthContext";
@@ -44,8 +43,13 @@ import NewGroup from "./pages/NewGroup.tsx";
 import NewChannel from "./pages/NewChannel.tsx";
 import Contacts from "./pages/Contacts.tsx";
 import { Box } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import { lightTheme, darkTheme } from './theme.tsx';
+import { ThemeContext } from "./components/ThemeContext.tsx";
 
 const App: React.FC = () => {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light'); // Новое состояние для темы
+
   const [activeSection, setActiveSection] = useState<string | null>("Home");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -78,7 +82,8 @@ const App: React.FC = () => {
   const allowedUsernames = ["AdrianAdrian", "Adrian Lieblich", "RomarioFisch"];
 
   return (
-    <ThemeProvider>
+    <ThemeContext.Provider value={{theme: theme, setTheme }}>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}> {/* Использование состояния темы */}
       <Router>
         <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
           {isLoggedIn ? (
@@ -126,7 +131,8 @@ const App: React.FC = () => {
           <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
         </AuthContext.Provider>
       </Router>
-    </ThemeProvider>
+      </ThemeProvider>
+      </ThemeContext.Provider>
   );
 };
 
