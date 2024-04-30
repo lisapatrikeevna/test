@@ -76,9 +76,9 @@ const VideoListHorizontal = () => {
         <Grid container spacing={2}>
             {!loading ? (
                 videos.map((video) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={video.id}>
-                        <Link to={`${mediaPath}/${video.id}`}>
-                            <Card>
+                    <Grid style={{ textDecoration: 'none', maxWidth: '320px' }} item xs={12} sm={6} md={4} lg={3} key={video.id}>
+                        <Link to={`${mediaPath}/${video.id}`} >
+                            <Card sx={{maxWidth: '320px'}}>
                                 <PreviewImage videoId={video.id}/>
                                 <CardContent style={{ backgroundColor: 'var(--background)' }}>
                                     <Typography variant="h5" >{video.videoName}</Typography>

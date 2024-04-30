@@ -4,6 +4,7 @@ import styles from "../../styles/VideosStyles/Videos.module.css";
 
 interface PreviewImageProps {
     videoId: string;
+    style?: React.CSSProperties;
 }
 
 const PreviewImage: React.FC<PreviewImageProps> = ({ videoId }) => {
