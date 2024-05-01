@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { Typography } from '@mui/material';
 import { Instagram, Telegram, YouTube, Facebook, LinkedIn  } from '@mui/icons-material';
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
-import { Theme } from "../../theme.tsx";
+import { Theme } from "../../components/themes.ts";
 
 
 const useStyles = makeStyles((theme: Theme) => ({

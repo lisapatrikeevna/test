@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography, Paper } from '@mui/material';
-import VideoListHorizontal from "../../components/VideosComponents/VideoListHorizontal.tsx";
-import SearchField from "../../components/VideosComponents/SearchField.tsx";
+import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal.tsx";
+import SearchField from "../../components/VideoComponents/SearchField.tsx";
 
 
 // interface Video {

@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setBuffering, setError, setLoading, setVideoUrl } from '../../store/video/videoSlice';
-import VideoListVertical from '../../components/VideosComponents/VideoListVertical';
+import VideoListVertical from '../../components/VideoComponents/VideoListVertical.tsx';
 import {Grid, Paper, Typography, Container, Skeleton} from "@mui/material";
 
 
