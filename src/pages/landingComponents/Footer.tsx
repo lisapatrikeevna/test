@@ -1,10 +1,9 @@
 import { useContext } from 'react';
 import { makeStyles } from '@mui/styles';
 import { Typography } from '@mui/material';
-import { logoInstagram, paperPlane, logoYoutube, logoFacebook, logoLinkedin } from 'ionicons/icons';
-import { IonIcon } from "@ionic/react";
+import { Instagram, Telegram, YouTube, Facebook, LinkedIn  } from '@mui/icons-material';
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
-import {Theme} from "../../theme.tsx";
+import { Theme } from "../../theme.tsx";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -69,19 +68,19 @@ const Footer: React.FC<FooterProps> = ({ onImpressumClick, onPrivacyPolicyClick,
             <div onClick={onDatenschutzClick}>Datenschutz</div>
             <div onClick={contact}>Contact</div>
             <a className={classes.socialLink} href="https://www.instagram.com/neox_online/" target="_blank" rel="noopener noreferrer">
-                <IonIcon icon={logoInstagram} />
+                <Instagram />
             </a>
             <a className={classes.socialLink} href="https://t.me/neoxonline" target="_blank" rel="noopener noreferrer">
-                <IonIcon icon={paperPlane} />
+                <Telegram />
             </a>
             <a className={classes.socialLink} href="https://www.facebook.com/profile.php?id=61557996420950" target="_blank" rel="noopener noreferrer">
-                <IonIcon icon={logoFacebook} />
+                <Facebook />
             </a>
             <a className={classes.socialLink} href="https://www.linkedin.com/company/103143013/admin/feed/posts/" target="_blank" rel="noopener noreferrer">
-                <IonIcon icon={logoLinkedin} />
+                <LinkedIn />
             </a>
             <a className={classes.socialLink} href="https://www.youtube.com/channel/UC3YWemWS7WPJXReBBKOYfLQ" target="_blank" rel="noopener noreferrer">
-                <IonIcon icon={logoYoutube} />
+                <YouTube />
             </a>
         </div>
     );
