@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 import {
   HomeOutlined,
   PeopleOutline,
@@ -13,27 +13,30 @@ import {
   AddCircleOutline,
   KeyboardArrowUpOutlined,
   KeyboardArrowDownOutlined,
-} from "@mui/icons-material";
-import avatar from "../assets/img.webp";
-import neumorph from "../styles/Neumorph.module.css";
-import sidebar from "../styles/SideBar.module.css";
-import { Link } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext.tsx";
-import { AuthService } from "../services/auth.service.ts";
-import { logout, selectUsername } from "../store/user/userSlice.ts";
-import { useAppDispatch, useAppSelector } from "../store/hooks.ts";
-import { useTheme } from "../components/ThemeContext.tsx";
+} from '@mui/icons-material';
+import avatar from '../assets/img.webp';
+import neumorph from '../styles/Neumorph.module.css';
+import sidebar from '../styles/SideBar.module.css';
+import { Link } from 'react-router-dom';
+import AuthContext from '../contexts/AuthContext.tsx';
+import { AuthService } from '../services/auth.service.ts';
+import { logout, selectUsername } from '../store/user/userSlice.ts';
+import { useAppDispatch, useAppSelector } from '../store/hooks.ts';
+import { useTheme } from '../components/ThemeContext.tsx';
+// TODO Повесить UserModalProfile на аватар пользователя
+// import UserModalProfile from './UserModalProfile.tsx'; 
+import MyModalProfile from './MyModalProfile.tsx';
 import {
   chatsPath,
   homePath,
   mediaPath,
-  profilePath,
+  // profilePath,
   settingsPath,
   callsPath,
   newGroupPath,
   newChannelPath,
   contactsPath,
-} from "../configs/RouteConfig.tsx";
+} from '../configs/RouteConfig.tsx';
 import {
   Box,
   List,
@@ -43,22 +46,23 @@ import {
   ListItemText,
   Collapse,
   Divider,
-} from "@mui/material";
-import { Switch } from "@mui/material";
+} from '@mui/material';
+import { Switch } from '@mui/material';
 
 const SideBar: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const [isActive, setIsActive] = useState(false);
-  const [activeItem, setActiveItem] = useState("home");
+  const [activeItem, setActiveItem] = useState('home');
+  const [openProfileModal, setOpenProfileModal] = useState(false);
   const { setIsLoggedIn } = useContext(AuthContext);
-  const username = useAppSelector(selectUsername) || "Guest";
+  const username = useAppSelector(selectUsername) || 'Guest';
   const dispatch = useAppDispatch();
 
   const [isAccountsDropdownOpen, setIsAccountsDropdownOpen] = useState(false);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => {
-      const newTheme = prevTheme === "light" ? "dark" : "light";
+      const newTheme = prevTheme === 'light' ? 'dark' : 'light';
       return newTheme;
     });
   };
@@ -87,18 +91,20 @@ const SideBar: React.FC = () => {
       setIsLoggedIn(false); // Обновление состояния аутентификации
       dispatch(logout()); // Очистка данных пользователя
     } catch (error) {
-      console.error("Ошибка при выходе", error);
+      console.error('Ошибка при выходе', error);
     }
   };
 
+  const handleAvatarClick = () => {
+    setOpenProfileModal(true); // Открываем модальное окно
+  };
+
   return (
-    <Box
-      className={`${sidebar.sidebar} ${isActive ? sidebar.active : ""}`}
-    >
+    <Box className={`${sidebar.sidebar} ${isActive ? sidebar.active : ''}`}>
       <List>
         <Box
           className={`${neumorph.neumorph_EH} ${sidebar.menuToggle} ${
-            isActive ? sidebar.active : ""
+            isActive ? sidebar.active : ''
           }`}
           onClick={toggleActiveClass}
         >
@@ -107,25 +113,34 @@ const SideBar: React.FC = () => {
       </List>
       <Box
         className={`${sidebar.overlayBackdrop} ${
-          isActive ? sidebar.overlayBackdropActive : ""
+          isActive ? sidebar.overlayBackdropActive : ''
         }`}
         onClick={toggleActiveClass} // Закрываем overlaySidebar при клике на backdrop
       ></Box>
       <Box
         className={`${sidebar.overlaySidebar} ${
-          isActive ? sidebar.overlaySidebarActive : ""
+          isActive ? sidebar.overlaySidebarActive : ''
         }`}
       >
         <List>
           <ListItem
             className={sidebar.profileItem}
-            style={{ "--bg": "#333" } as React.CSSProperties}
+            style={{ '--bg': '#333' } as React.CSSProperties}
           >
-            <Link to={profilePath} className={sidebar.imgLink}>
-              <img src={avatar} alt="Avatar" />
-            </Link>
+            {/* <Link to={profilePath} className={sidebar.imgLink}> */}
+              <img src={avatar} alt="Avatar" onClick={handleAvatarClick} />
+            {/* </Link> */}
+            {/* <UserModalProfile
+                open={openProfileModal}
+                onClose={() => setOpenProfileModal(false)}
+              /> */}
+              <MyModalProfile
+                open={openProfileModal}
+                onClose={() => setOpenProfileModal(false)}
+              />
+
             <ListItemButton onClick={toggleAccountsDropdown} disableRipple>
-              <ListItemText primary={username}/>
+              <ListItemText primary={username} />
               {isAccountsDropdownOpen ? (
                 <KeyboardArrowUpOutlined />
               ) : (
@@ -152,14 +167,14 @@ const SideBar: React.FC = () => {
             </List>
           </Collapse>
           <ListItem
-            className={activeItem === "home" ? sidebar.active : ""}
+            className={activeItem === 'home' ? sidebar.active : ''}
             onClick={() => {
-              handleClick("home");
+              handleClick('home');
               setIsActive(false);
             }}
-            style={{ "--bg": "#17ecff" } as React.CSSProperties}
+            style={{ '--bg': '#17ecff' } as React.CSSProperties}
           >
-            <ListItemButton component={Link} to={homePath} disableRipple >
+            <ListItemButton component={Link} to={homePath} disableRipple>
               <ListItemIcon>
                 <HomeOutlined />
               </ListItemIcon>
@@ -167,12 +182,12 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
-            className={activeItem === "newGroup" ? sidebar.active : ""}
+            className={activeItem === 'newGroup' ? sidebar.active : ''}
             onClick={() => {
-              handleClick("newGroup");
+              handleClick('newGroup');
               setIsActive(false);
             }}
-            style={{ "--bg": "#9b94ff" } as React.CSSProperties}
+            style={{ '--bg': '#9b94ff' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={newGroupPath} disableRipple>
               <ListItemIcon>
@@ -182,12 +197,12 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
-            className={activeItem === "newChannel" ? sidebar.active : ""}
+            className={activeItem === 'newChannel' ? sidebar.active : ''}
             onClick={() => {
-              handleClick("newChannel");
+              handleClick('newChannel');
               setIsActive(false);
             }}
-            style={{ "--bg": "#9b94ff" } as React.CSSProperties}
+            style={{ '--bg': '#9b94ff' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={newChannelPath} disableRipple>
               <ListItemIcon>
@@ -195,29 +210,29 @@ const SideBar: React.FC = () => {
               </ListItemIcon>
               <ListItemText primary="New channel" />
             </ListItemButton>
-          </ListItem>
+          </ListItemButton>
           <ListItem
-            className={activeItem === "contacts" ? sidebar.active : ""}
+            className={activeItem === 'contacts' ? sidebar.active : ''}
             onClick={() => {
-              handleClick("contacts");
+              handleClick('contacts');
               setIsActive(false);
             }}
-            style={{ "--bg": "#9b94ff" } as React.CSSProperties}
+            style={{ '--bg': '#9b94ff' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={contactsPath} disableRipple>
               <ListItemIcon>
                 <AccountCircleOutlined />
               </ListItemIcon>
-              <ListItemText primary="Contacts"/>
+              <ListItemText primary="Contacts" />
             </ListItemButton>
           </ListItem>
           <ListItem
-            className={activeItem === "chats" ? sidebar.active : ""}
+            className={activeItem === 'chats' ? sidebar.active : ''}
             onClick={() => {
-              handleClick("chats");
+              handleClick('chats');
               setIsActive(false);
             }}
-            style={{ "--bg": "#59ff17" } as React.CSSProperties}
+            style={{ '--bg': '#59ff17' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={chatsPath} disableRipple>
               <ListItemIcon>
@@ -225,44 +240,44 @@ const SideBar: React.FC = () => {
               </ListItemIcon>
               <ListItemText primary="Chats" />
             </ListItemButton>
-          </ListItem>
+          </ListItemButton>
           <ListItem
-            className={activeItem === "videos" ? sidebar.active : ""}
+            className={activeItem === 'videos' ? sidebar.active : ''}
             onClick={() => {
-              handleClick("videos");
+              handleClick('videos');
               setIsActive(false);
             }}
-            style={{ "--bg": "#ff1768" } as React.CSSProperties}
+            style={{ '--bg': '#ff1768' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={mediaPath} disableRipple>
               <ListItemIcon>
                 <PlayCircleOutline />
               </ListItemIcon>
-              <ListItemText primary="Videos"/>
+              <ListItemText primary="Videos" />
             </ListItemButton>
-          </ListItem>
+          </ListItemButton>
           <ListItem
-            className={activeItem === "calls" ? sidebar.active : ""}
+            className={activeItem === 'calls' ? sidebar.active : ''}
             onClick={() => {
-              handleClick("calls");
+              handleClick('calls');
               setIsActive(false);
             }}
-            style={{ "--bg": "#ffa117" } as React.CSSProperties}
+            style={{ '--bg': '#ffa117' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={callsPath} disableRipple>
               <ListItemIcon>
                 <CallOutlined />
               </ListItemIcon>
-              <ListItemText primary="Calls"/>
+              <ListItemText primary="Calls" />
             </ListItemButton>
-          </ListItem>
+          </ListItemButton>
           <ListItem
-            className={activeItem === "settings" ? sidebar.active : ""}
+            className={activeItem === 'settings' ? sidebar.active : ''}
             onClick={() => {
-              handleClick("settings");
+              handleClick('settings');
               setIsActive(false);
             }}
-            style={{ "--bg": "#1783ff" } as React.CSSProperties}
+            style={{ '--bg': '#1783ff' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={settingsPath} disableRipple>
               <ListItemIcon>
@@ -274,14 +289,14 @@ const SideBar: React.FC = () => {
           <ListItem
             className={sidebar.themeSwitcherWrapper}
             onClick={toggleTheme}
-            style={{ "--bg": "#ff17ff" } as React.CSSProperties}
+            style={{ '--bg': '#ff17ff' } as React.CSSProperties}
           >
             <ListItemIcon>
               <NightsStayOutlined />
             </ListItemIcon>
             <ListItemText primary="Theme" />
             <Switch
-              checked={theme === "light"}
+              checked={theme === 'light'}
               onChange={toggleTheme}
               name="themeSwitch"
               inputProps={{ 'aria-label': 'theme switch' }}
@@ -291,9 +306,9 @@ const SideBar: React.FC = () => {
           <ListItem
             className={sidebar.logoutItem}
             onClick={handleLogout}
-            style={{ "--bg": "#ff1744" } as React.CSSProperties}
+            style={{ '--bg': '#ff1744' } as React.CSSProperties}
           >
-            <ListItemButton component={Link} to={"/"} disableRipple>
+            <ListItemButton component={Link} to={'/'} disableRipple>
               <ListItemIcon>
                 <LogoutOutlined />
               </ListItemIcon>
