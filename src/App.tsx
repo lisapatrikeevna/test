@@ -7,7 +7,7 @@ import AuthContext from "./contexts/AuthContext";
 import SideBar from "./pages/SideBar";
 import Home from "./pages/landingComponents/Home.tsx";
 import Chats from "./pages/Chats";
-
+import AboutUs from "./pages/landingComponents/AboutUs.tsx";
 import Calls from "./pages/Calls.tsx";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
@@ -21,6 +21,7 @@ import { useAppDispatch, useAppSelector } from "./store/hooks.ts";
 import { AuthService } from "./services/auth.service.ts";
 import { userSliceMapper } from "./store/user/utilits/userUtilits.ts";
 import { login, selectUsername } from "./store/user/userSlice.ts";
+import AboutUs from './AboutUs.tsx';
 // import styles from "./styles/App.module.css";
 import VideosMainPage from "./pages/Videos/VideosMainPage.tsx";
 import {
@@ -28,6 +29,7 @@ import {
   chatsPath,
   homePath,
   mediaIdPath,
+  aboutUsPath,
   mediaPath,
   productsPath, profilePath,
   settingsPath,
@@ -82,24 +84,25 @@ const App: React.FC = () => {
   const allowedUsernames = ["AdrianAdrian", "Adrian Lieblich", "RomarioFisch"];
 
   return (
-    <ThemeContext.Provider value={{theme: theme, setTheme }}>
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}> {/* Использование состояния темы */}
-      <Router>
-        <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-          {isLoggedIn ? (
+    <ThemeContext.Provider value={{ theme: theme, setTheme }}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}> {/* Использование состояния темы */}
+        <Router>
+          <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+            {isLoggedIn ? (
               <Box sx={{
                 display: 'flex',
                 height: '100vh'
               }}>
                 <SideBar />
                 <Box sx={{
-                flexGrow: 1,
-                overflow: 'auto',
-                width: '100%'
-              }}>
+                  flexGrow: 1,
+                  overflow: 'auto',
+                  width: '100%'
+                }}>
                   <Routes>
                     <Route path={homePath} element={<Home />} />
                     <Route path={chatsPath} element={<Chats />} />
+                    <Route path={aboutUsPath} element={<AboutUs />} />
                     <Route path={mediaPath} element={<VideosMainPage />} />
                     <Route path={mediaIdPath} element={<VideoPage />} />
                     <Route path={callsPath} element={<Calls />} />
@@ -119,20 +122,20 @@ const App: React.FC = () => {
                   </Routes>
                 </Box>
               </Box>
-          ) : (
+            ) : (
               <>
                 <HeaderAndMainPage
                   activeSection={activeSection}
                   setActiveSection={setActiveSection}
-              />
+                />
               </>
-          )}
+            )}
 
-          <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
-        </AuthContext.Provider>
-      </Router>
+            <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
+          </AuthContext.Provider>
+        </Router>
       </ThemeProvider>
-      </ThemeContext.Provider>
+    </ThemeContext.Provider>
   );
 };
 
