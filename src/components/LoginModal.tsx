@@ -78,12 +78,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                 label="Email"
                                 margin="normal"
                                 variant="outlined"
-                                InputProps={{
-                                    style: { color: 'var(--text)' }
-                                }}
-                                InputLabelProps={{
-                                    style: { color: 'var(--text)' }
-                                }}
+
                             />
                         )}
                         <TextField
@@ -93,12 +88,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             label="Username"
                             margin="normal"
                             variant="outlined"
-                            InputProps={{
-                                style: { color: 'var(--text)' }
-                            }}
-                            InputLabelProps={{
-                                style: { color: 'var(--text)' }
-                            }}
+
                         />
                         <TextField
                             required
@@ -108,12 +98,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             type="password"
                             margin="normal"
                             variant="outlined"
-                            InputProps={{
-                                style: { color: 'var(--text)' }
-                            }}
-                            InputLabelProps={{
-                                style: { color: 'var(--text)' }
-                            }}
+
                         />
                         <Button
                             variant="contained"
@@ -124,7 +109,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             {isRegistering ? 'Sign up' : 'Sign in'}
                         </Button>
                         <div>
-                            <Button onClick={() => setIsRegistering(!isRegistering)} style={{ margin: "10px" }}>
+                            <Button onClick={() => setIsRegistering(!isRegistering)} style={{ margin: "10px", color: 'var(--text)' }}>
                                 {isRegistering ? 'Sign in' : 'Sign up'}
                             </Button>
                             {/*<Button onClick={onClose} style={{ margin: "10px" }}>*/}

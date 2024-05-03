@@ -80,7 +80,7 @@ const VideoListHorizontal = () => {
                         <Link to={`${mediaPath}/${video.id}`} >
                             <Card sx={{maxWidth: '320px'}}>
                                 <PreviewImage videoId={video.id}/>
-                                <CardContent style={{ backgroundColor: 'var(--background)' }}>
+                                <CardContent >
                                     <Typography variant="h5" >{video.videoName}</Typography>
                                 </CardContent>
                             </Card>

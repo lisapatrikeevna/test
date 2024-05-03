@@ -1,26 +1,28 @@
 import { FC } from "react";
-import { Container, Typography, Box, Divider } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Typography, Box, Divider } from "@mui/material";
+// import { makeStyles } from "@mui/styles";
+import CardComponent from "../../components/CardComponent.tsx";
 
-const useStyles = makeStyles({
-    scrollContainer: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "start",
-        alignItems: "center",
-        height: "auto",
-        maxHeight: "70vh",
-        overflowY: "auto",
-        padding: "0 1rem",
-        color: "var(--text)"
-    }
-});
+// const useStyles = makeStyles({
+//     scrollContainer: {
+//         display: "flex",
+//         flexDirection: "column",
+//         justifyContent: "start",
+//         alignItems: "center",
+//         height: "auto",
+//         maxHeight: "70vh",
+//         overflowY: "auto",
+//         padding: "0 1rem",
+//
+//         background: "default"
+//     }
+// });
 
 const Datenschutz: FC = () => {
-    const classes = useStyles();
+    // const classes = useStyles();
 
     return (
-        <Container className={classes.scrollContainer}>
+        <CardComponent>
             <Typography variant="h2" sx={{ fontSize: '2rem' }}>
                 Information zum Datenschutz gemäß Art. 12, 13, 14 und 21 DSGVO
             </Typography>
@@ -122,7 +124,7 @@ const Datenschutz: FC = () => {
                     </li>
                 </ul>
             </Box>
-        </Container>
+        </CardComponent>
     );
 };
 

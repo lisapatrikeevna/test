@@ -23,7 +23,7 @@ const PreviewImage: React.FC<PreviewImageProps> = ({ videoId }) => {
         return null;
     }
 
-    return <img src={imageSrc} alt="Preview" className={styles.videoPreview} />;
+    return <img src={imageSrc} alt="Preview" className={styles.videoPreview}  />;
 };
 
 export default PreviewImage;
