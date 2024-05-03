@@ -210,7 +210,7 @@ const SideBar: React.FC = () => {
               </ListItemIcon>
               <ListItemText primary="New channel" />
             </ListItemButton>
-          </ListItemButton>
+          </ListItem>
           <ListItem
             className={activeItem === 'contacts' ? sidebar.active : ''}
             onClick={() => {
@@ -240,7 +240,7 @@ const SideBar: React.FC = () => {
               </ListItemIcon>
               <ListItemText primary="Chats" />
             </ListItemButton>
-          </ListItemButton>
+          </ListItem> 
           <ListItem
             className={activeItem === 'videos' ? sidebar.active : ''}
             onClick={() => {
@@ -255,7 +255,7 @@ const SideBar: React.FC = () => {
               </ListItemIcon>
               <ListItemText primary="Videos" />
             </ListItemButton>
-          </ListItemButton>
+          </ListItem>
           <ListItem
             className={activeItem === 'calls' ? sidebar.active : ''}
             onClick={() => {
@@ -270,7 +270,7 @@ const SideBar: React.FC = () => {
               </ListItemIcon>
               <ListItemText primary="Calls" />
             </ListItemButton>
-          </ListItemButton>
+          </ListItem> 
           <ListItem
             className={activeItem === 'settings' ? sidebar.active : ''}
             onClick={() => {
