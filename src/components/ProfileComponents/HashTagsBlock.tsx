@@ -1,7 +1,17 @@
 import { Link, Stack, Typography } from '@mui/material';
 import { hashTagsData } from './utils';
 
-const HashTagsBlock = () => {
+interface Tag {
+  id: string;
+  title: string;
+}
+
+interface HashTagsBlockProps {
+  arrTags: Tag[];
+}
+
+const HashTagsBlock = ({ arrTags }: HashTagsBlockProps) => {
+  console.log(arrTags); // затычка
   return (
     <Stack
       direction="row"

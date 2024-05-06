@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Chats = () => {
+const Chats: React.FC = () => {
   return (
     <></>
   )

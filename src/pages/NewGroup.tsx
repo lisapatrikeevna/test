@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NewGroup = () => {
+const NewGroup: React.FC = () => {
   return (
     <></>
   )

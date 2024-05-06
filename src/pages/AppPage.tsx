@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AppPage = () => {
+const AppPage: React.FC = () => {
   return (
     <></>
   )

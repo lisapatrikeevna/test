@@ -21,7 +21,6 @@ import { useAppDispatch, useAppSelector } from "./store/hooks.ts";
 import { AuthService } from "./services/auth.service.ts";
 import { userSliceMapper } from "./store/user/utilits/userUtilits.ts";
 import { login, selectUsername } from "./store/user/userSlice.ts";
-import AboutUs from './AboutUs.tsx';
 // import styles from "./styles/App.module.css";
 import VideosMainPage from "./pages/Videos/VideosMainPage.tsx";
 import {
@@ -74,7 +73,7 @@ const App: React.FC = () => {
         setIsLoggedIn(true);
       } catch (error) {
         console.error("Failed to refresh session", error);
-        // setIsLoggedIn(false);
+        setIsLoggedIn(false);
       }
     };
 

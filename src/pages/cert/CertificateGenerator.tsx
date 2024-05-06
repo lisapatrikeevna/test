@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CertificateGenerator = () => {
+const CertificateGenerator: React.FC = () => {
   return (
     <></>
   )

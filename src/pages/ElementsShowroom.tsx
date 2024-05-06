@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ElementsShowroom = () => {
+const ElementsShowroom: React.FC = () => {
   return (
     <></>
   )

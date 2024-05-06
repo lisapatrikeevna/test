@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Calls = () => {
+const Calls: React.FC = () => {
   return (
     <></>
   )
