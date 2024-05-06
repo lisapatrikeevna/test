@@ -1,5 +1,5 @@
 import { FC } from "react";
-import styles from "../../styles/landingStyles/Contatcs.module.css";
+import styles from "../../styles/landingStyles/Contacts.module.css";
 import WriteToUsForm from "../../components/WriteToUsForm.tsx";
 
 const Contacts: FC = () => {
