@@ -5,7 +5,7 @@ import { AuthService } from "../services/auth.service";
 import { login } from "../store/user/userSlice";
 import { userSliceMapper } from "../store/user/utilits/userUtilits";
 
-export const API_URL = "https://neox.it-assistent.eu:8030";
+export const API_URL = "https://hungry-carver.212-132-99-188.plesk.page/:8030";
 // export const API_URL = "http://localhost:8030";
 
 export const instanceAuth = axios.create({
