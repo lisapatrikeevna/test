@@ -15,6 +15,7 @@ import LoginModal from "./components/LoginModal";
 import Header from "./pages/landingComponents/Header";
 import MainPage from "./pages/landingComponents/MainPage";
 import VideoPage from "./pages/Videos/VideoPage.tsx";
+import VR from "./pages/VR.tsx";
 import { useAppDispatch, useAppSelector } from "./store/hooks.ts";
 import { AuthService } from "./services/auth.service.ts";
 import { userSliceMapper } from "./store/user/utilits/userUtilits.ts";
@@ -32,7 +33,8 @@ import {
   callsPath, sideBarPath, certificatePath,
   newGroupPath,
   newChannelPath,
-  contactsPath
+  contactsPath,
+  vrPath
 } from "./configs/RouteConfig.tsx";
 import ChannelPage from "./pages/Videos/ChannelPage.tsx";
 import CertificateGenerator from "./pages/cert/CertificateGenerator.tsx";
@@ -111,6 +113,7 @@ const App: React.FC = () => {
                         <Route path={newGroupPath} element={<NewGroup />} />
                         <Route path={newChannelPath} element={<NewChannel />} />
                         <Route path={contactsPath} element={<Contacts />} />
+                        <Route path={vrPath} element={<VR />} />
 
                         <Route path={certificatePath} element={allowedUsernames.includes(username) ? <CertificateGenerator /> : ""} />
 

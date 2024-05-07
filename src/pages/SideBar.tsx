@@ -13,6 +13,7 @@ import {
   AddCircleOutline,
   KeyboardArrowUpOutlined,
   KeyboardArrowDownOutlined,
+  BlurOnOutlined
 } from '@mui/icons-material';
 import avatar from '../assets/img.webp';
 // import neumorph from '../styles/Neumorph.module.css';
@@ -39,6 +40,7 @@ import {
   newGroupPath,
   newChannelPath,
   contactsPath,
+  vrPath
 } from '../configs/RouteConfig.tsx';
 import {
   Box,
@@ -131,9 +133,10 @@ const SideBar: React.FC = () => {
         sx={{backgroundColor: muiTheme.palette.background.default,
           color: muiTheme.palette.text.primary,}}
       >
-        <List>
+        <List disablePadding>
           <ListItem
             className={sidebar.profileItem}
+            disablePadding
           >
             <Box className={sidebar.imgLink}>
               <img src={avatar} alt="Avatar" onClick={handleAvatarClick}/>
@@ -176,6 +179,7 @@ const SideBar: React.FC = () => {
             </List>
           </Collapse>
           <ListItem
+            disablePadding
             className={activeItem === 'home' ? sidebar.active : ''}
             onClick={() => {
               handleClick('home');
@@ -190,6 +194,7 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={activeItem === 'newGroup' ? sidebar.active : ''}
             onClick={() => {
               handleClick('newGroup');
@@ -204,6 +209,7 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={activeItem === 'newChannel' ? sidebar.active : ''}
             onClick={() => {
               handleClick('newChannel');
@@ -218,6 +224,7 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={activeItem === 'contacts' ? sidebar.active : ''}
             onClick={() => {
               handleClick('contacts');
@@ -232,6 +239,7 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={activeItem === 'chats' ? sidebar.active : ''}
             onClick={() => {
               handleClick('chats');
@@ -246,6 +254,7 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem> 
           <ListItem
+            disablePadding
             className={activeItem === 'videos' ? sidebar.active : ''}
             onClick={() => {
               handleClick('videos');
@@ -260,6 +269,7 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={activeItem === 'calls' ? sidebar.active : ''}
             onClick={() => {
               handleClick('calls');
@@ -274,6 +284,22 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem> 
           <ListItem
+            disablePadding
+            className={activeItem === 'vrBoard' ? sidebar.active : ''}
+            onClick={() => {
+              handleClick('vrBoard');
+              setIsActive(false);
+            }}
+          >
+            <ListItemButton component={Link} to={vrPath} disableRipple>
+              <ListItemIcon>
+                <BlurOnOutlined />
+              </ListItemIcon>
+              <ListItemText primary="VR board" />
+            </ListItemButton>
+          </ListItem> 
+          <ListItem
+            disablePadding
             className={activeItem === 'settings' ? sidebar.active : ''}
             onClick={() => {
               handleClick('settings');
@@ -288,6 +314,7 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={sidebar.themeSwitcherWrapper}
             onClick={toggleTheme}
             sx={{ cursor: 'pointer'}}
@@ -303,6 +330,7 @@ const SideBar: React.FC = () => {
             />
           </ListItem>
           <ListItem
+            disablePadding
             className={sidebar.logoutItem}
             onClick={handleLogout}
           >
