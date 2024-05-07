@@ -62,10 +62,10 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    // Функция для проверки и восстановления сессии
+    // Function for checking session and refreshing it
     const checkSession = async () => {
       try {
-        const data = await AuthService.refresh(dispatch); // Попытка обновить токен
+        const data = await AuthService.refresh(dispatch); // Try of refresh session
         dispatch(login(userSliceMapper(data)));
         setIsLoggedIn(true);
       } catch (error) {
