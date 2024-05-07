@@ -46,7 +46,7 @@ import Contacts from "./pages/Contacts.tsx";
 import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
-import { ThemeContext } from "./components/ThemeContext.tsx";
+import { ThemeContext } from "./contexts/ThemeContext.tsx";
 
 const App: React.FC = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light'); // Новое состояние для темы
@@ -73,7 +73,7 @@ const App: React.FC = () => {
         setIsLoggedIn(true);
       } catch (error) {
         console.error("Failed to refresh session", error);
-        setIsLoggedIn(false);
+        // setIsLoggedIn(false);
       }
     };
 
@@ -90,13 +90,13 @@ const App: React.FC = () => {
             {isLoggedIn ? (
               <Box sx={{
                 display: 'flex',
-                height: '100vh'
+                height: '100vh',
               }}>
                 <SideBar />
                 <Box sx={{
                   flexGrow: 1,
                   overflow: 'auto',
-                  width: '100%'
+                  width: '100%',
                 }}>
                   <Routes>
                     <Route path={homePath} element={<Home />} />

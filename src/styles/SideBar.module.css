@@ -93,7 +93,7 @@
     background: var(--body);
     transition: 0.5s;
     overflow: hidden;
-    /* padding-left: 10px; */
+    padding-left: 10px;
     box-shadow: var(--shadow_outer_dark) 5px 5px 7px;
   }
   
