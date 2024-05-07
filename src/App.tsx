@@ -10,7 +10,6 @@ import Chats from "./pages/Chats";
 import AboutUs from "./pages/landingComponents/AboutUs.tsx";
 import Calls from "./pages/Calls.tsx";
 import Settings from "./pages/Settings";
-import Profile from "./pages/Profile";
 import AppPage from "./pages/AppPage";
 import ElementsShowroom from "./pages/ElementsShowroom";
 import LoginModal from "./components/LoginModal";
@@ -30,7 +29,7 @@ import {
   mediaIdPath,
   aboutUsPath,
   mediaPath,
-  productsPath, profilePath,
+  productsPath,
   settingsPath,
   callsPath, sideBarPath, certificatePath,
   newGroupPath,
@@ -106,7 +105,6 @@ const App: React.FC = () => {
                     <Route path={mediaIdPath} element={<VideoPage />} />
                     <Route path={callsPath} element={<Calls />} />
                     <Route path={settingsPath} element={<Settings />} />
-                    <Route path={profilePath} element={<Profile />} />
                     <Route path={sideBarPath} element={<SideBar />} />
                     <Route path={appPagePath} element={<AppPage />} />
                     <Route path={channelPagePrototypePath} element={<ChannelPage />} />

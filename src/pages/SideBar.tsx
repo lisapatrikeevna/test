@@ -34,7 +34,6 @@ import {
   chatsPath,
   homePath,
   mediaPath,
-  profilePath,
   settingsPath,
   callsPath,
   newGroupPath,
@@ -97,9 +96,9 @@ const SideBar: React.FC = () => {
     }
   };
 
-  // const handleAvatarClick = () => {
-  //   setOpenProfileModal(true); // Открываем модальное окно
-  // };
+  const handleAvatarClick = () => {
+    setOpenProfileModal(true); // Открываем модальное окно
+  };
 
   return (
     // <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -136,10 +135,10 @@ const SideBar: React.FC = () => {
           <ListItem
             className={sidebar.profileItem}
           >
-            <Link to={profilePath} className={sidebar.imgLink}>
-              <img src={avatar} alt="Avatar"/>
+            <Box className={sidebar.imgLink}>
+              <img src={avatar} alt="Avatar" onClick={handleAvatarClick}/>
               {/* <img src={avatar} alt="Avatar" onClick={handleAvatarClick} /> */}
-            </Link>
+            </Box>
             {/* <UserModalProfile
                 open={openProfileModal}
                 onClose={() => setOpenProfileModal(false)}
