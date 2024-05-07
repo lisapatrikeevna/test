@@ -20,7 +20,6 @@ import { useAppDispatch, useAppSelector } from "./store/hooks.ts";
 import { AuthService } from "./services/auth.service.ts";
 import { userSliceMapper } from "./store/user/utilits/userUtilits.ts";
 import { login, selectUsername } from "./store/user/userSlice.ts";
-// import styles from "./styles/App.module.css";
 import VideosMainPage from "./pages/Videos/VideosMainPage.tsx";
 import {
   appPagePath, channelEditPrototypePath, channelPagePrototypePath,
