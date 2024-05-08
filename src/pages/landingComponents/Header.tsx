@@ -226,6 +226,7 @@ const Header: React.FC = () => {
             width: bttnWidth,
             height: bttnHeight,
             borderRadius: "25px",
+            backgroundColor: buttonStates['login'] ? 'gray' : 'white',
             "&:hover": {
               backgroundColor: "black",
             }
