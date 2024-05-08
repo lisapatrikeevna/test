@@ -1,15 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "../styles/Chats.module.css";
+// import styles from "../styles/Chats.module.css";
 import { store } from "../store/store";
 import linkifyHtml from "linkify-html";
 import {
   AttachFile,
   Redo,
-  Send
+  Send,
+  Reply
 } from "@mui/icons-material";
+import {
+  Box,
+  Container,
+  IconButton,
+  TextField,
+  Typography,
+  Paper,
+  Avatar,
+  Button,
+  List,
+  ListItem,
+  ListItemText
+} from "@mui/material";
 import ReactionSelector from "../selectors/ReactionSelector";
 import { IMessage } from "../types/types";
 // import { useTheme } from "../components/ThemeContext";
+
 
 const Chats: React.FC = () => {
   // const { theme } = useTheme();
@@ -154,6 +169,7 @@ const Chats: React.FC = () => {
       );
     }
 
+    /* eslint-disable react-hooks/exhaustive-deps */
     return () => {
       ws.current?.close();
     };
@@ -406,110 +422,153 @@ const rsWho = function(msg: { userId: string; users: any; })
     "https://miro.medium.com/v2/resize:fit:640/format:webp/1*W35QUSvGpcLuxPo3SRTH4w.png";
 
   return (
-    <div className={styles.container}>
-      <div className={styles.chatsSidebar}>
-        <input
-          type="text"
-          placeholder="Search"
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-            rqSearch();
-          }}
-          className={styles.searchInput}
-        />
+    <Container maxWidth="lg" sx={{ display: "flex", height: "100vh" }}>
+    <Box
+      sx={{
+        width: 300,
+        backgroundColor: "#f0f0f0",
+        overflowY: "auto",
+        borderRight: "1px solid #ccc",
+        p: 2,
+      }}
+    >
+      <TextField
+        fullWidth
+        label="Search"
+        variant="outlined"
+        value={searchQuery}
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
+          rqSearch();
+        }}
+        sx={{ mb: 2 }}
+      />
+      <List>
         {contacts
           .filter((contact) =>
             contact.name.toLowerCase().startsWith(searchQuery.toLowerCase())
           )
           .map((contact) => (
-            <div
+            <ListItem
               key={contact.id}
-              className={`${styles.contact} ${
-                activeChat === contact.id ? styles.active : ""
-              }`} // Добавляем класс active, если чат активен
+              button
+              selected={activeChat === contact.id}
               onClick={() => setChat(contact.id)}
             >
-              <img
-                src={contact.avatar || defaultAvatar}
-                alt="Avatar"
-                className={styles.avatar}
-              />
-              <div className={styles.contactName}>{contact.name}</div>
-            </div>
+              <Avatar src={contact.avatar || defaultAvatar} sx={{ mr: 2 }} />
+              <ListItemText primary={contact.name} secondary={contact.lastSeen} />
+            </ListItem>
           ))}
-      </div>
-      <div className={styles.chatArea}>
-        {activeContact && (
-          <div className={styles.userPanel}>
-            <div className={styles.userName}>{activeContact.name}</div>
-            <div className={styles.userStatus}>{activeContact.lastSeen}</div>
-          </div>
-        )}
-        <div className={styles.messagesContainer}>
-          {activeChat &&
-            messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`${styles.message} ${
-                  msg.sentByMe ? styles.sent : styles.received
-                }`}
+      </List>
+    </Box>
+    <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+      {activeContact && (
+        <Paper
+          elevation={2}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            p: 2,
+            mb: 1,
+          }}
+        >
+          <Typography variant="h6">{activeContact.name}</Typography>
+          <Typography variant="body2" color="textSecondary">
+            {activeContact.lastSeen}
+          </Typography>
+        </Paper>
+      )}
+      <Box sx={{ flexGrow: 1, overflowY: "auto", p: 2 }}>
+        {activeChat &&
+          messages.map((msg, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: msg.sentByMe ? "flex-end" : "flex-start",
+                mb: 2,
+              }}
+            >
+              <Paper
+                sx={{
+                  maxWidth: "70%",
+                  borderRadius: 2,
+                  p: 2,
+                  backgroundColor: msg.sentByMe ? "#e1f5fe" : "#f1f1f1",
+                }}
               >
-                <div
-                  className={styles.messageContentContainer}
-                  onClick={() => toggleReactionSelector(msg.id)}
-                >
-                  <span className={styles.messageSender}>
-                    {msg.sentByMe ? "You" : "Companion"}
-                  </span>
-                  <span
-                    className={styles.messageContent}
-                    dangerouslySetInnerHTML={{ __html: linkifyHtml(msg.text) }}
-                  ></span>
+                <Typography variant="body2" color="textSecondary">
+                  {msg.sentByMe ? "You" : "Companion"}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  dangerouslySetInnerHTML={{ __html: linkifyHtml(msg.text) }}
+                ></Typography>
+                <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
+                  <Typography variant="caption" sx={{ mr: 1 }}>
+                    {formatTime(msg.timestamp)}
+                  </Typography>
+                  <IconButton
+                    size="small"
+                    color="primary"
+                    onClick={() => handleReplyToMessage(msg)}
+                  >
+                    <Reply fontSize="small" />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    color="primary"
+                    onClick={() => toggleReactionSelector(msg.id)}
+                  >
+                    <Redo fontSize="small" />
+                  </IconButton>
                   {showReactionSelector && selectedMessageId === msg.id && (
                     <ReactionSelector
                       onReact={(type) => handleAddReaction(msg.id, type)}
                     />
                   )}
-                </div>
-                <span className={styles.messageTime}>
-                  {formatTime(msg.timestamp)}
-                </span>
-                <div className={styles.messageActions}>
-                <Redo
-                    className={styles.replyIcon}
-                    onClick={() => handleReplyToMessage(msg)}
-                  />
-                </div>
-              </div>
-            ))}
-        </div>
-        <form
-          onSubmit={handleSendMessage}
-          className={styles.messageInputContainer}
+                </Box>
+              </Paper>
+            </Box>
+          ))}
+      </Box>
+      <Box
+        component="form"
+        onSubmit={handleSendMessage}
+        sx={{ display: "flex", p: 2, borderTop: "1px solid #ccc" }}
+      >
+        <input
+          type="file"
+          onChange={handleFileUpload}
+          style={{ display: "none" }}
+          id="file-upload"
+        />
+        <label htmlFor="file-upload">
+          <IconButton color="primary" component="span">
+            <AttachFile />
+          </IconButton>
+        </label>
+        <TextField
+          fullWidth
+          value={messageText}
+          onChange={(e) => setMessageText(e.target.value)}
+          placeholder="Write a message..."
+          variant="outlined"
+          sx={{ mx: 1 }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          endIcon={<Send />}
         >
-          <input
-            type="file"
-            onChange={handleFileUpload}
-            style={{ display: "none" }}
-            id="file-upload"
-          />
-          <label htmlFor="file-upload" className={styles.uploadButton}>
-          <AttachFile className={styles.attachIcon} />
-          </label>
-          <input
-            type="text"
-            value={messageText}
-            onChange={(e) => setMessageText(e.target.value)}
-            placeholder="Write a message..."
-            className={styles.messageInput}
-          />
-          <button type="submit" className={styles.sendMessageButton}>
-          <Send />
-          </button>
-        </form>
-      </div>
-    </div>
+          Send
+        </Button>
+      </Box>
+    </Box>
+  </Container>
   );
 };
 
