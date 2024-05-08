@@ -422,7 +422,7 @@ const rsWho = function(msg: { userId: string; users: any; })
     "https://miro.medium.com/v2/resize:fit:640/format:webp/1*W35QUSvGpcLuxPo3SRTH4w.png";
 
   return (
-    <Container maxWidth="lg" sx={{ display: "flex", height: "100vh" }}>
+    <Container maxWidth={false} sx={{ display: "flex", height: "100vh" }}>
     <Box
       sx={{
         width: 300,
