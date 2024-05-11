@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import ReactionSelector from "../selectors/ReactionSelector";
 import { IMessage } from "../types/types";
-// import { useTheme } from "../components/ThemeContext";
+import { useTheme } from "@mui/material/styles";
 import {
   Avatar,
   ChatList,
@@ -23,7 +23,7 @@ import {
 import "react-chat-elements/dist/main.css";
 
 const Chats: FC = () => {
-  // const { theme } = useTheme();
+  const theme = useTheme();
   const [activeChat, setActiveChat] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [messageText, setMessageText] = useState("");
@@ -426,15 +426,21 @@ const rsWho = function(msg: { userId: string; users: any; })
     <Container
       maxWidth={false}
       disableGutters
-      sx={{ display: "flex", height: "100vh" }}
+      sx={{ 
+        display: "flex",
+        height: "100vh",
+        backgroundColor: theme.palette.background.paper,
+      }}
     >
       {/* Left chat list */}
       <Box
         sx={{
           width: 300,
-          backgroundColor: "#f0f0f0",
+          backgroundColor: theme.palette.background.paper,
           overflowY: "auto",
-          borderRight: "1px solid #ccc",
+          borderRight: "1px solid",
+          borderLeft: "1px solid",
+          borderColor: theme.palette.divider,
           pt: 1,
         }}
       >
@@ -455,11 +461,12 @@ const rsWho = function(msg: { userId: string; users: any; })
             avatar: contact.avatar || defaultAvatar,
             title: contact.name,
             subtitle: contact.lastMessage,
-            date: new Date(),
+            date: new Date(contact.lastSeen),
             unread: 0,
             id: contact.id,
+            onClick: () => setActiveChat(contact.id.toString()) // Convert item.id to a string
           }))}
-          onClick={(chat) => setActiveChat(chat.id.toString())}
+          onClick={(item) => setActiveChat(item.id.toString())} // Convert item.id to a string
           id="chat-list-id"
           lazyLoadingImage="lazy-loading-image"
         />
@@ -475,17 +482,21 @@ const rsWho = function(msg: { userId: string; users: any; })
               sx={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
+                justifyContent: "flex-start",
                 p: 2,
                 mb: 1,
+                width: '100%',
+                borderRadius: 0,
               }}
             >
               <Avatar
                 src={activeContact.avatar || defaultAvatar}
                 alt="avatar"
+                size="medium"
+                type="circle"
               />
-              <Typography variant="h6">{activeContact.name}</Typography>
-              <Typography variant="body2" color="textSecondary">
+              <Typography variant="h6" sx={{ ml: 2 }}>{activeContact.name}</Typography>
+              <Typography variant="body2" sx={{ ml: 2 }} color="textSecondary">
                 {activeContact.lastSeen}
               </Typography>
             </Paper>
@@ -538,8 +549,8 @@ const rsWho = function(msg: { userId: string; users: any; })
               onSubmit={handleSendMessage}
               sx={{
                 display: "flex",
-                p: 2,
-                borderTop: "1px solid #ccc",
+                borderTop: "1px solid",
+                borderColor: theme.palette.divider,
               }}
             >
               <Input
