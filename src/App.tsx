@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ActiveSectionContext from "./contexts/ActiveSectionContext";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import AuthContext from "./contexts/AuthContext";
 import SideBar from "./pages/SideBar";
 import Home from "./pages/landingComponents/Home.tsx";
@@ -47,8 +47,19 @@ import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
 import { ThemeContext } from "./contexts/ThemeContext";
 
-const App: React.FC = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light'); // Новое состояние для темы
+const App: FC = () => {
+  // Initialize theme state with light theme as default
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    return (localStorage.getItem('theme') as 'light' | 'dark') || 'light';
+  });
+
+  // Save theme to localStorage
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  // Object with theme settings
+  const muiTheme = theme === 'light' ? lightTheme : darkTheme;
 
   const [activeSection, setActiveSection] = useState<string | null>("Home");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -72,7 +83,7 @@ const App: React.FC = () => {
         setIsLoggedIn(true);
       } catch (error) {
         console.error("Failed to refresh session", error);
-        setIsLoggedIn(false);
+        // setIsLoggedIn(false);
       }
     };
 
@@ -83,7 +94,7 @@ const App: React.FC = () => {
 
   return (
       <ThemeContext.Provider value={{ theme: theme, setTheme }}>
-        <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}> {/* Использование состояния темы */}
+        <ThemeProvider theme={muiTheme}>
           <Router>
             <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
               {isLoggedIn ? (

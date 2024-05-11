@@ -18,8 +18,8 @@ const PageContainer = styled('div')({
   flexDirection: 'row',
   minHeight: '100vh',
   minWidth: '100vw',
-  scrollSnapType: 'x mandatory', // Установка значения scrollSnapType
-  overflow: 'hidden', // Скрытие скролл-баров
+  scrollSnapType: 'x mandatory', // Setting the scrollSnapType value
+  overflow: 'hidden', // Hiding scroll bars
 });
 
 const Section = styled('div')({
@@ -58,7 +58,7 @@ const MainPage = () => {
         return;
       }
 
-      const sections = ["Home", "Pricing", "News", "Contacts"]; // Убираем "News", так как в коде отсутствует
+      const sections = ["Home", "Pricing", "News", "Contacts"]; // remove “News” since it's missing from the code
       const currentIndex = sections.indexOf(activeSection as string);
       let newIndex = currentIndex;
 
@@ -73,7 +73,7 @@ const MainPage = () => {
 
       const sectionElement = document.getElementById(sections[newIndex]);
       if (sectionElement !== null) {
-        // Прокручиваем к следующей или предыдущей секции в зависимости от направления прокрутки
+        // Scroll to the next or previous section depending on the scroll direction
         sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
       }
     };

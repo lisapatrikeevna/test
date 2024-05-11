@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { toast } from 'react-toastify';
 import { useAppSelector, useAppDispatch } from '../../store/hooks.ts';
 import { addVideo, setVideoUrl, setBuffering } from '../../store/video/videoSlice';
@@ -10,7 +10,7 @@ interface AddVideoModalProps {
     onClose: () => void;
 }
 
-const AddVideoModal: React.FC<AddVideoModalProps> = ({ isOpen, onClose }) => {
+const AddVideoModal: FC<AddVideoModalProps> = ({ isOpen, onClose }) => {
     const [videoName, setVideoName] = useState('');
     const [description, setDescription] = useState('');
     const [video, setVideo] = useState<File | null>(null);

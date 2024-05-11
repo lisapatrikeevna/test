@@ -1,6 +1,6 @@
-import React from 'react'
+import { FC } from 'react'
 
-const AppPage: React.FC = () => {
+const AppPage: FC = () => {
   return (
     <></>
   )

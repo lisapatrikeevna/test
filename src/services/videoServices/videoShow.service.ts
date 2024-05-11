@@ -21,6 +21,7 @@ export async function getVideo(id: string): Promise<Blob | null> {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getVideoMetadata(id: string): Promise<any> {
     try {
         const response = await instance.get(`/video/${id}`);

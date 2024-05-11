@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import {
   HomeOutlined,
   PeopleOutline,
@@ -16,15 +16,12 @@ import {
   BlurOnOutlined
 } from '@mui/icons-material';
 import avatar from '../assets/img.webp';
-// import neumorph from '../styles/Neumorph.module.css';
 import sidebar from '../styles/SideBar.module.css';
 import { Link } from 'react-router-dom';
 import AuthContext from '../contexts/AuthContext.tsx';
 import { AuthService } from '../services/auth.service.ts';
 import { logout, selectUsername } from '../store/user/userSlice.ts';
 import { useAppDispatch, useAppSelector } from '../store/hooks.ts';
-// import { ThemeProvider } from '@mui/material/styles';
-// import { lightTheme, darkTheme } from '../theme.tsx';
 import { useTheme } from '@mui/material/styles';
 import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
 
@@ -54,7 +51,7 @@ import {
   Switch
 } from '@mui/material';
 
-const SideBar: React.FC = () => {
+const SideBar: FC = () => {
   const muiTheme = useTheme();
   const { theme, setTheme } = useCustomTheme();
   const [isActive, setIsActive] = useState(false);
@@ -81,7 +78,7 @@ const SideBar: React.FC = () => {
   };
 
   const handleAddAccount = () => {
-    // Логика добавления нового аккаунта
+    // Logic for adding a new account
   };
 
   const handleClick = (id: string) => {
@@ -91,19 +88,18 @@ const SideBar: React.FC = () => {
   const handleLogout = async () => {
     try {
       await AuthService.logout();
-      setIsLoggedIn(false); // Обновление состояния аутентификации
-      dispatch(logout()); // Очистка данных пользователя
+      setIsLoggedIn(false); // Updating the authentication status
+      dispatch(logout()); // Clear user data
     } catch (error) {
       console.error('Ошибка при выходе', error);
     }
   };
 
   const handleAvatarClick = () => {
-    setOpenProfileModal(true); // Открываем модальное окно
+    setOpenProfileModal(true); // Open profile modal
   };
 
   return (
-    // <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
     <Box className={`${sidebar.sidebar} ${isActive ? sidebar.active : ''}`}
     sx={{
       backgroundColor: muiTheme.palette.background.default,
@@ -124,7 +120,7 @@ const SideBar: React.FC = () => {
         className={`${sidebar.overlayBackdrop} ${
           isActive ? sidebar.overlayBackdropActive : ''
         }`}
-        onClick={toggleActiveClass} // Закрываем overlaySidebar при клике на backdrop
+        onClick={toggleActiveClass} // Close sidebar on backdrop click
       ></Box>
       <Box
         className={`${sidebar.overlaySidebar} ${
@@ -162,14 +158,14 @@ const SideBar: React.FC = () => {
           </ListItem>
           <Collapse in={isAccountsDropdownOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              {/* Здесь должен быть список аккаунтов */}
+              {/* Here should be the list of accounts */}
               {/* <ListItemButton sx={{ pl: 4 }}>
                   <ListItemText primary="Account 1" />
                 </ListItemButton>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemText primary="Account 2" />
                 </ListItemButton> */}
-              {/* Кнопка добавления аккаунта */}
+              {/* Button for adding an account */}
               <ListItemButton sx={{ pl: 4 }} onClick={handleAddAccount}>
                 <ListItemIcon>
                   <AddCircleOutline />
@@ -356,7 +352,6 @@ const SideBar: React.FC = () => {
         </Box>
       </Box>
     </Box>
-    // </ThemeProvider>
   );
 };
 

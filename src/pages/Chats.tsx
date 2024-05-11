@@ -78,7 +78,7 @@ const Chats: FC = () => {
     { text: "Окей", sentByMe: true, timestamp: new Date()},
   ]);
  */
-  // Пример данных
+  // Example of a contact object
   const [contacts, setContacts] = useState([
     {
       id: "e6ac0106-44a8-40e7-8225-9eb75d567c5b",
@@ -181,7 +181,7 @@ const Chats: FC = () => {
       const asJson = rqMessage(messageText, replyingToMessage?.id);
       ws.current.send(asJson);
       setMessageText("");
-      setReplyingToMessage(null); // Сброс после отправки
+      setReplyingToMessage(null); // Clear the reply message after sending
     }
   };
 

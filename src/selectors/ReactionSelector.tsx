@@ -1,8 +1,8 @@
-import React from "react";
+import { FC } from "react";
 import { ReactionSelectorProps } from "../types/types";
 import { Box, Button } from "@mui/material";
 
-const ReactionSelector: React.FC<ReactionSelectorProps> = ({ onReact }) => {
+const ReactionSelector: FC<ReactionSelectorProps> = ({ onReact }) => {
   const emojis = [
     { emoji: "👍", type: "ok" },
     { emoji: "🔥", type: "fire" },

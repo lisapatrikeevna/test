@@ -1,11 +1,11 @@
 import { Stack } from '@mui/material';
-import React from 'react';
+import { FC } from 'react';
 
 interface PictureProps {
   img: string;
 }
 
-const Picture: React.FC<PictureProps> = ({ img }) => {
+const Picture: FC<PictureProps> = ({ img }) => {
   return (
     <Stack>
       <img src={img} alt="photo" />

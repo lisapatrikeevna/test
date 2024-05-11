@@ -1,8 +1,10 @@
-import React from 'react'
+import { FC } from 'react'
 
-const CertificateGenerator: React.FC = () => {
+const CertificateGenerator: FC = () => {
   return (
-    <></>
+    <>
+    
+    </>
   )
 }
 

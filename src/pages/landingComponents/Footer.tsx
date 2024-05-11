@@ -1,7 +1,7 @@
 import { styled, Theme} from '@mui/material/styles';
 import { Instagram, Telegram, YouTube, Facebook, LinkedIn  } from '@mui/icons-material';
 import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
-import {useContext} from "react";
+import {FC, useContext} from "react";
 
 
 const FooterContainer = styled('div')(({ theme }) => ({
@@ -39,7 +39,7 @@ interface FooterProps {
     theme?: Theme;
 }
 
-const Footer: React.FC<FooterProps> = ({ onImpressumClick, onPrivacyPolicyClick, onDatenschutzClick, theme }) => {
+const Footer: FC<FooterProps> = ({ onImpressumClick, onPrivacyPolicyClick, onDatenschutzClick, theme }) => {
     const context = useContext(ActiveSectionContext);
 
     if (!context) {

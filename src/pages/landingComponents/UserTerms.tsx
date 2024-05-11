@@ -7,7 +7,6 @@ import CloseIcon from '@mui/icons-material/Close';
 interface UserTermsProps {
     onClose: () => void;
 }
-;
 
 const UserTerms: FC<UserTermsProps> = ({ onClose }) => {
     const [isTermsAccepted, setIsTermsAccepted] = useState(false);

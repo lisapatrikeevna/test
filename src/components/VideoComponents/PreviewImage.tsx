@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { showImage } from '../../services/videoServices/video.previewImage.service.ts';
 import styles from "../../styles/VideosStyles/Videos.module.css";
 
@@ -7,7 +7,7 @@ interface PreviewImageProps {
     style?: React.CSSProperties;
 }
 
-const PreviewImage: React.FC<PreviewImageProps> = ({ videoId }) => {
+const PreviewImage: FC<PreviewImageProps> = ({ videoId }) => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
     useEffect(() => {

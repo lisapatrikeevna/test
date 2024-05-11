@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { Grid, Typography, Paper } from '@mui/material';
 import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal.tsx";
 import SearchField from "../../components/VideoComponents/SearchField.tsx";
@@ -11,7 +11,7 @@ import SearchField from "../../components/VideoComponents/SearchField.tsx";
 //     views: number;
 // }
 
-const ChannelPage: React.FC = () => {
+const ChannelPage: FC = () => {
     // const [videos, setVideos] = useState<Video[]>([]);
     // useEffect(() => {
     //     //TODO Выгружать видео конкретно этого пользователя
@@ -33,7 +33,7 @@ const ChannelPage: React.FC = () => {
                 <div style={{ maxWidth: '500px' }}>
                     <SearchField
                         onSearch={() => {
-                            // ваша логика поиска
+                            // your search logic
                         }}
                     />
                 </div>
