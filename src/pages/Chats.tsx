@@ -1,5 +1,4 @@
 import { FC, useEffect, useRef, useState } from "react";
-// import styles from "../styles/Chats.module.css";
 import { store } from "../store/store";
 import linkifyHtml from "linkify-html";
 import { AttachFile, Send } from "@mui/icons-material";
@@ -68,6 +67,7 @@ const Chats: FC = () => {
   };
 
   const toggleReactionSelector = (messageId: number) => {
+    console.log("Toggling reactions for messageId:", messageId);
     setSelectedMessageId(messageId);
     setShowReactionSelector(!showReactionSelector);
   };
@@ -86,6 +86,7 @@ const Chats: FC = () => {
       lastSeen: "last seen recently",
       avatar: "",
       online: true,
+      lastMessage: "Окей",
     },
     /*   { id: 2, name: "Боб", lastSeen: "last seen 2 hours ago", avatar: "", online: true },
   { id: 3, name: "Вася", lastSeen: "last seen 3 hours ago", avatar: "", online: true },
@@ -225,6 +226,7 @@ const Chats: FC = () => {
         lastSeen: "last seen recently",
         avatar: "",
         online: true,
+        lastMessage: "Окей",
       },
     ];
 
@@ -240,6 +242,7 @@ const Chats: FC = () => {
         lastSeen: new Date(u.lastSeen).toISOString(),
         avatar: "",
         online: u.online,
+        lastMessage: u.lastMessage,
       });
 
       console.log("name: " + u.name + ", id: " + u.id);
@@ -451,7 +454,7 @@ const rsWho = function(msg: { userId: string; users: any; })
           dataSource={contacts.map((contact) => ({
             avatar: contact.avatar || defaultAvatar,
             title: contact.name,
-            subtitle: contact.lastSeen,
+            subtitle: contact.lastMessage,
             date: new Date(),
             unread: 0,
             id: contact.id,
@@ -493,7 +496,7 @@ const rsWho = function(msg: { userId: string; users: any; })
                 referance={messageListRef}
                 className="message-list"
                 lockable={true}
-                toBottomHeight={"100%"}
+                toBottomHeight="100%"
                 dataSource={messages.map((msg) => ({
                   position: msg.sentByMe ? "right" : "left",
                   type: "text",
@@ -502,7 +505,7 @@ const rsWho = function(msg: { userId: string; users: any; })
                   id: msg.id.toString(),
                   title: activeContact?.name || "Unknown",
                   titleColor: "#000",
-                  forwarded: false, 
+                  forwarded: true, 
                   removeButton: true, 
                   notch: true, 
                   retracted: false, 
