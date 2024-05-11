@@ -1,10 +1,8 @@
-import React from 'react'
+import { FC } from 'react'
 
-const VR: React.FC = () => {
+const VR: FC = () => {
   return (
-    <>
-      
-    </>
+    <></>
   )
 }
 

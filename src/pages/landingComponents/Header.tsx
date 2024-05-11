@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext, useState } from 'react';
+import { useEffect, useRef, useContext, useState, FC } from 'react';
 import { Box, Typography, Button, Switch } from '@mui/material';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import Brightness2Icon from '@mui/icons-material/Brightness2';
@@ -11,7 +11,7 @@ import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import LoginModal from '../../components/LoginModal.tsx';
 import logo from '../../assets/neox-logo.svg';
 
-const Header: React.FC = () => {
+const Header: FC = () => {
   const { theme, setTheme } = useCustomTheme();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
@@ -65,13 +65,13 @@ const Header: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Найти активную ссылку на основе activeSection
+    // Find the active link based on activeSection
     const activeIndex = activeSection ? ["Home", "Pricing", "News", "Contacts", "AboutUs"].indexOf(activeSection) : -1;
     const activeLink = linksRef.current[activeIndex];
     if (activeLink) {
       moveIndicator(activeLink);
     }
-  }, [activeSection]); // Отслеживать изменения activeSection
+  }, [activeSection]); // Update the indicator when activeSection changes
 
   const [buttonStates, setButtonStates] = useState<{ [key: string]: boolean }>({});
 

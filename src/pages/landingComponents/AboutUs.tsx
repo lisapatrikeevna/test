@@ -1,4 +1,3 @@
-
 import { Container, Typography, Paper, ThemeProvider, createTheme, Grid, Card, CardMedia } from '@mui/material';
 import aboutUsImage from '../../assets/qrcode.jpg';
 

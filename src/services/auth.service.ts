@@ -23,7 +23,7 @@ export const AuthService = {
 
   async login(userData: ILoginUser): Promise<IResponseUserData> {
     try {
-      const token = btoa(`${userData.username}:${userData.password}`); // Кодируем имя пользователя и пароль в base64
+      const token = btoa(`${userData.username}:${userData.password}`); // Encode username and password in base64
 
       const response: AxiosResponse<IResponseUserData> = await instanceAuth.post(
         "login-user",
@@ -38,7 +38,7 @@ export const AuthService = {
 
       return response.data;
     } catch (error) {
-      // Обработка ошибок
+      // Handle error
       console.error("Error occurred during login:", error);
       throw error;
     }

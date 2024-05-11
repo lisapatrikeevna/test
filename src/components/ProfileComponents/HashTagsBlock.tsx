@@ -11,7 +11,7 @@ interface HashTagsBlockProps {
 }
 
 const HashTagsBlock = ({ arrTags }: HashTagsBlockProps) => {
-  console.log(arrTags); // затычка
+  console.log(arrTags); // plug
   return (
     <Stack
       direction="row"

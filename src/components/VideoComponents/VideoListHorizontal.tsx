@@ -16,7 +16,7 @@ export interface IVideo {
 
 const VideoListHorizontal = () => {
     const [videos, setVideos] = useState<IVideo[]>([]);
-    const [loading, setLoading] = useState(true); // Создайте локальное состояние loading
+    const [loading, setLoading] = useState(true); // Create a loading state to display a loading indicator while fetching videos
 
     const fetchVideo = async (id: string) => {
         try {
@@ -38,9 +38,9 @@ const VideoListHorizontal = () => {
 
     useEffect(() => {
         const fetchVideos = async (videoIds: string[] = []) => {
-            setLoading(true); // Установите состояние загрузки в true при начале загрузки
+            setLoading(true); // Initialize loading state to true in beginning of fetching videos
             if (videoIds.length === 0) {
-                // Запрос на получение всех видео
+                // Query to fetch all videos
                 try {
                     const response = await instance.get(`video/all`, {});
                     if (response.status !== 200) {
@@ -52,7 +52,7 @@ const VideoListHorizontal = () => {
                     console.error(`Error fetching all videos:`, error);
                 }
             } else {
-                // Запрос на получение видео по идентификаторам
+                // Fetch videos by ids
                 const fetchPromises = videoIds.map(fetchVideo);
                 const results = await Promise.allSettled(fetchPromises);
                 const videos = results
@@ -60,16 +60,16 @@ const VideoListHorizontal = () => {
                     .map(result => result.value);
                 setVideos(videos);
             }
-            setLoading(false); // Установите состояние загрузки в false по завершении загрузки
+            setLoading(false); // Initialize loading state to false after fetching videos
         };
 
         const timer = setTimeout(() => {
             fetchVideos();
         }, 500);
 
-        // Очистка таймера при размонтировании компонента
+        // Clear the timer when the component is unmounted
         return () => clearTimeout(timer);
-    }, []); // Пустой массив зависимостей, чтобы useEffect вызывался только при монтировании компонента
+    }, []); // Empty dependency array to run the effect only once when the component mounts
 
 
     return (

@@ -9,8 +9,6 @@ interface UserState {
   token: IToken
   //TODO - для тестирования сервера ресурсов
   hello: string;
-  //TODO
-
 }
 
 

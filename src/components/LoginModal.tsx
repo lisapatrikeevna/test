@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext, FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AuthContext from '../contexts/AuthContext.tsx';
@@ -22,7 +22,7 @@ interface LoginModalProps {
 //     email: string;
 // }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
+const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -57,6 +57,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                     navigate("/");
                 }
             }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             toast.error(err.response?.data?.message || "An unexpected error occurred.");
         }

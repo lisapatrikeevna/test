@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { Typography } from '@mui/material';
 
 interface RotatingWordsProps {
@@ -6,7 +6,7 @@ interface RotatingWordsProps {
   interval?: number;
 }
 
-const RotatingWords: React.FC<RotatingWordsProps> = ({
+const RotatingWords: FC<RotatingWordsProps> = ({
   words,
   interval = 2000,
 }) => {
@@ -19,7 +19,7 @@ const RotatingWords: React.FC<RotatingWordsProps> = ({
       setTimeout(() => {
         setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
         setFade(true);
-      }, 500); // Совпадает с половиной интервала анимации
+      }, 500); // Matches half of the animation interval
     };
 
     const timer = setInterval(changeWord, interval);

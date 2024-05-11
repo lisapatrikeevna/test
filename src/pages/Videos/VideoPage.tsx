@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import { FC, useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import { getVideo, getVideoMetadata } from '../../services/videoServices/videoShow.service';
 import ReactPlayer from 'react-player';
@@ -9,7 +9,7 @@ import VideoListVertical from '../../components/VideoComponents/VideoListVertica
 import {Grid, Paper, Typography, Container, Skeleton} from "@mui/material";
 
 
-const VideoPage: React.FC = () => {
+const VideoPage: FC = () => {
     const { id } = useParams();
     const videoId = id as string;
     const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const VideoPage: React.FC = () => {
         loadVideo();
     }, [videoId, dispatch]);
 
-    // Отображение скелетона во время загрузки данных
+    // Display a skeleton while loading data
     if (loading) {
         return (
             <Container>
@@ -58,7 +58,7 @@ const VideoPage: React.FC = () => {
         );
     }
 
-    //Отображение реальных данных после загрузки
+    // Display real data when it's loaded
     return (
         <Grid container spacing={3} style={{flexWrap: 'nowrap', justifyContent: 'space-between'}}>
             <Grid item xs={12} md={8} style={{ display: 'flex', alignItems: 'flex-start', maxWidth: '1200px' }}>
@@ -82,7 +82,7 @@ const VideoPage: React.FC = () => {
                     {buffering && <Typography>Buffering...</Typography>}
                     <Typography variant="h4">{videoName}</Typography>
                     <Typography>{description}</Typography>
-                    {/* Здесь можно добавить компонент комментариев */}
+                    {/* You can add a comment component here */}
                 </Container>
             </Grid>
             <Grid item xs={12} md={4} style={{ display: 'flex', alignItems: 'flex-start', maxWidth: '300px', marginRight: '100px' }}>

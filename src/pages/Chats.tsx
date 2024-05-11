@@ -1,13 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-// import styles from "../styles/Chats.module.css";
+import { FC, useEffect, useRef, useState } from "react";
 import { store } from "../store/store";
 import linkifyHtml from "linkify-html";
-import {
-  AttachFile,
-  Redo,
-  Send,
-  Reply
-} from "@mui/icons-material";
+import { AttachFile, Send } from "@mui/icons-material";
 import {
   Box,
   Container,
@@ -15,19 +9,21 @@ import {
   TextField,
   Typography,
   Paper,
-  Avatar,
-  Button,
-  List,
-  ListItem,
-  ListItemText
 } from "@mui/material";
 import ReactionSelector from "../selectors/ReactionSelector";
 import { IMessage } from "../types/types";
-// import { useTheme } from "../components/ThemeContext";
+import { useTheme } from "@mui/material/styles";
+import {
+  Avatar,
+  ChatList,
+  MessageList,
+  Input,
+  // Button,
+} from "react-chat-elements";
+import "react-chat-elements/dist/main.css";
 
-
-const Chats: React.FC = () => {
-  // const { theme } = useTheme();
+const Chats: FC = () => {
+  const theme = useTheme();
   const [activeChat, setActiveChat] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [messageText, setMessageText] = useState("");
@@ -55,6 +51,8 @@ const Chats: React.FC = () => {
     },
   ]);
 
+  const messageListRef = useRef(null);
+
   const [showReactionSelector, setShowReactionSelector] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState<number | null>(
     null
@@ -69,6 +67,7 @@ const Chats: React.FC = () => {
   };
 
   const toggleReactionSelector = (messageId: number) => {
+    console.log("Toggling reactions for messageId:", messageId);
     setSelectedMessageId(messageId);
     setShowReactionSelector(!showReactionSelector);
   };
@@ -79,7 +78,7 @@ const Chats: React.FC = () => {
     { text: "Окей", sentByMe: true, timestamp: new Date()},
   ]);
  */
-  // Пример данных
+  // Example of a contact object
   const [contacts, setContacts] = useState([
     {
       id: "e6ac0106-44a8-40e7-8225-9eb75d567c5b",
@@ -87,6 +86,7 @@ const Chats: React.FC = () => {
       lastSeen: "last seen recently",
       avatar: "",
       online: true,
+      lastMessage: "Окей",
     },
     /*   { id: 2, name: "Боб", lastSeen: "last seen 2 hours ago", avatar: "", online: true },
   { id: 3, name: "Вася", lastSeen: "last seen 3 hours ago", avatar: "", online: true },
@@ -99,7 +99,7 @@ const Chats: React.FC = () => {
   const myId = useRef("nobody");
   const ws = useRef<WebSocket | null>(null);
 
-  function chatHello(helloURL: string | URL, ifOk: (() => void)) {
+  function chatHello(helloURL: string | URL, ifOk: () => void) {
     const token = store.getState().user.token;
 
     ws.current?.close();
@@ -125,7 +125,7 @@ const Chats: React.FC = () => {
       }
     };
   }
-  
+
   useEffect(() => {
     const token = store.getState().user.token;
     const currentLocation = window.location;
@@ -149,24 +149,23 @@ const Chats: React.FC = () => {
         ws.current.onopen = () => {
           console.log("Connected to " + chatURI);
           rqMyChats();
-  
+
           const loc = window.location;
           const host = loc.hostname;
           console.log("host = " + host);
         };
-  
+
         ws.current.onmessage = (event) => {
           const msg = JSON.parse(event.data);
-  
+
           console.log("Got: " + event.data);
           handleresponse(msg);
         };
-  
+
         ws.current.onclose = () => {
           console.log("Disconnected from the WebSocket server");
         };
-      }
-      );
+      });
     }
 
     /* eslint-disable react-hooks/exhaustive-deps */
@@ -182,7 +181,7 @@ const Chats: React.FC = () => {
       const asJson = rqMessage(messageText, replyingToMessage?.id);
       ws.current.send(asJson);
       setMessageText("");
-      setReplyingToMessage(null); // Сброс после отправки
+      setReplyingToMessage(null); // Clear the reply message after sending
     }
   };
 
@@ -227,6 +226,7 @@ const Chats: React.FC = () => {
         lastSeen: "last seen recently",
         avatar: "",
         online: true,
+        lastMessage: "Окей",
       },
     ];
 
@@ -242,6 +242,7 @@ const Chats: React.FC = () => {
         lastSeen: new Date(u.lastSeen).toISOString(),
         avatar: "",
         online: u.online,
+        lastMessage: u.lastMessage,
       });
 
       console.log("name: " + u.name + ", id: " + u.id);
@@ -346,39 +347,39 @@ const rsWho = function(msg: { userId: string; users: any; })
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rqChat = function (id: any) {
-    const msg = {
-      type: "set_chat",
-      chatId: id,
-    };
+  // const rqChat = function (id: any) {
+  //   const msg = {
+  //     type: "set_chat",
+  //     chatId: id,
+  //   };
 
-    if (ws.current) ws.current.send(JSON.stringify(msg));
-  };
+  //   if (ws.current) ws.current.send(JSON.stringify(msg));
+  // };
 
-  const setChat = function (id: React.SetStateAction<string | null>) {
-    setActiveChat(id);
+  // const setChat = function (id: React.SetStateAction<string | null>) {
+  //   setActiveChat(id);
 
-    const updMessages = [
-      {
-        id: 1,
-        text: "Привет, как дела?",
-        sentByMe: true,
-        timestamp: new Date(),
-        reactions: [],
-      },
-    ];
+  //   const updMessages = [
+  //     {
+  //       id: 1,
+  //       text: "Привет, как дела?",
+  //       sentByMe: true,
+  //       timestamp: new Date(),
+  //       reactions: [],
+  //     },
+  //   ];
 
-    updMessages.length = 0;
-    setMessages(updMessages);
-    rqChat(id);
-    console.log("set chat id " + id);
-  };
+  //   updMessages.length = 0;
+  //   setMessages(updMessages);
+  //   rqChat(id);
+  //   console.log("set chat id " + id);
+  // };
 
-  const formatTime = (date: Date) => {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
-  };
+  // const formatTime = (date: Date) => {
+  //   const hours = date.getHours();
+  //   const minutes = date.getMinutes();
+  //   return `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
+  // };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0];
@@ -422,153 +423,189 @@ const rsWho = function(msg: { userId: string; users: any; })
     "https://miro.medium.com/v2/resize:fit:640/format:webp/1*W35QUSvGpcLuxPo3SRTH4w.png";
 
   return (
-    <Container maxWidth={false} disableGutters sx={{ display: "flex", height: "100vh" }}>
-    <Box
-      sx={{
-        width: 300,
-        backgroundColor: "#f0f0f0",
-        overflowY: "auto",
-        borderRight: "1px solid #ccc",
-        p: 2,
+    <Container
+      maxWidth={false}
+      disableGutters
+      sx={{ 
+        display: "flex",
+        height: "100vh",
+        backgroundColor: theme.palette.background.paper,
       }}
     >
-      <TextField
-        fullWidth
-        label="Search"
-        variant="outlined"
-        value={searchQuery}
-        onChange={(e) => {
-          setSearchQuery(e.target.value);
-          rqSearch();
-        }}
-        sx={{ mb: 2 }}
-      />
-      <List>
-        {contacts
-          .filter((contact) =>
-            contact.name.toLowerCase().startsWith(searchQuery.toLowerCase())
-          )
-          .map((contact) => (
-            <ListItem
-              key={contact.id}
-              button
-              selected={activeChat === contact.id}
-              onClick={() => setChat(contact.id)}
-            >
-              <Avatar src={contact.avatar || defaultAvatar} sx={{ mr: 2 }} />
-              <ListItemText primary={contact.name} secondary={contact.lastSeen} />
-            </ListItem>
-          ))}
-      </List>
-    </Box>
-    <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
-      {activeContact && (
-        <Paper
-          elevation={2}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            p: 2,
-            mb: 1,
-          }}
-        >
-          <Typography variant="h6">{activeContact.name}</Typography>
-          <Typography variant="body2" color="textSecondary">
-            {activeContact.lastSeen}
-          </Typography>
-        </Paper>
-      )}
-      <Box sx={{ flexGrow: 1, overflowY: "auto", p: 2 }}>
-        {activeChat &&
-          messages.map((msg, index) => (
-            <Box
-              key={index}
-              sx={{
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: msg.sentByMe ? "flex-end" : "flex-start",
-                mb: 2,
-              }}
-            >
-              <Paper
-                sx={{
-                  maxWidth: "70%",
-                  borderRadius: 2,
-                  p: 2,
-                  backgroundColor: msg.sentByMe ? "#e1f5fe" : "#f1f1f1",
-                }}
-              >
-                <Typography variant="body2" color="textSecondary">
-                  {msg.sentByMe ? "You" : "Companion"}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  dangerouslySetInnerHTML={{ __html: linkifyHtml(msg.text) }}
-                ></Typography>
-                <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-                  <Typography variant="caption" sx={{ mr: 1 }}>
-                    {formatTime(msg.timestamp)}
-                  </Typography>
-                  <IconButton
-                    size="small"
-                    color="primary"
-                    onClick={() => handleReplyToMessage(msg)}
-                  >
-                    <Reply fontSize="small" />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    color="primary"
-                    onClick={() => toggleReactionSelector(msg.id)}
-                  >
-                    <Redo fontSize="small" />
-                  </IconButton>
-                  {showReactionSelector && selectedMessageId === msg.id && (
-                    <ReactionSelector
-                      onReact={(type) => handleAddReaction(msg.id, type)}
-                    />
-                  )}
-                </Box>
-              </Paper>
-            </Box>
-          ))}
-      </Box>
+      {/* Left chat list */}
       <Box
-        component="form"
-        onSubmit={handleSendMessage}
-        sx={{ display: "flex", p: 2, borderTop: "1px solid #ccc" }}
+        sx={{
+          width: 300,
+          backgroundColor: theme.palette.background.paper,
+          overflowY: "auto",
+          borderRight: "1px solid",
+          borderLeft: "1px solid",
+          borderColor: theme.palette.divider,
+          pt: 1,
+        }}
       >
-        <input
-          type="file"
-          onChange={handleFileUpload}
-          style={{ display: "none" }}
-          id="file-upload"
-        />
-        <label htmlFor="file-upload">
-          <IconButton color="primary" component="span">
-            <AttachFile />
-          </IconButton>
-        </label>
         <TextField
           fullWidth
-          value={messageText}
-          onChange={(e) => setMessageText(e.target.value)}
-          placeholder="Write a message..."
+          label="Search"
           variant="outlined"
-          sx={{ mx: 1 }}
+          value={searchQuery}
+          onChange={(e) => {
+          setSearchQuery(e.target.value);
+          rqSearch();
+          }}
+          sx={{ mb: 2 }}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          endIcon={<Send />}
-        >
-          Send
-        </Button>
+        <ChatList
+          className="chat-list"
+          dataSource={contacts.map((contact) => ({
+            avatar: contact.avatar || defaultAvatar,
+            title: contact.name,
+            subtitle: contact.lastMessage,
+            date: new Date(contact.lastSeen),
+            unread: 0,
+            id: contact.id,
+            onClick: () => setActiveChat(contact.id.toString()) // Convert item.id to a string
+          }))}
+          onClick={(item) => setActiveChat(item.id.toString())} // Convert item.id to a string
+          id="chat-list-id"
+          lazyLoadingImage="lazy-loading-image"
+        />
       </Box>
-    </Box>
-  </Container>
+
+      {/* Main panel with messages */}
+      <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+        {activeContact ? (
+          <>
+            {/* Top panel with contact information */}
+            <Paper
+              elevation={2}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                p: 2,
+                mb: 1,
+                width: '100%',
+                borderRadius: 0,
+              }}
+            >
+              <Avatar
+                src={activeContact.avatar || defaultAvatar}
+                alt="avatar"
+                size="medium"
+                type="circle"
+              />
+              <Typography variant="h6" sx={{ ml: 2 }}>{activeContact.name}</Typography>
+              <Typography variant="body2" sx={{ ml: 2 }} color="textSecondary">
+                {activeContact.lastSeen}
+              </Typography>
+            </Paper>
+
+            {/* Message list */}
+            <Box sx={{ flexGrow: 1, overflowY: "auto", p: 2 }}>
+              <MessageList
+                referance={messageListRef}
+                className="message-list"
+                lockable={true}
+                toBottomHeight="100%"
+                dataSource={messages.map((msg) => ({
+                  position: msg.sentByMe ? "right" : "left",
+                  type: "text",
+                  text: linkifyHtml(msg.text, { target: "_blank" }),
+                  date: msg.timestamp,
+                  id: msg.id.toString(),
+                  title: activeContact?.name || "Unknown",
+                  titleColor: "#000",
+                  forwarded: true, 
+                  removeButton: true, 
+                  notch: true, 
+                  retracted: false, 
+                  focus: false,
+                  onClick: () => toggleReactionSelector(msg.id),
+                  replyButton: true,
+                  reply:
+                    msg.id === replyingToMessage?.id
+                      ? {
+                          title: "Reply to:",
+                          message: replyingToMessage.text,
+                        }
+                      : undefined,
+                  status: "read",
+                  onReplyClick: () => handleReplyToMessage(msg),
+                  renderAddCmp: () =>
+                    showReactionSelector && selectedMessageId === msg.id ? (
+                      <ReactionSelector
+                        onReact={(type) => handleAddReaction(msg.id, type)}
+                      />
+                    ) : null,
+                }))}
+              />
+            </Box>
+
+            {/* New message entry field */}
+
+            <Box
+              component="form"
+              onSubmit={handleSendMessage}
+              sx={{
+                display: "flex",
+                borderTop: "1px solid",
+                borderColor: theme.palette.divider,
+              }}
+            >
+              <Input
+                multiline={true}
+                placeholder="Write a message..."
+                value={messageText}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMessageText(e.target.value)}
+                maxHeight={100}
+                leftButtons={
+                  <>
+                    <input
+                      type="file"
+                      onChange={handleFileUpload}
+                      id="file-upload"
+                      style={{
+                        display: "none"
+                      }}
+                    />
+                    <label htmlFor="file-upload">
+                      <IconButton color="primary" component="span">
+                        <AttachFile />
+                      </IconButton>
+                    </label>
+                  </>
+                }
+                rightButtons={
+                  <IconButton
+                  color="primary"
+                  type="submit"
+                  title="Send"
+                >
+                  <Send />
+                </IconButton>
+                }
+              />
+            </Box>
+          </>
+        ) : (
+          // Message when no chat is selected
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Typography variant="h5" color="textSecondary">
+              Choose a chat to start messaging
+            </Typography>
+          </Box>
+        )}
+      </Box>
+    </Container>
   );
 };
 

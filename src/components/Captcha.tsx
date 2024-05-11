@@ -44,8 +44,8 @@ const Captcha = ({ onResult, reset }: CaptchaProps) => {
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            event.preventDefault(); // Отменяем стандартное действие Enter
-            checkAnswer(); // Вызываем функцию проверки ответа
+            event.preventDefault(); // Cancel the default Enter action, if needed
+            checkAnswer(); // Call the checkAnswer function when the Enter key is pressed
         }
     };
 
@@ -66,7 +66,7 @@ const Captcha = ({ onResult, reset }: CaptchaProps) => {
                             style: { color: 'var(--text)' }
                         }}
                         onChange={(e) => setUserAnswer(e.target.value)}
-                        onKeyDown={handleKeyDown} // Добавляем обработчик нажатия клавиш
+                        onKeyDown={handleKeyDown} // Add the keydown event listener
 
                     />
                     <Button sx={{ color: 'var(--text)', backgroundColor: 'var(--body)' }} variant="contained" onClick={checkAnswer}>Check</Button>

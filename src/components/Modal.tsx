@@ -1,9 +1,9 @@
-import React from "react";
+import { FC } from "react";
 import { Dialog, DialogContent, styled, Theme } from '@mui/material';
 
-import CardComponent from "./CardComponent.tsx"; //
+import CardComponent from "./CardComponent.tsx"; 
 
-// Определяем стили для MUI компонентов
+// Define styles for MUI components
 const StyledDialog = styled(Dialog)({
     width: '100%',
     height: '100%',
@@ -27,7 +27,7 @@ interface ModalProps {
     theme?: Theme;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, height, width, children, theme, showCloseButton = true }) => {
+const Modal: FC<ModalProps> = ({ isOpen, onClose, height, width, children, theme, showCloseButton = true }) => {
     console.log('Modal rendered, isOpen:', isOpen);
     if (!isOpen) return null;
     const bttnHeight = '50px';

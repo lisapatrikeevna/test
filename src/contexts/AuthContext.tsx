@@ -1,4 +1,3 @@
-// src/contexts/AuthContext.tsx
 import React from 'react';
 
 interface AuthContextProps {
