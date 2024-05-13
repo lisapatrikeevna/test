@@ -16,9 +16,9 @@ const UserTerms: FC<UserTermsProps> = ({ onClose }) => {
     useEffect(() => {
         console.log('UserTerms rendered' + isTermsAccepted + isAgeConfirmed);
         if (isTermsAccepted && isAgeConfirmed) {
-            setShowAcceptButton(true);
+            setShowAcceptButton(true); // Activate the accept button
         } else {
-            setShowAcceptButton(false)
+            setShowAcceptButton(false) // Deactivate the accept button
         }
     }, [isTermsAccepted, isAgeConfirmed, onClose]);
 
