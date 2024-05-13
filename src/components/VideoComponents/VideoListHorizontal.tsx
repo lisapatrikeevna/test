@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
 import {mediaPath} from "../../configs/RouteConfig.tsx";
-import { Grid, Card, CardContent, Typography, Skeleton } from "@mui/material";
+import {Grid, Card, CardContent, Typography, Skeleton, Box} from "@mui/material";
+import {Contacts} from "@mui/icons-material";
 
 export interface IVideo {
     id: string;
@@ -81,7 +82,21 @@ const VideoListHorizontal = () => {
                             <Card sx={{maxWidth: '320px'}}>
                                 <PreviewImage videoId={video.id}/>
                                 <CardContent >
-                                    <Typography variant="h5" >{video.videoName}</Typography>
+                                    <Box>
+                                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                            <Typography variant="h5">{video.videoName}</Typography>
+                                            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+                                                <Contacts />
+                                                <Typography>UnknownUser</Typography>
+                                            </Box>
+                                        </Box>
+                                        <Box style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
+                                            {/*<Typography>{viewCount}</Typography>*/}
+                                            <Typography>63555 views</Typography>
+                                            {/*<Typography>{viewLikes}</Typography>*/}
+                                            <Typography>2 weeks ago</Typography>
+                                        </Box>
+                                    </Box>
                                 </CardContent>
                             </Card>
                         </Link>
