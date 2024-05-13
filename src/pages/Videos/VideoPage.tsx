@@ -83,22 +83,30 @@ const VideoPage: FC = () => {
                     )}
                     {buffering && <Typography>Buffering...</Typography>}
                     {/*Container for video full description*/}
+                    
                     <Box>
                         <Typography variant="h4">{videoName}</Typography>
                         {/*Container for video metadata*/}
+
                         <Container style={{display: 'flex', flexDirection: 'row'}}>
                             {/*Container for all userInfo*/}
+
                             <Container style={{display: 'flex', flexDirection: 'row'}}>
                                 {/*Container for views, data, userAvatar, userName*/}
+
                                 <Container style={{display: 'flex', flexDirection: 'column'}}>
                                     {/*Container for views,data*/}
+
                                     <Container style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
                                         {/*<Typography>{viewCount}</Typography>*/}
+
                                         <Typography>63555 views</Typography>
                                         {/*<Typography>{viewLikes}</Typography>*/}
+
                                         <Typography>2 weeks ago</Typography>
                                     </Container>
                                     {/*Container for userAvatar, userName*/}
+
                                     <Container style={{display: 'flex', flexDirection: 'row'}}>
                                         <Contacts/>
                                         <Typography>UnknownUser</Typography>
