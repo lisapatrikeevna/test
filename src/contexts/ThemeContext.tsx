@@ -10,8 +10,6 @@ interface ThemeContextType {
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 
-
-
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (context === undefined) {

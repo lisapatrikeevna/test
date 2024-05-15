@@ -1,6 +1,6 @@
-import React from 'react'
+import { FC } from 'react'
 
-const UserChannelPage = () => {
+const UserChannelPage: FC = () => {
   return (
     <></>
   )

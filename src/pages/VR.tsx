@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
-const Calls: FC = () => {
+const VR: FC = () => {
   return (
     <></>
   )
 }
 
-export default Calls
+export default VR

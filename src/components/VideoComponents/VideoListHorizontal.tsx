@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
 import {mediaPath} from "../../configs/RouteConfig.tsx";
-import { Grid, Card, CardContent, Typography, Skeleton } from "@mui/material";
+import {Grid, Card, CardContent, Typography, Skeleton, Box} from "@mui/material";
+import {Contacts} from "@mui/icons-material";
 
 export interface IVideo {
     id: string;
@@ -16,7 +17,7 @@ export interface IVideo {
 
 const VideoListHorizontal = () => {
     const [videos, setVideos] = useState<IVideo[]>([]);
-    const [loading, setLoading] = useState(true); // Создайте локальное состояние loading
+    const [loading, setLoading] = useState(true); // Create a loading state to display a loading indicator while fetching videos
 
     const fetchVideo = async (id: string) => {
         try {
@@ -38,9 +39,9 @@ const VideoListHorizontal = () => {
 
     useEffect(() => {
         const fetchVideos = async (videoIds: string[] = []) => {
-            setLoading(true); // Установите состояние загрузки в true при начале загрузки
+            setLoading(true); // Initialize loading state to true in beginning of fetching videos
             if (videoIds.length === 0) {
-                // Запрос на получение всех видео
+                // Query to fetch all videos
                 try {
                     const response = await instance.get(`video/all`, {});
                     if (response.status !== 200) {
@@ -52,7 +53,7 @@ const VideoListHorizontal = () => {
                     console.error(`Error fetching all videos:`, error);
                 }
             } else {
-                // Запрос на получение видео по идентификаторам
+                // Fetch videos by ids
                 const fetchPromises = videoIds.map(fetchVideo);
                 const results = await Promise.allSettled(fetchPromises);
                 const videos = results
@@ -60,16 +61,16 @@ const VideoListHorizontal = () => {
                     .map(result => result.value);
                 setVideos(videos);
             }
-            setLoading(false); // Установите состояние загрузки в false по завершении загрузки
+            setLoading(false); // Initialize loading state to false after fetching videos
         };
 
         const timer = setTimeout(() => {
             fetchVideos();
         }, 500);
 
-        // Очистка таймера при размонтировании компонента
+        // Clear the timer when the component is unmounted
         return () => clearTimeout(timer);
-    }, []); // Пустой массив зависимостей, чтобы useEffect вызывался только при монтировании компонента
+    }, []); // Empty dependency array to run the effect only once when the component mounts
 
 
     return (
@@ -81,7 +82,21 @@ const VideoListHorizontal = () => {
                             <Card sx={{maxWidth: '320px'}}>
                                 <PreviewImage videoId={video.id}/>
                                 <CardContent >
-                                    <Typography variant="h5" >{video.videoName}</Typography>
+                                    <Box>
+                                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                            <Typography variant="h5">{video.videoName}</Typography>
+                                            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+                                                <Contacts />
+                                                <Typography>UnknownUser</Typography>
+                                            </Box>
+                                        </Box>
+                                        <Box style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
+                                            {/*<Typography>{viewCount}</Typography>*/}
+                                            <Typography>63555 views</Typography>
+                                            {/*<Typography>{viewLikes}</Typography>*/}
+                                            <Typography>2 weeks ago</Typography>
+                                        </Box>
+                                    </Box>
                                 </CardContent>
                             </Card>
                         </Link>

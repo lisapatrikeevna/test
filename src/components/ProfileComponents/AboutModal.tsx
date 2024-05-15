@@ -33,7 +33,7 @@ const AboutModal = () => {
         architecto nulla! Delectus quo unde incidunt commodi. Saepe molestiae
         eum pariatur!
       </Typography>
-      <HashTagsBlock />
+      <HashTagsBlock arrTags={[]} />
     </Stack>
   );
 };

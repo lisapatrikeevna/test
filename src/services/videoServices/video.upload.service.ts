@@ -11,6 +11,6 @@ export async function uploadVideo(formData: FormData, ): Promise<void> {
 
         console.log('Video upload response:', response.data);
     } catch (error) {
-        // Обработка ошибок
+        // Handle the error
     }
 }

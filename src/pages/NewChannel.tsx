@@ -1,6 +1,6 @@
-import React from 'react'
+import { FC } from 'react'
 
-const NewChannel = () => {
+const NewChannel: FC = () => {
   return (
     <></>
   )

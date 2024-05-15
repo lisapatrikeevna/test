@@ -85,7 +85,7 @@ const WriteToUsForm = () => {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            {/* Первый блок с адресом, телефоном и электронной почтой */}
+            {/* First block with address, phone and email */}
             <Box sx={{ display: 'flex', flexDirection: 'column' , justifyContent: 'center', mb: 4, maxWidth: 400 }}>
                 <Grid container spacing={2} sx={{ flexDirection: 'column',width: 800 }}>
                     <Grid item xs={12} md={4}>
@@ -118,7 +118,7 @@ const WriteToUsForm = () => {
                 </Grid>
             </Box>
 
-            {/* Второй блок с формой */}
+            { /* Second block with form */}
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h5" sx={{ mb: 2 }}>Send us a message</Typography>
                 <Typography sx={{ mb: 2 }}>If you have any questions, fill out the form below</Typography>

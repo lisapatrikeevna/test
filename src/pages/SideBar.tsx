@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import {
   HomeOutlined,
   PeopleOutline,
@@ -13,16 +13,18 @@ import {
   AddCircleOutline,
   KeyboardArrowUpOutlined,
   KeyboardArrowDownOutlined,
+  BlurOnOutlined
 } from '@mui/icons-material';
 import avatar from '../assets/img.webp';
-import neumorph from '../styles/Neumorph.module.css';
 import sidebar from '../styles/SideBar.module.css';
 import { Link } from 'react-router-dom';
 import AuthContext from '../contexts/AuthContext.tsx';
 import { AuthService } from '../services/auth.service.ts';
 import { logout, selectUsername } from '../store/user/userSlice.ts';
 import { useAppDispatch, useAppSelector } from '../store/hooks.ts';
-import { useTheme } from '../components/ThemeContext.tsx';
+import { useTheme } from '@mui/material/styles';
+import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
+
 // TODO Повесить UserModalProfile на аватар пользователя
 // import UserModalProfile from './UserModalProfile.tsx'; 
 import MyModalProfile from './MyModalProfile.tsx';
@@ -30,12 +32,12 @@ import {
   chatsPath,
   homePath,
   mediaPath,
-  // profilePath,
   settingsPath,
   callsPath,
   newGroupPath,
   newChannelPath,
   contactsPath,
+  vrPath
 } from '../configs/RouteConfig.tsx';
 import {
   Box,
@@ -46,11 +48,12 @@ import {
   ListItemText,
   Collapse,
   Divider,
+  Switch
 } from '@mui/material';
-import { Switch } from '@mui/material';
 
-const SideBar: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+const SideBar: FC = () => {
+  const muiTheme = useTheme();
+  const { theme, setTheme } = useCustomTheme();
   const [isActive, setIsActive] = useState(false);
   const [activeItem, setActiveItem] = useState('home');
   const [openProfileModal, setOpenProfileModal] = useState(false);
@@ -61,10 +64,7 @@ const SideBar: React.FC = () => {
   const [isAccountsDropdownOpen, setIsAccountsDropdownOpen] = useState(false);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => {
-      const newTheme = prevTheme === 'light' ? 'dark' : 'light';
-      return newTheme;
-    });
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
   const toggleActiveClass = () => {
@@ -78,7 +78,7 @@ const SideBar: React.FC = () => {
   };
 
   const handleAddAccount = () => {
-    // Логика добавления нового аккаунта
+    // Logic for adding a new account
   };
 
   const handleClick = (id: string) => {
@@ -88,22 +88,27 @@ const SideBar: React.FC = () => {
   const handleLogout = async () => {
     try {
       await AuthService.logout();
-      setIsLoggedIn(false); // Обновление состояния аутентификации
-      dispatch(logout()); // Очистка данных пользователя
+      setIsLoggedIn(false); // Updating the authentication status
+      dispatch(logout()); // Clear user data
     } catch (error) {
       console.error('Ошибка при выходе', error);
     }
   };
 
   const handleAvatarClick = () => {
-    setOpenProfileModal(true); // Открываем модальное окно
+    setOpenProfileModal(true); // Open profile modal
   };
 
   return (
-    <Box className={`${sidebar.sidebar} ${isActive ? sidebar.active : ''}`}>
+    <Box className={`${sidebar.sidebar} ${isActive ? sidebar.active : ''}`}
+    sx={{
+      backgroundColor: muiTheme.palette.background.default,
+      color: muiTheme.palette.text.primary,
+      boxShadow: '2px 0 10px rgba(0, 0, 0, 0.5)',
+    }}>
       <List>
         <Box
-          className={`${neumorph.neumorph_EH} ${sidebar.menuToggle} ${
+          className={`${sidebar.menuToggle} ${
             isActive ? sidebar.active : ''
           }`}
           onClick={toggleActiveClass}
@@ -115,21 +120,24 @@ const SideBar: React.FC = () => {
         className={`${sidebar.overlayBackdrop} ${
           isActive ? sidebar.overlayBackdropActive : ''
         }`}
-        onClick={toggleActiveClass} // Закрываем overlaySidebar при клике на backdrop
+        onClick={toggleActiveClass} // Close sidebar on backdrop click
       ></Box>
       <Box
         className={`${sidebar.overlaySidebar} ${
           isActive ? sidebar.overlaySidebarActive : ''
         }`}
+        sx={{backgroundColor: muiTheme.palette.background.default,
+          color: muiTheme.palette.text.primary,}}
       >
-        <List>
+        <List disablePadding>
           <ListItem
             className={sidebar.profileItem}
-            style={{ '--bg': '#333' } as React.CSSProperties}
+            disablePadding
           >
-            {/* <Link to={profilePath} className={sidebar.imgLink}> */}
-              <img src={avatar} alt="Avatar" onClick={handleAvatarClick} />
-            {/* </Link> */}
+            <Box className={sidebar.imgLink}>
+              <img src={avatar} alt="Avatar" onClick={handleAvatarClick}/>
+              {/* <img src={avatar} alt="Avatar" onClick={handleAvatarClick} /> */}
+            </Box>
             {/* <UserModalProfile
                 open={openProfileModal}
                 onClose={() => setOpenProfileModal(false)}
@@ -150,14 +158,14 @@ const SideBar: React.FC = () => {
           </ListItem>
           <Collapse in={isAccountsDropdownOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              {/* Здесь должен быть список аккаунтов */}
+              {/* Here should be the list of accounts */}
               {/* <ListItemButton sx={{ pl: 4 }}>
                   <ListItemText primary="Account 1" />
                 </ListItemButton>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemText primary="Account 2" />
                 </ListItemButton> */}
-              {/* Кнопка добавления аккаунта */}
+              {/* Button for adding an account */}
               <ListItemButton sx={{ pl: 4 }} onClick={handleAddAccount}>
                 <ListItemIcon>
                   <AddCircleOutline />
@@ -167,12 +175,12 @@ const SideBar: React.FC = () => {
             </List>
           </Collapse>
           <ListItem
+            disablePadding
             className={activeItem === 'home' ? sidebar.active : ''}
             onClick={() => {
               handleClick('home');
               setIsActive(false);
             }}
-            style={{ '--bg': '#17ecff' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={homePath} disableRipple>
               <ListItemIcon>
@@ -182,12 +190,12 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={activeItem === 'newGroup' ? sidebar.active : ''}
             onClick={() => {
               handleClick('newGroup');
               setIsActive(false);
             }}
-            style={{ '--bg': '#9b94ff' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={newGroupPath} disableRipple>
               <ListItemIcon>
@@ -197,12 +205,12 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={activeItem === 'newChannel' ? sidebar.active : ''}
             onClick={() => {
               handleClick('newChannel');
               setIsActive(false);
             }}
-            style={{ '--bg': '#9b94ff' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={newChannelPath} disableRipple>
               <ListItemIcon>
@@ -212,12 +220,12 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={activeItem === 'contacts' ? sidebar.active : ''}
             onClick={() => {
               handleClick('contacts');
               setIsActive(false);
             }}
-            style={{ '--bg': '#9b94ff' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={contactsPath} disableRipple>
               <ListItemIcon>
@@ -227,12 +235,12 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={activeItem === 'chats' ? sidebar.active : ''}
             onClick={() => {
               handleClick('chats');
               setIsActive(false);
             }}
-            style={{ '--bg': '#59ff17' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={chatsPath} disableRipple>
               <ListItemIcon>
@@ -242,12 +250,12 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem> 
           <ListItem
+            disablePadding
             className={activeItem === 'videos' ? sidebar.active : ''}
             onClick={() => {
               handleClick('videos');
               setIsActive(false);
             }}
-            style={{ '--bg': '#ff1768' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={mediaPath} disableRipple>
               <ListItemIcon>
@@ -257,12 +265,12 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={activeItem === 'calls' ? sidebar.active : ''}
             onClick={() => {
               handleClick('calls');
               setIsActive(false);
             }}
-            style={{ '--bg': '#ffa117' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={callsPath} disableRipple>
               <ListItemIcon>
@@ -272,12 +280,27 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem> 
           <ListItem
+            disablePadding
+            className={activeItem === 'vrBoard' ? sidebar.active : ''}
+            onClick={() => {
+              handleClick('vrBoard');
+              setIsActive(false);
+            }}
+          >
+            <ListItemButton component={Link} to={vrPath} disableRipple>
+              <ListItemIcon>
+                <BlurOnOutlined />
+              </ListItemIcon>
+              <ListItemText primary="VR board" />
+            </ListItemButton>
+          </ListItem> 
+          <ListItem
+            disablePadding
             className={activeItem === 'settings' ? sidebar.active : ''}
             onClick={() => {
               handleClick('settings');
               setIsActive(false);
             }}
-            style={{ '--bg': '#1783ff' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={settingsPath} disableRipple>
               <ListItemIcon>
@@ -287,26 +310,25 @@ const SideBar: React.FC = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
+            disablePadding
             className={sidebar.themeSwitcherWrapper}
             onClick={toggleTheme}
-            style={{ '--bg': '#ff17ff' } as React.CSSProperties}
+            sx={{ cursor: 'pointer'}}
           >
             <ListItemIcon>
               <NightsStayOutlined />
             </ListItemIcon>
             <ListItemText primary="Theme" />
             <Switch
-              checked={theme === 'light'}
-              onChange={toggleTheme}
+              checked={theme === 'dark'}
               name="themeSwitch"
               inputProps={{ 'aria-label': 'theme switch' }}
-              // style={}
             />
           </ListItem>
           <ListItem
+            disablePadding
             className={sidebar.logoutItem}
             onClick={handleLogout}
-            style={{ '--bg': '#ff1744' } as React.CSSProperties}
           >
             <ListItemButton component={Link} to={'/'} disableRipple>
               <ListItemIcon>

@@ -4,11 +4,11 @@ import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
 import {mediaPath} from "../../configs/RouteConfig.tsx";
 import { Grid, Card, CardContent, Typography, Skeleton } from "@mui/material";
-import { IVideo } from "./VideoListHorizontal.tsx"; // Импортируем интерфейс IVideo из VideoList
+import { IVideo } from "./VideoListHorizontal.tsx"; // Import the IVideo interface from VideoListHorizontal.tsx
 
 const VideoListVertical = () => {
     const [videos, setVideos] = useState<IVideo[]>([]);
-    const [loading, setLoading] = useState(true); // Создайте локальное состояние loading
+    const [loading, setLoading] = useState(true); // Create a local loading state to display a loading indicator while fetching videos
 
     const fetchVideo = async (id: string) => {
         try {
@@ -30,9 +30,9 @@ const VideoListVertical = () => {
 
     useEffect(() => {
         const fetchVideos = async (videoIds: string[] = []) => {
-            setLoading(true); // Установите состояние загрузки в true при начале загрузки
+            setLoading(true); // Initialize the loading state to true at the beginning of fetching videos
             if (videoIds.length === 0) {
-                // Запрос на получение всех видео
+                // Query to fetch all videos
                 try {
                     const response = await instance.get(`video/all`, {});
                     if (response.status !== 200) {
@@ -44,7 +44,7 @@ const VideoListVertical = () => {
                     console.error(`Error fetching all videos:`, error);
                 }
             } else {
-                // Запрос на получение видео по идентификаторам
+                // Query to fetch videos by ids
                 const fetchPromises = videoIds.map(fetchVideo);
                 const results = await Promise.allSettled(fetchPromises);
                 const videos = results
@@ -52,16 +52,16 @@ const VideoListVertical = () => {
                     .map(result => result.value);
                 setVideos(videos);
             }
-            setLoading(false); // Установите состояние загрузки в false по завершении загрузки
+            setLoading(false); // Initialize the loading state to false after fetching videos
         };
 
         const timer = setTimeout(() => {
             fetchVideos();
         }, 500);
 
-        // Очистка таймера при размонтировании компонента
+        // Clear the timer when the component is unmounted
         return () => clearTimeout(timer);
-    }, []); // Пустой массив зависимостей, чтобы useEffect вызывался только при монтировании компонента
+    }, []); // Empty dependency array to run the effect only once when the component mounts
 
 
     return (

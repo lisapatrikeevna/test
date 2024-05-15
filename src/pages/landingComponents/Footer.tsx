@@ -1,50 +1,45 @@
-import { useContext } from 'react';
-import { makeStyles } from '@mui/styles';
-import { Typography } from '@mui/material';
-import { logoInstagram, paperPlane, logoYoutube, logoFacebook, logoLinkedin } from 'ionicons/icons';
-import { IonIcon } from "@ionic/react";
-import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
-import {Theme} from "../../theme.tsx";
+import { styled, Theme} from '@mui/material/styles';
+import { Instagram, Telegram, YouTube, Facebook, LinkedIn  } from '@mui/icons-material';
+import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
+import {FC, useContext} from "react";
 
 
-const useStyles = makeStyles((theme: Theme) => ({
-    footer: {
-        position: 'absolute',
-        bottom: 0,
-        paddingRight: '5vw',
-        paddingLeft: '20vw',
-        width: '100vw',
-        height: '6vh',
-        zIndex: 100,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: theme.palette.background.default,
-        boxShadow: `0 -10px 10px ${theme.palette.mode === 'light' ? theme.shadows[2] : theme.shadows[5]}`,
-        transition: '0.5s',
-        borderTopLeftRadius: theme.shape.borderRadius,
-        borderTopRightRadius: theme.shape.borderRadius,
-        color: theme.palette.text.primary,
-    },
-    copyright: {
-        position: 'absolute',
-        left: theme.spacing(1),
-        bottom: theme.spacing(1),
-        fontFamily: theme.typography.fontFamily,
-    },
-    socialLink: {
-        color: theme.palette.primary.main,
-    },
+const FooterContainer = styled('div')(({ theme }) => ({
+    position: 'absolute',
+    bottom: 0,
+    paddingRight: '5vw',
+    paddingLeft: '20vw',
+    width: '100vw',
+    height: '6vh',
+    zIndex: 100,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: theme.palette.background.default,
+    boxShadow: `0 -10px 10px ${theme.palette.mode === 'light' ? theme.shadows[2] : theme.shadows[5]}`,
+    transition: '0.5s',
+    borderTopLeftRadius: theme.shape.borderRadius,
+    borderTopRightRadius: theme.shape.borderRadius,
+    color: theme.palette.text.primary,
+}));
+const Copyright = styled('div')(({ theme }) => ({
+    position: 'absolute',
+    left: theme.spacing(1),
+    bottom: theme.spacing(1),
+    fontFamily: theme.typography.fontFamily,
+}));
+const SocialLink = styled('a')(({ theme }) => ({
+    color: theme.palette.primary.main,
 }));
 
 interface FooterProps {
     onImpressumClick: () => void;
     onPrivacyPolicyClick: () => void;
     onDatenschutzClick: () => void;
+    theme?: Theme;
 }
 
-const Footer: React.FC<FooterProps> = ({ onImpressumClick, onPrivacyPolicyClick, onDatenschutzClick }) => {
-    const classes = useStyles();
+const Footer: FC<FooterProps> = ({ onImpressumClick, onPrivacyPolicyClick, onDatenschutzClick, theme }) => {
     const context = useContext(ActiveSectionContext);
 
     if (!context) {
@@ -62,28 +57,28 @@ const Footer: React.FC<FooterProps> = ({ onImpressumClick, onPrivacyPolicyClick,
     };
 
     return (
-        <div className={classes.footer}>
-            <Typography variant="body2">&copy; Copyright 2024 NeoX</Typography>
+        <FooterContainer theme={theme}>
+            <Copyright>&copy; Copyright 2024 NeoX</Copyright>
             <div onClick={onImpressumClick}>Impressum</div>
             <div onClick={onPrivacyPolicyClick}>Privacy</div>
             <div onClick={onDatenschutzClick}>Datenschutz</div>
             <div onClick={contact}>Contact</div>
-            <a className={classes.socialLink} href="https://www.instagram.com/neox_online/" target="_blank" rel="noopener noreferrer">
-                <IonIcon icon={logoInstagram} />
-            </a>
-            <a className={classes.socialLink} href="https://t.me/neoxonline" target="_blank" rel="noopener noreferrer">
-                <IonIcon icon={paperPlane} />
-            </a>
-            <a className={classes.socialLink} href="https://www.facebook.com/profile.php?id=61557996420950" target="_blank" rel="noopener noreferrer">
-                <IonIcon icon={logoFacebook} />
-            </a>
-            <a className={classes.socialLink} href="https://www.linkedin.com/company/103143013/admin/feed/posts/" target="_blank" rel="noopener noreferrer">
-                <IonIcon icon={logoLinkedin} />
-            </a>
-            <a className={classes.socialLink} href="https://www.youtube.com/channel/UC3YWemWS7WPJXReBBKOYfLQ" target="_blank" rel="noopener noreferrer">
-                <IonIcon icon={logoYoutube} />
-            </a>
-        </div>
+            <SocialLink href="https://www.instagram.com/neox_online/" target="_blank" rel="noopener noreferrer">
+                <Instagram />
+            </SocialLink>
+            <SocialLink href="https://t.me/neoxonline" target="_blank" rel="noopener noreferrer">
+                <Telegram />
+            </SocialLink>
+            <SocialLink href="https://www.facebook.com/profile.php?id=61557996420950" target="_blank" rel="noopener noreferrer">
+                <Facebook />
+            </SocialLink>
+            <SocialLink href="https://www.linkedin.com/company/103143013/admin/feed/posts/" target="_blank" rel="noopener noreferrer">
+                <LinkedIn />
+            </SocialLink>
+            <SocialLink href="https://www.youtube.com/channel/UC3YWemWS7WPJXReBBKOYfLQ" target="_blank" rel="noopener noreferrer">
+                <YouTube />
+            </SocialLink>
+        </FooterContainer>
     );
 };
 

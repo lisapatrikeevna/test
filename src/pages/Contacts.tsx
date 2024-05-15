@@ -1,6 +1,6 @@
-import React from 'react'
+import { FC } from 'react'
 
-const Contacts = () => {
+const Contacts: FC = () => {
   return (
     <></>
   )
