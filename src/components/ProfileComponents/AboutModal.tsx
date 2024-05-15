@@ -1,6 +1,9 @@
 import { Typography, Stack } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import HashTagsBlock from './HashTagsBlock';
+import QrCode2Icon from '@mui/icons-material/QrCode2';
+import ShareIcon from '@mui/icons-material/Share';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const AboutModal = () => {
   return (
@@ -20,6 +23,9 @@ const AboutModal = () => {
             Username
           </Typography>
         </Stack>
+        <QrCode2Icon cursor="pointer" />
+        <ShareIcon cursor="pointer" />
+        <ContentCopyIcon cursor="pointer" />
       </Stack>
       <Typography variant="body1" gutterBottom>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam velit

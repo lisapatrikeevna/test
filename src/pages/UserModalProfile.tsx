@@ -7,8 +7,8 @@ import ButtonsBlockModal from '../components/ProfileComponents/ButtonsBlockModal
 import { useState } from 'react';
 
 type UserModalProfileProps = {
-  open: boolean; // Определяет, открыто ли модальное окно
-  onClose: () => void; // Функция для закрытия модального окна
+  open: boolean;
+  onClose: () => void;
 };
 
 const UserModalProfile = ({ open, onClose }: UserModalProfileProps) => {
@@ -16,7 +16,7 @@ const UserModalProfile = ({ open, onClose }: UserModalProfileProps) => {
   const [lastname, setLastName] = useState('Olegov');
 
   const handleClose = () => {
-    onClose(); // Call the onClose function passed as a prop
+    onClose(); // Close Modal
   };
 
   return (
