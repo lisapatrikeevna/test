@@ -1,0 +1,10 @@
+diff a/src/pages/Chats.tsx b/src/pages/Chats.tsx	(rejected hunks)
+@@ -451,7 +454,7 @@
+           dataSource={contacts.map((contact) => ({
+             avatar: contact.avatar || defaultAvatar,
+             title: contact.name,
+-            subtitle: contact.lastSeen,
++            subtitle: contact.lastMessage,
+             date: new Date(),
+             unread: 0,
+             id: contact.id,
