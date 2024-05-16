@@ -5,7 +5,7 @@ import { AuthService } from "../services/auth.service";
 import { login } from "../store/user/userSlice";
 import { userSliceMapper } from "../store/user/utilits/userUtilits";
 
-export const API_URL = "https://hungry-carver.212-132-99-188.plesk.page/:8030";
+export const API_URL = "http://hungry-carver.212-132-99-188.plesk.page/:8030";
 // export const API_URL = "http://localhost:8030";
 
 export const instanceAuth = axios.create({
@@ -22,7 +22,7 @@ instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     const token: IToken = store.getState().user.token;
 
-      config.headers["Authorization"] = `Bearer ${token.accessToken}`;
+    config.headers["Authorization"] = `Bearer ${token.accessToken}`;
     return config;
   }
 );

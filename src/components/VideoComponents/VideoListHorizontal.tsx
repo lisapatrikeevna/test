@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
-import {mediaPath} from "../../configs/RouteConfig.tsx";
-import {Grid, Card, CardContent, Typography, Skeleton, Box} from "@mui/material";
-import {Contacts} from "@mui/icons-material";
+import { mediaPath } from "../../configs/RouteConfig.tsx";
+import { Grid, Card, CardContent, Typography, Skeleton, Box, Button } from "@mui/material";
+import { Contacts } from "@mui/icons-material";
 
 export interface IVideo {
     id: string;
@@ -79,8 +79,8 @@ const VideoListHorizontal = () => {
                 videos.map((video) => (
                     <Grid style={{ textDecoration: 'none', maxWidth: '320px' }} item xs={12} sm={6} md={4} lg={3} key={video.id}>
                         <Link to={`${mediaPath}/${video.id}`} >
-                            <Card sx={{maxWidth: '320px'}}>
-                                <PreviewImage videoId={video.id}/>
+                            <Card sx={{ maxWidth: '320px' }}>
+                                <PreviewImage videoId={video.id} />
                                 <CardContent >
                                     <Box>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -90,7 +90,7 @@ const VideoListHorizontal = () => {
                                                 <Typography>UnknownUser</Typography>
                                             </Box>
                                         </Box>
-                                        <Box style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
+                                        <Box style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
                                             {/*<Typography>{viewCount}</Typography>*/}
                                             <Typography>63555 views</Typography>
                                             {/*<Typography>{viewLikes}</Typography>*/}
@@ -103,14 +103,17 @@ const VideoListHorizontal = () => {
                     </Grid>
                 ))
             ) : (
-                Array.from({length: 5}).map((_, index) => (
+                Array.from({ length: 5 }).map((_, index) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                        <Skeleton variant="rectangular" width="100%" height={180}/>
-                        <Skeleton/>
-                        <Skeleton width="60%"/>
+                        <Skeleton variant="rectangular" width="100%" height={180} />
+                        <Skeleton />
+                        <Skeleton width="60%" />
                     </Grid>
                 ))
             )}
+            <Button variant="contained" color="primary">
+                Load More
+            </Button>
         </Grid>
     );
 };
