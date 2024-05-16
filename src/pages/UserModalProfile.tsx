@@ -12,8 +12,8 @@ type UserModalProfileProps = {
 };
 
 const UserModalProfile = ({ open, onClose }: UserModalProfileProps) => {
-  const [name, setName] = useState('Vasya');
-  const [lastname, setLastName] = useState('Olegov');
+  const [name] = useState('Vasya');
+  const [lastname] = useState('Olegov');
 
   const handleClose = () => {
     onClose(); // Close Modal

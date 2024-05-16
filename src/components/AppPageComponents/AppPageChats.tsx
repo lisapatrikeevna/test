@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { data } from '../../components/ProfileComponents/utils';
 
 const AppPageChats = () => {
-  const [users, setUsers] = useState(data);
+  const [users] = useState(data);
   return (
     <Stack
       direction="row"
