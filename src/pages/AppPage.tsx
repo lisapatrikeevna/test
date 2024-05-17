@@ -5,9 +5,18 @@ import AppPageChats from '../components/AppPageComponents/AppPageChats';
 import AppPageComments from '../components/AppPageComponents/AppPageComments';
 import AppPageSideBar from '../components/AppPageComponents/AppPageSideBar';
 import { useState } from 'react';
+import AppPageClaendar from '../components/AppPageComponents/AppPageClaendar';
+import VideoInSideBareAppPage from '../components/AppPageComponents/VideoInSideBareAppPage';
+
+type RenderValues = 'comments' | 'chats' | 'calendar' | 'videos';
 
 const AppPage = () => {
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
+  const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
+
+  function changeRender(value: RenderValues) {
+    setRenderValues(value);
+  }
 
   return (
     <Box>
@@ -24,7 +33,12 @@ const AppPage = () => {
           <Panel defaultSize={50}>Central container</Panel>
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
           <Panel defaultSize={25} maxSize={50} minSize={20} collapsible={true}>
-            <AppPageComments />
+            <Box padding="5px">
+              {renderValues === 'chats' && <AppPageChats />}
+              {renderValues === 'comments' && <AppPageComments />}
+              {renderValues === 'videos' && <VideoInSideBareAppPage />}
+              {renderValues === 'calendar' && <AppPageClaendar />}
+            </Box>
           </Panel>
         </PanelGroup>
         {isOpenSideBar && (
@@ -40,7 +54,10 @@ const AppPage = () => {
           />
         )}
         <Box position="absolute" top={0} right={0} zIndex={1000}>
-          <AppPageSideBar isOpenSideBar={isOpenSideBar} />
+          <AppPageSideBar
+            isOpenSideBar={isOpenSideBar}
+            changeRender={changeRender}
+          />
         </Box>
       </Box>
     </Box>

@@ -2,9 +2,10 @@ import { Box, Button } from '@mui/material';
 
 type Props = {
   isOpenSideBar: boolean;
+  changeRender: Function;
 };
 
-const AppPageSideBar = ({ isOpenSideBar }: Props) => {
+const AppPageSideBar = ({ isOpenSideBar, changeRender }: Props) => {
   return (
     <Box
       height="100vh"
@@ -17,10 +18,38 @@ const AppPageSideBar = ({ isOpenSideBar }: Props) => {
         padding: '10px',
       }}
     >
-      <Button variant="contained">Comments</Button>
-      <Button variant="contained">Chats</Button>
-      <Button variant="contained">Video</Button>
-      <Button variant="contained">Calendar</Button>
+      <Button
+        variant="contained"
+        onClick={() => {
+          changeRender('comments');
+        }}
+      >
+        Comments
+      </Button>
+      <Button
+        variant="contained"
+        onClick={() => {
+          changeRender('chats');
+        }}
+      >
+        Chats
+      </Button>
+      <Button
+        variant="contained"
+        onClick={() => {
+          changeRender('videos');
+        }}
+      >
+        Video
+      </Button>
+      <Button
+        variant="contained"
+        onClick={() => {
+          changeRender('calendar');
+        }}
+      >
+        Calendar
+      </Button>
     </Box>
   );
 };
