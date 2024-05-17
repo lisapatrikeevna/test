@@ -27,7 +27,9 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false); 
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
     const [isRegistering, setIsRegistering] = useState(false);
     const { setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -39,6 +41,10 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
         event.preventDefault();
         try {
             if(isRegistering) {
+                if (password !== confirmPassword) { 
+                    toast.error("Passwords do not match.");
+                    return;
+                }
                 if (!isUserTermsAccepted) {
                     setIsUserTermsModalOpen(true);
                     return;
@@ -67,6 +73,10 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
+    };
+
+    const toggleConfirmPasswordVisibility = () => { 
+        setShowConfirmPassword(!showConfirmPassword);
     };
 
     const bttnHeight = '50px';
@@ -119,6 +129,29 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             }}
 
                         />
+                        {isRegistering && ( 
+                            <TextField
+                                required
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                label="Confirm Password"
+                                type={showConfirmPassword ? "text" : "password"}
+                                margin="normal"
+                                variant="outlined"
+                                InputProps={{ // InputAdornment for the show/hide password button
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={toggleConfirmPasswordVisibility}
+                                                edge="end"
+                                            >
+                                                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        )}
                         <Button
                             variant="contained"
                             type="submit"
