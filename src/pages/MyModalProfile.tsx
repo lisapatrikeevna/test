@@ -6,11 +6,11 @@ import {
   Divider,
   TextField,
   Typography,
+  Button,
 } from '@mui/material';
 import HeaderModal from '../components/ProfileComponents/HeaderModal';
 import AvatarModal from '../components/ProfileComponents/AvatarModal';
 import InfoIcon from '@mui/icons-material/Info';
-// import { v4 as uuidv4 } from 'uuid';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 type MyModalProps = {
@@ -139,6 +139,9 @@ const MyModalProfile = ({ open, onClose }: MyModalProps) => {
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
             />
+            <Button variant="contained" sx={{ width: '200px' }}>
+              Check
+            </Button>
             <TextField
               id="outlined-basic"
               label="Status"
