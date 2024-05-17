@@ -9,7 +9,7 @@ import Modal from "./Modal.tsx";
 import UserTerms from "../pages/landingComponents/UserTerms.tsx";
 import { useAppDispatch } from '../store/hooks.ts';
 import CardComponent from "./CardComponent.tsx";
-import { Typography, TextField, Button, IconButton, InputAdornment } from "@mui/material";
+import { Typography, TextField, Button, IconButton, InputAdornment, Link } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface LoginModalProps {
@@ -53,7 +53,7 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 if (data) {
                     dispatch(login(userSliceMapper(data)));
                     toast.success("Account has been created.");
-                    setIsUserTermsModalOpen(true);
+                    setIsUserTermsModalOpen(false);
                 }
             } else {
                 const data = await AuthService.login({ username, password });
@@ -130,6 +130,7 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
                         />
                         {isRegistering && ( 
+                            <>
                             <TextField
                                 required
                                 value={confirmPassword}
@@ -151,6 +152,10 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                     ),
                                 }}
                             />
+                            <Typography variant="body2" style={{ margin: "10px 0" }}>
+                            By signing up, you agree to our <Link href="#" onClick={() => setIsUserTermsModalOpen(true)}>User Terms</Link>.
+                            </Typography>
+                        </>
                         )}
                         <Button
                             variant="contained"
