@@ -9,7 +9,8 @@ import Modal from "./Modal.tsx";
 import UserTerms from "../pages/landingComponents/UserTerms.tsx";
 import { useAppDispatch } from '../store/hooks.ts';
 import CardComponent from "./CardComponent.tsx";
-import { Typography, TextField, Button } from "@mui/material";
+import { Typography, TextField, Button, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -26,6 +27,7 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false); 
     const [isRegistering, setIsRegistering] = useState(false);
     const { setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -63,6 +65,10 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
         }
     };
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     const bttnHeight = '50px';
 
     return (
@@ -96,9 +102,21 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             label="Password"
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             margin="normal"
                             variant="outlined"
+                            InputProps={{ // InputAdornment for the show/hide password button
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={togglePasswordVisibility}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
 
                         />
                         <Button
