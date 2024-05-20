@@ -9,8 +9,10 @@ import Modal from "./Modal.tsx";
 import UserTerms from "../pages/landingComponents/UserTerms.tsx";
 import { useAppDispatch } from '../store/hooks.ts';
 import CardComponent from "./CardComponent.tsx";
-import { Typography, TextField, Button, IconButton, InputAdornment, Link } from "@mui/material";
+import { Box, Typography, IconButton, InputAdornment, Link } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import NeuTextField from './neumorphism/input/NeuTextField';
+import NeuButton from './neumorphism/button/NeuButton';
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -84,37 +86,38 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     return (
         <Modal isOpen={isOpen} onClose={onClose} width="500px">
             <CardComponent cardHeight={isRegistering ? '667px' : '600px'} cardWidth="100%">
-                <div style={{ padding: '25px' }}>
+                <Box sx={{ padding: '25px' }}>
                     <Typography variant="h2">{isRegistering ? 'Register' : 'Login'}</Typography>
                     <form onSubmit={handleSubmit} autoComplete='off'>
                         {isRegistering && (
-                            <TextField
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                label="Email"
-                                margin="normal"
-                                variant="outlined"
-
-                            />
+                            <NeuTextField
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            label="Email"
+                            margin="normal"
+                            rounded
+                            outlined
+                        />
                         )}
-                        <TextField
+                        <NeuTextField
                             required
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             label="Username"
                             margin="normal"
-                            variant="outlined"
-
+                            rounded
+                            outlined
                         />
-                        <TextField
+                        <NeuTextField
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             label="Password"
                             type={showPassword ? "text" : "password"}
                             margin="normal"
-                            variant="outlined"
+                            rounded 
+                            outlined
                             InputProps={{ // InputAdornment for the show/hide password button
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -127,18 +130,18 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                     </InputAdornment>
                                 ),
                             }}
-
                         />
                         {isRegistering && ( 
                             <>
-                            <TextField
+                             <NeuTextField
                                 required
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 label="Confirm Password"
                                 type={showConfirmPassword ? "text" : "password"}
                                 margin="normal"
-                                variant="outlined"
+                                rounded
+                                outlined
                                 InputProps={{ // InputAdornment for the show/hide password button
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -152,29 +155,26 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                     ),
                                 }}
                             />
-                            <Typography variant="body2" style={{ margin: "10px 0" }}>
+                            <Typography variant="body2" sx={{ margin: "10px 0" }}>
                             By signing up, you agree to our <Link href="#" onClick={() => setIsUserTermsModalOpen(true)}>User Terms</Link>.
                             </Typography>
                         </>
                         )}
-                        <Button
-                            variant="contained"
+                         <NeuButton
+                            rounded
                             type="submit"
                             color="primary"
-                            style={{ width: '385px', height: bttnHeight, margin: "10px 0", color: 'var(--text)', backgroundColor: 'var(--body)' }}
+                            sx={{ width: '385px', height: bttnHeight, margin: "10px 0", color: 'var(--text)', backgroundColor: 'var(--body)' }}
                         >
                             {isRegistering ? 'Sign up' : 'Sign in'}
-                        </Button>
-                        <div>
-                            <Button onClick={() => setIsRegistering(!isRegistering)} style={{ margin: "10px", color: 'var(--text)' }}>
+                        </NeuButton>
+                        <Box>
+                            <NeuButton onClick={() => setIsRegistering(!isRegistering)} sx={{ margin: "10px", color: 'var(--text)' }}>
                                 {isRegistering ? 'Sign in' : 'Sign up'}
-                            </Button>
-                            {/*<Button onClick={onClose} style={{ margin: "10px" }}>*/}
-                            {/*    Close*/}
-                            {/*</Button>*/}
-                        </div>
+                            </NeuButton>
+                        </Box>
                     </form>
-                </div>
+                </Box>
             </CardComponent>
             <Modal isOpen={isUserTermsModalOpen} onClose={() => {
                 setIsUserTermsModalOpen(false);
