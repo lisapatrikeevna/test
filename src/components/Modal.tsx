@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Dialog, DialogContent, styled, Theme } from '@mui/material';
-
+import { Dialog, DialogContent, styled, Theme, Box } from '@mui/material';
+import NeuButton from './neumorphism/button/NeuButton';
 import CardComponent from "./CardComponent.tsx"; 
 
 // Define styles for MUI components
@@ -28,7 +28,7 @@ interface ModalProps {
 }
 
 const Modal: FC<ModalProps> = ({ isOpen, onClose, height, width, children, theme, showCloseButton = true }) => {
-    console.log('Modal rendered, isOpen:', isOpen);
+    // console.log('Modal rendered, isOpen:', isOpen);
     if (!isOpen) return null;
     const bttnHeight = '50px';
     const bttnWidth = '150px';
@@ -40,16 +40,16 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, height, width, children, theme
                     cardWidth={width ? width : 'auto'}
                 >
                     {children}
-                    <div>
+                    <Box>
                         {showCloseButton && (
-                            <button
-                                style={{ width: bttnWidth, height: bttnHeight }}
-                                onClick={onClose}
-                            >
-                                Close
-                            </button>
+                            <NeuButton
+                            sx={{ width: bttnWidth, height: bttnHeight }}
+                            onClick={onClose}
+                        >
+                            Close
+                            </NeuButton>
                         )}
-                    </div>
+                    </Box>
                 </CardComponent>
             </StyledDialogContent>
         </StyledDialog>

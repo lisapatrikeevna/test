@@ -39,3 +39,10 @@ export interface IMessage {
   timestamp: Date;
   reactions: { type: string; userId: string }[];
 }
+
+// Type for fixed length shadow array
+export type Shadows = [
+  "none", string, string, string, string, string, string, string, string, string,
+  string, string, string, string, string, string, string, string, string, string,
+  string, string, string, string, string
+];
