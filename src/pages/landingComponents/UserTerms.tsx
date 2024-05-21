@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
-import { Checkbox, FormControlLabel, Typography, Container, Button } from '@mui/material';
+import { FormControlLabel, Typography, Container, Button, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
+import NeuCheckbox from "../../components/neumorphism/checkbox/NeuCheckbox";
 
 
 interface UserTermsProps {
@@ -176,19 +176,19 @@ const UserTerms: FC<UserTermsProps> = ({ onClose }) => {
 
             <FormControlLabel
                 control={
-                    <Checkbox
+                    <NeuCheckbox
                         checked={isTermsAccepted}
                         onChange={(e) => setIsTermsAccepted(e.target.checked)}
                         color="primary"
                         id="terms"
                         name="terms"
+                        
                     />}
-                label="I accept the terms of use"
-
+                    label={<Box sx={{ marginLeft: 1 }}>I accept the terms of use</Box>}
             />
             <FormControlLabel
                 control={
-                    <Checkbox
+                    <NeuCheckbox
                         checked={isAgeConfirmed}
                         onChange={(e) => setIsAgeConfirmed(e.target.checked)}
                         color="primary"
@@ -196,7 +196,8 @@ const UserTerms: FC<UserTermsProps> = ({ onClose }) => {
                         name="age"
                     />
                 }
-                label="I am 18 years of age or older"
+                label={<Box sx={{ marginLeft: 1 }}>I am 18 years of age or older</Box>}
+                
             />
             {!showAcceptButton ?
                 <Button variant="contained" size="small" disabled style={{ width: 120, marginLeft: 150 }} >
