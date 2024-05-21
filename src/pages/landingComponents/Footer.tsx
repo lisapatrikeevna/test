@@ -1,8 +1,8 @@
-import { styled, Theme} from '@mui/material/styles';
-import { Instagram, Telegram, YouTube, Facebook, LinkedIn  } from '@mui/icons-material';
+import { styled, Theme } from '@mui/material/styles';
+import { Instagram, Telegram, YouTube, Facebook, LinkedIn } from '@mui/icons-material';
 import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
-import {FC, useContext} from "react";
-
+import { FC, useContext } from "react";
+import NeuIconButton from "../../components/neumorphism/button/NeuIconButton"; 
 
 const FooterContainer = styled('div')(({ theme }) => ({
     position: 'absolute',
@@ -30,6 +30,12 @@ const Copyright = styled('div')(({ theme }) => ({
 }));
 const SocialLink = styled('a')(({ theme }) => ({
     color: theme.palette.primary.main,
+    textDecoration: 'none',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
 }));
 
 interface FooterProps {
@@ -64,19 +70,29 @@ const Footer: FC<FooterProps> = ({ onImpressumClick, onPrivacyPolicyClick, onDat
             <div onClick={onDatenschutzClick}>Datenschutz</div>
             <div onClick={contact}>Contact</div>
             <SocialLink href="https://www.instagram.com/neox_online/" target="_blank" rel="noopener noreferrer">
-                <Instagram />
+                <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                    <Instagram />
+                </NeuIconButton>
             </SocialLink>
             <SocialLink href="https://t.me/neoxonline" target="_blank" rel="noopener noreferrer">
-                <Telegram />
+                <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                    <Telegram />
+                </NeuIconButton>
             </SocialLink>
             <SocialLink href="https://www.facebook.com/profile.php?id=61557996420950" target="_blank" rel="noopener noreferrer">
-                <Facebook />
+                <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                    <Facebook />
+                </NeuIconButton>
             </SocialLink>
             <SocialLink href="https://www.linkedin.com/company/103143013/admin/feed/posts/" target="_blank" rel="noopener noreferrer">
-                <LinkedIn />
+                <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                    <LinkedIn />
+                </NeuIconButton>
             </SocialLink>
             <SocialLink href="https://www.youtube.com/channel/UC3YWemWS7WPJXReBBKOYfLQ" target="_blank" rel="noopener noreferrer">
-                <YouTube />
+                <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                    <YouTube />
+                </NeuIconButton>
             </SocialLink>
         </FooterContainer>
     );
