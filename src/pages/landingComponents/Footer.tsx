@@ -3,6 +3,7 @@ import { Instagram, Telegram, YouTube, Facebook, LinkedIn } from '@mui/icons-mat
 import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
 import { FC, useContext } from "react";
 import NeuIconButton from "../../components/neumorphism/button/NeuIconButton"; 
+import NeuButton from '../../components/neumorphism/button/NeuButton.tsx';
 
 const FooterContainer = styled('div')(({ theme }) => ({
     position: 'absolute',
@@ -65,10 +66,10 @@ const Footer: FC<FooterProps> = ({ onImpressumClick, onPrivacyPolicyClick, onDat
     return (
         <FooterContainer theme={theme}>
             <Copyright>&copy; Copyright 2024 NeoX</Copyright>
-            <div onClick={onImpressumClick}>Impressum</div>
-            <div onClick={onPrivacyPolicyClick}>Privacy</div>
-            <div onClick={onDatenschutzClick}>Datenschutz</div>
-            <div onClick={contact}>Contact</div>
+            <NeuButton rounded onClick={onImpressumClick}>Impressum</NeuButton>
+            <NeuButton rounded onClick={onPrivacyPolicyClick}>Privacy</NeuButton>
+            <NeuButton rounded onClick={onDatenschutzClick}>Datenschutz</NeuButton>
+            <NeuButton rounded onClick={contact}>Contact</NeuButton>
             <SocialLink href="https://www.instagram.com/neox_online/" target="_blank" rel="noopener noreferrer">
                 <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
                     <Instagram />
