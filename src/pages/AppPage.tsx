@@ -1,4 +1,4 @@
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import AppPageHeader from '../components/AppPageComponents/AppPageHeader';
 import AppPageChats from '../components/AppPageComponents/AppPageChats';
@@ -7,6 +7,7 @@ import AppPageSideBar from '../components/AppPageComponents/AppPageSideBar';
 import { useState } from 'react';
 import AppPageClaendar from '../components/AppPageComponents/AppPageClaendar';
 import VideoInSideBareAppPage from '../components/AppPageComponents/VideoInSideBareAppPage';
+import AppPageButtonsComponent from '../components/AppPageComponents/AppPageButtonsComponent';
 
 type RenderValues = 'comments' | 'chats' | 'calendar' | 'videos';
 
@@ -30,7 +31,18 @@ const AppPage = () => {
 
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
 
-          <Panel defaultSize={50}>Central container</Panel>
+          <Panel defaultSize={50}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Typography>Central container</Typography>
+              <AppPageButtonsComponent />
+            </Box>
+          </Panel>
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
           <Panel defaultSize={25} maxSize={50} minSize={20} collapsible={true}>
             <Box padding="5px">
