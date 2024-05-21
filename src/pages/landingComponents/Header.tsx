@@ -1,7 +1,6 @@
 import { useEffect, useRef, useContext, useState, FC } from 'react';
-import { Box, Typography, Switch } from '@mui/material';
+import { Box, Typography, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { WbSunny, Brightness2} from '@mui/icons-material';
-import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { Home, Apps, Call, AccountBalance, AttachMoney} from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
@@ -9,6 +8,7 @@ import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import LoginModal from '../../components/LoginModal.tsx';
 import logo from '../../assets/neox-logo.svg';
 import NeuButton from "../../components/neumorphism/button/NeuButton.tsx";
+import NeuSwitch from '../../components/neumorphism/switch/NeuSwitch.tsx';
 
 const Header: FC = () => {
   const { theme, setTheme } = useCustomTheme();
@@ -120,7 +120,7 @@ const Header: FC = () => {
               width: '24px',
               height: '24px',
             }} />
-            <Switch
+            <NeuSwitch
               checked={theme === 'light'}
               onChange={toggleTheme}
               name="check"
