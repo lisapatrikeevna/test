@@ -34,6 +34,7 @@ import {
   newGroupPath,
   newChannelPath,
   contactsPath,
+  moreVideosPath,
   vrPath
 } from "./configs/RouteConfig.tsx";
 import ChannelPage from "./pages/Videos/ChannelPage.tsx";
@@ -46,6 +47,7 @@ import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
 import { ThemeContext } from "./contexts/ThemeContext";
+import MoreVideos from "./pages/Videos/MoreVideos.tsx";
 
 const App: FC = () => {
   // Initialize theme state with light theme as default
@@ -93,58 +95,57 @@ const App: FC = () => {
   const allowedUsernames = ["AdrianAdrian", "Adrian Lieblich", "RomarioFisch"];
 
   return (
-      <ThemeContext.Provider value={{ theme: theme, setTheme }}>
-        <ThemeProvider theme={muiTheme}>
-          <Router>
-            <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-              {isLoggedIn ? (
-                  <Box sx={{
-                    display: 'flex',
-                    height: '100vh'
-                  }}>
-                    <SideBar />
-                    <Box sx={{
-                      flexGrow: 1,
-                      overflow: 'auto',
-                      width: '100%'
-                    }}>
-                      <Routes>
-                        <Route path={homePath} element={<Home />} />
-                        <Route path={chatsPath} element={<Chats />} />
-                        <Route path={aboutUsPath} element={<AboutUs />} />
-                        <Route path={mediaPath} element={<VideosMainPage />} />
-                        <Route path={mediaIdPath} element={<VideoPage />} />
-                        <Route path={callsPath} element={<Calls />} />
-                        <Route path={settingsPath} element={<Settings />} />
-                        <Route path={sideBarPath} element={<SideBar />} />
-                        <Route path={appPagePath} element={<AppPage />} />
-                        <Route path={channelPagePrototypePath} element={<ChannelPage />} />
-                        <Route path={channelEditPrototypePath} element={<UserChannelPage />} />
-                        <Route path={productsPath} element={<ElementsShowroom />} />
-                        <Route path={newGroupPath} element={<NewGroup />} />
-                        <Route path={newChannelPath} element={<NewChannel />} />
-                        <Route path={contactsPath} element={<Contacts />} />
-                        <Route path={vrPath} element={<VR />} />
+    <ThemeContext.Provider value={{ theme: theme, setTheme }}>
+      <ThemeProvider theme={muiTheme}>
+        <Router>
+          <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+            {isLoggedIn ? (
+              <Box sx={{
+                display: 'flex',
+                height: '100vh'
+              }}>
+                <SideBar />
+                <Box sx={{
+                  flexGrow: 1,
+                  overflow: 'auto',
+                  width: '100%'
+                }}>
+                  <Routes>
+                    <Route path={homePath} element={<Home />} />
+                    <Route path={chatsPath} element={<Chats />} />
+                    <Route path={aboutUsPath} element={<AboutUs />} />
+                    <Route path={mediaPath} element={<VideosMainPage />} />
+                    <Route path={mediaIdPath} element={<VideoPage />} />
+                    <Route path={callsPath} element={<Calls />} />
+                    <Route path={settingsPath} element={<Settings />} />
+                    <Route path={sideBarPath} element={<SideBar />} />
+                    <Route path={appPagePath} element={<AppPage />} />
+                    <Route path={channelPagePrototypePath} element={<ChannelPage />} />
+                    <Route path={channelEditPrototypePath} element={<UserChannelPage />} />
+                    <Route path={productsPath} element={<ElementsShowroom />} />
+                    <Route path={newGroupPath} element={<NewGroup />} />
+                    <Route path={newChannelPath} element={<NewChannel />} />
+                    <Route path={contactsPath} element={<Contacts />} />
+                    <Route path={moreVideosPath} element={<MoreVideos />} />
+                    <Route path={vrPath} element={<VR />} />
+                    <Route path={certificatePath} element={allowedUsernames.includes(username) ? <CertificateGenerator /> : ""} />
+                  </Routes>
+                </Box>
+              </Box>
+            ) : (
+              <>
+                <HeaderAndMainPage
+                  activeSection={activeSection}
+                  setActiveSection={setActiveSection}
+                />
+              </>
+            )}
 
-                        <Route path={certificatePath} element={allowedUsernames.includes(username) ? <CertificateGenerator /> : ""} />
-
-                      </Routes>
-                    </Box>
-                  </Box>
-              ) : (
-                  <>
-                    <HeaderAndMainPage
-                        activeSection={activeSection}
-                        setActiveSection={setActiveSection}
-                    />
-                  </>
-              )}
-
-              <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
-            </AuthContext.Provider>
-          </Router>
-        </ThemeProvider>
-      </ThemeContext.Provider>
+            <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
+          </AuthContext.Provider>
+        </Router>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 };
 
@@ -152,9 +153,9 @@ const HeaderAndMainPage: React.FC<{
   activeSection: string | null;
   setActiveSection: React.Dispatch<React.SetStateAction<string | null>>;
 }> = ({ activeSection, setActiveSection }) => (
-    <ActiveSectionContext.Provider value={{ activeSection, setActiveSection }}>
-      <Header />
-      <MainPage />
-    </ActiveSectionContext.Provider>
+  <ActiveSectionContext.Provider value={{ activeSection, setActiveSection }}>
+    <Header />
+    <MainPage />
+  </ActiveSectionContext.Provider>
 );
 export default App;

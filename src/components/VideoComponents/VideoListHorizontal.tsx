@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
 import { mediaPath } from "../../configs/RouteConfig.tsx";
@@ -111,9 +111,12 @@ const VideoListHorizontal = () => {
                     </Grid>
                 ))
             )}
-            <Button variant="contained" color="primary">
-                Load More
-            </Button>
+            <Link to="moreVideosPath">
+                <Button variant="contained" color="primary">
+                    Load More
+                </Button>
+            </Link>
+            <Outlet />
         </Grid>
     );
 };
