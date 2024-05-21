@@ -4,7 +4,7 @@ import { styled } from '@mui/system';
 import { Theme } from '@mui/material/styles';
 import { Shadows } from '../../../types/types';
 
-interface NeuButtonProps extends ButtonProps {
+export interface NeuButtonProps extends ButtonProps {
   dark?: boolean;
   text?: boolean;
   block?: boolean;
