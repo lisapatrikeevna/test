@@ -80,9 +80,9 @@ const AppPageHeader = ({ setIsOpenSideBar }: Props) => {
           <Box
             sx={{
               padding: '15px',
-              borderRadius: 3,
+              borderRadius: '15px',
               width: '300px',
-              background: 'white',
+              background: '#e0e0e0',
               position: 'absolute',
               top: modalPosition.top,
               left: modalPosition.left,
