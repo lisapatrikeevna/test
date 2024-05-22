@@ -44,12 +44,12 @@ const Header: FC = () => {
 
   useEffect(() => {
     linksRef.current = linksRef.current.slice(0, 6);
-    const homeLink = linksRef.current.find(link => link?.dataset.to === "#Partners");
-    if (homeLink) moveIndicator(homeLink);
+    const partnersLink = linksRef.current.find(link => link?.dataset.to === "#Partners");
+    if (partnersLink) moveIndicator(partnersLink);
   }, []);
 
   useEffect(() => {
-    const activeIndex = activeSection ? ["Partners", "Pricing", "News", "Contacts", "AboutUs"].indexOf(activeSection) : -1;
+    const activeIndex = activeSection ? ["Pricing", "News", "Contacts", "AboutUs", "Partners"].indexOf(activeSection) : -1;
     const activeLink = linksRef.current[activeIndex];
     if (activeLink) {
       moveIndicator(activeLink);
@@ -82,7 +82,7 @@ const Header: FC = () => {
         alignItems: 'center',
       }} >
         <List sx={{ display: 'flex', flexDirection: 'row', position: 'absolute', top: '-65px', width: "850px" }}>
-          {["#Partners", "#Pricing", "#News", "#Contacts", "#AboutUs"].map((item, index) => (
+          {["#Pricing", "#News", "#Contacts", "#AboutUs", "#Partners"].map((item, index) => (
             <ListItem key={item} sx={{ transform: 'translateY(70px)' }}>
               <Link to={item}
                 ref={el => linksRef.current[index] = el}

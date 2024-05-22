@@ -79,7 +79,7 @@ const MainPage = () => {
         return;
       }
 
-      const sections = ["Home", "Pricing", "News", "Contacts"];
+      const sections = ["Pricing", "News", "Contacts", "AboutUs", "Partners"];
       const currentIndex = sections.indexOf(activeSection as string);
       let newIndex = currentIndex;
 
@@ -117,11 +117,6 @@ const MainPage = () => {
 
   return (
     <PageContainer>
-      <Section id="Partners">
-        <SectionContent maxWidth="lg">
-          <Partners />
-        </SectionContent>
-      </Section>
       <Section id="Pricing">
         <SectionContent maxWidth="lg">
           <Pricing />
@@ -140,6 +135,11 @@ const MainPage = () => {
       <Section id="AboutUs">
         <SectionContent maxWidth="lg">
           <AboutUs />
+        </SectionContent>
+      </Section>
+      <Section id="Partners">
+        <SectionContent maxWidth="lg">
+          <Partners />
         </SectionContent>
       </Section>
       <Footer
