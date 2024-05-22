@@ -1,24 +1,24 @@
 import { useState } from 'react';
 import {
     AppBar, Box, Button, Card, CardActions, CardContent, CardHeader, CssBaseline,
-    Grid, Toolbar, Typography, Link, GlobalStyles, Container, Switch, FormControlLabel
+    Grid, Toolbar, Typography, GlobalStyles, Container, Switch, FormControlLabel
 } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import StarIcon from '@mui/icons-material/StarBorder';
 
 
-function Copyright(props: React.PropsWithChildren<object>) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://neox.it-assistent.eu/">
-                NeoX
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+// function Copyright(props: React.PropsWithChildren<object>) {
+//     return (
+//         <Typography variant="body2" color="text.secondary" align="center" {...props}>
+//             {'Copyright © '}
+//             <Link color="inherit" href="https://neox.it-assistent.eu/">
+//                 NeoX
+//             </Link>{' '}
+//             {new Date().getFullYear()}
+//             {'.'}
+//         </Typography>
+//     );
+// }
 
 const tiers = [
     {
@@ -177,10 +177,10 @@ const Pricing = () => {
                 </Grid>
             </Box>
 
-            <Container maxWidth="md" component="footer" sx={{ borderTop: (theme) => `1px solid ${theme.palette.divider}`, mt: 8, py: [3, 6] }}>
+            {/* <Container maxWidth="md" component="footer" sx={{ borderTop: (theme) => `1px solid ${theme.palette.divider}`, mt: 8, py: [3, 6] }}> */}
                 {/* Footer content here */}
-                <Copyright />
-            </Container>
+                {/* <Copyright /> */}
+            {/* </Container> */}
         </>
     );
 };
