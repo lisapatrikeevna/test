@@ -51,6 +51,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
 import { ThemeContext } from './contexts/ThemeContext';
 
+
 const App: FC = () => {
   // Initialize theme state with light theme as default
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -97,6 +98,7 @@ const App: FC = () => {
   const allowedUsernames = ['AdrianAdrian', 'Adrian Lieblich', 'RomarioFisch'];
 
   return (
+
       <ThemeContext.Provider value={{ theme: theme, setTheme }}>
         <ThemeProvider theme={muiTheme}>
           <Router>
