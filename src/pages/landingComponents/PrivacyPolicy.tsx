@@ -8,10 +8,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius,
     height: '100%',
     boxShadow: 'none',
-    border: 'none', 
+    border: 'none',
 }));
 
-const StyledList = styled('ol')(({ theme }) => ({
+const MainList = styled('ol')(({ theme }) => ({
     paddingInlineStart: theme.spacing(3),
     listStyleType: 'none',
     '& > li': {
@@ -19,8 +19,15 @@ const StyledList = styled('ol')(({ theme }) => ({
     },
 }));
 
-const PrivacyPolicy: FC = () => {
+const SubList = styled('ul')(({ theme }) => ({
+    paddingInlineStart: theme.spacing(3),
+    listStyleType: 'disc',
+    '& > li': {
+        marginBottom: theme.spacing(1),
+    },
+}));
 
+const PrivacyPolicy: FC = () => {
     return (
         <StyledBox>
             <Typography align="center">
@@ -60,19 +67,19 @@ const PrivacyPolicy: FC = () => {
                 review this page.
             </Typography>
 
-            <StyledList>
+            <MainList>
                 <li>
-                    <Typography sx={{ fontSize: '2rem' }} align="center">
+                    <Typography sx={{ fontSize: '2rem' }} align="left">
                         How We Use Your Information:
                     </Typography>
-                    <Typography variant="body1" align="center">
+                    <Typography variant="body1" align="left">
                         We will use the information that we collect
                         about you for the following purposes:
                     </Typography>
-                    <StyledList>
+                    <SubList>
                         <li>Support</li>
                         <li>Administration info</li>
-                    </StyledList>
+                    </SubList>
                     <Typography variant="body1">
                         If we want to use your information for any other
                         purpose, we will ask you for consent and will
@@ -83,26 +90,26 @@ const PrivacyPolicy: FC = () => {
                     </Typography>
                 </li>
                 <li>
-                    <Typography variant="h2" sx={{ fontSize: '2rem' }} align="center">
+                    <Typography variant="h2" sx={{ fontSize: '2rem' }} align="left">
                         How We Share Your Information:
                     </Typography>
-                    <Typography variant="body1" align="center">
+                    <Typography variant="body1" align="left">
                         We will not transfer your personal information
                         to any third party without seeking your consent,
                         except in limited circumstances as described
                         below:
                     </Typography>
-                    <StyledList>
+                    <SubList>
                         <li>Analytics</li>
-                    </StyledList>
-                    <Typography variant="body1" align="center">
+                    </SubList>
+                    <Typography variant="body1" align="left">
                         We require such third party’s to use the
                         personal information we transfer to them only
                         for the purpose for which it was transferred and
                         not to retain it for longer than is required for
                         fulfilling the said purpose.
                     </Typography>
-                    <Typography variant="body1" align="center">
+                    <Typography variant="body1" align="left">
                         We may also disclose your personal information
                         for the following: (1) to comply with applicable
                         law, regulation, court order or other legal
@@ -203,7 +210,7 @@ const PrivacyPolicy: FC = () => {
                         We will address your concerns in accordance with applicable law.
                     </Typography>
                 </li>
-            </StyledList>
+            </MainList>
         </StyledBox>
     );
 };

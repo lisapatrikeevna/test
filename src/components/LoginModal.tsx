@@ -19,19 +19,12 @@ interface LoginModalProps {
     onClose: () => void;
 }
 
-// interface User {
-//     password: string;
-//     username: string;
-//     email: string;
-// }
-
 const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
     const [isRegistering, setIsRegistering] = useState(false);
     const { setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -42,8 +35,8 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            if(isRegistering) {
-                if (password !== confirmPassword) { 
+            if (isRegistering) {
+                if (password !== confirmPassword) {
                     toast.error("Passwords do not match.");
                     return;
                 }
@@ -77,9 +70,9 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
         setShowPassword(!showPassword);
     };
 
-    const toggleConfirmPasswordVisibility = () => { 
-        setShowConfirmPassword(!showConfirmPassword);
-    };
+    // const toggleConfirmPasswordVisibility = () => {
+    //     setShowConfirmPassword(!showConfirmPassword);
+    // };
 
     const bttnHeight = '50px';
 
@@ -91,14 +84,14 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                     <form onSubmit={handleSubmit} autoComplete='off'>
                         {isRegistering && (
                             <NeuTextField
-                            required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            label="Email"
-                            margin="normal"
-                            rounded
-                            outlined
-                        />
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                label="Email"
+                                margin="normal"
+                                rounded
+                                outlined
+                            />
                         )}
                         <NeuTextField
                             required
@@ -116,9 +109,9 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             label="Password"
                             type={showPassword ? "text" : "password"}
                             margin="normal"
-                            rounded 
+                            rounded
                             outlined
-                            InputProps={{ // InputAdornment for the show/hide password button
+                            InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
@@ -131,36 +124,36 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                 ),
                             }}
                         />
-                        {isRegistering && ( 
+                        {isRegistering && (
                             <>
-                             <NeuTextField
-                                required
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                label="Confirm Password"
-                                type={showConfirmPassword ? "text" : "password"}
-                                margin="normal"
-                                rounded
-                                outlined
-                                InputProps={{ // InputAdornment for the show/hide password button
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={toggleConfirmPasswordVisibility}
-                                                edge="end"
-                                            >
-                                                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <Typography variant="body2" sx={{ margin: "10px 0" }}>
-                            By signing up, you agree to our <Link href="#" onClick={() => setIsUserTermsModalOpen(true)}>User Terms</Link>.
-                            </Typography>
-                        </>
+                                <NeuTextField
+                                    required
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    label="Confirm Password"
+                                    type={showPassword ? "text" : "password"}
+                                    margin="normal"
+                                    rounded
+                                    outlined
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={togglePasswordVisibility}
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <Typography variant="body2" sx={{ margin: "10px 0" }}>
+                                    By signing up, you agree to our <Link href="#" onClick={() => setIsUserTermsModalOpen(true)}>User Terms</Link>.
+                                </Typography>
+                            </>
                         )}
-                         <NeuButton
+                        <NeuButton
                             rounded
                             type="submit"
                             color="primary"
@@ -188,4 +181,5 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
         </Modal>
     );
 };
+
 export default LoginModal;
