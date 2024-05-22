@@ -18,18 +18,22 @@ export interface IVideo {
 const VideoListHorizontal = () => {
     const [videos, setVideos] = useState<IVideo[]>([]);
     const [loading, setLoading] = useState(true); // Create a loading state to display a loading indicator while fetching videos
-    const [moreVideoCount, setmoreVideoCount] = useState(8); // Initial count of skeletons
+    const [more, setMore] = useState(false);
 
     const fetchVideo = async (id: string) => {
         try {
             const response = await instance.get(`video/${id}`, {
-                headers: {},
+                headers: {
+
+                },
             });
             if (response.status !== 200) {
                 throw new Error(`Failed to fetch video with id ${id}`);
             }
             const data = await response.data;
             return data;
+
+
         } catch (error) {
             console.error(`Error fetching video with id ${id}:`, error);
             return null;
@@ -72,8 +76,8 @@ const VideoListHorizontal = () => {
     }, []); // Empty dependency array to run the effect only once when the component mounts
 
     const handleButton = () => {
-        setmoreVideoCount(prevCount => prevCount + 8); // Increment the skeleton count by 8
-    };
+        setMore(!more)
+    }
 
     return (
         <Grid container spacing={2}>
@@ -105,7 +109,7 @@ const VideoListHorizontal = () => {
                     </Grid>
                 ))
             ) : (
-                Array.from({ length: moreVideoCount }).map((_, index) => (
+                Array.from({ length: 8 }).map((_, index) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                         <Skeleton variant="rectangular" width="100%" height={180} />
                         <Skeleton />
@@ -119,6 +123,15 @@ const VideoListHorizontal = () => {
             }} onClick={handleButton}>
                 Load More
             </Button>
+            {
+                more && Array.from({ length: 12 }).map((_, index) => (
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                        <Skeleton variant="rectangular" width="100%" height={180} />
+                        <Skeleton />
+                        <Skeleton width="60%" />
+                    </Grid>))
+            }
+
             <Outlet />
         </Grid>
     );
