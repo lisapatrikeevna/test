@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Box, Container, Modal, styled } from '@mui/material';
-import Home from './Home';
+import { Box, Container, Modal, styled, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+// import Home from './Home';
+import Partners from './Partners.tsx'
 import Pricing from '../../components/Pricing.tsx';
 import Contacts from './Contacts';
 import Footer from './Footer';
@@ -18,8 +20,8 @@ const PageContainer = styled('div')({
   flexDirection: 'row',
   minHeight: '100vh',
   minWidth: '100vw',
-  scrollSnapType: 'x mandatory', // Setting the scrollSnapType value
-  overflow: 'hidden', // Hiding scroll bars
+  scrollSnapType: 'x mandatory',
+  overflow: 'hidden', 
 });
 
 const Section = styled('div')({
@@ -28,29 +30,48 @@ const Section = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  padding: '64px 0', // Adjust padding as needed
+  padding: '64px 0', 
 });
 
 const SectionContent = styled(Container)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  // Add other styles as needed
+  marginTop: '65px', 
 });
+
+const ModalContent = styled(Box)(({ theme }) => ({
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '80vw',
+  maxHeight: '80vh',
+  backgroundColor: theme.palette.background.paper,
+  boxShadow: theme.shadows[5],
+  padding: theme.spacing(4),
+  overflowY: 'auto',
+  borderRadius: theme.shape.borderRadius,
+  position: 'relative',
+}));
+
+const CloseButton = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  top: theme.spacing(1),
+  right: theme.spacing(1),
+}));
 
 const MainPage = () => {
   const context = useContext(ActiveSectionContext);
   const [isImpressumModalOpen, setIsImpressumModalOpen] = useState(false);
   const [isPrivacyPolicyModalOpen, setIsPrivacyPolicyModalOpen] = useState(false);
   const [isDatenschutzModalOpen, setIsDatenschutzModalOpen] = useState(false);
-  const [isUserTermsModalOpen] = useState(false); // Declaration corrected here
-
+  const [isUserTermsModalOpen] = useState(false);
 
   if (!context) {
     throw new Error('Header must be used within ActiveSectionContext');
   }
   const { activeSection, setActiveSection } = context;
-  const location = useLocation(); // Removed duplicate declaration
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
@@ -58,7 +79,7 @@ const MainPage = () => {
         return;
       }
 
-      const sections = ["Home", "Pricing", "News", "Contacts"]; // remove “News” since it's missing from the code
+      const sections = ["Pricing", "News", "Contacts", "AboutUs", "Partners"];
       const currentIndex = sections.indexOf(activeSection as string);
       let newIndex = currentIndex;
 
@@ -73,12 +94,9 @@ const MainPage = () => {
 
       const sectionElement = document.getElementById(sections[newIndex]);
       if (sectionElement !== null) {
-        // Scroll to the next or previous section depending on the scroll direction
         sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
       }
     };
-
-
 
     window.addEventListener('wheel', handleScroll, { passive: false });
 
@@ -98,66 +116,68 @@ const MainPage = () => {
   }, [location.hash]);
 
   return (
-      <PageContainer>
-        <Section id="Home">
-          <SectionContent maxWidth="lg">
-            <Home />
-          </SectionContent>
-        </Section>
-        <Section id="Pricing">
-          <SectionContent maxWidth="lg">
-            <Pricing />
-          </SectionContent>
-        </Section>
-        <Section id="News">
-          <SectionContent maxWidth="lg">
-            <News />
-          </SectionContent>
-        </Section>
-        <Section id="Contacts">
-          <SectionContent maxWidth="lg">
-            <Contacts />
-          </SectionContent>
-        </Section>
-        <Section id="AboutUs">
-          <SectionContent maxWidth="lg">
-            <AboutUs />
-          </SectionContent>
-        </Section>
-        <Footer
-            onImpressumClick={() => setIsImpressumModalOpen(true)}
-            onPrivacyPolicyClick={() => setIsPrivacyPolicyModalOpen(true)}
-            onDatenschutzClick={() => setIsDatenschutzModalOpen(true)}
-        />
-        <Modal
-            open={isImpressumModalOpen}
-            onClose={() => setIsImpressumModalOpen(false)}
-            // Add modal styles
-        >
-          <Box>
-            <Impressum />
-          </Box>
-        </Modal>
-        <Modal open={isPrivacyPolicyModalOpen}
-               onClose={() => setIsPrivacyPolicyModalOpen(false)}>
-          <PrivacyPolicy/>
-        </Modal>
-        <Modal open={isDatenschutzModalOpen}
-               onClose={() => setIsDatenschutzModalOpen(false)}>
-          <Datenschutz/>
-        </Modal>
-        <Modal open={isDatenschutzModalOpen}
-               onClose={() => setIsDatenschutzModalOpen(false)}>
-          <Datenschutz/>
-        </Modal>
-        {/*<Modal isOpen={isUserTermsModalOpen}*/}
-        {/*       onClose={() => setIsUserTermsModalOpen(false)}*/}
-        {/*       width={"80vw"}*/}
-        {/*       height={"80vh"}>*/}
-        {/*    <UserTerms/>*/}
-        {/*</Modal>*/}
-        <Cookies />
-      </PageContainer>
+    <PageContainer>
+      <Section id="Pricing">
+        <SectionContent maxWidth="lg">
+          <Pricing />
+        </SectionContent>
+      </Section>
+      <Section id="News">
+        <SectionContent maxWidth="lg">
+          <News />
+        </SectionContent>
+      </Section>
+      <Section id="Contacts">
+        <SectionContent maxWidth="lg">
+          <Contacts />
+        </SectionContent>
+      </Section>
+      <Section id="AboutUs">
+        <SectionContent maxWidth="lg">
+          <AboutUs />
+        </SectionContent>
+      </Section>
+      <Section id="Partners">
+        <SectionContent maxWidth="lg">
+          <Partners />
+        </SectionContent>
+      </Section>
+      <Footer
+        onImpressumClick={() => setIsImpressumModalOpen(true)}
+        onPrivacyPolicyClick={() => setIsPrivacyPolicyModalOpen(true)}
+        onDatenschutzClick={() => setIsDatenschutzModalOpen(true)}
+      />
+      <Modal
+        open={isImpressumModalOpen}
+        onClose={() => setIsImpressumModalOpen(false)}
+      >
+        <ModalContent>
+          <CloseButton onClick={() => setIsImpressumModalOpen(false)}>
+            <CloseIcon />
+          </CloseButton>
+          <Impressum />
+        </ModalContent>
+      </Modal>
+      <Modal open={isPrivacyPolicyModalOpen}
+        onClose={() => setIsPrivacyPolicyModalOpen(false)}>
+        <ModalContent>
+          <CloseButton onClick={() => setIsPrivacyPolicyModalOpen(false)}>
+            <CloseIcon />
+          </CloseButton>
+          <PrivacyPolicy />
+        </ModalContent>
+      </Modal>
+      <Modal open={isDatenschutzModalOpen}
+        onClose={() => setIsDatenschutzModalOpen(false)}>
+        <ModalContent>
+          <CloseButton onClick={() => setIsDatenschutzModalOpen(false)}>
+            <CloseIcon />
+          </CloseButton>
+          <Datenschutz />
+        </ModalContent>
+      </Modal>
+      <Cookies />
+    </PageContainer>
   );
 };
 

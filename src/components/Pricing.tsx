@@ -112,7 +112,7 @@ const Pricing = () => {
                 </Toolbar>
             </AppBar>
 
-            <Container disableGutters maxWidth={false} component="main" sx={{ pt: 8, pb: 6 }}>
+            <Container disableGutters maxWidth={false} component="main">
                 <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
                     Pricing
                 </Typography>
