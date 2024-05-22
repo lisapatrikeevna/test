@@ -1,14 +1,14 @@
 import { useEffect, useRef, useContext, useState, FC } from 'react';
-import { Box, Typography, Switch } from '@mui/material';
-import { WbSunny, Brightness2} from '@mui/icons-material';
-import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { Home, Apps, Call, AccountBalance, AttachMoney} from '@mui/icons-material';
+import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { WbSunny, Brightness2 } from '@mui/icons-material';
+import { Handshake, Apps, Call, AccountBalance, AttachMoney } from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import LoginModal from '../../components/LoginModal.tsx';
 import logo from '../../assets/neox-logo.svg';
 import NeuButton from "../../components/neumorphism/button/NeuButton.tsx";
+import NeuSwitch from '../../components/neumorphism/switch/NeuSwitch.tsx';
 
 const Header: FC = () => {
   const { theme, setTheme } = useCustomTheme();
@@ -44,12 +44,12 @@ const Header: FC = () => {
 
   useEffect(() => {
     linksRef.current = linksRef.current.slice(0, 6);
-    const homeLink = linksRef.current.find(link => link?.dataset.to === "#Home");
-    if (homeLink) moveIndicator(homeLink);
+    const partnersLink = linksRef.current.find(link => link?.dataset.to === "#Partners");
+    if (partnersLink) moveIndicator(partnersLink);
   }, []);
 
   useEffect(() => {
-    const activeIndex = activeSection ? ["Home", "Pricing", "News", "Contacts", "AboutUs"].indexOf(activeSection) : -1;
+    const activeIndex = activeSection ? ["Pricing", "News", "Contacts", "AboutUs", "Partners"].indexOf(activeSection) : -1;
     const activeLink = linksRef.current[activeIndex];
     if (activeLink) {
       moveIndicator(activeLink);
@@ -57,7 +57,7 @@ const Header: FC = () => {
   }, [activeSection]);
 
   return (
-    <Typography variant="body1" sx={{
+    <Box sx={{
       width: '100%',
       position: 'absolute',
       top: 0,
@@ -74,36 +74,38 @@ const Header: FC = () => {
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
     }}>
-      <img src={logo} alt="NeoX" style={{ width: 70, height: 70 }} onClick={() => { handleClick("#Home") }} />
-      <Typography variant="body1" sx={{
+      <img src={logo} alt="NeoX" style={{ width: 70, height: 70 }} onClick={() => { handleClick("#Partners") }} />
+      <Box sx={{
         transformOrigin: 'left',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
       }} >
         <List sx={{ display: 'flex', flexDirection: 'row', position: 'absolute', top: '-65px', width: "850px" }}>
-          {["#Home", "#Pricing", "#News", "#Contacts", "#AboutUs"].map((item, index) => (
+          {["#Pricing", "#News", "#Contacts", "#AboutUs", "#Partners"].map((item, index) => (
             <ListItem key={item} sx={{ transform: 'translateY(70px)' }}>
               <Link to={item}
                 ref={el => linksRef.current[index] = el}
                 data-to={item}
-                onClick={() => { handleClick(item); }}>
-                <ListItemIcon>
-                  {item === "#Home" && <Home />}
+                onClick={() => { handleClick(item); }}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}
+              >
+                <ListItemIcon sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: 'auto', marginBottom: '4px' }}>
+                  {item === "#Partners" && <Handshake />} 
                   {item === "#Pricing" && <AttachMoney />}
                   {item === "#News" && <Apps />}
                   {item === "#Contacts" && <Call />}
                   {item === "#AboutUs" && <AccountBalance />}
                 </ListItemIcon>
-                <ListItemText primary={item.substring(1)} />
+                <ListItemText primary={item.substring(1)} sx={{ textAlign: 'center' }} />
               </Link>
             </ListItem>
           ))}
         </List>
-      </Typography>
-      <Typography variant='body1' sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
         <Box component="label" sx={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', color: '#394a56' }}>
-        <Box sx={{
+          <Box sx={{
             isolation: 'isolate',
             position: 'relative',
             display: 'flex',
@@ -120,7 +122,7 @@ const Header: FC = () => {
               width: '24px',
               height: '24px',
             }} />
-            <Switch
+            <NeuSwitch
               checked={theme === 'light'}
               onChange={toggleTheme}
               name="check"
@@ -142,9 +144,9 @@ const Header: FC = () => {
         >
           Login
         </NeuButton>
-      </Typography>
+      </Box>
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
-    </Typography >
+    </Box>
   );
 };
 

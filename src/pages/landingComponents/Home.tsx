@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Typography, Stack, Box } from '@mui/material';
-import RotatingWords from '../../components/RotatingWords.tsx';
+// import RotatingWords from '../../components/RotatingWords.tsx';
 
 const Home: FC = () => {
   return (
