@@ -27,7 +27,7 @@ export const instance = axios.create({
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     const token: IToken = store.getState().user.token;
-      config.headers["Authorization"] = `Bearer ${token.accessToken}`;
+    config.headers["Authorization"] = `Bearer ${token.accessToken}`;
     return config;
   }
 );
