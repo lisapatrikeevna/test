@@ -5,8 +5,8 @@ import { AuthService } from "../services/auth.service";
 import { login } from "../store/user/userSlice";
 import { userSliceMapper } from "../store/user/utilits/userUtilits";
 
-export const API_URL = "http://212.132.99.188:8030";
-// export const API_URL = "http://localhost:8030";
+// export const API_URL = "http://212.132.99.188:8030";
+export const API_URL = "http://neoxonline.com:8030";
 
 export const instanceAuth = axios.create({
   withCredentials: true,

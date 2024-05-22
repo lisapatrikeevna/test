@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setBuffering, setError, setLoading, setVideoUrl } from '../../store/video/videoSlice';
-import VideoListHorizontal from '../../components/VideoComponents/VideoListHorizontal.tsx';
+// import VideoListHorizontal from '../../components/VideoComponents/VideoListHorizontal.tsx';
 import {Grid, Paper, Typography, Container, Skeleton, Button, Box} from "@mui/material";
 import {Contacts, Flag, IosShare, JoinFull, ThumbDown, ThumbUp} from "@mui/icons-material";
 
@@ -18,6 +18,9 @@ const VideoPage: FC = () => {
 
     const [videoName, setVideoName] = useState('');
     const [description, setDescription] = useState('');
+    const [views, setViews] = useState(0);
+    const [likes, setLikes] = useState(0);
+
 
     useEffect(() => {
         const loadVideo = async () => {
@@ -28,6 +31,9 @@ const VideoPage: FC = () => {
                     const metadata = await getVideoMetadata(videoId);
                     setVideoName(metadata.videoName);
                     setDescription(metadata.description);
+                    setViews(metadata.videoInfo.contentViewsByUsers);
+                    setLikes(metadata.videoInfo.contentLikesByUsers);
+
                     let blobUrl = '';
                     if (videoData) {
                         blobUrl = URL.createObjectURL(videoData);
@@ -83,7 +89,7 @@ const VideoPage: FC = () => {
                     )}
                     {buffering && <Typography>Buffering...</Typography>}
                     {/*Container for video full description*/}
-                    
+
                     <Box>
                         <Typography variant="h4">{videoName}</Typography>
                         {/*Container for video metadata*/}
@@ -100,7 +106,7 @@ const VideoPage: FC = () => {
                                     <Container style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
                                         {/*<Typography>{viewCount}</Typography>*/}
 
-                                        <Typography>63555 views</Typography>
+                                        <Typography>{views}</Typography>
                                         {/*<Typography>{viewLikes}</Typography>*/}
 
                                         <Typography>2 weeks ago</Typography>
@@ -116,7 +122,7 @@ const VideoPage: FC = () => {
                                 {/*Container for like, dislike, share*/}
                                 <Container style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
                                     <ThumbUp/>
-                                    <Typography>255</Typography>
+                                    <Typography>{likes}</Typography>
                                     <ThumbDown/>
                                     <Button variant='text' size='small' startIcon={<JoinFull/>}>Subscribe</Button>
                                     <Button variant='text' startIcon={<Flag/>}>Report</Button>
@@ -136,7 +142,7 @@ const VideoPage: FC = () => {
 
                     <Container style={{ padding: 0 }}>
                         <Paper elevation={3}>
-                            <VideoListHorizontal />
+                            {/*<VideoListHorizontal />*/}
                         </Paper>
                     </Container>
 

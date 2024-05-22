@@ -23,8 +23,8 @@ import { login, selectUsername } from './store/user/userSlice.ts';
 import VideosMainPage from './pages/Videos/VideosMainPage.tsx';
 import {
   appPagePath,
-  // channelEditPrototypePath,
-  // channelPagePrototypePath,
+  channelEditPrototypePath,
+  channelPagePrototypePath,
   // chatsPath,
   // homePath,
   mediaIdPath,
@@ -40,9 +40,9 @@ import {
   // contactsPath,
   // vrPath,
 } from './configs/RouteConfig.tsx';
-// import ChannelPage from './pages/Videos/ChannelPage.tsx';
+import ChannelPage from './pages/Videos/ChannelPage.tsx';
 import CertificateGenerator from './pages/cert/CertificateGenerator.tsx';
-// import UserChannelPage from './pages/Videos/UserChannelPage.tsx';
+import UserChannelPage from './pages/Videos/UserChannelPage.tsx';
 // import NewGroup from './pages/NewGroup.tsx';
 // import NewChannel from './pages/NewChannel.tsx';
 // import Contacts from './pages/Contacts.tsx';
@@ -126,14 +126,14 @@ const App: FC = () => {
                         {/*<Route path={settingsPath} element={<Settings />} />*/}
                         <Route path={sideBarPath} element={<SideBar />} />
                         <Route path={appPagePath} element={<AppPage />} />
-                        {/*<Route*/}
-                        {/*  path={channelPagePrototypePath}*/}
-                        {/*  element={<ChannelPage />}*/}
-                        {/*/>*/}
-                        {/*<Route*/}
-                        {/*  path={channelEditPrototypePath}*/}
-                        {/*  element={<UserChannelPage />}*/}
-                        {/*/>*/}
+                        <Route
+                          path={channelPagePrototypePath}
+                          element={<ChannelPage />}
+                        />
+                        <Route
+                          path={channelEditPrototypePath}
+                          element={<UserChannelPage />}
+                        />
                         {/*<Route path={productsPath} element={<ElementsShowroom />} />*/}
                         {/*<Route path={newGroupPath} element={<NewGroup />} />*/}
                         {/*<Route path={newChannelPath} element={<NewChannel />} />*/}
