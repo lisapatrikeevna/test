@@ -88,7 +88,7 @@ const App: FC = () => {
         setIsLoggedIn(true);
       } catch (error) {
         console.error('Failed to refresh session', error);
-        // setIsLoggedIn(false);
+        setIsLoggedIn(false);
       }
     };
 
