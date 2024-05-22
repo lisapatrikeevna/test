@@ -46,7 +46,7 @@ interface FooterProps {
     theme?: Theme;
 }
 
-const Footer: FC<FooterProps> = ({ onImpressumClick, onPrivacyPolicyClick, onDatenschutzClick, theme }) => {
+const Footer: FC<FooterProps> = ({ theme, onImpressumClick, onPrivacyPolicyClick, onDatenschutzClick }) => {
     const context = useContext(ActiveSectionContext);
 
     if (!context) {
