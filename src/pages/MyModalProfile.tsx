@@ -86,7 +86,7 @@ const MyModalProfile = ({ open, onClose }: MyModalProps) => {
       <Box
         sx={{
           padding: '15px',
-          borderRadius: 3,
+          borderRadius: '15px',
           width: {
             xs: '90%',
             sm: '90%',
@@ -95,7 +95,7 @@ const MyModalProfile = ({ open, onClose }: MyModalProps) => {
           },
           margin: 'auto',
           mt: 2,
-          background: 'white',
+          background: '#e0e0e0',
           maxHeight: '90vh',
           overflowY: 'auto',
         }}
