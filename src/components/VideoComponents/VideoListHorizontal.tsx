@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
-import {mediaPath} from "../../configs/RouteConfig.tsx";
-import {Grid, Card, CardContent, Typography, Skeleton, Box} from "@mui/material";
-import {Contacts} from "@mui/icons-material";
+import { mediaPath } from "../../configs/RouteConfig.tsx";
+import { Grid, Card, CardContent, Typography, Skeleton, Box, Button } from "@mui/material";
+import { Contacts } from "@mui/icons-material";
 
 export interface IVideo {
     id: string;
@@ -18,13 +18,12 @@ export interface IVideo {
 const VideoListHorizontal = () => {
     const [videos, setVideos] = useState<IVideo[]>([]);
     const [loading, setLoading] = useState(true); // Create a loading state to display a loading indicator while fetching videos
+    const [moreVideoCount, setmoreVideoCount] = useState(8); // Initial count of skeletons
 
     const fetchVideo = async (id: string) => {
         try {
             const response = await instance.get(`video/${id}`, {
-                headers: {
-
-                },
+                headers: {},
             });
             if (response.status !== 200) {
                 throw new Error(`Failed to fetch video with id ${id}`);
@@ -72,6 +71,9 @@ const VideoListHorizontal = () => {
         return () => clearTimeout(timer);
     }, []); // Empty dependency array to run the effect only once when the component mounts
 
+    const handleButton = () => {
+        setmoreVideoCount(prevCount => prevCount + 8); // Increment the skeleton count by 8
+    };
 
     return (
         <Grid container spacing={2}>
@@ -79,8 +81,8 @@ const VideoListHorizontal = () => {
                 videos.map((video) => (
                     <Grid style={{ textDecoration: 'none', maxWidth: '320px' }} item xs={12} sm={6} md={4} lg={3} key={video.id}>
                         <Link to={`${mediaPath}/${video.id}`} >
-                            <Card sx={{maxWidth: '320px'}}>
-                                <PreviewImage videoId={video.id}/>
+                            <Card sx={{ maxWidth: '320px' }}>
+                                <PreviewImage videoId={video.id} />
                                 <CardContent >
                                     <Box>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -90,7 +92,7 @@ const VideoListHorizontal = () => {
                                                 <Typography>UnknownUser</Typography>
                                             </Box>
                                         </Box>
-                                        <Box style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
+                                        <Box style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
                                             {/*<Typography>{viewCount}</Typography>*/}
                                             <Typography>63555 views</Typography>
                                             {/*<Typography>{viewLikes}</Typography>*/}
@@ -103,14 +105,21 @@ const VideoListHorizontal = () => {
                     </Grid>
                 ))
             ) : (
-                Array.from({length: 5}).map((_, index) => (
+                Array.from({ length: moreVideoCount }).map((_, index) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                        <Skeleton variant="rectangular" width="100%" height={180}/>
-                        <Skeleton/>
-                        <Skeleton width="60%"/>
+                        <Skeleton variant="rectangular" width="100%" height={180} />
+                        <Skeleton />
+                        <Skeleton width="60%" />
                     </Grid>
                 ))
             )}
+            <Button variant="contained" color="primary" sx={{
+                height: "40px", width: "150px", position: "fixed",
+                top: "80%", left: "50%"
+            }} onClick={handleButton}>
+                Load More
+            </Button>
+            <Outlet />
         </Grid>
     );
 };

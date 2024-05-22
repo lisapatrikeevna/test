@@ -4,6 +4,7 @@ import VideoListHorizontal from "../../components/VideoComponents/VideoListHoriz
 import SearchField from "../../components/VideoComponents/SearchField.tsx";
 
 
+
 // interface Video {
 //     id: string;
 //     title: string;
@@ -51,7 +52,8 @@ const ChannelPage: FC = () => {
                 </Paper>
             </Grid>
             <Grid item xs={12}>
-                <VideoListHorizontal/>
+                <VideoListHorizontal />
+
             </Grid>
         </Grid>
     );

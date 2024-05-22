@@ -1,14 +1,14 @@
-import { FC, useEffect, useState} from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getVideo, getVideoMetadata } from '../../services/videoServices/videoShow.service';
 import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setBuffering, setError, setLoading, setVideoUrl } from '../../store/video/videoSlice';
-import VideoListHorizontal from '../../components/VideoComponents/VideoListHorizontal.tsx';
+
+// import VideoListHorizontal from '../../components/VideoComponents/VideoListHorizontal.tsx';
 import {Grid, Paper, Typography, Container, Skeleton, Button, Box} from "@mui/material";
 import {Contacts, Flag, IosShare, JoinFull, ThumbDown, ThumbUp} from "@mui/icons-material";
-
 
 const VideoPage: FC = () => {
     const { id } = useParams();
@@ -18,6 +18,9 @@ const VideoPage: FC = () => {
 
     const [videoName, setVideoName] = useState('');
     const [description, setDescription] = useState('');
+    const [views, setViews] = useState(0);
+    const [likes, setLikes] = useState(0);
+
 
     useEffect(() => {
         const loadVideo = async () => {
@@ -28,6 +31,9 @@ const VideoPage: FC = () => {
                     const metadata = await getVideoMetadata(videoId);
                     setVideoName(metadata.videoName);
                     setDescription(metadata.description);
+                    setViews(metadata.videoInfo.contentViewsByUsers);
+                    setLikes(metadata.videoInfo.contentLikesByUsers);
+
                     let blobUrl = '';
                     if (videoData) {
                         blobUrl = URL.createObjectURL(videoData);
@@ -61,7 +67,7 @@ const VideoPage: FC = () => {
 
     // Display real data when it's loaded
     return (
-        <Grid container spacing={3} style={{flexWrap: 'nowrap', justifyContent: 'center'}}>
+        <Grid container spacing={3} style={{ flexWrap: 'nowrap', justifyContent: 'center' }}>
             <Grid item xs={12} md={8} style={{ display: 'flex', alignItems: 'flex-start', maxWidth: '1200px' }}>
                 {/*VideoContainer*/}
                 <Container style={{ padding: 0 }}>
@@ -83,44 +89,46 @@ const VideoPage: FC = () => {
                     )}
                     {buffering && <Typography>Buffering...</Typography>}
                     {/*Container for video full description*/}
-                    
+
                     <Box>
                         <Typography variant="h4">{videoName}</Typography>
                         {/*Container for video metadata*/}
 
-                        <Container style={{display: 'flex', flexDirection: 'row'}}>
+                        <Container style={{ display: 'flex', flexDirection: 'row' }}>
                             {/*Container for all userInfo*/}
 
-                            <Container style={{display: 'flex', flexDirection: 'row'}}>
+                            <Container style={{ display: 'flex', flexDirection: 'row' }}>
                                 {/*Container for views, data, userAvatar, userName*/}
 
-                                <Container style={{display: 'flex', flexDirection: 'column'}}>
+                                <Container style={{ display: 'flex', flexDirection: 'column' }}>
                                     {/*Container for views,data*/}
 
-                                    <Container style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
+                                    <Container style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
                                         {/*<Typography>{viewCount}</Typography>*/}
 
-                                        <Typography>63555 views</Typography>
+                                        <Typography>{views}</Typography>
                                         {/*<Typography>{viewLikes}</Typography>*/}
 
                                         <Typography>2 weeks ago</Typography>
                                     </Container>
                                     {/*Container for userAvatar, userName*/}
 
-                                    <Container style={{display: 'flex', flexDirection: 'row'}}>
-                                        <Contacts/>
+                                    <Container style={{ display: 'flex', flexDirection: 'row' }}>
+                                        <Contacts />
                                         <Typography>UnknownUser</Typography>
                                     </Container>
                                 </Container>
 
                                 {/*Container for like, dislike, share*/}
+
                                 <Container style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
                                     <ThumbUp/>
-                                    <Typography>255</Typography>
+                                    <Typography>{likes}</Typography>
                                     <ThumbDown/>
                                     <Button variant='text' size='small' startIcon={<JoinFull/>}>Subscribe</Button>
                                     <Button variant='text' startIcon={<Flag/>}>Report</Button>
                                     <Button variant='text' startIcon={<IosShare/>}>Share</Button>
+
                                 </Container>
                             </Container>
                         </Container>
@@ -133,10 +141,9 @@ const VideoPage: FC = () => {
                             </Typography>
                         </Box>
                     </Box>
-
                     <Container style={{ padding: 0 }}>
                         <Paper elevation={3}>
-                            <VideoListHorizontal />
+                            {/*<VideoListHorizontal />*/}
                         </Paper>
                     </Container>
 

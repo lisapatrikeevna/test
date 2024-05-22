@@ -1,56 +1,61 @@
-import { Box, Button } from '@mui/material';
+// AppPageSideBar.tsx
+import { Box, Button, Collapse } from '@mui/material';
+import { RenderValues } from '../../pages/AppPage';
 
 type Props = {
   isOpenSideBar: boolean;
-  changeRender: Function;
+  changeRender: (value: RenderValues) => void;
 };
 
 const AppPageSideBar = ({ isOpenSideBar, changeRender }: Props) => {
   return (
-    <Box
-      height="100vh"
-      width="250px"
-      sx={{
-        display: isOpenSideBar ? 'flex' : 'none',
-        flexDirection: 'column',
-        gap: '10px',
-        background: 'cyan',
-        padding: '10px',
-      }}
-    >
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('comments');
+    <Collapse in={isOpenSideBar} timeout={300}>
+      <Box
+        height="100vh"
+        width="250px"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          background: '#e0e0e0',
+          padding: '10px',
+          borderRadius: '5px',
         }}
       >
-        Comments
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('chats');
-        }}
-      >
-        Chats
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('videos');
-        }}
-      >
-        Video
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('calendar');
-        }}
-      >
-        Calendar
-      </Button>
-    </Box>
+        <Button
+          variant="contained"
+          onClick={() => {
+            changeRender('comments');
+          }}
+        >
+          Comments
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            changeRender('chats');
+          }}
+        >
+          Chats
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            changeRender('videos');
+          }}
+        >
+          Video
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            changeRender('calendar');
+          }}
+        >
+          Calendar
+        </Button>
+      </Box>
+    </Collapse>
   );
 };
 export default AppPageSideBar;
