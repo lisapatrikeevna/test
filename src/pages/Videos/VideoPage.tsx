@@ -5,16 +5,10 @@ import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setBuffering, setError, setLoading, setVideoUrl } from '../../store/video/videoSlice';
-<<<<<<< HEAD
-import VideoListHorizontal from '../../components/VideoComponents/VideoListHorizontal.tsx';
-import { Grid, Paper, Typography, Container, Skeleton, Button, Box } from "@mui/material";
-import { Contacts, Flag, IosShare, JoinFull, ThumbDown, ThumbUp } from "@mui/icons-material";
-=======
+
 // import VideoListHorizontal from '../../components/VideoComponents/VideoListHorizontal.tsx';
 import {Grid, Paper, Typography, Container, Skeleton, Button, Box} from "@mui/material";
 import {Contacts, Flag, IosShare, JoinFull, ThumbDown, ThumbUp} from "@mui/icons-material";
-
->>>>>>> 3a5724d631936774f68ef12178109eb32dfeb45e
 
 const VideoPage: FC = () => {
     const { id } = useParams();
@@ -126,15 +120,7 @@ const VideoPage: FC = () => {
                                 </Container>
 
                                 {/*Container for like, dislike, share*/}
-<<<<<<< HEAD
-                                <Container style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                    <ThumbUp />
-                                    <Typography>255</Typography>
-                                    <ThumbDown />
-                                    <Button variant='text' size='small' startIcon={<JoinFull />}>Subscribe</Button>
-                                    <Button variant='text' startIcon={<Flag />}>Report</Button>
-                                    <Button variant='text' startIcon={<IosShare />}>Share</Button>
-=======
+
                                 <Container style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
                                     <ThumbUp/>
                                     <Typography>{likes}</Typography>
@@ -142,7 +128,7 @@ const VideoPage: FC = () => {
                                     <Button variant='text' size='small' startIcon={<JoinFull/>}>Subscribe</Button>
                                     <Button variant='text' startIcon={<Flag/>}>Report</Button>
                                     <Button variant='text' startIcon={<IosShare/>}>Share</Button>
->>>>>>> 3a5724d631936774f68ef12178109eb32dfeb45e
+
                                 </Container>
                             </Container>
                         </Container>
