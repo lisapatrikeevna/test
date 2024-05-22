@@ -1,3 +1,4 @@
+// AppPage.tsx
 import { Box, Divider } from '@mui/material';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import AppPageHeader from '../components/AppPageComponents/AppPageHeader';
@@ -9,7 +10,7 @@ import AppPageClaendar from '../components/AppPageComponents/AppPageClaendar';
 import VideoInSideBareAppPage from '../components/AppPageComponents/VideoInSideBareAppPage';
 import AppPageCentralComponent from '../components/AppPageComponents/AppPageCentralComponent';
 
-type RenderValues = 'comments' | 'chats' | 'calendar' | 'videos';
+export type RenderValues = 'comments' | 'chats' | 'calendar' | 'videos';
 
 const AppPage = () => {
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);

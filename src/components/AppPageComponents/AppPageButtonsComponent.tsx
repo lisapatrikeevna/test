@@ -38,7 +38,7 @@ const AppPageButtonsComponent = () => {
           alignItems: 'center',
         }}
       >
-        <Typography fontWeight="bold">VR</Typography>
+        <Typography fontWeight="bold" sx={{userSelect: 'none'}}>VR</Typography>
       </Stack>
 
       <BorderColorIcon

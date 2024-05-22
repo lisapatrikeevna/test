@@ -1,11 +1,20 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Typography, Collapse } from '@mui/material';
 import AppPageButtonsComponent from './AppPageButtonsComponent';
+import axios from 'axios';
 
 const AppPageCentralComponent = () => {
   const [showOptionsButton, setShowOptionsButton] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get('http://neoxonline.com:8030/video/all', { params: { offset: 0 } })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <Box
       sx={{
@@ -32,9 +41,9 @@ const AppPageCentralComponent = () => {
           variant="outlined"
           endIcon={
             showOptionsButton ? (
-              <KeyboardArrowUpIcon />
-            ) : (
               <KeyboardArrowDownIcon />
+            ) : (
+              <KeyboardArrowUpIcon />
             )
           }
           sx={{ width: '300px' }}
