@@ -18,17 +18,17 @@ interface LoginModalProps {
     onClose: () => void;
 }
 
-// Переопределим стили для MuiDialogContent-root
+
 const CustomDialogContent = styled(Box)(({ theme }) => ({
-    padding: '0 !important', // Удаляем padding
-    boxShadow: 'none !important', // Убираем тени
-    border: 'none !important', // Убираем бордеры
-    backgroundColor: theme.palette.background.default, // Цвет фона
+    padding: '0 !important', 
+    boxShadow: 'none !important', 
+    border: 'none !important', 
+    backgroundColor: theme.palette.background.default, 
 }));
 
 const CustomCardComponent = styled(Box)(({ theme }) => ({
-    boxShadow: 'none', // Убираем тени
-    border: 'none', // Убираем бордеры
+    boxShadow: 'none', 
+    border: 'none', 
     backgroundColor: theme.palette.background.default,
 }));
 

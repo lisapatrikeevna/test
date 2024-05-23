@@ -12,7 +12,7 @@ interface NeuCardContentProps extends BoxProps {
 const getContentStyles = (theme: Theme, props: NeuCardContentProps) => {
   const typedTheme = theme as Theme & { shadows: Shadows };
   return {
-    backgroundColor: typedTheme.palette.background.default,
+    backgroundColor: typedTheme.palette.background.paper,
     color: typedTheme.palette.text.primary,
     borderRadius: props.rounded ? '24px' : '8px',
   };
@@ -28,8 +28,8 @@ const StyledCardContent = styled(Box, {
   alignItems: 'center',
   justifyContent: 'center',
   boxSizing: 'border-box',
-  backgroundColor: 'var(--bg-color)',
-  color: 'var(--text-color)',
+  backgroundColor: 'inherit',
+  color: 'inherit',
   borderRadius: props.rounded ? '24px' : '8px',
 }));
 
