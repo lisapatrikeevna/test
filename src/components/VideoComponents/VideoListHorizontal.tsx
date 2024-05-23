@@ -99,7 +99,7 @@ const VideoListHorizontal = () => {
                 videos.map((video) => (
                     <Grid style={{ textDecoration: 'none', maxWidth: '320px' }} item xs={12} sm={6} md={4} lg={3} key={video.id}>
                         <Link to={`${mediaPath}/${video.id}`} >
-                            <Card sx={{ maxWidth: '320px' }}>
+                            <Card sx={{ maxWidth: '320px', maxHeight: '280px' }}>
                                 <PreviewImage videoId={video.id} />
                                 <CardContent >
                                     <Box>
@@ -145,11 +145,8 @@ const VideoListHorizontal = () => {
                 <Button
                     variant="contained"
                     color="primary"
-                    sx={{
-                        height: "40px",
-                        width: "150px",
-                    }}
                     onClick={handleButton}
+                    size="large"
                 >
                     Load More
                 </Button>
