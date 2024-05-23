@@ -66,7 +66,6 @@ const MainPage = () => {
   const [isImpressumModalOpen, setIsImpressumModalOpen] = useState(false);
   const [isPrivacyPolicyModalOpen, setIsPrivacyPolicyModalOpen] = useState(false);
   const [isDatenschutzModalOpen, setIsDatenschutzModalOpen] = useState(false);
-  const [isUserTermsModalOpen] = useState(false);
 
   if (!context) {
     throw new Error('Header must be used within ActiveSectionContext');
@@ -104,7 +103,7 @@ const MainPage = () => {
     return () => {
       window.removeEventListener('wheel', handleScroll);
     };
-  }, [activeSection, isImpressumModalOpen, isPrivacyPolicyModalOpen, isDatenschutzModalOpen, isUserTermsModalOpen, setActiveSection]);
+  }, [activeSection, isImpressumModalOpen, isPrivacyPolicyModalOpen, isDatenschutzModalOpen, setActiveSection]);
 
   useEffect(() => {
     const hash = location.hash;
@@ -162,11 +161,11 @@ const MainPage = () => {
         open={isImpressumModalOpen}
         onClose={() => setIsImpressumModalOpen(false)}
       >
-        <ModalContent>
+        <ModalContent sx={{ maxWidth: '500px' }}> {/* Установлено ограничение по ширине */}
           <CloseButton onClick={() => setIsImpressumModalOpen(false)}>
             <CloseIcon />
           </CloseButton>
-          <Impressum />
+          <Impressum onClose={() => setIsImpressumModalOpen(false)} />
         </ModalContent>
       </Modal>
       <Modal open={isPrivacyPolicyModalOpen}
