@@ -14,6 +14,7 @@ export interface IAuthUser {
   username: string;
   token: string;
   tokenExpiry: string;
+  userId: string;
 }
 export interface IToken {
   accessToken: string | null;
@@ -23,9 +24,11 @@ export interface IToken {
 
 export interface IResponseUserData {
   access_token: string;
-  access_token_expiry: string;
+  access_token_expiry: number;
   token_type: string;
   user_name: string;
+  message: string;
+  user_id: string; // Add this line
 }
 
 export interface ReactionSelectorProps {

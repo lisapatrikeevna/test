@@ -8,8 +8,7 @@ import { AuthService } from '../services/auth.service.ts';
 import Modal from "./Modal.tsx";
 import UserTerms from "../pages/landingComponents/UserTerms.tsx";
 import { useAppDispatch } from '../store/hooks.ts';
-import CardComponent from "./CardComponent.tsx";
-import { Box, Typography, IconButton, InputAdornment, Link } from "@mui/material";
+import { Box, Typography, IconButton, InputAdornment, Link, styled } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import NeuTextField from './neumorphism/input/NeuTextField';
 import NeuButton from './neumorphism/button/NeuButton';
@@ -18,6 +17,20 @@ interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
+
+
+const CustomDialogContent = styled(Box)(({ theme }) => ({
+    padding: '0 !important', 
+    boxShadow: 'none !important', 
+    border: 'none !important', 
+    backgroundColor: theme.palette.background.default, 
+}));
+
+const CustomCardComponent = styled(Box)(({ theme }) => ({
+    boxShadow: 'none', 
+    border: 'none', 
+    backgroundColor: theme.palette.background.default,
+}));
 
 const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [username, setUsername] = useState('');
@@ -60,6 +73,7 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                     navigate("/");
                 }
             }
+            
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             toast.error(err.response?.data?.message || "An unexpected error occurred.");
@@ -70,105 +84,103 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
         setShowPassword(!showPassword);
     };
 
-    // const toggleConfirmPasswordVisibility = () => {
-    //     setShowConfirmPassword(!showConfirmPassword);
-    // };
-
     const bttnHeight = '50px';
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} width="500px">
-            <CardComponent cardHeight={isRegistering ? '667px' : '600px'} cardWidth="100%">
-                <Box sx={{ padding: '25px' }}>
-                    <Typography variant="h2">{isRegistering ? 'Register' : 'Login'}</Typography>
-                    <form onSubmit={handleSubmit} autoComplete='off'>
-                        {isRegistering && (
+            <CustomDialogContent>
+                <CustomCardComponent sx={{ height: isRegistering ? '667px' : '600px', width: "100%" }}>
+                    <Box sx={{ padding: '25px' }}>
+                        <Typography variant="h2">{isRegistering ? 'Register' : 'Login'}</Typography>
+                        <form onSubmit={handleSubmit} autoComplete='off'>
+                            {isRegistering && (
+                                <NeuTextField
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    label="Email"
+                                    margin="normal"
+                                    rounded
+                                    outlined
+                                />
+                            )}
                             <NeuTextField
                                 required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                label="Email"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                label="Username"
                                 margin="normal"
                                 rounded
                                 outlined
                             />
-                        )}
-                        <NeuTextField
-                            required
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            label="Username"
-                            margin="normal"
-                            rounded
-                            outlined
-                        />
-                        <NeuTextField
-                            required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            label="Password"
-                            type={showPassword ? "text" : "password"}
-                            margin="normal"
-                            rounded
-                            outlined
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={togglePasswordVisibility}
-                                            edge="end"
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        {isRegistering && (
-                            <>
-                                <NeuTextField
-                                    required
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    label="Confirm Password"
-                                    type={showPassword ? "text" : "password"}
-                                    margin="normal"
-                                    rounded
-                                    outlined
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    onClick={togglePasswordVisibility}
-                                                    edge="end"
-                                                >
-                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                                <Typography variant="body2" sx={{ margin: "10px 0" }}>
-                                    By signing up, you agree to our <Link href="#" onClick={() => setIsUserTermsModalOpen(true)}>User Terms</Link>.
-                                </Typography>
-                            </>
-                        )}
-                        <NeuButton
-                            rounded
-                            type="submit"
-                            color="primary"
-                            sx={{ width: '385px', height: bttnHeight, margin: "10px 0", color: 'var(--text)', backgroundColor: 'var(--body)' }}
-                        >
-                            {isRegistering ? 'Sign up' : 'Sign in'}
-                        </NeuButton>
-                        <Box>
-                            <NeuButton onClick={() => setIsRegistering(!isRegistering)} sx={{ margin: "10px", color: 'var(--text)' }}>
-                                {isRegistering ? 'Sign in' : 'Sign up'}
+                            <NeuTextField
+                                required
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                label="Password"
+                                type={showPassword ? "text" : "password"}
+                                margin="normal"
+                                rounded
+                                outlined
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={togglePasswordVisibility}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            {isRegistering && (
+                                <>
+                                    <NeuTextField
+                                        required
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        label="Confirm Password"
+                                        type={showPassword ? "text" : "password"}
+                                        margin="normal"
+                                        rounded
+                                        outlined
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        onClick={togglePasswordVisibility}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <Typography variant="body2" sx={{ margin: "10px 0" }}>
+                                        By signing up, you agree to our <Link href="#" onClick={() => setIsUserTermsModalOpen(true)}>User Terms</Link>.
+                                    </Typography>
+                                </>
+                            )}
+                            <NeuButton
+                                rounded
+                                type="submit"
+                                color="primary"
+                                sx={{ width: '385px', height: bttnHeight, margin: "10px 0", color: 'var(--text)', backgroundColor: 'var(--body)' }}
+                            >
+                                {isRegistering ? 'Sign up' : 'Sign in'}
                             </NeuButton>
-                        </Box>
-                    </form>
-                </Box>
-            </CardComponent>
+                            <Box>
+                                <NeuButton onClick={() => setIsRegistering(!isRegistering)} sx={{ margin: "10px", color: 'var(--text)' }}>
+                                    {isRegistering ? 'Sign in' : 'Sign up'}
+                                </NeuButton>
+                            </Box>
+                        </form>
+                    </Box>
+                </CustomCardComponent>
+            </CustomDialogContent>
             <Modal isOpen={isUserTermsModalOpen} onClose={() => {
                 setIsUserTermsModalOpen(false);
                 setIsUserTermsAccepted(true);
