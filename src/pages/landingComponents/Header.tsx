@@ -1,6 +1,6 @@
 import { useEffect, useRef, useContext, useState, FC } from 'react';
 import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { WbSunny, Brightness2 } from '@mui/icons-material';
+import { WbSunny, DarkMode } from '@mui/icons-material';
 import { Handshake, Apps, Call, AccountBalance, AttachMoney } from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
@@ -117,7 +117,7 @@ const Header: FC = () => {
             background: 'var(--toggle_background)',
             boxShadow: '-10px -10px 25px var(--shadow_outer_light), 10px 10px 25px var(--shadow_outer_dark)'
           }} component="div">
-            <Brightness2 sx={{
+            <DarkMode sx={{
               color: '#5e5e5e',
               width: '24px',
               height: '24px',
