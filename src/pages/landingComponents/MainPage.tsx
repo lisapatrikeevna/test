@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Container, Modal, styled, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-// import Home from './Home';
-import Partners from './Partners.tsx'
+import Home from './Home'; // Добавим компонент Home
+import Partners from './Partners.tsx';
 import Pricing from '../../components/Pricing.tsx';
 import Contacts from './Contacts';
 import Footer from './Footer';
@@ -21,7 +21,7 @@ const PageContainer = styled('div')({
   minHeight: '100vh',
   minWidth: '100vw',
   scrollSnapType: 'x mandatory',
-  overflow: 'hidden', 
+  overflow: 'hidden',
 });
 
 const Section = styled('div')({
@@ -30,14 +30,14 @@ const Section = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  padding: '64px 0', 
+  padding: '64px 0',
 });
 
 const SectionContent = styled(Container)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  marginTop: '65px', 
+  marginTop: '65px',
 });
 
 const ModalContent = styled(Box)(({ theme }) => ({
@@ -79,7 +79,7 @@ const MainPage = () => {
         return;
       }
 
-      const sections = ["Pricing", "News", "Contacts", "AboutUs", "Partners"];
+      const sections = ["Home", "Pricing", "News", "Contacts", "AboutUs", "Partners"];
       const currentIndex = sections.indexOf(activeSection as string);
       let newIndex = currentIndex;
 
@@ -117,6 +117,11 @@ const MainPage = () => {
 
   return (
     <PageContainer>
+      <Section id="Home">
+        <SectionContent maxWidth="lg">
+          <Home />
+        </SectionContent>
+      </Section>
       <Section id="Pricing">
         <SectionContent maxWidth="lg">
           <Pricing />

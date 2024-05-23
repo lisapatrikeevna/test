@@ -44,12 +44,12 @@ const Header: FC = () => {
 
   useEffect(() => {
     linksRef.current = linksRef.current.slice(0, 6);
-    const partnersLink = linksRef.current.find(link => link?.dataset.to === "#Partners");
+    const partnersLink = linksRef.current.find(link => link?.dataset.to === "#Home");
     if (partnersLink) moveIndicator(partnersLink);
   }, []);
 
   useEffect(() => {
-    const activeIndex = activeSection ? ["Pricing", "News", "Contacts", "AboutUs", "Partners"].indexOf(activeSection) : -1;
+    const activeIndex = activeSection ? ["Home", "Pricing", "News", "Contacts", "AboutUs", "Partners"].indexOf(activeSection) : -1;
     const activeLink = linksRef.current[activeIndex];
     if (activeLink) {
       moveIndicator(activeLink);
@@ -74,7 +74,7 @@ const Header: FC = () => {
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
     }}>
-      <img src={logo} alt="NeoX" style={{ width: 70, height: 70 }} onClick={() => { handleClick("#Partners") }} />
+      <img src={logo} alt="NeoX" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
       <Box sx={{
         transformOrigin: 'left',
         display: 'flex',
