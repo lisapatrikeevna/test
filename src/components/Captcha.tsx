@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Typography, TextField, Button, Box } from '@mui/material';
+import { Typography, TextField, Box } from '@mui/material';
+import NeuButton from './neumorphism/button/NeuButton';
 
 interface CaptchaProps {
     onResult: (result: boolean) => void;
@@ -56,20 +57,21 @@ const Captcha = ({ onResult, reset }: CaptchaProps) => {
             ) : (
                 <>
                     <Typography variant="body1">{`${num1} ${operator} ${num2} = ?`}</Typography>
-                    <TextField
-                        type="number"
-                        value={userAnswer}
-                        InputProps={{
-                            style: { color: 'var(--text)' }
-                        }}
-                        InputLabelProps={{
-                            style: { color: 'var(--text)' }
-                        }}
-                        onChange={(e) => setUserAnswer(e.target.value)}
-                        onKeyDown={handleKeyDown} // Add the keydown event listener
-
-                    />
-                    <Button sx={{ color: 'var(--text)', backgroundColor: 'var(--body)' }} variant="contained" onClick={checkAnswer}>Check</Button>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <TextField
+                            type="number"
+                            value={userAnswer}
+                            InputProps={{
+                                style: { color: 'var(--text)' }
+                            }}
+                            InputLabelProps={{
+                                style: { color: 'var(--text)' }
+                            }}
+                            onChange={(e) => setUserAnswer(e.target.value)}
+                            onKeyDown={handleKeyDown} // Add the keydown event listener
+                        />
+                        <NeuButton rounded sx={{ color: 'var(--text)', backgroundColor: 'var(--body)' }} variant="contained" onClick={checkAnswer}>Check</NeuButton>
+                    </Box>
                 </>
             )}
         </Box>

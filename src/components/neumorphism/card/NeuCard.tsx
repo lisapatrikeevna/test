@@ -18,30 +18,19 @@ const getCardStyles = (theme: Theme, props: NeuCardProps) => {
   const typedTheme = theme as Theme & { shadows: Shadows };
   const commonStyles = {
     boxShadow: typedTheme.shadows[1],
-    backgroundColor: typedTheme.palette.background.default,
     color: typedTheme.palette.text.primary,
     borderRadius: typedTheme.shape.borderRadius,
     transition: 'box-shadow 200ms ease-in-out',
   };
 
   const shadowLevel = props.elevation ? props.elevation : 1;
-//   const shadowProperty = `--box-shadow-${shadowLevel}`;
 
-  if (typedTheme.palette.mode === 'dark') {
-    return {
-      ...commonStyles,
-      '--bg-color': typedTheme.palette.background.default,
-      '--text-color': typedTheme.palette.text.primary,
-      '--box-shadow': typedTheme.shadows[shadowLevel],
-    };
-  } else {
-    return {
-      ...commonStyles,
-      '--bg-color': typedTheme.palette.background.default,
-      '--text-color': typedTheme.palette.text.primary,
-      '--box-shadow': typedTheme.shadows[shadowLevel],
-    };
-  }
+  return {
+    ...commonStyles,
+    backgroundColor: typedTheme.palette.background.paper,
+    '--text-color': typedTheme.palette.text.primary,
+    '--box-shadow': typedTheme.shadows[shadowLevel],
+  };
 };
 
 const StyledCard = styled(Card, {
@@ -63,7 +52,7 @@ const StyledCard = styled(Card, {
   justifyContent: 'center',
   height: 'auto',
   boxSizing: 'border-box',
-  backgroundColor: 'var(--bg-color)',
+  backgroundColor: 'inherit',
   boxShadow: 'var(--box-shadow)',
   color: 'var(--text-color)',
   transition: 'box-shadow 200ms ease-in-out',
@@ -72,7 +61,6 @@ const StyledCard = styled(Card, {
   ...(props.outlined && {
     boxShadow: 'none !important',
     transition: 'none !important',
-    '--bg-color': 'transparent !important',
     border: `1px solid var(--border-color)`,
   }),
   ...(props.flat && { boxShadow: 'none !important' }),

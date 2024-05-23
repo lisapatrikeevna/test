@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { TextField, Button, Typography, Box, Grid, IconButton } from '@mui/material';
+import { TextField, Typography, Box, Grid, IconButton } from '@mui/material';
 import { Call, Mail, Map } from '@mui/icons-material';
 import { FeedbackService } from '../services/feedback.service';
 import Captcha from './Captcha';
+import NeuButton from './neumorphism/button/NeuButton';
 
 const WriteToUsForm = () => {
     const formRef = useRef<HTMLFormElement>(null);
@@ -181,9 +182,9 @@ const WriteToUsForm = () => {
                         />
                         <Captcha onResult={handleCaptchaResult} reset={resetCaptcha} />
                         <Box sx={{ mt: 2, textAlign: 'center' }}>
-                            <Button sx={{ color: 'var(--text)', backgroundColor: 'var(--body)' }} variant="contained" onClick={() => formRef.current?.dispatchEvent(new Event('submit'))}>
+                            <NeuButton sx={{ color: 'var(--text)', backgroundColor: 'var(--body)' }} rounded size='large' onClick={() => formRef.current?.dispatchEvent(new Event('submit'))}>
                                 Send
-                            </Button>
+                            </NeuButton>
                         </Box>
                     </form>
                 </Box>
