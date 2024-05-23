@@ -5,16 +5,36 @@ import AppPageHeader from '../components/AppPageComponents/AppPageHeader';
 import AppPageChats from '../components/AppPageComponents/AppPageChats';
 import AppPageComments from '../components/AppPageComponents/AppPageComments';
 import AppPageSideBar from '../components/AppPageComponents/AppPageSideBar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AppPageClaendar from '../components/AppPageComponents/AppPageClaendar';
 import VideoInSideBareAppPage from '../components/AppPageComponents/VideoInSideBareAppPage';
 import AppPageCentralComponent from '../components/AppPageComponents/AppPageCentralComponent';
+import AppPageAudioComponent from '../components/AppPageComponents/AppPageAudioComponent';
+import AppPageRadioComponent from '../components/AppPageComponents/AppPageRadioComponent';
 
-export type RenderValues = 'comments' | 'chats' | 'calendar' | 'videos';
+export type RenderValues =
+  | 'comments'
+  | 'chats'
+  | 'calendar'
+  | 'videos'
+  | 'audio'
+  | 'radio';
 
 const AppPage = () => {
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
   const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+
+  useEffect(() => {
+    if (isOpenSideBar) {
+      setIsOverlayVisible(true);
+    } else {
+      const timeout = setTimeout(() => {
+        setIsOverlayVisible(false);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [isOpenSideBar]);
 
   function changeRender(value: RenderValues) {
     setRenderValues(value);
@@ -42,10 +62,12 @@ const AppPage = () => {
               {renderValues === 'comments' && <AppPageComments />}
               {renderValues === 'videos' && <VideoInSideBareAppPage />}
               {renderValues === 'calendar' && <AppPageClaendar />}
+              {renderValues === 'audio' && <AppPageAudioComponent />}
+              {renderValues === 'radio' && <AppPageRadioComponent />}
             </Box>
           </Panel>
         </PanelGroup>
-        {isOpenSideBar && (
+        {isOverlayVisible && (
           <Box
             position="fixed"
             top={0}
@@ -55,12 +77,18 @@ const AppPage = () => {
             bgcolor="rgba(0, 0, 0, 0.5)"
             zIndex={999}
             onClick={() => setIsOpenSideBar(false)}
+            style={{
+              transition: 'opacity 0.3s ease',
+              opacity: isOpenSideBar ? 1 : 0,
+              pointerEvents: isOpenSideBar ? 'auto' : 'none',
+            }}
           />
         )}
         <Box position="absolute" top={0} right={0} zIndex={1000}>
           <AppPageSideBar
             isOpenSideBar={isOpenSideBar}
             changeRender={changeRender}
+            setIsOpenSideBar={setIsOpenSideBar}
           />
         </Box>
       </Box>
