@@ -161,7 +161,7 @@ const MainPage = () => {
         open={isImpressumModalOpen}
         onClose={() => setIsImpressumModalOpen(false)}
       >
-        <ModalContent sx={{ maxWidth: '500px' }}> {/* Установлено ограничение по ширине */}
+        <ModalContent sx={{ maxWidth: '500px' }}> 
           <CloseButton onClick={() => setIsImpressumModalOpen(false)}>
             <CloseIcon />
           </CloseButton>
