@@ -30,8 +30,8 @@ export const userSlice = createSlice({
       state.user = action.payload;
       state.token.accessToken = action.payload.token;
       state.token.accessTokenExpiry = action.payload.tokenExpiry;
-
       state.isAuth = true;
+      state.user.userId = action.payload.userId;
     },
     logout: (state) => {
       state.isAuth = false;
