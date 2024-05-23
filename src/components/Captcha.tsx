@@ -57,7 +57,8 @@ const Captcha = ({ onResult, reset }: CaptchaProps) => {
                 <Typography variant="body1">Passed</Typography>
             ) : (
                 <>
-                    <Typography variant="body1">{`${num1} ${operator} ${num2} = ?`}</Typography>
+                    <Typography gutterBottom sx={{mt: 1, ml: 1}} variant="body1">Answer the question:</Typography>
+                    <Typography sx={{mt: 1, ml: 1}} gutterBottom variant="body1">{`${num1} ${operator} ${num2} = ?`}</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <NeuTextField
                             rounded

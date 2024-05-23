@@ -1,7 +1,7 @@
 import { useEffect, useRef, useContext, useState, FC } from 'react';
 import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { WbSunny, DarkMode } from '@mui/icons-material';
-import { Handshake, Apps, Call, AccountBalance, AttachMoney } from '@mui/icons-material';
+import { Handshake, Apps, Call, AccountBalance, AttachMoney, Build } from '@mui/icons-material'; // Import Build icon for Project
 import { Link } from "react-router-dom";
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
@@ -43,13 +43,13 @@ const Header: FC = () => {
   };
 
   useEffect(() => {
-    linksRef.current = linksRef.current.slice(0, 6);
-    const partnersLink = linksRef.current.find(link => link?.dataset.to === "#Home");
-    if (partnersLink) moveIndicator(partnersLink);
+    linksRef.current = linksRef.current.slice(0, 7); // Increase to 7 for the new section
+    const homeLink = linksRef.current.find(link => link?.dataset.to === "#Home");
+    if (homeLink) moveIndicator(homeLink);
   }, []);
 
   useEffect(() => {
-    const activeIndex = activeSection ? ["Home", "Pricing", "News", "Contacts", "AboutUs", "Partners"].indexOf(activeSection) : -1;
+    const activeIndex = activeSection ? ["Home", "Pricing", "News", "Contacts", "AboutUs", "Partners", "Project"].indexOf(activeSection) : -1;
     const activeLink = linksRef.current[activeIndex];
     if (activeLink) {
       moveIndicator(activeLink);
@@ -82,7 +82,7 @@ const Header: FC = () => {
         alignItems: 'center',
       }} >
         <List sx={{ display: 'flex', flexDirection: 'row', position: 'absolute', top: '-65px', width: "850px" }}>
-          {["#Pricing", "#News", "#Contacts", "#AboutUs", "#Partners"].map((item, index) => (
+          {["#Pricing", "#News", "#Contacts", "#AboutUs", "#Partners", "#Project"].map((item, index) => (
             <ListItem key={item} sx={{ transform: 'translateY(70px)' }}>
               <Link to={item}
                 ref={el => linksRef.current[index] = el}
@@ -96,6 +96,7 @@ const Header: FC = () => {
                   {item === "#News" && <Apps />}
                   {item === "#Contacts" && <Call />}
                   {item === "#AboutUs" && <AccountBalance />}
+                  {item === "#Project" && <Build />} {/* Add icon for Project */}
                 </ListItemIcon>
                 <ListItemText primary={item.substring(1)} sx={{ textAlign: 'center' }} />
               </Link>

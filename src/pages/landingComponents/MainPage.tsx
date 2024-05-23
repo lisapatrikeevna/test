@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Container, Modal, styled, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import Home from './Home'; // Добавим компонент Home
+import Home from './Home'; 
 import Partners from './Partners.tsx';
 import Pricing from '../../components/Pricing.tsx';
 import Contacts from './Contacts';
@@ -14,6 +14,7 @@ import Cookies from './cookies/Cookies.tsx';
 import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
 import News from "./News.tsx";
 import AboutUs from "./AboutUs.tsx";
+import Project from './Project'; 
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -79,7 +80,7 @@ const MainPage = () => {
         return;
       }
 
-      const sections = ["Home", "Pricing", "News", "Contacts", "AboutUs", "Partners"];
+      const sections = ["Home", "Pricing", "News", "Contacts", "AboutUs", "Partners", "Project"];
       const currentIndex = sections.indexOf(activeSection as string);
       let newIndex = currentIndex;
 
@@ -145,6 +146,11 @@ const MainPage = () => {
       <Section id="Partners">
         <SectionContent maxWidth="lg">
           <Partners />
+        </SectionContent>
+      </Section>
+      <Section id="Project">
+        <SectionContent maxWidth="lg">
+          <Project />
         </SectionContent>
       </Section>
       <Footer
