@@ -4,11 +4,12 @@ import { getVideo, getVideoMetadata } from '../../services/videoServices/videoSh
 import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { setBuffering, setError, setLoading, setVideoUrl } from '../../store/video/videoSlice';
+import { setError, setLoading, setVideoUrl, setBuffering } from '../../store/video/videoSlice';
 
-// import VideoListHorizontal from '../../components/VideoComponents/VideoListHorizontal.tsx';
-import {Grid, Paper, Typography, Container, Skeleton, Button, Box} from "@mui/material";
-import {Contacts, Flag, IosShare, JoinFull, ThumbDown, ThumbUp} from "@mui/icons-material";
+import { Grid, Paper, Typography, Container, Skeleton, Button, Box } from "@mui/material";
+import { Contacts, Flag, IosShare, JoinFull, ThumbDown, ThumbUp } from "@mui/icons-material";
+import { useVideoProgress, useLikeHandler } from '../../components/VideoComponents/UseVideoHandlers.tsx';
+import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal.tsx";
 
 const VideoPage: FC = () => {
     const { id } = useParams();
@@ -19,8 +20,10 @@ const VideoPage: FC = () => {
     const [videoName, setVideoName] = useState('');
     const [description, setDescription] = useState('');
     const [views, setViews] = useState(0);
-    const [likes, setLikes] = useState(0);
+    const [videoDuration, setVideoDuration] = useState(0);
 
+    const { handleVideoProgress } = useVideoProgress(videoDuration, videoId, videoName, description);
+    const { likes, setLikes, handleLike } = useLikeHandler(videoId, videoName, description);
 
     useEffect(() => {
         const loadVideo = async () => {
@@ -31,8 +34,8 @@ const VideoPage: FC = () => {
                     const metadata = await getVideoMetadata(videoId);
                     setVideoName(metadata.videoName);
                     setDescription(metadata.description);
-                    setViews(metadata.videoInfo.contentViewsByUsers);
-                    setLikes(metadata.videoInfo.contentLikesByUsers);
+                    setViews(metadata.videoInfo.contentViewsByUsers.length); // Assuming contentViewsByUsers is an array
+                    setLikes(metadata.videoInfo.contentLikesByUsers.length); // Assuming contentLikesByUsers is an array
 
                     let blobUrl = '';
                     if (videoData) {
@@ -69,7 +72,7 @@ const VideoPage: FC = () => {
     return (
         <Grid container spacing={3} style={{ flexWrap: 'nowrap', justifyContent: 'center' }}>
             <Grid item xs={12} md={8} style={{ display: 'flex', alignItems: 'flex-start', maxWidth: '1200px' }}>
-                {/*VideoContainer*/}
+                {/* VideoContainer */}
                 <Container style={{ padding: 0 }}>
                     {videoUrl ? (
                         <ReactPlayer
@@ -83,35 +86,33 @@ const VideoPage: FC = () => {
                             onBuffer={() => dispatch(setBuffering(true))}
                             onBufferEnd={() => dispatch(setBuffering(false))}
                             config={{ file: { attributes: { preload: 'metadata' } } }}
+                            onProgress={handleVideoProgress}
+                            onDuration={setVideoDuration}
                         />
                     ) : (
                         <Typography>Loading...</Typography>
                     )}
                     {buffering && <Typography>Buffering...</Typography>}
-                    {/*Container for video full description*/}
+                    {/* Container for video full description */}
 
                     <Box>
                         <Typography variant="h4">{videoName}</Typography>
-                        {/*Container for video metadata*/}
+                        {/* Container for video metadata */}
 
                         <Container style={{ display: 'flex', flexDirection: 'row' }}>
-                            {/*Container for all userInfo*/}
+                            {/* Container for all userInfo */}
 
                             <Container style={{ display: 'flex', flexDirection: 'row' }}>
-                                {/*Container for views, data, userAvatar, userName*/}
+                                {/* Container for views, data, userAvatar, userName */}
 
                                 <Container style={{ display: 'flex', flexDirection: 'column' }}>
-                                    {/*Container for views,data*/}
+                                    {/* Container for views, data */}
 
                                     <Container style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                        {/*<Typography>{viewCount}</Typography>*/}
-
-                                        <Typography>{views}</Typography>
-                                        {/*<Typography>{viewLikes}</Typography>*/}
-
+                                        <Typography>{views} views</Typography>
                                         <Typography>2 weeks ago</Typography>
                                     </Container>
-                                    {/*Container for userAvatar, userName*/}
+                                    {/* Container for userAvatar, userName */}
 
                                     <Container style={{ display: 'flex', flexDirection: 'row' }}>
                                         <Contacts />
@@ -119,38 +120,36 @@ const VideoPage: FC = () => {
                                     </Container>
                                 </Container>
 
-                                {/*Container for like, dislike, share*/}
+                                {/* Container for like, dislike, share */}
 
-                                <Container style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
-                                    <ThumbUp/>
+                                <Container style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                                    <ThumbUp onClick={() => {
+                                        console.log('ThumbUp clicked');
+                                        handleLike();
+                                    }} />
                                     <Typography>{likes}</Typography>
-                                    <ThumbDown/>
-                                    <Button variant='text' size='small' startIcon={<JoinFull/>}>Subscribe</Button>
-                                    <Button variant='text' startIcon={<Flag/>}>Report</Button>
-                                    <Button variant='text' startIcon={<IosShare/>}>Share</Button>
-
+                                    <ThumbDown />
+                                    <Button variant='text' size='small' startIcon={<JoinFull />}>Subscribe</Button>
+                                    <Button variant='text' startIcon={<Flag />}>Report</Button>
+                                    <Button variant='text' startIcon={<IosShare />}>Share</Button>
                                 </Container>
                             </Container>
                         </Container>
-                        {/*Box for Description*/}
+                        {/* Box for Description */}
                         <Box>
-                            {/*Typography for Description*/}
                             <Typography variant='h5'>Description</Typography>
-                            <Typography>
-                                {description}
-                            </Typography>
+                            <Typography>{description}</Typography>
                         </Box>
                     </Box>
                     <Container style={{ padding: 0 }}>
                         <Paper elevation={3}>
-                            {/*<VideoListHorizontal />*/}
+                            <VideoListHorizontal />
                         </Paper>
                     </Container>
 
-                    {/* Здесь можно добавить компонент комментариев */}
+                    {/* Here you can add the comments component */}
                 </Container>
             </Grid>
-
         </Grid>
     );
 }

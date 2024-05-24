@@ -26,14 +26,14 @@ export const AuthService = {
       const token = btoa(`${userData.username}:${userData.password}`); // Encode username and password in base64
 
       const response: AxiosResponse<IResponseUserData> = await instanceAuth.post(
-        "login-user",
-        {},
-        {
-          headers: {
-            Authorization: `Basic ${token}`,
-          },
-          withCredentials: true
-        }
+          "login-user",
+          {},
+          {
+            headers: {
+              Authorization: `Basic ${token}`,
+            },
+            withCredentials: true
+          }
       );
 
       return response.data;

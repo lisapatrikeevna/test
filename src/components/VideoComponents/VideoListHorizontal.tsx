@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
 import { mediaPath } from "../../configs/RouteConfig.tsx";
-import { Grid, Card, CardContent, Typography, Skeleton, Box, Button } from "@mui/material";
+import { Grid, Card, CardContent, Typography, Skeleton, Box, Button, Container, } from "@mui/material";
 import { Contacts } from "@mui/icons-material";
 
 export interface IVideo {
@@ -17,8 +17,9 @@ export interface IVideo {
 
 const VideoListHorizontal = () => {
     const [videos, setVideos] = useState<IVideo[]>([]);
-    const [loading, setLoading] = useState(true); // Create a loading state to display a loading indicator while fetching videos
-    const [moreVideoCount, setmoreVideoCount] = useState(8); // Initial count of skeletons
+    const [loading, setLoading] = useState(true);
+    const [moreVideoCount, setmoreVideoCount] = useState(4);; // Initial number of videos to display
+
 
     const fetchVideo = async (id: string) => {
         try {
@@ -71,56 +72,66 @@ const VideoListHorizontal = () => {
         return () => clearTimeout(timer);
     }, []); // Empty dependency array to run the effect only once when the component mounts
 
+
     const handleButton = () => {
-        setmoreVideoCount(prevCount => prevCount + 8); // Increment the skeleton count by 8
+        // Check if the current count of displayed videos is less than the total number of videos
+        if (moreVideoCount < videos.length) {
+            // Update the state "moreVideoCount" by either increasing it by 4
+            // or setting it to the total number of videos, whichever is smaller
+            setmoreVideoCount((prevCount) => Math.min(prevCount + 4, videos.length));
+        }
     };
 
     return (
-        <Grid container spacing={2}>
-            {!loading ? (
-                videos.map((video) => (
-                    <Grid style={{ textDecoration: 'none', maxWidth: '320px' }} item xs={12} sm={6} md={4} lg={3} key={video.id}>
-                        <Link to={`${mediaPath}/${video.id}`} >
-                            <Card sx={{ maxWidth: '320px' }}>
-                                <PreviewImage videoId={video.id} />
-                                <CardContent >
-                                    <Box>
-                                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                            <Typography variant="h5">{video.videoName}</Typography>
-                                            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
-                                                <Contacts />
-                                                <Typography>UnknownUser</Typography>
+        <Container>
+            <Grid container spacing={2}>
+                {!loading
+                    ? videos.slice(0, moreVideoCount).map((video) => (
+                        <Grid
+                            style={{ textDecoration: "none", maxWidth: "320px" }}
+                            item xs={12} sm={6} md={4} lg={2}
+                            key={video.id} >
+                            <Link to={`${mediaPath}/${video.id}`}>
+                                <Card sx={{ maxWidth: "320px", maxHeight: "280px" }}>
+                                    <PreviewImage videoId={video.id} />
+                                    <CardContent>
+                                        <Box>
+                                            <Box sx={{ display: "flex", flexDirection: "column" }}>
+                                                <Typography variant="h5">{video.videoName}</Typography>
+                                                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                                                    <Contacts />
+                                                    <Typography>UnknownUser</Typography>
+                                                </Box>
+                                            </Box>
+                                            <Box style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                                                <Typography>63555 views</Typography>
+                                                <Typography>2 weeks ago</Typography>
                                             </Box>
                                         </Box>
-                                        <Box style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                            {/*<Typography>{viewCount}</Typography>*/}
-                                            <Typography>63555 views</Typography>
-                                            {/*<Typography>{viewLikes}</Typography>*/}
-                                            <Typography>2 weeks ago</Typography>
-                                        </Box>
-                                    </Box>
-                                </CardContent>
-                            </Card>
-                        </Link>
-                    </Grid>
-                ))
-            ) : (
-                Array.from({ length: moreVideoCount }).map((_, index) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                        <Skeleton variant="rectangular" width="100%" height={180} />
-                        <Skeleton />
-                        <Skeleton width="60%" />
-                    </Grid>
-                ))
-            )}
-            <Button variant="contained" color="primary" sx={{
-                height: "40px", width: "150px", position: "fixed",
-                top: "80%", left: "50%"
-            }} onClick={handleButton}>
-                Load More
-            </Button>
+                                    </CardContent>
+                                </Card>
+                            </Link>
+                        </Grid>
+                    ))
+                    : Array.from({ length: 5 }).map((_, index) => (
+                        <Grid item xs={12} sm={6} md={4} lg={2} key={index}>
+                            <Skeleton variant="rectangular" width="100%" height={180} />
+                            <Skeleton />
+                            <Skeleton width="60%" />
+                        </Grid>
+                    ))}
+            </Grid>
+            <Box display="flex" justifyContent="center" mt={2}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleButton}
+                    size="large">
+                    Load More
+                </Button>
+            </Box>
             <Outlet />
-        </Grid>
+        </Container>
     );
 };
 
