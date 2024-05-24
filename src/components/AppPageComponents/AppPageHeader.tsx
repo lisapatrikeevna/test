@@ -16,9 +16,10 @@ import { useState } from 'react';
 
 type Props = {
   setIsOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenMainSideBar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const AppPageHeader = ({ setIsOpenSideBar }: Props) => {
+const AppPageHeader = ({ setIsOpenSideBar, setIsOpenMainSideBar }: Props) => {
   const [isOpenModalNotifications, setIsOpenModalNotifications] =
     useState(false);
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
@@ -43,7 +44,10 @@ const AppPageHeader = ({ setIsOpenSideBar }: Props) => {
       padding={2}
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <MenuIcon cursor="pointer" />
+        <MenuIcon
+          cursor="pointer"
+          onClick={() => setIsOpenMainSideBar((prev) => !prev)}
+        />
         <Avatar
           src={data[0].img}
           alt="avatar"

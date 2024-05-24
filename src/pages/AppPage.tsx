@@ -11,6 +11,7 @@ import VideoInSideBareAppPage from '../components/AppPageComponents/VideoInSideB
 import AppPageCentralComponent from '../components/AppPageComponents/AppPageCentralComponent';
 import AppPageAudioComponent from '../components/AppPageComponents/AppPageAudioComponent';
 import AppPageRadioComponent from '../components/AppPageComponents/AppPageRadioComponent';
+import AppPageMainSideBar from '../components/AppPageComponents/AppPageMainSideBar';
 
 export type RenderValues =
   | 'comments'
@@ -24,9 +25,10 @@ const AppPage = () => {
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
   const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+  const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
 
   useEffect(() => {
-    if (isOpenSideBar) {
+    if (isOpenSideBar || isOpenMainSideBar) {
       setIsOverlayVisible(true);
     } else {
       const timeout = setTimeout(() => {
@@ -34,7 +36,7 @@ const AppPage = () => {
       }, 500);
       return () => clearTimeout(timeout);
     }
-  }, [isOpenSideBar]);
+  }, [isOpenSideBar, isOpenMainSideBar]);
 
   function changeRender(value: RenderValues) {
     setRenderValues(value);
@@ -42,11 +44,17 @@ const AppPage = () => {
 
   return (
     <Box>
-      <AppPageHeader setIsOpenSideBar={setIsOpenSideBar} />
+      <AppPageHeader
+        setIsOpenSideBar={setIsOpenSideBar}
+        setIsOpenMainSideBar={setIsOpenMainSideBar}
+      />
       <Divider />
       <Box display="flex" position="relative">
+        <Box position="absolute" top={0} left={0} zIndex={1000}>
+          <AppPageMainSideBar isOpenMainSideBar={isOpenMainSideBar} />
+        </Box>
         <PanelGroup direction="horizontal" style={{ height: '100vh' }}>
-          <Panel defaultSize={25} collapsible={true} maxSize={100} minSize={15}>
+          <Panel defaultSize={25} maxSize={100} minSize={4}>
             <AppPageChats />
           </Panel>
 
@@ -76,11 +84,15 @@ const AppPage = () => {
             bottom={0}
             bgcolor="rgba(0, 0, 0, 0.5)"
             zIndex={999}
-            onClick={() => setIsOpenSideBar(false)}
+            onClick={() => {
+              setIsOpenSideBar(false);
+              setIsOpenMainSideBar(false);
+            }}
             style={{
               transition: 'opacity 0.3s ease',
-              opacity: isOpenSideBar ? 1 : 0,
-              pointerEvents: isOpenSideBar ? 'auto' : 'none',
+              opacity: isOpenSideBar || isOpenMainSideBar ? 1 : 0,
+              pointerEvents:
+                isOpenSideBar || isOpenMainSideBar ? 'auto' : 'none',
             }}
           />
         )}
