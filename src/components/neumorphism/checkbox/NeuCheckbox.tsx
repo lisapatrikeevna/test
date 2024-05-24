@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { CheckboxProps as MuiCheckboxProps } from '@mui/material';
-import { Shadows } from '../../../types/types';
+import { Shadows } from '../../../types/types'; 
 
 interface NeuCheckboxProps extends Omit<MuiCheckboxProps, 'checkedIcon' | 'icon'> {
   bgColor?: string;
@@ -9,11 +9,12 @@ interface NeuCheckboxProps extends Omit<MuiCheckboxProps, 'checkedIcon' | 'icon'
 }
 
 const StyledCheckboxContainer = styled('span')<NeuCheckboxProps>(({ theme, bgColor, borderColor }) => {
-  const typedTheme = theme as typeof theme & { shadows: Shadows };
+  const primaryColor = theme.palette.primary.main;
+  const textColor = theme.palette.text.primary;
 
   return {
-    width: '20px',
-    height: '20px',
+    width: '24px',
+    height: '24px',
     border: 'none',
     outline: 'none',
     cursor: 'pointer',
@@ -22,7 +23,7 @@ const StyledCheckboxContainer = styled('span')<NeuCheckboxProps>(({ theme, bgCol
     borderRadius: '4px',
     boxSizing: 'border-box',
     backgroundColor: bgColor || theme.palette.background.paper,
-    boxShadow: typedTheme.shadows[1],
+    boxShadow: (theme.shadows as Shadows)[1],
     transition: 'all 200ms ease-in-out',
     display: 'flex',
     alignItems: 'center',
@@ -30,72 +31,24 @@ const StyledCheckboxContainer = styled('span')<NeuCheckboxProps>(({ theme, bgCol
     '&:after': {
       content: '""',
       position: 'absolute',
-      width: '4px',
-      height: '10px',
-      borderRight: `2px solid ${borderColor || theme.palette.text.primary}`,
-      borderBottom: `2px solid ${borderColor || theme.palette.text.primary}`,
+      width: '8px',
+      height: '14px',
+      borderRight: `3px solid ${borderColor || textColor}`,
+      borderBottom: `3px solid ${borderColor || textColor}`,
       transform: 'rotate(45deg)',
     },
     '&.checked': {
-      boxShadow: `inset ${typedTheme.shadows[1]}`,
-    },
-    '&.checked:after': {
-      borderColor: theme.palette.primary.main,
-    },
-    '&:hover:after, &.checked:not(:hover):after': {
-      animation: 'checkbox-check 200ms cubic-bezier(.4, .0, .23, 1) forwards',
-    },
-    '&:not(:hover):after': {
-      animation: 'checkbox-uncheck 150ms cubic-bezier(.4, .0, .23, 1) forwards',
+      boxShadow: `inset ${(theme.shadows as Shadows)[1]}`,
+      '&:after': {
+        borderColor: primaryColor,
+      },
     },
     '&.Mui-disabled': {
       pointerEvents: 'none',
       color: theme.palette.action.disabled,
       '&.checked:after': {
-        borderRight: '2px solid transparent',
-        borderBottom: '2px solid transparent',
-      },
-    },
-    '@keyframes checkbox-check': {
-      '0%': {
-        width: '0',
-        height: '0',
-        borderColor: theme.palette.primary.main,
-        transform: 'rotate(45deg)',
-      },
-      '70%': {
-        width: '4px',
-        height: '0',
-        transform: 'rotate(45deg)',
-      },
-      '100%': {
-        width: '4px',
-        height: '10px',
-        borderColor: theme.palette.primary.main,
-        transform: 'rotate(45deg)',
-      },
-    },
-    '@keyframes checkbox-uncheck': {
-      '0%': {
-        width: '4px',
-        height: '10px',
-        borderColor: theme.palette.primary.main,
-        transform: 'rotate(45deg)',
-      },
-      '60%': {
-        width: '4px',
-        height: '0',
-        transform: 'rotate(45deg)',
-      },
-      '90%': {
-        width: '0',
-        height: '0',
-        borderColor: theme.palette.primary.main,
-        transform: 'rotate(45deg)',
-      },
-      '100%': {
-        borderColor: 'transparent',
-        transform: 'rotate(45deg)',
+        borderRight: '3px solid transparent',
+        borderBottom: '3px solid transparent',
       },
     },
   };
