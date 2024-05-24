@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service.ts';
 import Modal from "./Modal.tsx";
 import UserTerms from "../pages/landingComponents/UserTerms.tsx";
 import { useAppDispatch } from '../store/hooks.ts';
-import { Box, Typography, IconButton, InputAdornment, Link, styled } from "@mui/material";
+import { Box, Typography, IconButton, InputAdornment, Link, FormControl } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import NeuTextField from './neumorphism/input/NeuTextField';
 import NeuButton from './neumorphism/button/NeuButton';
@@ -17,20 +17,6 @@ interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
-
-
-const CustomDialogContent = styled(Box)(({ theme }) => ({
-    padding: '0 !important', 
-    boxShadow: 'none !important', 
-    border: 'none !important', 
-    backgroundColor: theme.palette.background.default, 
-}));
-
-const CustomCardComponent = styled(Box)(({ theme }) => ({
-    boxShadow: 'none', 
-    border: 'none', 
-    backgroundColor: theme.palette.background.default,
-}));
 
 const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [username, setUsername] = useState('');
@@ -88,15 +74,15 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} width="500px">
-            <CustomDialogContent>
-                <CustomCardComponent sx={{ height: isRegistering ? '667px' : '600px', width: "100%" }}>
+                <Box sx={{ height: isRegistering ? '667px' : '600px', width: "100%" }}>
                     <Box sx={{ padding: '25px' }}>
                         <Typography variant="h2">{isRegistering ? 'Register' : 'Login'}</Typography>
-                        <form onSubmit={handleSubmit} autoComplete='off'>
+                        <FormControl component="form" onSubmit={handleSubmit} autoComplete='off'>
                             {isRegistering && (
                                 <NeuTextField
                                     required
                                     value={email}
+                                    type="email"
                                     onChange={(e) => setEmail(e.target.value)}
                                     label="Email"
                                     margin="normal"
@@ -168,19 +154,20 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                 rounded
                                 type="submit"
                                 color="primary"
-                                sx={{ width: '385px', height: bttnHeight, margin: "10px 0", color: 'var(--text)', backgroundColor: 'var(--body)' }}
+                                sx={{ width: '385px', height: bttnHeight, margin: "10px 0" }}
                             >
                                 {isRegistering ? 'Sign up' : 'Sign in'}
                             </NeuButton>
                             <Box>
-                                <NeuButton onClick={() => setIsRegistering(!isRegistering)} sx={{ margin: "10px", color: 'var(--text)' }}>
+                                <NeuButton onClick={() => setIsRegistering(!isRegistering)} 
+                                    rounded
+                                    sx={{ width: '385px', height: bttnHeight, margin: "10px 0" }}>
                                     {isRegistering ? 'Sign in' : 'Sign up'}
                                 </NeuButton>
                             </Box>
-                        </form>
+                        </FormControl>
                     </Box>
-                </CustomCardComponent>
-            </CustomDialogContent>
+                </Box>
             <Modal isOpen={isUserTermsModalOpen} onClose={() => {
                 setIsUserTermsModalOpen(false);
                 setIsUserTermsAccepted(true);

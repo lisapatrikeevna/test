@@ -13,9 +13,9 @@ const StyledDialog = styled(Dialog)({
 const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
     display: 'flex',
     backgroundColor: theme.palette.background.default,
-    padding: '0 !important', // Убираем padding
-    boxShadow: 'none', // Убираем тени
-    border: 'none', // Убираем бордеры
+    padding: '0 !important', 
+    boxShadow: 'none', 
+    border: 'none', 
 }));
 
 interface ModalProps {
@@ -43,6 +43,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, height, width, children, theme
                     <Box>
                         {showCloseButton && (
                             <NeuButton
+                                rounded
                                 sx={{ width: bttnWidth, height: bttnHeight }}
                                 onClick={onClose}
                             >

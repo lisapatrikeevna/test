@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Container, Modal, styled, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import Home from './Home'; // Добавим компонент Home
+import Home from './Home'; 
 import Partners from './Partners.tsx';
 import Pricing from '../../components/Pricing.tsx';
 import Contacts from './Contacts';
@@ -14,6 +14,7 @@ import Cookies from './cookies/Cookies.tsx';
 import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
 import News from "./News.tsx";
 import AboutUs from "./AboutUs.tsx";
+import Project from './Project'; 
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -65,7 +66,6 @@ const MainPage = () => {
   const [isImpressumModalOpen, setIsImpressumModalOpen] = useState(false);
   const [isPrivacyPolicyModalOpen, setIsPrivacyPolicyModalOpen] = useState(false);
   const [isDatenschutzModalOpen, setIsDatenschutzModalOpen] = useState(false);
-  const [isUserTermsModalOpen] = useState(false);
 
   if (!context) {
     throw new Error('Header must be used within ActiveSectionContext');
@@ -79,7 +79,7 @@ const MainPage = () => {
         return;
       }
 
-      const sections = ["Home", "Pricing", "News", "Contacts", "AboutUs", "Partners"];
+      const sections = ["Home", "Pricing", "News", "Contacts", "AboutUs", "Partners", "Project"];
       const currentIndex = sections.indexOf(activeSection as string);
       let newIndex = currentIndex;
 
@@ -103,7 +103,7 @@ const MainPage = () => {
     return () => {
       window.removeEventListener('wheel', handleScroll);
     };
-  }, [activeSection, isImpressumModalOpen, isPrivacyPolicyModalOpen, isDatenschutzModalOpen, isUserTermsModalOpen, setActiveSection]);
+  }, [activeSection, isImpressumModalOpen, isPrivacyPolicyModalOpen, isDatenschutzModalOpen, setActiveSection]);
 
   useEffect(() => {
     const hash = location.hash;
@@ -147,6 +147,11 @@ const MainPage = () => {
           <Partners />
         </SectionContent>
       </Section>
+      <Section id="Project">
+        <SectionContent maxWidth="lg">
+          <Project />
+        </SectionContent>
+      </Section>
       <Footer
         onImpressumClick={() => setIsImpressumModalOpen(true)}
         onPrivacyPolicyClick={() => setIsPrivacyPolicyModalOpen(true)}
@@ -156,11 +161,11 @@ const MainPage = () => {
         open={isImpressumModalOpen}
         onClose={() => setIsImpressumModalOpen(false)}
       >
-        <ModalContent>
+        <ModalContent sx={{ maxWidth: '500px' }}> 
           <CloseButton onClick={() => setIsImpressumModalOpen(false)}>
             <CloseIcon />
           </CloseButton>
-          <Impressum />
+          <Impressum onClose={() => setIsImpressumModalOpen(false)} />
         </ModalContent>
       </Modal>
       <Modal open={isPrivacyPolicyModalOpen}

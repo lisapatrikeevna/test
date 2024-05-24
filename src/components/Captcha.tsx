@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Typography, TextField, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import NeuButton from './neumorphism/button/NeuButton';
+import NeuTextField from './neumorphism/input/NeuTextField';
 
 interface CaptchaProps {
     onResult: (result: boolean) => void;
@@ -56,9 +57,11 @@ const Captcha = ({ onResult, reset }: CaptchaProps) => {
                 <Typography variant="body1">Passed</Typography>
             ) : (
                 <>
-                    <Typography variant="body1">{`${num1} ${operator} ${num2} = ?`}</Typography>
+                    <Typography gutterBottom sx={{mt: 1, ml: 1}} variant="body1">Answer the question:</Typography>
+                    <Typography sx={{mt: 1, ml: 1}} gutterBottom variant="body1">{`${num1} ${operator} ${num2} = ?`}</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <TextField
+                        <NeuTextField
+                            rounded
                             type="number"
                             value={userAnswer}
                             InputProps={{
