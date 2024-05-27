@@ -111,37 +111,37 @@ const MainPage = () => {
   return (
     <PageContainer>
       <Section id="Home">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <Home />
         </SectionContent>
       </Section>
       <Section id="Pricing">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <Pricing />
         </SectionContent>
       </Section>
       <Section id="News">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <News />
         </SectionContent>
       </Section>
       <Section id="Contacts">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <Contacts />
         </SectionContent>
       </Section>
       <Section id="AboutUs">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <AboutUs />
         </SectionContent>
       </Section>
       <Section id="Partners">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <Partners />
         </SectionContent>
       </Section>
       <Section id="Project">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <Project />
         </SectionContent>
       </Section>

@@ -18,6 +18,17 @@ const Home: FC = () => {
       }}
     >
       <Box width="50%" sx={{ marginBottom: '2rem' }}>
+      <Typography
+          variant="h4"
+          sx={{
+            fontSize: 'clamp(1.625rem, 0.542rem + 4.81vw, 4.875rem)',
+            fontWeight: 500,
+            lineHeight: 'clamp(2rem, 1.208rem + 3.52vw, 4.375rem)',
+            letterSpacing: '0em',
+          }}
+        >
+          Your
+        </Typography>
         <Typography
           variant="h4"
           sx={{
@@ -27,26 +38,26 @@ const Home: FC = () => {
             letterSpacing: '0em',
           }}
         >
-          Your communication deserves the best – it deserves to be on NeoX!
+          communication deserves the best – it deserves to be on NeoX!
           Connect and learn with us!
         </Typography>
       </Box>
       <Box
         sx={{
           position: 'absolute',
-          top: '60%',
-          left: '70%',
+          top: '35vh',
+          left: '47vw',
           width: {
             xs: '80%',
             sm: '60%',
             md: '500px',
-            lg: '560px',
+            lg: '750px',
           },
           height: {
             xs: '200px',
             sm: '300px',
             md: '280px',
-            lg: '315px',
+            lg: '400px',
           },
           borderRadius: '25px',
           boxShadow: `
