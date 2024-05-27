@@ -12,7 +12,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 const MainList = styled(Box)(({ theme }) => ({
-    paddingInlineStart: theme.spacing(3),
+    // paddingInlineStart: theme.spacing(3),
     listStyleType: 'none',
     '& > div': {
         marginBottom: theme.spacing(2),
