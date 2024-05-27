@@ -1,9 +1,10 @@
 import { FC, useState } from "react";
-import { FormControlLabel, Typography, Box, IconButton, Container } from '@mui/material';
+import { FormControlLabel, Typography, Box, Container } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import NeuCheckbox from "../../components/neumorphism/checkbox/NeuCheckbox";
 import { styled } from "@mui/system";
 import NeuButton from "../../components/neumorphism/button/NeuButton";
+import NeuIconButton from "../../components/neumorphism/button/NeuIconButton";
 
 interface UserTermsProps {
     onClose: () => void;
@@ -21,11 +22,17 @@ const StyledContainer = styled(Container)(({ theme }) => ({
     position: 'relative',
 }));
 
-const CloseButton = styled(IconButton)(({ theme }) => ({
-    position: 'absolute',
+const CloseButton = styled(NeuIconButton)(({ theme }) => ({
+    position: 'fixed',
     top: theme.spacing(1),
     right: theme.spacing(1),
-    fontSize: '32px',
+    zIndex: 1000,
+    minWidth: '40px',
+    padding: '6px',
+    '&:hover': {
+        backgroundColor: theme.palette.mode === 'light' ? '#f0f0f0' : '#2c2c2c',
+    },
+    boxShadow: 'none'
 }));
 
 const UserTerms: FC<UserTermsProps> = ({ onClose }) => {
@@ -34,10 +41,10 @@ const UserTerms: FC<UserTermsProps> = ({ onClose }) => {
 
     return (
         <StyledContainer>
-            <Typography variant="h1" style={{ fontSize: 42, fontWeight: "bold", paddingBottom: 10, textAlign: 'center' }}>Terms of Use</Typography>
-            <CloseButton onClick={onClose}>
+            <CloseButton rounded onClick={onClose}>
                 <CloseIcon />
             </CloseButton>
+            <Typography variant="h1" style={{ fontSize: 42, fontWeight: "bold", paddingBottom: 10, textAlign: 'center' }}>Terms of Use</Typography>
             <Box sx={{ width: '100%', maxWidth: '800px', textAlign: 'justify' }}>
                 <Typography variant="body1">
                     <Typography component="span" fontWeight="bold">Intellectual Property: </Typography>
