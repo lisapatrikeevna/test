@@ -131,7 +131,7 @@ const MainPage = () => {
         </SectionContent>
       </Section>
       <Section id="Pricing">
-        <SectionContent maxWidth="xl">
+        <SectionContent maxWidth="lg">
           <Pricing />
         </SectionContent>
       </Section>

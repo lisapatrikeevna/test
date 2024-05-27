@@ -123,7 +123,7 @@ const Pricing = () => {
                 </Typography>
             </Container>
 
-            <Box maxWidth={"xs"}>
+            <Box>
                 <Grid container spacing={4} alignItems="flex-end" justifyContent={'center'}>
                     {tiers.map((tier) => (
                         <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2}>
