@@ -1,9 +1,8 @@
 import { FC } from "react";
 import { Dialog, DialogContent, styled, Theme, Box } from '@mui/material';
-import NeuButton from './neumorphism/button/NeuButton';
-import CardComponent from "./CardComponent.tsx"; 
+import NeuIconButton from "./neumorphism/button/NeuIconButton";
+import CloseIcon from '@mui/icons-material/Close';
 
-// Define styles for MUI components
 const StyledDialog = styled(Dialog)({
     width: '100%',
     height: '100%',
@@ -12,10 +11,23 @@ const StyledDialog = styled(Dialog)({
 
 const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
     display: 'flex',
-    backgroundColor: theme.palette.background.default,
-    padding: '0 !important', 
-    boxShadow: 'none', 
-    border: 'none', 
+    backgroundColor: theme?.palette.background.default,
+    padding: '0 !important',
+    boxShadow: 'none',
+    border: 'none',
+}));
+
+const CloseButton = styled(NeuIconButton)(({ theme }) => ({
+    position: 'fixed',
+    top: theme?.spacing(1),
+    right: theme?.spacing(1),
+    zIndex: 1000,
+    minWidth: '40px',
+    padding: '6px',
+    '&:hover': {
+        backgroundColor: theme?.palette.mode === 'light' ? '#f0f0f0' : '#2c2c2c',
+    },
+    boxShadow: 'none'
 }));
 
 interface ModalProps {
@@ -30,28 +42,30 @@ interface ModalProps {
 
 const Modal: FC<ModalProps> = ({ isOpen, onClose, height, width, children, theme, showCloseButton = true }) => {
     if (!isOpen) return null;
-    const bttnHeight = '50px';
-    const bttnWidth = '150px';
+
     return (
         <StyledDialog open={isOpen} onClose={onClose}>
             <StyledDialogContent theme={theme}>
-                <CardComponent
-                    cardHeight={height ? height : 'auto'}
-                    cardWidth={width ? width : 'auto'}
-                >
-                    {children}
-                    <Box>
-                        {showCloseButton && (
-                            <NeuButton
-                                rounded
-                                sx={{ width: bttnWidth, height: bttnHeight }}
-                                onClick={onClose}
-                            >
-                                Close
-                            </NeuButton>
-                        )}
+                <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
+                    {showCloseButton && (
+                        <CloseButton
+                            rounded
+                            onClick={onClose}
+                        >
+                            <CloseIcon />
+                        </CloseButton>
+                    )}
+                    <Box
+                        sx={{
+                            height: height ? height : 'auto',
+                            width: width ? width : 'auto',
+                            overflowY: 'auto',
+                            padding: '20px',
+                        }}
+                    >
+                        {children}
                     </Box>
-                </CardComponent>
+                </Box>
             </StyledDialogContent>
         </StyledDialog>
     );

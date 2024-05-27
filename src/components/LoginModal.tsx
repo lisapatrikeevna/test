@@ -173,7 +173,7 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
             <Modal isOpen={isUserTermsModalOpen} onClose={() => {
                 setIsUserTermsModalOpen(false);
                 setIsUserTermsAccepted(true);
-            }} width="40vw" height="70vh" showCloseButton={false}>
+            }} width="30vw" height="70vh" showCloseButton={false}>
                 <UserTerms onClose={() => {
                     setIsUserTermsModalOpen(false);
                     setIsUserTermsAccepted(true);
