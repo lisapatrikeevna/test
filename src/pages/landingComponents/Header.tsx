@@ -71,7 +71,7 @@ const Header: FC = () => {
       justifyContent: 'space-between',
       alignItems: 'center',
       backgroundColor: 'var(--body)',
-      boxShadow: '0 10px 10px var(--shadow_outer_dark)',
+      boxShadow: theme => theme.shadows[1],
       transition: '0.5s',
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
