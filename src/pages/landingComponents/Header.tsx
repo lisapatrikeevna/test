@@ -1,7 +1,6 @@
 import { useEffect, useRef, useContext, useState, FC } from 'react';
 import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-// import { WbSunny, DarkMode } from '@mui/icons-material';
-import { Handshake, Apps, Call, AccountBalance, AttachMoney, Build } from '@mui/icons-material'; // Import Build icon for Project
+import { Handshake, Apps, Call, AccountBalance, AttachMoney, Build } from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
@@ -43,7 +42,7 @@ const Header: FC = () => {
   };
 
   useEffect(() => {
-    linksRef.current = linksRef.current.slice(0, 7); // Increase to 7 for the new section
+    linksRef.current = linksRef.current.slice(0, 7);
     const homeLink = linksRef.current.find(link => link?.dataset.to === "#Home");
     if (homeLink) moveIndicator(homeLink);
   }, []);
@@ -63,6 +62,9 @@ const Header: FC = () => {
       top: 0,
       paddingLeft: '1vw',
       paddingRight: '5vw',
+      '@media (max-width: 830px)': {
+        paddingRight: '1vw'
+      },
       height: '10vh',
       zIndex: 100,
       display: 'flex',
@@ -81,7 +83,19 @@ const Header: FC = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }} >
-        <List sx={{ display: 'flex', flexDirection: 'row', position: 'absolute', top: '-65px', width: "850px" }}>
+        <List sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          position: 'absolute',
+          top: '-65px',
+          width: "850px",
+          '@media (max-width: 1250px)': {
+            width: '700px'
+          },
+          '@media (max-width: 1100px)': {
+            width: '500px'
+          },
+        }}>
           {["#Pricing", "#News", "#Contacts", "#AboutUs", "#Partners", "#Project"].map((item, index) => (
             <ListItem key={item} sx={{ transform: 'translateY(70px)' }}>
               <Link to={item}
@@ -91,7 +105,7 @@ const Header: FC = () => {
                 style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}
               >
                 <ListItemIcon sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: 'auto', marginBottom: '4px' }}>
-                  {item === "#Partners" && <Handshake />} 
+                  {item === "#Partners" && <Handshake />}
                   {item === "#Pricing" && <AttachMoney />}
                   {item === "#News" && <Apps />}
                   {item === "#Contacts" && <Call />}
@@ -113,16 +127,14 @@ const Header: FC = () => {
             alignItems: 'center',
             height: '60px',
             width: '120px',
+            '@media (max-width: 900px)': {
+              width: '70px'
+            },
             borderRadius: '25px',
             overflow: 'hidden',
             background: 'var(--toggle_background)',
             boxShadow: '-10px -10px 25px var(--shadow_outer_light), 10px 10px 25px var(--shadow_outer_dark)'
           }} component="div">
-            {/* <DarkMode sx={{
-              color: '#5e5e5e',
-              width: '24px',
-              height: '24px',
-            }} /> */}
             <NeuSwitch
               checked={theme === 'light'}
               onChange={toggleTheme}
@@ -131,17 +143,18 @@ const Header: FC = () => {
               size='large'
               inputProps={{ 'aria-label': 'theme switch' }}
             />
-            {/* <WbSunny sx={{
-              color: 'orange',
-              width: '24px',
-              height: '24px',
-            }} /> */}
           </Box>
         </Box>
         <NeuButton
           rounded
           size='large'
-          sx={{ padding: "10px", width: "130px"}}
+          sx={{ 
+            padding: "10px", 
+            width: "130px",
+            '@media (max-width: 870px)': {
+              width: '90px'
+            }, 
+          }}
           onClick={() => setIsLoginModalOpen(true)}
         >
           Login
