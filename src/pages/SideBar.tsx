@@ -13,7 +13,7 @@ import {
   AddCircleOutline,
   KeyboardArrowUpOutlined,
   KeyboardArrowDownOutlined,
-  BlurOnOutlined
+  BlurOnOutlined,
 } from '@mui/icons-material';
 import avatar from '../assets/img.webp';
 import sidebar from '../styles/SideBar.module.css';
@@ -26,7 +26,7 @@ import { useTheme } from '@mui/material/styles';
 import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
 
 // TODO Повесить UserModalProfile на аватар пользователя
-// import UserModalProfile from './UserModalProfile.tsx'; 
+// import UserModalProfile from './UserModalProfile.tsx';
 import MyModalProfile from './MyModalProfile.tsx';
 import {
   chatsPath,
@@ -37,7 +37,7 @@ import {
   newGroupPath,
   newChannelPath,
   contactsPath,
-  vrPath
+  vrPath,
 } from '../configs/RouteConfig.tsx';
 import {
   Box,
@@ -48,7 +48,7 @@ import {
   ListItemText,
   Collapse,
   Divider,
-  Switch
+  Switch,
 } from '@mui/material';
 
 const SideBar: FC = () => {
@@ -100,17 +100,17 @@ const SideBar: FC = () => {
   };
 
   return (
-    <Box className={`${sidebar.sidebar} ${isActive ? sidebar.active : ''}`}
-    sx={{
-      backgroundColor: muiTheme.palette.background.default,
-      color: muiTheme.palette.text.primary,
-      boxShadow: '2px 0 10px rgba(0, 0, 0, 0.5)',
-    }}>
+    <Box
+      className={`${sidebar.sidebar} ${isActive ? sidebar.active : ''}`}
+      sx={{
+        backgroundColor: muiTheme.palette.background.default,
+        color: muiTheme.palette.text.primary,
+        boxShadow: '2px 0 10px rgba(0, 0, 0, 0.5)',
+      }}
+    >
       <List>
         <Box
-          className={`${sidebar.menuToggle} ${
-            isActive ? sidebar.active : ''
-          }`}
+          className={`${sidebar.menuToggle} ${isActive ? sidebar.active : ''}`}
           onClick={toggleActiveClass}
         >
           <img src={avatar} alt="Avatar" />
@@ -126,26 +126,25 @@ const SideBar: FC = () => {
         className={`${sidebar.overlaySidebar} ${
           isActive ? sidebar.overlaySidebarActive : ''
         }`}
-        sx={{backgroundColor: muiTheme.palette.background.default,
-          color: muiTheme.palette.text.primary,}}
+        sx={{
+          backgroundColor: muiTheme.palette.background.default,
+          color: muiTheme.palette.text.primary,
+        }}
       >
         <List disablePadding>
-          <ListItem
-            className={sidebar.profileItem}
-            disablePadding
-          >
+          <ListItem className={sidebar.profileItem} disablePadding>
             <Box className={sidebar.imgLink}>
-              <img src={avatar} alt="Avatar" onClick={handleAvatarClick}/>
+              <img src={avatar} alt="Avatar" onClick={handleAvatarClick} />
               {/* <img src={avatar} alt="Avatar" onClick={handleAvatarClick} /> */}
             </Box>
             {/* <UserModalProfile
                 open={openProfileModal}
                 onClose={() => setOpenProfileModal(false)}
               /> */}
-              <MyModalProfile
-                open={openProfileModal}
-                onClose={() => setOpenProfileModal(false)}
-              />
+            <MyModalProfile
+              open={openProfileModal}
+              onClose={() => setOpenProfileModal(false)}
+            />
 
             <ListItemButton onClick={toggleAccountsDropdown} disableRipple>
               <ListItemText primary={username} />
@@ -248,7 +247,7 @@ const SideBar: FC = () => {
               </ListItemIcon>
               <ListItemText primary="Chats" />
             </ListItemButton>
-          </ListItem> 
+          </ListItem>
           <ListItem
             disablePadding
             className={activeItem === 'videos' ? sidebar.active : ''}
@@ -278,7 +277,7 @@ const SideBar: FC = () => {
               </ListItemIcon>
               <ListItemText primary="Calls" />
             </ListItemButton>
-          </ListItem> 
+          </ListItem>
           <ListItem
             disablePadding
             className={activeItem === 'vrBoard' ? sidebar.active : ''}
@@ -293,7 +292,7 @@ const SideBar: FC = () => {
               </ListItemIcon>
               <ListItemText primary="VR board" />
             </ListItemButton>
-          </ListItem> 
+          </ListItem>
           <ListItem
             disablePadding
             className={activeItem === 'settings' ? sidebar.active : ''}
@@ -313,7 +312,7 @@ const SideBar: FC = () => {
             disablePadding
             className={sidebar.themeSwitcherWrapper}
             onClick={toggleTheme}
-            sx={{ cursor: 'pointer'}}
+            sx={{ cursor: 'pointer' }}
           >
             <ListItemIcon>
               <NightsStayOutlined />

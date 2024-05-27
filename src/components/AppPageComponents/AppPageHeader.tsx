@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Badge,
   Box,
   Modal,
@@ -10,7 +9,6 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import EmailIcon from '@mui/icons-material/Email';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { data } from '../ProfileComponents/utils';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 
@@ -48,16 +46,7 @@ const AppPageHeader = ({ setIsOpenSideBar, setIsOpenMainSideBar }: Props) => {
           cursor="pointer"
           onClick={() => setIsOpenMainSideBar((prev) => !prev)}
         />
-        <Avatar
-          src={data[0].img}
-          alt="avatar"
-          sx={{
-            width: 50,
-            height: 50,
-            cursor: 'pointer',
-            position: 'relative',
-          }}
-        />
+        
         <EmailIcon cursor="pointer" />
       </Stack>
       <TextField

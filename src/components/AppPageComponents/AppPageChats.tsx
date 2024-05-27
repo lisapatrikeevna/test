@@ -18,7 +18,18 @@ const AppPageChats = () => {
         spacing={2}
         padding={1}
         borderRight="1px solid black"
+        alignItems="center"
       >
+        <Avatar
+          src={data[0].img}
+          alt="avatar"
+          sx={{
+            width: 50,
+            height: 50,
+            cursor: 'pointer',
+            position: 'relative',
+          }}
+        />
         {users.map((elem) => (
           <Avatar key={elem.id} src={elem.img} />
         ))}

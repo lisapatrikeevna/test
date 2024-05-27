@@ -54,7 +54,7 @@ const AppPage = () => {
           <AppPageMainSideBar isOpenMainSideBar={isOpenMainSideBar} />
         </Box>
         <PanelGroup direction="horizontal" style={{ height: '100vh' }}>
-          <Panel defaultSize={25} maxSize={100} minSize={4}>
+          <Panel defaultSize={25} maxSize={100} minSize={4.7}>
             <AppPageChats />
           </Panel>
 
