@@ -5,14 +5,13 @@ import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setError, setLoading, setVideoUrl, setBuffering } from '../../store/video/videoSlice';
-
 import { Grid, Paper, Typography, Container, Skeleton, Button, Box } from "@mui/material";
 import { Contacts, Flag, IosShare, JoinFull, ThumbDown, ThumbUp } from "@mui/icons-material";
-import { useVideoProgress, useLikeHandler } from '../../components/VideoComponents/UseVideoHandlers.tsx';
+import { useVideoProgress, useLikeHandler } from '../../components/VideoComponents/UseVideoHandlers';
 import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal.tsx";
 
 const VideoPage: FC = () => {
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
     const videoId = id as string;
     const dispatch = useDispatch();
     const { videoUrl, buffering, loading } = useSelector((state: RootState) => state.video);
@@ -22,8 +21,8 @@ const VideoPage: FC = () => {
     const [views, setViews] = useState(0);
     const [videoDuration, setVideoDuration] = useState(0);
 
-    const { handleVideoProgress } = useVideoProgress(videoDuration, videoId, videoName, description);
-    const { likes, setLikes, handleLike } = useLikeHandler(videoId, videoName, description);
+    const { handleVideoProgress } = useVideoProgress(videoDuration, videoId);
+    const { likes, hasLiked, handleLike, hasDisliked, handleDislike, setLikes } = useLikeHandler(videoId); // Ensure setLikes is available from the hook
 
     useEffect(() => {
         const loadVideo = async () => {
@@ -34,8 +33,8 @@ const VideoPage: FC = () => {
                     const metadata = await getVideoMetadata(videoId);
                     setVideoName(metadata.videoName);
                     setDescription(metadata.description);
-                    setViews(metadata.videoInfo.contentViewsByUsers.length); // Assuming contentViewsByUsers is an array
-                    setLikes(metadata.videoInfo.contentLikesByUsers.length); // Assuming contentLikesByUsers is an array
+                    setViews(metadata.videoInfo.contentViewsByUsers.length);
+                    setLikes(metadata.videoInfo.contentLikesByUsers.length); // Set likes using the hook's method
 
                     let blobUrl = '';
                     if (videoData) {
@@ -55,9 +54,8 @@ const VideoPage: FC = () => {
         };
 
         loadVideo();
-    }, [videoId, dispatch]);
+    }, [videoId, dispatch, setLikes]);
 
-    // Display a skeleton while loading data
     if (loading) {
         return (
             <Container>
@@ -68,11 +66,9 @@ const VideoPage: FC = () => {
         );
     }
 
-    // Display real data when it's loaded
     return (
         <Grid container spacing={3} style={{ flexWrap: 'nowrap', justifyContent: 'center' }}>
             <Grid item xs={12} md={8} style={{ display: 'flex', alignItems: 'flex-start', maxWidth: '1200px' }}>
-                {/* VideoContainer */}
                 <Container style={{ padding: 0 }}>
                     {videoUrl ? (
                         <ReactPlayer
@@ -86,56 +82,48 @@ const VideoPage: FC = () => {
                             onBuffer={() => dispatch(setBuffering(true))}
                             onBufferEnd={() => dispatch(setBuffering(false))}
                             config={{ file: { attributes: { preload: 'metadata' } } }}
-                            onProgress={handleVideoProgress}
+                            onProgress={(state) => handleVideoProgress(state)}
                             onDuration={setVideoDuration}
                         />
                     ) : (
                         <Typography>Loading...</Typography>
                     )}
                     {buffering && <Typography>Buffering...</Typography>}
-                    {/* Container for video full description */}
-
                     <Box>
                         <Typography variant="h4">{videoName}</Typography>
-                        {/* Container for video metadata */}
-
                         <Container style={{ display: 'flex', flexDirection: 'row' }}>
-                            {/* Container for all userInfo */}
-
                             <Container style={{ display: 'flex', flexDirection: 'row' }}>
-                                {/* Container for views, data, userAvatar, userName */}
-
                                 <Container style={{ display: 'flex', flexDirection: 'column' }}>
-                                    {/* Container for views, data */}
-
                                     <Container style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
                                         <Typography>{views} views</Typography>
                                         <Typography>2 weeks ago</Typography>
                                     </Container>
-                                    {/* Container for userAvatar, userName */}
-
                                     <Container style={{ display: 'flex', flexDirection: 'row' }}>
                                         <Contacts />
                                         <Typography>UnknownUser</Typography>
                                     </Container>
                                 </Container>
-
-                                {/* Container for like, dislike, share */}
-
                                 <Container style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                    <ThumbUp onClick={() => {
-                                        console.log('ThumbUp clicked');
-                                        handleLike();
-                                    }} />
-                                    <Typography>{likes}</Typography>
-                                    <ThumbDown />
+                                    <Button
+                                        variant="outlined"
+                                        startIcon={<ThumbUp />}
+                                        onClick={handleLike}
+                                        color={hasLiked ? 'primary' : 'inherit'}
+                                    >
+                                        {likes}
+                                    </Button>
+                                    <Button
+                                        variant="outlined"
+                                        startIcon={<ThumbDown />}
+                                        onClick={handleDislike}
+                                        color={hasDisliked ? 'primary' : 'inherit'}
+                                    />
                                     <Button variant='text' size='small' startIcon={<JoinFull />}>Subscribe</Button>
                                     <Button variant='text' startIcon={<Flag />}>Report</Button>
                                     <Button variant='text' startIcon={<IosShare />}>Share</Button>
                                 </Container>
                             </Container>
                         </Container>
-                        {/* Box for Description */}
                         <Box>
                             <Typography variant='h5'>Description</Typography>
                             <Typography>{description}</Typography>
@@ -146,12 +134,10 @@ const VideoPage: FC = () => {
                             <VideoListHorizontal />
                         </Paper>
                     </Container>
-
-                    {/* Here you can add the comments component */}
                 </Container>
             </Grid>
         </Grid>
     );
-}
+};
 
 export default VideoPage;
