@@ -7,7 +7,6 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import StarIcon from '@mui/icons-material/StarBorder';
 import { styled } from '@mui/system';
 
-// Создаем стилизованный компонент для переопределения стилей контейнера MUI
 const CustomContainer = styled(Container)({
     width: '100%',
     margin: '0 auto',
@@ -66,7 +65,6 @@ const tiers = [
     },
     {
         title: 'Enterprise',
-        // price: 30,
         description: [
             '50 users included',
             '30 GB of storage',
@@ -92,12 +90,12 @@ const Pricing = () => {
     return (
         <Box>
             <GlobalStyles styles={{
-                '.MuiContainer-root': {
+                '.MuiContainer-root.Pricing-container': {
                     maxWidth: '1920px !important',
                     maxHeight: '1080px !important',
                 },
+                ul: { margin: 0, padding: 0, listStyle: 'none' }
             }} />
-            <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
             <CssBaseline />
             <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
                 <Toolbar sx={{ flexWrap: 'wrap' }}>
@@ -112,7 +110,7 @@ const Pricing = () => {
                 </Toolbar>
             </AppBar>
 
-            <CustomContainer sx={{ pb: 2 }} maxWidth="xl">
+            <CustomContainer className="Pricing-container" sx={{ pb: 2 }} maxWidth="xl">
                 <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
                     Pricing
                 </Typography>
@@ -123,7 +121,7 @@ const Pricing = () => {
                 </Typography>
             </CustomContainer>
 
-            <CustomContainer maxWidth="xl">
+            <CustomContainer className="Pricing-container" maxWidth="xl">
                 <Grid container spacing={4} alignItems="flex-end" justifyContent={'center'}>
                     {tiers.map((tier) => (
                         <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2}>
