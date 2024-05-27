@@ -1,7 +1,5 @@
 import { FC } from "react";
 import { Dialog, DialogContent, styled, Theme, Box } from '@mui/material';
-import NeuIconButton from "./neumorphism/button/NeuIconButton";
-import CloseIcon from '@mui/icons-material/Close';
 
 const StyledDialog = styled(Dialog)({
     width: '100%',
@@ -17,19 +15,6 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
     border: 'none',
 }));
 
-const CloseButton = styled(NeuIconButton)(({ theme }) => ({
-    position: 'fixed',
-    top: theme?.spacing(1),
-    right: theme?.spacing(1),
-    zIndex: 1000,
-    minWidth: '40px',
-    padding: '6px',
-    '&:hover': {
-        backgroundColor: theme?.palette.mode === 'light' ? '#f0f0f0' : '#2c2c2c',
-    },
-    boxShadow: 'none'
-}));
-
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -40,21 +25,13 @@ interface ModalProps {
     theme?: Theme;
 }
 
-const Modal: FC<ModalProps> = ({ isOpen, onClose, height, width, children, theme, showCloseButton = true }) => {
+const Modal: FC<ModalProps> = ({ isOpen, onClose, height, width, children, theme }) => {
     if (!isOpen) return null;
 
     return (
         <StyledDialog open={isOpen} onClose={onClose}>
             <StyledDialogContent theme={theme}>
                 <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
-                    {showCloseButton && (
-                        <CloseButton
-                            rounded
-                            onClick={onClose}
-                        >
-                            <CloseIcon />
-                        </CloseButton>
-                    )}
                     <Box
                         sx={{
                             height: height ? height : 'auto',
