@@ -5,20 +5,14 @@ import {
 } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import StarIcon from '@mui/icons-material/StarBorder';
+import { styled } from '@mui/system';
 
-
-// function Copyright(props: React.PropsWithChildren<object>) {
-//     return (
-//         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://neox.it-assistent.eu/">
-//                 NeoX
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
+// Создаем стилизованный компонент для переопределения стилей контейнера MUI
+const CustomContainer = styled(Container)({
+    width: '100%',
+    margin: '0 auto',
+    padding: 0,
+});
 
 const tiers = [
     {
@@ -96,7 +90,13 @@ const Pricing = () => {
     };
 
     return (
-        <>
+        <Box>
+            <GlobalStyles styles={{
+                '.MuiContainer-root': {
+                    maxWidth: '1920px !important',
+                    maxHeight: '1080px !important',
+                },
+            }} />
             <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
             <CssBaseline />
             <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
@@ -112,7 +112,7 @@ const Pricing = () => {
                 </Toolbar>
             </AppBar>
 
-            <Container disableGutters maxWidth={false} component="main" sx={{ pb: 2 }}>
+            <CustomContainer sx={{ pb: 2 }} maxWidth="xl">
                 <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
                     Pricing
                 </Typography>
@@ -121,9 +121,9 @@ const Pricing = () => {
                     this layout. It's built with default MUI components with little
                     customization.
                 </Typography>
-            </Container>
+            </CustomContainer>
 
-            <Box>
+            <CustomContainer maxWidth="xl">
                 <Grid container spacing={4} alignItems="flex-end" justifyContent={'center'}>
                     {tiers.map((tier) => (
                         <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2}>
@@ -175,13 +175,8 @@ const Pricing = () => {
                         </Grid>
                     ))}
                 </Grid>
-            </Box>
-
-            {/* <Container maxWidth="md" component="footer" sx={{ borderTop: (theme) => `1px solid ${theme.palette.divider}`, mt: 8, py: [3, 6] }}> */}
-                {/* Footer content here */}
-                {/* <Copyright /> */}
-            {/* </Container> */}
-        </>
+            </CustomContainer>
+        </Box>
     );
 };
 
