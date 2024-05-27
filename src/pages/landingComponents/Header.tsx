@@ -127,7 +127,7 @@ const Header: FC = () => {
             alignItems: 'center',
             height: '60px',
             width: '120px',
-            '@media (max-width: 900px)': {
+            '@media (max-width: 930px)': {
               width: '70px'
             },
             borderRadius: '25px',
@@ -151,7 +151,7 @@ const Header: FC = () => {
           sx={{ 
             padding: "10px", 
             width: "130px",
-            '@media (max-width: 870px)': {
+            '@media (max-width: 930px)': {
               width: '90px'
             }, 
           }}
