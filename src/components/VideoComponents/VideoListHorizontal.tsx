@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
 import { mediaPath } from "../../configs/RouteConfig.tsx";
-import { Grid, Card, CardContent, Typography, Skeleton, Box, Button, Container, } from "@mui/material";
+import { Grid, Card, CardContent, Typography, Skeleton, Box, Button, Container } from "@mui/material";
 import { Contacts } from "@mui/icons-material";
 
 export interface IVideo {
@@ -13,13 +13,15 @@ export interface IVideo {
     description: string;
     videoName: string;
     streamUrl: string;
+    videoInfo: {
+        contentViewsByUsers: string[];
+    };
 }
 
 const VideoListHorizontal = () => {
     const [videos, setVideos] = useState<IVideo[]>([]);
     const [loading, setLoading] = useState(true);
-    const [moreVideoCount, setmoreVideoCount] = useState(4);; // Initial number of videos to display
-
+    const [moreVideoCount, setmoreVideoCount] = useState(12); // Initial number of videos to display
 
     const fetchVideo = async (id: string) => {
         try {
@@ -29,14 +31,13 @@ const VideoListHorizontal = () => {
             if (response.status !== 200) {
                 throw new Error(`Failed to fetch video with id ${id}`);
             }
-            const data = await response.data;
+            const data: IVideo = await response.data;
             return data;
         } catch (error) {
             console.error(`Error fetching video with id ${id}:`, error);
             return null;
         }
     };
-
     useEffect(() => {
         const fetchVideos = async (videoIds: string[] = []) => {
             setLoading(true); // Initialize loading state to true in beginning of fetching videos
@@ -76,9 +77,9 @@ const VideoListHorizontal = () => {
     const handleButton = () => {
         // Check if the current count of displayed videos is less than the total number of videos
         if (moreVideoCount < videos.length) {
-            // Update the state "moreVideoCount" by either increasing it by 4
+            // Update the state "moreVideoCount" by either increasing it by 6
             // or setting it to the total number of videos, whichever is smaller
-            setmoreVideoCount((prevCount) => Math.min(prevCount + 4, videos.length));
+            setmoreVideoCount((prevCount) => Math.min(prevCount + 6, videos.length));
         }
     };
 
@@ -88,11 +89,11 @@ const VideoListHorizontal = () => {
                 {!loading
                     ? videos.slice(0, moreVideoCount).map((video) => (
                         <Grid
-                            style={{ textDecoration: "none", maxWidth: "320px" }}
+                            style={{ textDecoration: "none", /* maxWidth: "320px" */ }}
                             item xs={12} sm={6} md={4} lg={2}
                             key={video.id} >
                             <Link to={`${mediaPath}/${video.id}`}>
-                                <Card sx={{ maxWidth: "320px", maxHeight: "280px" }}>
+                                <Card sx={{/*  maxWidth: "320px", */ maxHeight: "280px" }}>
                                     <PreviewImage videoId={video.id} />
                                     <CardContent>
                                         <Box>
@@ -104,7 +105,7 @@ const VideoListHorizontal = () => {
                                                 </Box>
                                             </Box>
                                             <Box style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-                                                <Typography>63555 views</Typography>
+                                                <Typography>{video.videoInfo.contentViewsByUsers ? video.videoInfo.contentViewsByUsers.length : 0} views</Typography>
                                                 <Typography>2 weeks ago</Typography>
                                             </Box>
                                         </Box>
