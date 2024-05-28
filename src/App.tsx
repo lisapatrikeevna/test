@@ -108,7 +108,7 @@ const App: FC = () => {
                   height: '100vh',
                 }}
               >
-                <SideBar />
+                {/* <SideBar /> */}
                 <Box
                   sx={{
                     flexGrow: 1,

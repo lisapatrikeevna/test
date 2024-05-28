@@ -135,7 +135,6 @@ const SideBar: FC = () => {
           <ListItem className={sidebar.profileItem} disablePadding>
             <Box className={sidebar.imgLink}>
               <img src={avatar} alt="Avatar" onClick={handleAvatarClick} />
-              {/* <img src={avatar} alt="Avatar" onClick={handleAvatarClick} /> */}
             </Box>
             {/* <UserModalProfile
                 open={openProfileModal}
