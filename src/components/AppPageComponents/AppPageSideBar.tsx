@@ -16,7 +16,7 @@ const AppPageSideBar = ({
   return (
     <Box
       sx={{
-        height: '100vh',
+        height: '80vh',
         width: '250px',
         transition: 'opacity 0.5s ease, visibility 0.5s ease',
         opacity: isOpenSideBar ? 1 : 0,

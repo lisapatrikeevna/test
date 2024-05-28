@@ -1,11 +1,4 @@
-import {
-  Badge,
-  Box,
-  Modal,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Badge, Box, Modal, Stack, TextField, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import EmailIcon from '@mui/icons-material/Email';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -40,20 +33,22 @@ const AppPageHeader = ({ setIsOpenSideBar, setIsOpenMainSideBar }: Props) => {
       justifyContent="space-between"
       alignItems="center"
       padding={2}
+      sx={{ zIndex: 1100, position: 'relative' }}
     >
       <Stack direction="row" spacing={2} alignItems="center">
         <MenuIcon
           cursor="pointer"
           onClick={() => setIsOpenMainSideBar((prev) => !prev)}
         />
-        
+
         <EmailIcon cursor="pointer" />
       </Stack>
       <TextField
         id="outlined-basic"
         label="Search"
         variant="outlined"
-        sx={{ width: '500px' }}
+        size="small"
+        sx={{ width: '500px', maxHeight: '40px' }}
       />
       <Stack direction="row" spacing={2}>
         <Badge badgeContent={10} color="primary" max={9}>

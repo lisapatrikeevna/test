@@ -53,7 +53,7 @@ const AppPage = () => {
         <Box position="absolute" top={0} left={0} zIndex={1000}>
           <AppPageMainSideBar isOpenMainSideBar={isOpenMainSideBar} />
         </Box>
-        <PanelGroup direction="horizontal" style={{ height: '100vh' }}>
+        <PanelGroup direction="horizontal" style={{ height: '80vh' }}>
           <Panel defaultSize={25} maxSize={100} minSize={4.7}>
             <AppPageChats />
           </Panel>
@@ -78,7 +78,7 @@ const AppPage = () => {
         {isOverlayVisible && (
           <Box
             position="fixed"
-            top={0}
+            top="73px"
             left={0}
             right={0}
             bottom={0}
