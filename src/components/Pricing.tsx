@@ -10,14 +10,14 @@ import { styled } from '@mui/system';
 const CustomContainer = styled(Container)({
     width: '100%',
     margin: '0 auto',
-    padding: 13,
 });
 
 const ScrollableContainer = styled(Box)({
     width: '100%',
     overflowY: 'auto',
     maxHeight: 'calc(100vh - 440px)', 
-    // paddingBottom: '10px'
+    paddingTop: '10px',
+    paddingBottom: '10px'
 });
 
 const tiers = [
