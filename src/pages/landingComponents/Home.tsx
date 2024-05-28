@@ -18,7 +18,7 @@ const Home: FC = () => {
       }}
     >
       <Box width="50%" sx={{ marginBottom: '2rem' }}>
-      <Typography
+        <Typography
           variant="h4"
           sx={{
             fontSize: 'clamp(1.625rem, 0.542rem + 4.81vw, 4.875rem)',
@@ -45,19 +45,22 @@ const Home: FC = () => {
       <Box
         sx={{
           position: 'absolute',
-          top: '35vh',
-          left: '47vw',
+          top: '31vh',
+          left: '48vw',
+          paddingRight: '1vh',
           width: {
             xs: '80%',
             sm: '60%',
-            md: '500px',
-            lg: '750px',
+            md: '550px',
+            lg: '700px',
+            xl: '750px'
           },
           height: {
             xs: '200px',
             sm: '300px',
-            md: '280px',
-            lg: '400px',
+            md: '300px',
+            lg: '350px',
+            xl: '400px'
           },
           borderRadius: '25px',
           boxShadow: `
@@ -68,6 +71,16 @@ const Home: FC = () => {
             inset -9px -9px 17px var(--shadow_inner_dark),
             inset 9px 9px 17px var(--shadow_inner_light)
           `,
+          '@media (max-width: 1400px)': {
+            width: '610px',
+            height: '350px',
+            left: '48vw',
+          },
+          '@media (max-width: 1210px)': {
+            width: '550px',
+            height: '280px',
+            left: '48vw',
+          }
         }}
       >
         <iframe
