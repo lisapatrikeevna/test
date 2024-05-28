@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
 import { mediaPath } from "../../configs/RouteConfig.tsx";
-import { Grid, Card, CardContent, Typography, Skeleton, Box, Button, Container } from "@mui/material";
+import {  Card, CardContent, Typography, Skeleton, Box, Button } from "@mui/material";
 import { Contacts } from "@mui/icons-material";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
