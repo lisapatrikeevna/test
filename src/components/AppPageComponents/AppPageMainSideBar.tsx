@@ -1,4 +1,7 @@
 import {
+  Avatar,
+  Collapse,
+  List,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -6,14 +9,17 @@ import {
   Switch,
 } from '@mui/material';
 import { Box } from '@mui/system';
-
+import avatar from '../../assets/img.webp';
 import {
   AccountCircleOutlined,
+  AddCircleOutline,
   BlurOnOutlined,
   CallOutlined,
   CampaignOutlined,
   ForumOutlined,
   HomeOutlined,
+  KeyboardArrowDownOutlined,
+  KeyboardArrowUpOutlined,
   LogoutOutlined,
   NightsStayOutlined,
   PeopleOutline,
@@ -31,14 +37,36 @@ import {
   settingsPath,
   vrPath,
 } from '../../configs/RouteConfig';
+import { useState } from 'react';
+import MyModalProfile from '../../pages/MyModalProfile';
+import { useAppSelector } from '../../store/hooks';
+import { selectUsername } from '../../store/user/userSlice';
+// import UserModalProfile from '../../pages/UserModalProfile';
+import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 
 type Props = {
   isOpenMainSideBar: boolean;
 };
 
 const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
-  // const handleAvatarClick = () => {};
+  const username = useAppSelector(selectUsername) || 'Guest';
+  const [openProfileModal, setOpenProfileModal] = useState(false);
+  const [isAccountsDropdownOpen, setIsAccountsDropdownOpen] = useState(false);
+  const { theme, setTheme } = useCustomTheme();
 
+  const handleAvatarClick = () => {
+    setOpenProfileModal(true); // Open profile modal
+  };
+
+  const toggleAccountsDropdown = () => {
+    setIsAccountsDropdownOpen(!isAccountsDropdownOpen);
+  };
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
+  // TODO Повесить UserModalProfile на аватар пользователя
   return (
     <Box
       sx={{
@@ -54,7 +82,53 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
       }}
     >
       {isOpenMainSideBar && (
-        <>
+        <Box>
+          <Box
+            sx={{
+              color: 'inherit',
+              textDecoration: 'none',
+              padding: '20px 0px',
+              display: 'flex',
+            }}
+          >
+            <Avatar
+              src={avatar}
+              alt="avatar"
+              sx={{
+                width: 50,
+                height: 50,
+                cursor: 'pointer',
+                position: 'relative',
+              }}
+              onClick={handleAvatarClick}
+            />
+            <ListItemButton onClick={toggleAccountsDropdown} disableRipple>
+              <ListItemText primary={username} />
+              {isAccountsDropdownOpen ? (
+                <KeyboardArrowUpOutlined />
+              ) : (
+                <KeyboardArrowDownOutlined />
+              )}
+            </ListItemButton>
+          </Box>
+          <Collapse in={isAccountsDropdownOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemIcon>
+                  <AddCircleOutline />
+                </ListItemIcon>
+                <ListItemText primary="Add account" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+          <MyModalProfile
+            open={openProfileModal}
+            onClose={() => setOpenProfileModal(false)}
+          />
+          {/* <UserModalProfile
+                open={openProfileModal}
+                onClose={() => setOpenProfileModal(false)}
+              /> */}
           <ListItem disablePadding>
             <ListItemButton component={Link} to={homePath} disableRipple>
               <ListItemIcon>
@@ -127,12 +201,17 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
               <ListItemText primary="Settings" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding sx={{ paddingLeft: '17px' }}>
+          <ListItem
+            disablePadding
+            sx={{ paddingLeft: '17px' }}
+            onClick={toggleTheme}
+          >
             <ListItemIcon>
               <NightsStayOutlined />
             </ListItemIcon>
             <ListItemText primary="Theme" />
             <Switch
+              checked={theme === 'dark'}
               name="themeSwitch"
               inputProps={{ 'aria-label': 'theme switch' }}
             />
@@ -167,7 +246,7 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
             </Box>
             <Box>NeoX version 1.0</Box>
           </Box>
-        </>
+        </Box>
       )}
     </Box>
   );
