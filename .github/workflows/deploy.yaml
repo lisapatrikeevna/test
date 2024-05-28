@@ -58,8 +58,8 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.PLESK_PROD_HOST }}
-        username: ${{ secrets.PLESK_TEST_PROD_USERNAME }}
-        password: ${{ secrets.PLESK_TEST_PROD_PASSWORD }}
+        username: ${{ secrets.PLESK_PROD_USERNAME }}
+        password: ${{ secrets.PLESK_PROD_PASSWORD }}
         script: |
           if [ -d "/var/www/vhosts/neoxonline.com/httpdocs/assets" ]; then
           rm -rf /var/www/vhosts/neoxonline.com/httpdocs/assets/*
