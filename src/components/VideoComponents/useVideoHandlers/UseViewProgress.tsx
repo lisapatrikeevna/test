@@ -23,7 +23,7 @@ export const useViewProgress = (videoDuration: number, videoId: string) => {
         try {
             const response = await instance.get(`/video/${videoId}`);
             console.log('Initial video data for views:', response.data);
-            const currentViews = Array.isArray(response.data.contentViewsByUsers) ? response.data.contentViewsByUsers : [];
+            const currentViews = Array.isArray(response.data.videoInfo.contentViewsByUsers) ? response.data.videoInfo.contentViewsByUsers : [];
             if (!currentViews.includes(userId)) {
                 const updatedViews = [...currentViews, userId];
                 console.log(updatedViews)
