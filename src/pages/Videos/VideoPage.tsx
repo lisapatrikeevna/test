@@ -7,8 +7,9 @@ import { RootState } from '../../store/store';
 import { setError, setLoading, setVideoUrl, setBuffering } from '../../store/video/videoSlice';
 import { Grid, Paper, Typography, Container, Skeleton, Button, Box } from "@mui/material";
 import { Contacts, Flag, IosShare, JoinFull, ThumbDown, ThumbUp } from "@mui/icons-material";
-import { useVideoProgress, useLikeHandler } from '../../components/VideoComponents/UseVideoHandlers';
-import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal.tsx";
+import { useLikeHandler } from '../../components/VideoComponents/useVideoHandlers/UseLikeProgress.tsx';
+import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal";
+import { useViewProgress } from '../../components/VideoComponents/useVideoHandlers/UseViewProgress.tsx';
 
 const VideoPage: FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -21,8 +22,8 @@ const VideoPage: FC = () => {
     const [views, setViews] = useState(0);
     const [videoDuration, setVideoDuration] = useState(0);
 
-    const { handleVideoProgress } = useVideoProgress(videoDuration, videoId);
-    const { likes, hasLiked, handleLike, hasDisliked, handleDislike, setLikes } = useLikeHandler(videoId); // Ensure setLikes is available from the hook
+    const { handleVideoProgress } = useViewProgress(videoDuration, videoId);
+    const { likes, hasLiked, handleLike, hasDisliked, handleDislike, setLikes } = useLikeHandler(videoId);
 
     useEffect(() => {
         const loadVideo = async () => {
@@ -34,7 +35,7 @@ const VideoPage: FC = () => {
                     setVideoName(metadata.videoName);
                     setDescription(metadata.description);
                     setViews(metadata.videoInfo.contentViewsByUsers.length);
-                    setLikes(metadata.videoInfo.contentLikesByUsers.length); // Set likes using the hook's method
+                    setLikes(metadata.videoInfo.contentLikesByUsers.length);
 
                     let blobUrl = '';
                     if (videoData) {
@@ -69,7 +70,7 @@ const VideoPage: FC = () => {
     return (
         <Grid container spacing={3} style={{ flexWrap: 'nowrap', justifyContent: 'center' }}>
             <Grid item xs={12} md={8} style={{ display: 'flex', alignItems: 'flex-start', maxWidth: '1200px' }}>
-                <Container style={{ padding: 0 }}>
+                <Box style={{ padding: 0 }}>
                     {videoUrl ? (
                         <ReactPlayer
                             style={{ margin: 0 }}
@@ -129,12 +130,12 @@ const VideoPage: FC = () => {
                             <Typography>{description}</Typography>
                         </Box>
                     </Box>
-                    <Container style={{ padding: 0 }}>
+                    <Box style={{ padding: 0 }}>
                         <Paper elevation={3}>
                             <VideoListHorizontal />
                         </Paper>
-                    </Container>
-                </Container>
+                    </Box>
+                </Box>
             </Grid>
         </Grid>
     );

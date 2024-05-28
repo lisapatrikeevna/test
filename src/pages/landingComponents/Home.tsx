@@ -27,26 +27,40 @@ const Home: FC = () => {
             letterSpacing: '0em',
           }}
         >
-          Your communication deserves the best – it deserves to be on NeoX!
+          Your
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            fontSize: 'clamp(1.625rem, 0.542rem + 4.81vw, 4.875rem)',
+            fontWeight: 500,
+            lineHeight: 'clamp(2rem, 1.208rem + 3.52vw, 4.375rem)',
+            letterSpacing: '0em',
+          }}
+        >
+          communication deserves the best – it deserves to be on NeoX!
           Connect and learn with us!
         </Typography>
       </Box>
       <Box
         sx={{
           position: 'absolute',
-          top: '60%',
-          left: '70%',
+          top: '31vh',
+          left: '48vw',
+          paddingRight: '1vh',
           width: {
             xs: '80%',
             sm: '60%',
-            md: '500px',
-            lg: '560px',
+            md: '550px',
+            lg: '700px',
+            xl: '750px'
           },
           height: {
             xs: '200px',
             sm: '300px',
-            md: '280px',
-            lg: '315px',
+            md: '300px',
+            lg: '350px',
+            xl: '400px'
           },
           borderRadius: '25px',
           boxShadow: `
@@ -57,6 +71,16 @@ const Home: FC = () => {
             inset -9px -9px 17px var(--shadow_inner_dark),
             inset 9px 9px 17px var(--shadow_inner_light)
           `,
+          '@media (max-width: 1400px)': {
+            width: '610px',
+            height: '350px',
+            left: '48vw',
+          },
+          '@media (max-width: 1210px)': {
+            width: '550px',
+            height: '280px',
+            left: '48vw',
+          }
         }}
       >
         <iframe

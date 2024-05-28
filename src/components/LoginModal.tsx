@@ -74,7 +74,7 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} width="500px">
-            <Box sx={{ height: isRegistering ? '667px' : '600px', width: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Box sx={{ height: '600px', width: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Box sx={{ padding: '25px', width: '100%' }}>
                     <Typography variant="h2" align="center">{isRegistering ? 'Register' : 'Login'}</Typography>
                     <FormControl component="form" onSubmit={handleSubmit} autoComplete='off' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -173,7 +173,7 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
             <Modal isOpen={isUserTermsModalOpen} onClose={() => {
                 setIsUserTermsModalOpen(false);
                 setIsUserTermsAccepted(true);
-            }} width="40vw" height="70vh" showCloseButton={false}>
+            }} width="30vw" height="70vh" showCloseButton={false}>
                 <UserTerms onClose={() => {
                     setIsUserTermsModalOpen(false);
                     setIsUserTermsAccepted(true);

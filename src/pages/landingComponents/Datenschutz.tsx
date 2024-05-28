@@ -37,10 +37,10 @@ const Datenschutz: FC = () => {
                     zur Verarbeitung Ihrer Daten, können Sie sich jede Zeit an uns oder an unseren Datenschutzbeauftragten wenden.
                 </Typography>
                 <Typography>
-                    <strong>Name des Verantwortlichen:</strong> Verantwortlicher für die Verarbeitung Ihrer personenbezogenen Daten ist die Am Meisenberg 14, 51491 Overath
+                    <Box component="span" fontWeight="bold">Name des Verantwortlichen:</Box> Verantwortlicher für die Verarbeitung Ihrer personenbezogenen Daten ist die Am Meisenberg 14, 51491 Overath
                 </Typography>
                 <Typography>
-                    <strong>Datenschutzbeauftragte(r):</strong> Roman Snimshchikov, neox@it-assistent.eu, +491623067782
+                    <Box component="span" fontWeight="bold">Datenschutzbeauftragte(r):</Box> Roman Snimshchikov, neox@it-assistent.eu, +491623067782
                 </Typography>
             </Box>
             <NeuDivider sx={{ my: 2 }} />
@@ -59,13 +59,13 @@ const Datenschutz: FC = () => {
                 </Typography>
                 <List>
                     <ListItem>
-                        Vertrag (Art. 6 Abs. 1 lit. b) DSGVO),
+                        Vertrag (Art. 6 Abs. 1 lit. b) DSGVO)
                     </ListItem>
                     <ListItem>
-                        Gesetzlicher Vorgaben (Art. 6 Abs. 1 lit. c) DSGVO) und
+                        Gesetzlicher Vorgaben (Art. 6 Abs. 1 lit. c) DSGVO)
                     </ListItem>
                     <ListItem>
-                        Einwilligung (Art. 6 Abs.1 lit. a), 7 DSGVO) sowie aus
+                        Einwilligung (Art. 6 Abs.1 lit. a), 7 DSGVO)
                     </ListItem>
                     <ListItem>
                         unseren berechtigten Interessen heraus, sofern Ihr schutzwürdiges Interesse am Ausschluss der Verarbeitung nicht überwiegt, dies kann insbesondere der Fall sein, sofern Sie einer Verarbeitung zu bestimmten Zwecken (z.B. Werbung) widersprochen haben.
