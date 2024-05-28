@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Container, Modal, styled } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 import Home from './Home'; 
 import Partners from './Partners.tsx';
 import Pricing from '../../components/Pricing.tsx';
@@ -15,7 +14,6 @@ import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
 import News from "./News.tsx";
 import AboutUs from "./AboutUs.tsx";
 import Project from './Project'; 
-import NeuIconButton from "../../components/neumorphism/button/NeuIconButton"; // импортируем NeuIconButton
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -54,19 +52,6 @@ const ModalContent = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),
   overflowY: 'auto',
   borderRadius: theme.shape.borderRadius,
-}));
-
-const CloseButton = styled(NeuIconButton)(({ theme }) => ({
-  position: 'fixed',
-  top: theme.spacing(1),
-  right: theme.spacing(1),
-  zIndex: 1000,
-  minWidth: '40px',
-  padding: '6px',
-  '&:hover': {
-    backgroundColor: theme.palette.mode === 'light' ? '#f0f0f0' : '#2c2c2c',
-  },
-  boxShadow: 'none',
 }));
 
 const MainPage = () => {
@@ -126,7 +111,7 @@ const MainPage = () => {
   return (
     <PageContainer>
       <Section id="Home">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <Home />
         </SectionContent>
       </Section>
@@ -136,27 +121,27 @@ const MainPage = () => {
         </SectionContent>
       </Section>
       <Section id="News">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <News />
         </SectionContent>
       </Section>
       <Section id="Contacts">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <Contacts />
         </SectionContent>
       </Section>
       <Section id="AboutUs">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <AboutUs />
         </SectionContent>
       </Section>
       <Section id="Partners">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <Partners />
         </SectionContent>
       </Section>
       <Section id="Project">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <Project />
         </SectionContent>
       </Section>
@@ -172,9 +157,6 @@ const MainPage = () => {
         aria-describedby="impressum-modal-description"
       >
         <Box>
-          <CloseButton rounded onClick={() => setIsImpressumModalOpen(false)}>
-            <CloseIcon />
-          </CloseButton>
           <ModalContent sx={{ maxWidth: '500px' }}>
             <Impressum onClose={() => setIsImpressumModalOpen(false)} />
           </ModalContent>
@@ -187,9 +169,6 @@ const MainPage = () => {
         aria-describedby="privacy-policy-modal-description"
       >
         <Box>
-          <CloseButton rounded onClick={() => setIsPrivacyPolicyModalOpen(false)}>
-            <CloseIcon />
-          </CloseButton>
           <ModalContent>
             <PrivacyPolicy />
           </ModalContent>
@@ -202,9 +181,6 @@ const MainPage = () => {
         aria-describedby="datenschutz-modal-description"
       >
         <Box>
-          <CloseButton rounded onClick={() => setIsDatenschutzModalOpen(false)}>
-            <CloseIcon />
-          </CloseButton>
           <ModalContent>
             <Datenschutz />
           </ModalContent>

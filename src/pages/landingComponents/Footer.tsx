@@ -17,18 +17,20 @@ const FooterContainer = styled('div')(({ theme }) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: theme.palette.background.default,
-    boxShadow: `0 -10px 10px ${theme.palette.mode === 'light' ? theme.shadows[2] : theme.shadows[5]}`,
+    boxShadow: theme.shadows[1],
     transition: '0.5s',
     borderTopLeftRadius: theme.shape.borderRadius,
     borderTopRightRadius: theme.shape.borderRadius,
     color: theme.palette.text.primary,
 }));
+
 const Copyright = styled('div')(({ theme }) => ({
     position: 'absolute',
     left: theme.spacing(1),
     bottom: theme.spacing(1),
     fontFamily: theme.typography.fontFamily,
 }));
+
 const SocialLink = styled('a')(({ theme }) => ({
     color: theme.palette.primary.main,
     textDecoration: 'none',
