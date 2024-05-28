@@ -1,16 +1,18 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { CheckboxProps as MuiCheckboxProps } from '@mui/material';
-import { Shadows } from '../../../types/types'; 
+import { Shadows } from '../../../types/types';
 
 interface NeuCheckboxProps extends Omit<MuiCheckboxProps, 'checkedIcon' | 'icon'> {
   bgColor?: string;
   borderColor?: string;
 }
 
-const StyledCheckboxContainer = styled('span')<NeuCheckboxProps>(({ theme, bgColor, borderColor }) => {
+const StyledCheckboxContainer = styled('span')<NeuCheckboxProps>(({ theme, bgColor }) => {
   const primaryColor = theme.palette.primary.main;
-  const textColor = theme.palette.text.primary;
+
+  // Приведение theme.shadows к типу Shadows
+  const shadows = theme.shadows as Shadows;
 
   return {
     width: '24px',
@@ -23,7 +25,7 @@ const StyledCheckboxContainer = styled('span')<NeuCheckboxProps>(({ theme, bgCol
     borderRadius: '4px',
     boxSizing: 'border-box',
     backgroundColor: bgColor || theme.palette.background.paper,
-    boxShadow: (theme.shadows as Shadows)[1],
+    boxShadow: shadows[1],
     transition: 'all 200ms ease-in-out',
     display: 'flex',
     alignItems: 'center',
@@ -33,12 +35,16 @@ const StyledCheckboxContainer = styled('span')<NeuCheckboxProps>(({ theme, bgCol
       position: 'absolute',
       width: '8px',
       height: '14px',
-      borderRight: `3px solid ${borderColor || textColor}`,
-      borderBottom: `3px solid ${borderColor || textColor}`,
+      borderRight: `3px solid gray`,
+      borderBottom: `3px solid gray`,
       transform: 'rotate(45deg)',
+      transition: 'border-color 200ms ease-in-out',
+    },
+    '&:hover:after': {
+      borderColor: primaryColor,
     },
     '&.checked': {
-      boxShadow: `inset ${(theme.shadows as Shadows)[1]}`,
+      boxShadow: `inset ${shadows[1]}`,
       '&:after': {
         borderColor: primaryColor,
       },

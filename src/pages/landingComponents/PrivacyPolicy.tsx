@@ -31,7 +31,7 @@ const PrivacyPolicy: FC = () => {
     return (
         <StyledBox>
             <Typography align="center">
-                <br /><span>Last Updated On 04-Apr-2024</span>
+                <span>Last Updated On 04-Apr-2024</span>
                 <br /><span>Effective Date 04-Apr-2024</span>
             </Typography>
 

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Box, Container, Modal, styled, IconButton } from '@mui/material';
+import { Box, Container, Modal, styled } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Home from './Home'; 
 import Partners from './Partners.tsx';
@@ -15,6 +15,7 @@ import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
 import News from "./News.tsx";
 import AboutUs from "./AboutUs.tsx";
 import Project from './Project'; 
+import NeuIconButton from "../../components/neumorphism/button/NeuIconButton"; // импортируем NeuIconButton
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -42,6 +43,7 @@ const SectionContent = styled(Container)({
 });
 
 const ModalContent = styled(Box)(({ theme }) => ({
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -52,13 +54,19 @@ const ModalContent = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),
   overflowY: 'auto',
   borderRadius: theme.shape.borderRadius,
-  position: 'relative',
 }));
 
-const CloseButton = styled(IconButton)(({ theme }) => ({
-  position: 'absolute',
+const CloseButton = styled(NeuIconButton)(({ theme }) => ({
+  position: 'fixed',
   top: theme.spacing(1),
   right: theme.spacing(1),
+  zIndex: 1000,
+  minWidth: '40px',
+  padding: '6px',
+  '&:hover': {
+    backgroundColor: theme.palette.mode === 'light' ? '#f0f0f0' : '#2c2c2c',
+  },
+  boxShadow: 'none',
 }));
 
 const MainPage = () => {
@@ -123,7 +131,7 @@ const MainPage = () => {
         </SectionContent>
       </Section>
       <Section id="Pricing">
-        <SectionContent maxWidth="lg">
+        <SectionContent maxWidth="xl">
           <Pricing />
         </SectionContent>
       </Section>
@@ -160,31 +168,47 @@ const MainPage = () => {
       <Modal
         open={isImpressumModalOpen}
         onClose={() => setIsImpressumModalOpen(false)}
+        aria-labelledby="impressum-modal"
+        aria-describedby="impressum-modal-description"
       >
-        <ModalContent sx={{ maxWidth: '500px' }}> 
-          <CloseButton onClick={() => setIsImpressumModalOpen(false)}>
+        <Box>
+          <CloseButton rounded onClick={() => setIsImpressumModalOpen(false)}>
             <CloseIcon />
           </CloseButton>
-          <Impressum onClose={() => setIsImpressumModalOpen(false)} />
-        </ModalContent>
+          <ModalContent sx={{ maxWidth: '500px' }}>
+            <Impressum onClose={() => setIsImpressumModalOpen(false)} />
+          </ModalContent>
+        </Box>
       </Modal>
-      <Modal open={isPrivacyPolicyModalOpen}
-        onClose={() => setIsPrivacyPolicyModalOpen(false)}>
-        <ModalContent>
-          <CloseButton onClick={() => setIsPrivacyPolicyModalOpen(false)}>
+      <Modal
+        open={isPrivacyPolicyModalOpen}
+        onClose={() => setIsPrivacyPolicyModalOpen(false)}
+        aria-labelledby="privacy-policy-modal"
+        aria-describedby="privacy-policy-modal-description"
+      >
+        <Box>
+          <CloseButton rounded onClick={() => setIsPrivacyPolicyModalOpen(false)}>
             <CloseIcon />
           </CloseButton>
-          <PrivacyPolicy />
-        </ModalContent>
+          <ModalContent>
+            <PrivacyPolicy />
+          </ModalContent>
+        </Box>
       </Modal>
-      <Modal open={isDatenschutzModalOpen}
-        onClose={() => setIsDatenschutzModalOpen(false)}>
-        <ModalContent>
-          <CloseButton onClick={() => setIsDatenschutzModalOpen(false)}>
+      <Modal
+        open={isDatenschutzModalOpen}
+        onClose={() => setIsDatenschutzModalOpen(false)}
+        aria-labelledby="datenschutz-modal"
+        aria-describedby="datenschutz-modal-description"
+      >
+        <Box>
+          <CloseButton rounded onClick={() => setIsDatenschutzModalOpen(false)}>
             <CloseIcon />
           </CloseButton>
-          <Datenschutz />
-        </ModalContent>
+          <ModalContent>
+            <Datenschutz />
+          </ModalContent>
+        </Box>
       </Modal>
       <Cookies />
     </PageContainer>
