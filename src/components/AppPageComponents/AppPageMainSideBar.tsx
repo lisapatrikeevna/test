@@ -70,12 +70,12 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
   return (
     <Box
       sx={{
-        height: '100vh',
+        height: '89vh',
         width: isOpenMainSideBar ? '250px' : '0px',
         transition: 'width 0.5s ease',
         display: 'flex',
         flexDirection: 'column',
-        gap: '10px',
+        gap: '2px',
         background: '#e0e0e0',
         padding: isOpenMainSideBar ? '10px' : '0px',
         overflow: 'hidden',
@@ -87,7 +87,7 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
             sx={{
               color: 'inherit',
               textDecoration: 'none',
-              padding: '20px 0px',
+              padding: '10px 0px',
               display: 'flex',
             }}
           >
@@ -115,7 +115,9 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
             <List component="div" disablePadding>
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon>
-                  <AddCircleOutline />
+                  <AddCircleOutline
+                    sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                  />
                 </ListItemIcon>
                 <ListItemText primary="Add account" />
               </ListItemButton>
@@ -130,73 +132,126 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
                 onClose={() => setOpenProfileModal(false)}
               /> */}
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={homePath} disableRipple>
+            <ListItemButton
+              component={Link}
+              to={homePath}
+              disableRipple
+              sx={{ padding: '0px 16px' }}
+            >
               <ListItemIcon>
-                <HomeOutlined />
+                <HomeOutlined
+                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                />
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={newGroupPath} disableRipple>
+            <ListItemButton
+              component={Link}
+              to={newGroupPath}
+              disableRipple
+              sx={{ padding: '0px 16px' }}
+            >
               <ListItemIcon>
-                <PeopleOutline />
+                <PeopleOutline
+                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                />
               </ListItemIcon>
               <ListItemText primary="New group" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={newChannelPath} disableRipple>
+            <ListItemButton
+              component={Link}
+              to={newChannelPath}
+              disableRipple
+              sx={{ padding: '0px 16px' }}
+            >
               <ListItemIcon>
-                <CampaignOutlined />
+                <CampaignOutlined
+                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                />
               </ListItemIcon>
               <ListItemText primary="New channel" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={contactsPath} disableRipple>
+            <ListItemButton
+              component={Link}
+              to={contactsPath}
+              disableRipple
+              sx={{ padding: '0px 16px' }}
+            >
               <ListItemIcon>
-                <AccountCircleOutlined />
+                <AccountCircleOutlined
+                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                />
               </ListItemIcon>
               <ListItemText primary="Contacts" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={chatsPath} disableRipple>
+            <ListItemButton
+              component={Link}
+              to={chatsPath}
+              disableRipple
+              sx={{ padding: '0px 16px' }}
+            >
               <ListItemIcon>
-                <ForumOutlined />
+                <ForumOutlined
+                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                />
               </ListItemIcon>
               <ListItemText primary="Chats" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={mediaPath} disableRipple>
+            <ListItemButton
+              component={Link}
+              to={mediaPath}
+              disableRipple
+              sx={{ padding: '0px 16px' }}
+            >
               <ListItemIcon>
-                <PlayCircleOutline />
+                <PlayCircleOutline
+                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                />
               </ListItemIcon>
               <ListItemText primary="Videos" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton disableRipple>
+            <ListItemButton disableRipple sx={{ padding: '0px 16px' }}>
               <ListItemIcon>
-                <CallOutlined />
+                <CallOutlined
+                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                />
               </ListItemIcon>
               <ListItemText primary="Calls" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem disablePadding sx={{ padding: '0px' }}>
             <ListItemButton component={Link} to={vrPath} disableRipple>
               <ListItemIcon>
-                <BlurOnOutlined />
+                <BlurOnOutlined
+                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                />
               </ListItemIcon>
               <ListItemText primary="VR board" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={settingsPath} disableRipple>
+            <ListItemButton
+              component={Link}
+              to={settingsPath}
+              disableRipple
+              sx={{ padding: '0px 16px' }}
+            >
               <ListItemIcon>
-                <SettingsOutlined />
+                <SettingsOutlined
+                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                />
               </ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItemButton>
@@ -207,7 +262,9 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
             onClick={toggleTheme}
           >
             <ListItemIcon>
-              <NightsStayOutlined />
+              <NightsStayOutlined
+                sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+              />
             </ListItemIcon>
             <ListItemText primary="Theme" />
             <Switch
@@ -217,9 +274,16 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
             />
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={'/'} disableRipple>
+            <ListItemButton
+              component={Link}
+              to={'/'}
+              disableRipple
+              sx={{ padding: '0px 16px' }}
+            >
               <ListItemIcon>
-                <LogoutOutlined />
+                <LogoutOutlined
+                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                />
               </ListItemIcon>
               <ListItemText primary="Logout" />
             </ListItemButton>
