@@ -5,11 +5,26 @@ import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setError, setLoading, setVideoUrl, setBuffering } from '../../store/video/videoSlice';
-import { Grid, Paper, Typography, Container, Skeleton, Button, Box } from "@mui/material";
-import { Contacts, Flag, IosShare, JoinFull, ThumbDown, ThumbUp } from "@mui/icons-material";
+import {Grid, Paper, Typography, Container, Skeleton, Button, Box, TextField, IconButton} from "@mui/material";
+import {
+    Contacts,
+    ContentCopy,
+    Facebook,
+    Flag,
+    IosShare,
+    JoinFull,
+    LinkedIn,
+    ThumbDown,
+    ThumbUp,
+    X
+} from "@mui/icons-material";
 import { useLikeHandler } from '../../components/VideoComponents/useVideoHandlers/UseLikeProgress.tsx';
 import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal";
 import { useViewProgress } from '../../components/VideoComponents/useVideoHandlers/UseViewProgress.tsx';
+import Modal from "../../components/Modal.tsx";
+import HandleShareOnFacebook from "../../components/VideoComponents/VideoShare/HandleShareOnFacebook.tsx";
+import HandleShareOnX from "../../components/VideoComponents/VideoShare/HandleShareOnX.tsx";
+import HandleShareOnLinkedIn from "../../components/VideoComponents/VideoShare/HandleShareOnLinkedIn.tsx";
 
 const VideoPage: FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -24,6 +39,22 @@ const VideoPage: FC = () => {
 
     const { handleVideoProgress } = useViewProgress(videoDuration, videoId);
     const { likes, hasLiked, handleLike, hasDisliked, handleDislike, setLikes } = useLikeHandler(videoId);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const link = window.location.href;
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCopyLink = () => {
+        navigator.clipboard.writeText(link);
+        alert("Link copied to clipboard!");
+    };
 
     useEffect(() => {
         const loadVideo = async () => {
@@ -70,7 +101,7 @@ const VideoPage: FC = () => {
     return (
         <Grid container spacing={3} style={{ flexWrap: 'nowrap', justifyContent: 'center' }}>
             <Grid item xs={12} md={8} style={{ display: 'flex', alignItems: 'flex-start', maxWidth: '1200px' }}>
-                <Box style={{ padding: 0 }}>
+                <Container style={{ padding: 0 }}>
                     {videoUrl ? (
                         <ReactPlayer
                             style={{ margin: 0 }}
@@ -92,15 +123,22 @@ const VideoPage: FC = () => {
                     {buffering && <Typography>Buffering...</Typography>}
                     <Box>
                         <Typography variant="h4">{videoName}</Typography>
+                        {/*Container for all info about video*/}
                         <Container style={{ display: 'flex', flexDirection: 'row' }}>
+
                             <Container style={{ display: 'flex', flexDirection: 'row' }}>
+                                {/*Place for Avatar (first in a row)*/}
+                                <Box style={{display: 'flex', justifyContent: 'start', alignItems: 'center'}}>
+                                {/*TODO AVATAR and press on it, navigate to thisUserChannel*/}
+                                    <Contacts sx={{ fontSize: '34px' }} />
+
+                                </Box>
                                 <Container style={{ display: 'flex', flexDirection: 'column' }}>
                                     <Container style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
                                         <Typography>{views} views</Typography>
                                         <Typography>2 weeks ago</Typography>
                                     </Container>
                                     <Container style={{ display: 'flex', flexDirection: 'row' }}>
-                                        <Contacts />
                                         <Typography>UnknownUser</Typography>
                                     </Container>
                                 </Container>
@@ -121,7 +159,32 @@ const VideoPage: FC = () => {
                                     />
                                     <Button variant='text' size='small' startIcon={<JoinFull />}>Subscribe</Button>
                                     <Button variant='text' startIcon={<Flag />}>Report</Button>
-                                    <Button variant='text' startIcon={<IosShare />}>Share</Button>
+                                    <Button variant="text" startIcon={<IosShare />} onClick={handleOpenModal}>
+                                        Share
+                                    </Button>
+                                    <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+                                        <Box sx={{ textAlign: 'center', p: 2 }}>
+                                            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, mb: 2 }}>
+                                                <Facebook onClick={() => HandleShareOnFacebook(link)} style={{ cursor: 'pointer', fontSize: '52px' }} />
+                                                <X onClick={() => HandleShareOnX(link)} style={{ cursor: 'pointer', fontSize: '52px' }}/>
+                                                <LinkedIn onClick={() => HandleShareOnLinkedIn(link)} style={{ cursor: 'pointer', fontSize: '52px' }}/>
+                                                {/* Add more icons as needed */}
+                                            </Box>
+                                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                <TextField
+                                                    value={link}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                    variant="outlined"
+                                                    sx={{ width: '300px', mr: 1 }}
+                                                />
+                                                <IconButton onClick={handleCopyLink}>
+                                                    <ContentCopy />
+                                                </IconButton>
+                                            </Box>
+                                        </Box>
+                                    </Modal>
                                 </Container>
                             </Container>
                         </Container>
@@ -135,7 +198,7 @@ const VideoPage: FC = () => {
                             <VideoListHorizontal />
                         </Paper>
                     </Box>
-                </Box>
+                </Container>
             </Grid>
         </Grid>
     );
