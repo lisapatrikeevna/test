@@ -1,3 +1,4 @@
+
 import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getVideo, getVideoMetadata } from '../../services/videoServices/videoShow.service';
@@ -5,7 +6,7 @@ import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setError, setLoading, setVideoUrl, setBuffering } from '../../store/video/videoSlice';
-import {Grid, Paper, Typography, Container, Skeleton, Button, Box, TextField, IconButton} from "@mui/material";
+import { Grid, Paper, Typography, Container, Skeleton, Button, Box, TextField, IconButton } from "@mui/material";
 import {
     Contacts,
     ContentCopy,
@@ -97,7 +98,6 @@ const VideoPage: FC = () => {
             </Container>
         );
     }
-
     return (
         <Grid container spacing={3} style={{ flexWrap: 'nowrap', justifyContent: 'center' }}>
             <Grid item xs={12} md={8} style={{ display: 'flex', alignItems: 'flex-start', maxWidth: '1200px' }}>
@@ -128,8 +128,8 @@ const VideoPage: FC = () => {
 
                             <Container style={{ display: 'flex', flexDirection: 'row' }}>
                                 {/*Place for Avatar (first in a row)*/}
-                                <Box style={{display: 'flex', justifyContent: 'start', alignItems: 'center'}}>
-                                {/*TODO AVATAR and press on it, navigate to thisUserChannel*/}
+                                <Box style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+                                    {/*TODO AVATAR and press on it, navigate to thisUserChannel*/}
                                     <Contacts sx={{ fontSize: '34px' }} />
 
                                 </Box>
@@ -163,11 +163,13 @@ const VideoPage: FC = () => {
                                         Share
                                     </Button>
                                     <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+
+
                                         <Box sx={{ textAlign: 'center', p: 2 }}>
                                             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, mb: 2 }}>
                                                 <Facebook onClick={() => HandleShareOnFacebook(link)} style={{ cursor: 'pointer', fontSize: '52px' }} />
-                                                <X onClick={() => HandleShareOnX(link)} style={{ cursor: 'pointer', fontSize: '52px' }}/>
-                                                <LinkedIn onClick={() => HandleShareOnLinkedIn(link)} style={{ cursor: 'pointer', fontSize: '52px' }}/>
+                                                <X onClick={() => HandleShareOnX(link)} style={{ cursor: 'pointer', fontSize: '52px' }} />
+                                                <LinkedIn onClick={() => HandleShareOnLinkedIn(link)} style={{ cursor: 'pointer', fontSize: '52px' }} />
                                                 {/* Add more icons as needed */}
                                             </Box>
                                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -195,7 +197,7 @@ const VideoPage: FC = () => {
                     </Box>
                     <Box style={{ padding: 0 }}>
                         <Paper elevation={3}>
-                            <VideoListHorizontal />
+                            <VideoListHorizontal currentVideoId={videoId} />
                         </Paper>
                     </Box>
                 </Container>
