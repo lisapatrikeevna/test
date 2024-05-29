@@ -15,7 +15,7 @@ const VideosMainPage: FC = () => {
     const handleCloseAddVideoModal = () => {
         setIsAddVideoModalOpen(false);
     };
-
+    const videoId = '';
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -35,7 +35,7 @@ const VideosMainPage: FC = () => {
                 <AddVideoModal isOpen={isAddVideoModalOpen} onClose={handleCloseAddVideoModal}/>
             </Grid>
             <Grid item xs={12}>
-                <VideoListHorizontal/>
+                <VideoListHorizontal currentVideoId={videoId} />
             </Grid>
         </Grid>
     );
