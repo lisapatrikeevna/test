@@ -18,8 +18,11 @@ export interface IVideo {
         contentViewsByUsers: string[];
     };
 }
+interface VideoListHorizontalProps {
+    currentVideoId: string;
+}
 
-const VideoListHorizontal = () => {
+const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoId }) => {
     const [videos, setVideos] = useState<IVideo[]>([]);
     const [loading, setLoading] = useState(true);
     const [visibleCount, setVisibleCount] = useState(0);
@@ -98,12 +101,13 @@ const VideoListHorizontal = () => {
         });
     };
 
+    const filteredVideos = videos.filter(video => video.id !== currentVideoId);
     return (
         <Box sx={{ padding: "10px" }}>
             <Box sx={{ maxWidth: "100%", margin: "0 auto" }}>
                 <Grid container spacing={2} sx={{ justifyContent: "center" }}>
                     {!loading
-                        ? videos.slice(0, visibleCount).map((video) => (
+                        ? filteredVideos.slice(0, visibleCount).map((video) => (
                             <Grid item key={video.id} xs={12} sm={6} md={4} lg={2.4} xl={2}>
                                 <Card sx={{ height: "100%" }}>
                                     <Link to={`${mediaPath}/${video.id}`}>
