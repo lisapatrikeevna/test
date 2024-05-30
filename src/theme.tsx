@@ -50,7 +50,7 @@ const darkShadows = generateShadows('7px 7px 15px #1a1a1a, -7px -7px 15px #33333
 
 export const lightTheme = createTheme({
     shape: {
-        borderRadius: 25,
+        borderRadius: 10,
     },
 
 
@@ -85,7 +85,7 @@ export const lightTheme = createTheme({
 
 export const darkTheme = createTheme({
     shape: {
-        borderRadius: 25,
+        borderRadius: 10,
     },
 
     spacing: (factor: number) => factor * 8,
