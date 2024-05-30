@@ -27,7 +27,7 @@ const ChannelPage: FC = () => {
     //
     //     fetchVideos();
     // }, []);
-
+    const videoId = '';
     return (
         <Grid container spacing={2} justifyContent="center" style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <Grid item xs={6} container justifyContent="center">
@@ -52,8 +52,7 @@ const ChannelPage: FC = () => {
                 </Paper>
             </Grid>
             <Grid item xs={12}>
-                <VideoListHorizontal />
-
+                <VideoListHorizontal currentVideoId={videoId} />
             </Grid>
         </Grid>
     );
