@@ -51,7 +51,7 @@ const WriteToUsForm = () => {
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             {/* First block with address, phone and email */}
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 4, maxWidth: 400 }}>
-                <Grid container spacing={2} sx={{ flexDirection: 'column', width: 800 }}>
+                <Grid container spacing={2} sx={{ flexDirection: 'column', width: 500 }}>
                     <Grid item xs={12} md={4}>
                         <Box sx={{ textAlign: 'center' }}>
                             <NeuIconButton disabled rounded sx={{ minWidth: '40px', padding: '6px' }}>
