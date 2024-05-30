@@ -1,19 +1,36 @@
-import { Badge, Box, Modal, Stack, TextField, Typography } from '@mui/material';
+import {
+  Badge,
+  Box,
+  InputAdornment,
+  Modal,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import EmailIcon from '@mui/icons-material/Email';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import KeyboardAltOutlinedIcon from '@mui/icons-material/KeyboardAltOutlined';
+import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
 
 type Props = {
   setIsOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   setIsOpenMainSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleChatsPanel: () => void;
 };
 
-const AppPageHeader = ({ setIsOpenSideBar, setIsOpenMainSideBar }: Props) => {
+const AppPageHeader = ({
+  setIsOpenSideBar,
+  setIsOpenMainSideBar,
+  toggleChatsPanel,
+}: Props) => {
   const [isOpenModalNotifications, setIsOpenModalNotifications] =
     useState(false);
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleModal = (event: React.MouseEvent<SVGSVGElement>) => {
     const target = event.currentTarget as unknown as HTMLElement;
@@ -27,13 +44,28 @@ const AppPageHeader = ({ setIsOpenSideBar, setIsOpenMainSideBar }: Props) => {
     setIsOpenModalNotifications(true);
   };
 
+  const handleSearch = () => {
+    if (searchQuery.trim() !== '') {
+      const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(
+        searchQuery
+      )}`;
+      window.open(googleSearchUrl, '_blank');
+    }
+    setSearchQuery('');
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <Stack
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      padding={2}
-      sx={{ zIndex: 1100, position: 'relative' }}
+      sx={{ zIndex: 1100, position: 'relative', padding: '10px 20px' }}
     >
       <Stack direction="row" spacing={2} alignItems="center">
         <MenuIcon
@@ -41,7 +73,7 @@ const AppPageHeader = ({ setIsOpenSideBar, setIsOpenMainSideBar }: Props) => {
           onClick={() => setIsOpenMainSideBar((prev) => !prev)}
         />
 
-        <EmailIcon cursor="pointer" />
+        <EmailIcon cursor="pointer" onClick={toggleChatsPanel} />
       </Stack>
       <TextField
         id="outlined-basic"
@@ -49,8 +81,20 @@ const AppPageHeader = ({ setIsOpenSideBar, setIsOpenMainSideBar }: Props) => {
         variant="outlined"
         size="small"
         sx={{ width: '500px', maxHeight: '40px' }}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        onKeyPress={handleKeyPress}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <SearchOutlinedIcon cursor="pointer" onClick={handleSearch} />
+            </InputAdornment>
+          ),
+        }}
       />
       <Stack direction="row" spacing={2}>
+        <KeyboardVoiceOutlinedIcon sx={{ cursor: 'pointer' }} />
+        <KeyboardAltOutlinedIcon sx={{ cursor: 'pointer' }} />
         <Badge badgeContent={10} color="primary" max={9}>
           <NotificationsIcon
             cursor="pointer"

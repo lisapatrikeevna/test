@@ -1,11 +1,10 @@
-// AppPage.tsx
 import { Box, Divider } from '@mui/material';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import AppPageHeader from '../components/AppPageComponents/AppPageHeader';
 import AppPageChats from '../components/AppPageComponents/AppPageChats';
 import AppPageComments from '../components/AppPageComponents/AppPageComments';
 import AppPageSideBar from '../components/AppPageComponents/AppPageSideBar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import AppPageClaendar from '../components/AppPageComponents/AppPageClaendar';
 import VideoInSideBareAppPage from '../components/AppPageComponents/VideoInSideBareAppPage';
 import AppPageCentralComponent from '../components/AppPageComponents/AppPageCentralComponent';
@@ -26,6 +25,21 @@ const AppPage = () => {
   const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
+  const [isChatPanelOpen, setIsChatPanelOpen] = useState(true);
+
+  const chatsPanelRef = useRef(null);
+
+  const toggleChatsPanel = () => {
+    setIsChatPanelOpen((prev) => {
+      const newIsOpen = !prev;
+      if (newIsOpen) {
+        chatsPanelRef.current?.expand();
+      } else {
+        chatsPanelRef.current?.collapse();
+      }
+      return newIsOpen;
+    });
+  };
 
   useEffect(() => {
     if (isOpenSideBar || isOpenMainSideBar) {
@@ -43,18 +57,27 @@ const AppPage = () => {
   }
 
   return (
-    <Box>
+    <Box height="100vh" display="flex" flexDirection="column">
       <AppPageHeader
         setIsOpenSideBar={setIsOpenSideBar}
         setIsOpenMainSideBar={setIsOpenMainSideBar}
+        toggleChatsPanel={toggleChatsPanel}
       />
       <Divider />
-      <Box display="flex" position="relative">
+      <Box flex={1} display="flex" position="relative">
         <Box position="absolute" top={0} left={0} zIndex={1000}>
           <AppPageMainSideBar isOpenMainSideBar={isOpenMainSideBar} />
         </Box>
-        <PanelGroup direction="horizontal" style={{ height: '80vh' }}>
-          <Panel defaultSize={25} maxSize={100} minSize={4.7}>
+        <PanelGroup direction="horizontal" style={{ flex: 1 }}>
+          <Panel
+            ref={chatsPanelRef}
+            defaultSize={isChatPanelOpen ? 25 : 4}
+            maxSize={100}
+            minSize={4}
+            collapsible={true}
+            onExpand={() => setIsChatPanelOpen(true)}
+            onCollapse={() => setIsChatPanelOpen(false)}
+          >
             <AppPageChats />
           </Panel>
 
@@ -78,7 +101,7 @@ const AppPage = () => {
         {isOverlayVisible && (
           <Box
             position="fixed"
-            top="73px"
+            top="60px"
             left={0}
             right={0}
             bottom={0}
