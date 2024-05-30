@@ -24,7 +24,7 @@ const PreviewImage: FC<PreviewImageProps> = ({ videoId }) => {
     }
 
     /* return <img src={imageSrc} alt="Preview" className={styles.videoPreview}  />; */
-    return <img src={imageSrc} alt="Preview" className={styles.videoPreview} style={{ width: 320, height: 180 }} />;
+    return <img src={imageSrc} alt="Preview" className={styles.videoPreview} style={{ width: 350, height: 180 }} />;
 };
 
 export default PreviewImage;
