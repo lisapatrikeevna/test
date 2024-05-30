@@ -1,11 +1,21 @@
 import { FC } from 'react';
-import { Typography, Stack, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 
 const Home: FC = () => {
+  const textStyle = {
+    fontSize: 'clamp(1.625rem, 0.542rem + 4.81vw, 4.875rem)',
+    fontWeight: 500,
+    lineHeight: 'clamp(2rem, 1.208rem + 3.52vw, 4.375rem)',
+    letterSpacing: '0em',
+  };
+
   return (
-    <Stack
-      direction={{ sm: 'column' }}
+    <Box
       sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
         width: '100%',
         height: '100%',
         padding: {
@@ -13,54 +23,49 @@ const Home: FC = () => {
           sm: '20px 15px',
           lg: '1vh 2vw',
         },
-        justifyContent: 'left',
-        position: 'relative',
       }}
     >
-      <Box width="50%" sx={{ marginBottom: '2rem' }}>
+      <Box
+        sx={{
+          flex: '1 1 50%',
+          marginRight: '2rem',
+        }}
+      >
         <Typography
           variant="h4"
-          sx={{
-            fontSize: 'clamp(1.625rem, 0.542rem + 4.81vw, 4.875rem)',
-            fontWeight: 500,
-            lineHeight: 'clamp(2rem, 1.208rem + 3.52vw, 4.375rem)',
-            letterSpacing: '0em',
-          }}
+          sx={textStyle}
         >
           Your
         </Typography>
         <Typography
           variant="h4"
-          sx={{
-            fontSize: 'clamp(1.625rem, 0.542rem + 4.81vw, 4.875rem)',
-            fontWeight: 500,
-            lineHeight: 'clamp(2rem, 1.208rem + 3.52vw, 4.375rem)',
-            letterSpacing: '0em',
-          }}
+          sx={textStyle}
         >
           communication deserves the best – it deserves to be on NeoX!
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={textStyle}
+        >
           Connect and learn with us!
         </Typography>
       </Box>
       <Box
         sx={{
-          position: 'absolute',
-          top: '31vh',
-          left: '48vw',
-          paddingRight: '1vh',
-          width: {
-            xs: '80%',
+          flex: '1 1 50%',
+          maxWidth: {
+            xs: '100%',
             sm: '60%',
             md: '550px',
             lg: '700px',
-            xl: '750px'
+            xl: '830px'
           },
           height: {
             xs: '200px',
             sm: '300px',
             md: '300px',
             lg: '350px',
-            xl: '400px'
+            xl: '430px'
           },
           borderRadius: '25px',
           boxShadow: `
@@ -71,16 +76,7 @@ const Home: FC = () => {
             inset -9px -9px 17px var(--shadow_inner_dark),
             inset 9px 9px 17px var(--shadow_inner_light)
           `,
-          '@media (max-width: 1400px)': {
-            width: '610px',
-            height: '350px',
-            left: '48vw',
-          },
-          '@media (max-width: 1210px)': {
-            width: '550px',
-            height: '280px',
-            left: '48vw',
-          }
+          marginTop: '15vw' 
         }}
       >
         <iframe
@@ -92,7 +88,7 @@ const Home: FC = () => {
           style={{ width: '100%', height: '100%', borderRadius: '25px' }}
         ></iframe>
       </Box>
-    </Stack>
+    </Box>
   );
 };
 
