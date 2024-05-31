@@ -1,4 +1,4 @@
-import { Box, Divider } from '@mui/material';
+import { Avatar, Box, Divider } from '@mui/material';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import AppPageHeader from '../components/AppPageComponents/AppPageHeader';
 import AppPageChats from '../components/AppPageComponents/AppPageChats';
@@ -11,6 +11,8 @@ import AppPageCentralComponent from '../components/AppPageComponents/AppPageCent
 import AppPageAudioComponent from '../components/AppPageComponents/AppPageAudioComponent';
 import AppPageRadioComponent from '../components/AppPageComponents/AppPageRadioComponent';
 import AppPageMainSideBar from '../components/AppPageComponents/AppPageMainSideBar';
+import { Stack } from '@mui/system';
+import { data } from '../components/ProfileComponents/utils';
 
 export type RenderValues =
   | 'comments'
@@ -26,8 +28,10 @@ const AppPage = () => {
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
   const [isChatPanelOpen, setIsChatPanelOpen] = useState(true);
+  const [users] = useState(data);
 
   const chatsPanelRef = useRef(null);
+  const rightPanel = useRef(null);
 
   const toggleChatsPanel = () => {
     setIsChatPanelOpen((prev) => {
@@ -39,6 +43,10 @@ const AppPage = () => {
       }
       return newIsOpen;
     });
+  };
+
+  const openRightPanel = () => {
+    rightPanel?.current?.expand();
   };
 
   useEffect(() => {
@@ -68,10 +76,31 @@ const AppPage = () => {
         <Box position="absolute" top={0} left={0} zIndex={1000}>
           <AppPageMainSideBar isOpenMainSideBar={isOpenMainSideBar} />
         </Box>
+        <Stack
+          direction="column"
+          spacing={2}
+          padding={1}
+          borderRight="1px solid black"
+          alignItems="center"
+        >
+          <Avatar
+            src={data[0].img}
+            alt="avatar"
+            sx={{
+              width: 50,
+              height: 50,
+              cursor: 'pointer',
+              position: 'relative',
+            }}
+          />
+          {users.map((elem) => (
+            <Avatar key={elem.id} src={elem.img} />
+          ))}
+        </Stack>
         <PanelGroup direction="horizontal" style={{ flex: 1 }}>
           <Panel
             ref={chatsPanelRef}
-            defaultSize={isChatPanelOpen ? 25 : 4}
+            defaultSize={25}
             maxSize={100}
             minSize={4}
             collapsible={true}
@@ -87,7 +116,13 @@ const AppPage = () => {
             <AppPageCentralComponent />
           </Panel>
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
-          <Panel defaultSize={25} maxSize={50} minSize={20} collapsible={true}>
+          <Panel
+            ref={rightPanel}
+            defaultSize={25}
+            maxSize={50}
+            minSize={20}
+            collapsible={true}
+          >
             <Box padding="5px">
               {renderValues === 'chats' && <AppPageChats />}
               {renderValues === 'comments' && <AppPageComments />}
@@ -121,6 +156,7 @@ const AppPage = () => {
         )}
         <Box position="absolute" top={0} right={0} zIndex={1000}>
           <AppPageSideBar
+            openRightPanel={openRightPanel}
             isOpenSideBar={isOpenSideBar}
             changeRender={changeRender}
             setIsOpenSideBar={setIsOpenSideBar}
