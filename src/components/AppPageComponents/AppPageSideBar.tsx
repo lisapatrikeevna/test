@@ -6,13 +6,21 @@ type Props = {
   isOpenSideBar: boolean;
   changeRender: (value: RenderValues) => void;
   setIsOpenSideBar: Function;
+  openRightPanel: () => void;
 };
 
 const AppPageSideBar = ({
   isOpenSideBar,
   changeRender,
   setIsOpenSideBar,
+  openRightPanel,
 }: Props) => {
+  const handleButtonClick = (value: RenderValues) => {
+    changeRender(value);
+    openRightPanel();
+    setIsOpenSideBar(false);
+  };
+
   return (
     <Box
       sx={{
@@ -30,52 +38,22 @@ const AppPageSideBar = ({
         pointerEvents: isOpenSideBar ? 'auto' : 'none',
       }}
     >
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('comments'), setIsOpenSideBar(false);
-        }}
-      >
+      <Button variant="contained" onClick={() => handleButtonClick('comments')}>
         Comments
       </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('chats'), setIsOpenSideBar(false);
-        }}
-      >
+      <Button variant="contained" onClick={() => handleButtonClick('chats')}>
         Chats
       </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('videos'), setIsOpenSideBar(false);
-        }}
-      >
+      <Button variant="contained" onClick={() => handleButtonClick('videos')}>
         Video
       </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('calendar'), setIsOpenSideBar(false);
-        }}
-      >
+      <Button variant="contained" onClick={() => handleButtonClick('calendar')}>
         Calendar
       </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('audio'), setIsOpenSideBar(false);
-        }}
-      >
+      <Button variant="contained" onClick={() => handleButtonClick('audio')}>
         Music
       </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('radio'), setIsOpenSideBar(false);
-        }}
-      >
+      <Button variant="contained" onClick={() => handleButtonClick('radio')}>
         Radio
       </Button>
     </Box>
