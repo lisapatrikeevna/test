@@ -48,7 +48,7 @@ const Header: FC = () => {
   }, []);
 
   useEffect(() => {
-    const activeIndex = activeSection ? ["Home", "Pricing", "News", "Contacts", "AboutUs", "Partners", "Project"].indexOf(activeSection) : -1;
+    const activeIndex = activeSection ? ["Home", "AboutUs", "Project", "Pricing", "Partners", "Contacts", "News"].indexOf(activeSection) : -1;
     const activeLink = linksRef.current[activeIndex];
     if (activeLink) {
       moveIndicator(activeLink);
@@ -96,7 +96,7 @@ const Header: FC = () => {
             width: '500px'
           },
         }}>
-          {["#Pricing", "#News", "#Contacts", "#AboutUs", "#Partners", "#Project"].map((item, index) => (
+          {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News"].map((item, index) => (
             <ListItem key={item} sx={{ transform: 'translateY(70px)' }}>
               <Link to={item}
                 ref={el => linksRef.current[index] = el}
