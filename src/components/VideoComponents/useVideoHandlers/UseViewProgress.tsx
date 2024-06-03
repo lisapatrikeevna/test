@@ -14,6 +14,7 @@ export const useViewProgress = (videoDuration: number, videoId: string) => {
     const [hasCountedView, setHasCountedView] = useState(false);
     const userId = useSelector((state: RootState) => state.user.user?.userId);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const countView = async () => {
         if (!userId) {
             console.error('No user ID found');

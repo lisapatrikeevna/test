@@ -5,7 +5,6 @@ export async function uploadVideo(formData: FormData, ): Promise<void> {
         const response = await instance.post('/video/upload', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-
             }
         });
 

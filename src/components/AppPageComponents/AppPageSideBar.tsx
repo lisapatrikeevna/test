@@ -5,6 +5,7 @@ import { RenderValues } from '../../pages/AppPage';
 type Props = {
   isOpenSideBar: boolean;
   changeRender: (value: RenderValues) => void;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   setIsOpenSideBar: Function;
   openRightPanel: () => void;
 };
