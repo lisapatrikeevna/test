@@ -1,4 +1,5 @@
 import { Switch } from '@mui/material';
+import { Box } from '@mui/system';
 import * as React from 'react';
 
 interface ToggleColorModeProps {
@@ -8,9 +9,9 @@ interface ToggleColorModeProps {
 const ToggleColorMode: React.FC<ToggleColorModeProps> = ({ toggleColorMode }) => {
 
     return (
-        <div>
+        <Box>
             <Switch onChange={toggleColorMode} />
-        </div>
+        </Box>
     );
 }
 

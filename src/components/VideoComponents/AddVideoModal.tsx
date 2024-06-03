@@ -42,9 +42,9 @@ const AddVideoModal: FC<AddVideoModalProps> = ({ isOpen, onClose }) => {
             formData.append('file', video);
 
             if (accessToken) {
-                const uploadedVideoUrl = await uploadVideo(formData); // получаем URL загруженного видео
+                const uploadedVideoUrl = await uploadVideo(formData); // Get the URL of the uploaded video
                 if (typeof uploadedVideoUrl === 'string') {
-                    dispatch(addVideo({ id: generateId(), title: videoName, file: uploadedVideoUrl })); // используем URL загруженного видео
+                    dispatch(addVideo({ id: generateId(), title: videoName, file: uploadedVideoUrl })); // use the URL of the uploaded video
                     dispatch(setVideoUrl(uploadedVideoUrl));
                     dispatch(setBuffering(false));
                 }

@@ -4,8 +4,6 @@ export async function getUser(formData: FormData, ): Promise<void> {
     try {
         const response = await instance.post('/users/{id}', formData, {
             headers: {
-
-
             }
         });
 

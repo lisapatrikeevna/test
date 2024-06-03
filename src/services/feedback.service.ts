@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { instance } from '../api/axios.api';
 
 export const FeedbackService = {
     async sendFeedback(userName: string, userEmail: string, userMsg: string, userPhone?: string) {
@@ -11,7 +11,7 @@ export const FeedbackService = {
 
         // eslint-disable-next-line no-useless-catch
         try {
-            const response = await axios.post("https://neox.it-assistent.eu:8030/feedback/message", body, {
+            const response = await instance.post("/feedback/message", body, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
