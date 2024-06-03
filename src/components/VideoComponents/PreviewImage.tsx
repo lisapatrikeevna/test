@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { showImage } from '../../services/videoServices/video.previewImage.service.ts';
-import { Skeleton } from "@mui/material";
+//import styles from "../../styles/VideosStyles/Videos.module.css";
+import { Skeleton } from "@mui/material";  // Imported Skeleton from MUI
 
 interface PreviewImageProps {
     videoId: string;
@@ -9,7 +10,7 @@ interface PreviewImageProps {
 
 const PreviewImage: FC<PreviewImageProps> = ({ videoId, style }) => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true);  // Added loading state
 
     useEffect(() => {
         const fetchImage = async () => {
@@ -25,19 +26,20 @@ const PreviewImage: FC<PreviewImageProps> = ({ videoId, style }) => {
         setLoading(false);
     };
 
-    /* return <img src={imageSrc} alt="Preview" className={styles.videoPreview}  />; */
-    return <>
-        {loading && <Skeleton variant="rectangular" width={350} height={180} />}  // Added Skeleton component
-        {imageSrc && (
-            <img
-                src={imageSrc}
-                alt="Preview"
-                /* className={styles.videoPreview} */
-                style={{ ...style, display: loading ? 'none' : 'block', width: 350, height: 180 }}
-                onLoad={handleImageLoad}  // Added onLoad handler
-            />
-        )}
-    </>
+    return (
+        <>
+            {loading && <Skeleton variant="rectangular" width={350} height={180} />}  // Added Skeleton component
+            {imageSrc && (
+                <img
+                    src={imageSrc}
+                    alt="Preview"
+                    /* className={styles.videoPreview} */
+                    style={{ ...style, display: loading ? 'none' : 'block', width: 350, height: 180 }}
+                    onLoad={handleImageLoad}  // Added onLoad handler
+                />
+            )}
+        </>
+    );
+};
 
-
-    export default PreviewImage;
+export default PreviewImage;
