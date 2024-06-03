@@ -1,11 +1,11 @@
 import { Avatar, Box, Divider } from '@mui/material';
-import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
+import { Panel, PanelGroup, PanelResizeHandle, ImperativePanelHandle } from 'react-resizable-panels';
 import AppPageHeader from '../components/AppPageComponents/AppPageHeader';
 import AppPageChats from '../components/AppPageComponents/AppPageChats';
 import AppPageComments from '../components/AppPageComponents/AppPageComments';
 import AppPageSideBar from '../components/AppPageComponents/AppPageSideBar';
 import { useState, useEffect, useRef } from 'react';
-import AppPageClaendar from '../components/AppPageComponents/AppPageClaendar';
+import AppPageCalendar from '../components/AppPageComponents/AppPageCalendar';
 import VideoInSideBareAppPage from '../components/AppPageComponents/VideoInSideBareAppPage';
 import AppPageCentralComponent from '../components/AppPageComponents/AppPageCentralComponent';
 import AppPageAudioComponent from '../components/AppPageComponents/AppPageAudioComponent';
@@ -27,14 +27,13 @@ const AppPage = () => {
   const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
-  const [isChatPanelOpen, setIsChatPanelOpen] = useState(true);
   const [users] = useState(data);
 
-  const chatsPanelRef = useRef(null);
-  const rightPanel = useRef(null);
+  const chatsPanelRef = useRef<ImperativePanelHandle>(null);
+  const rightPanel = useRef<ImperativePanelHandle>(null);
 
   const toggleChatsPanel = () => {
-    setIsChatPanelOpen((prev) => {
+    setIsOpenSideBar((prev) => {
       const newIsOpen = !prev;
       if (newIsOpen) {
         chatsPanelRef.current?.expand();
@@ -46,7 +45,7 @@ const AppPage = () => {
   };
 
   const openRightPanel = () => {
-    rightPanel?.current?.expand();
+    rightPanel.current?.expand();
   };
 
   useEffect(() => {
@@ -103,9 +102,7 @@ const AppPage = () => {
             defaultSize={25}
             maxSize={100}
             minSize={4}
-            collapsible={true}
-            onExpand={() => setIsChatPanelOpen(true)}
-            onCollapse={() => setIsChatPanelOpen(false)}
+            collapsible
           >
             <AppPageChats />
           </Panel>
@@ -121,13 +118,13 @@ const AppPage = () => {
             defaultSize={25}
             maxSize={50}
             minSize={20}
-            collapsible={true}
+            collapsible
           >
             <Box padding="5px">
               {renderValues === 'chats' && <AppPageChats />}
               {renderValues === 'comments' && <AppPageComments />}
               {renderValues === 'videos' && <VideoInSideBareAppPage />}
-              {renderValues === 'calendar' && <AppPageClaendar />}
+              {renderValues === 'calendar' && <AppPageCalendar />}
               {renderValues === 'audio' && <AppPageAudioComponent />}
               {renderValues === 'radio' && <AppPageRadioComponent />}
             </Box>

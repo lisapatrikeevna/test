@@ -1,9 +1,9 @@
-import { Avatar, Divider, Stack, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
-import { data } from '../../components/ProfileComponents/utils';
+import { Divider, Stack, TextField, Typography } from '@mui/material';
+// import { useState } from 'react';
+// import { data } from '../../components/ProfileComponents/utils';
 
 const AppPageChats = () => {
-  const [users] = useState(data);
+  // const [users] = useState(data);
   return (
     <Stack
       direction="row"
