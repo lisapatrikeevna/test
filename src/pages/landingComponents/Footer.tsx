@@ -67,33 +67,33 @@ const Footer: FC<FooterProps> = ({ theme, onImpressumClick, onPrivacyPolicyClick
 
     return (
         <FooterContainer theme={theme}>
-            <Copyright>&copy; Copyright 2024 NeoX</Copyright>
+            <Copyright>&copy; Copyright 2024 NeoXonline</Copyright>
             <NeuButton rounded onClick={onImpressumClick}>Impressum</NeuButton>
             <NeuButton rounded onClick={onPrivacyPolicyClick}>Privacy</NeuButton>
             <NeuButton rounded onClick={onDatenschutzClick}>Datenschutz</NeuButton>
             <NeuButton rounded onClick={contact}>Contact</NeuButton>
             <SocialLink href="https://www.instagram.com/neox_online/" target="_blank" rel="noopener noreferrer">
-                <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                <NeuIconButton rounded >
                     <Instagram />
                 </NeuIconButton>
             </SocialLink>
             <SocialLink href="https://t.me/neoxonline" target="_blank" rel="noopener noreferrer">
-                <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                <NeuIconButton rounded >
                     <Telegram />
                 </NeuIconButton>
             </SocialLink>
             <SocialLink href="https://www.facebook.com/profile.php?id=61557996420950" target="_blank" rel="noopener noreferrer">
-                <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                <NeuIconButton rounded >
                     <Facebook />
                 </NeuIconButton>
             </SocialLink>
             <SocialLink href="https://www.linkedin.com/company/103143013/admin/feed/posts/" target="_blank" rel="noopener noreferrer">
-                <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                <NeuIconButton rounded >
                     <LinkedIn />
                 </NeuIconButton>
             </SocialLink>
             <SocialLink href="https://www.youtube.com/channel/UC3YWemWS7WPJXReBBKOYfLQ" target="_blank" rel="noopener noreferrer">
-                <NeuIconButton rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                <NeuIconButton rounded >
                     <YouTube />
                 </NeuIconButton>
             </SocialLink>

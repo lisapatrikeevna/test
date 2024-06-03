@@ -30,7 +30,7 @@ export const useLikeHandler = (videoId: string) => {
                 setHasLiked(userLikes.includes(userId));
                 setLikes(userLikes.length);
                 setHasDisliked(userDislikes.includes(userId));
-                setLikeDataLoaded(true); // Установка состояния загрузки данных о лайках
+                setLikeDataLoaded(true); // Setting the download status of the likes data
 
             } catch (error) {
                 console.error('Error fetching like status:', error);
@@ -77,10 +77,10 @@ export const useLikeHandler = (videoId: string) => {
                 contentLikesByUsers: updatedLikes,
                 contentDislikesByUsers: updatedDislikes,
             });
-            // После успешного выполнения запроса обновляем состояние лайка
+            // After successful completion of the request, update the status of the likes
             setLikes(updatedLikes.length);
             setHasLiked(prev => !prev);
-            setHasDisliked(false); // Сбрасываем состояние дизлайка
+            setHasDisliked(false); // Resetting the dislikes state
             console.log('Like status updated successfully');
             console.log(updatedLikes, updatedDislikes)
         } catch (error) {
@@ -133,9 +133,9 @@ export const useLikeHandler = (videoId: string) => {
 
 
 
-            // После успешного выполнения запроса обновляем состояние дизлайка
+            // After the request is successful, update the dislikes status
             setLikes(updatedLikes.length);
-            setHasLiked(false); // Сбрасываем состояние лайка
+            setHasLiked(false); // Resetting the dislikes state
             setHasDisliked(prev => !prev);
             console.log('Dislike status updated successfully');
             console.log(updatedLikes, updatedDislikes)

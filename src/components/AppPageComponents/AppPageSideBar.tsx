@@ -6,6 +6,7 @@ import NeuButton from '../neumorphism/button/NeuButton';
 type Props = {
   isOpenSideBar: boolean;
   changeRender: (value: RenderValues) => void;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   setIsOpenSideBar: Function;
   openRightPanel: () => void;
 };
