@@ -102,7 +102,7 @@ const AppPage = () => {
             ref={chatsPanelRef}
             defaultSize={25}
             maxSize={100}
-            minSize={4}
+            minSize={10}
             collapsible={true}
             onExpand={() => setIsChatPanelOpen(true)}
             onCollapse={() => setIsChatPanelOpen(false)}
@@ -140,7 +140,7 @@ const AppPage = () => {
             left={0}
             right={0}
             bottom={0}
-            bgcolor="rgba(0, 0, 0, 0.5)"
+            bgcolor="rgba(0, 0, 0, 0.2)"
             zIndex={999}
             onClick={() => {
               setIsOpenSideBar(false);
@@ -154,7 +154,12 @@ const AppPage = () => {
             }}
           />
         )}
-        <Box position="absolute" top={0} right={0} zIndex={1000}>
+        <Box
+          position="absolute"
+          top={0}
+          right={0}
+          zIndex={isOpenSideBar ? 1000 : -1}
+        >
           <AppPageSideBar
             openRightPanel={openRightPanel}
             isOpenSideBar={isOpenSideBar}
