@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react';
 import { showImage } from '../../services/videoServices/video.previewImage.service.ts';
-import styles from "../../styles/VideosStyles/Videos.module.css";
 
 interface PreviewImageProps {
     videoId: string;
@@ -23,8 +22,8 @@ const PreviewImage: FC<PreviewImageProps> = ({ videoId }) => {
         return null;
     }
 
-    /* return <img src={imageSrc} alt="Preview" className={styles.videoPreview}  />; */
-    return <img src={imageSrc} alt="Preview" className={styles.videoPreview} style={{ width: 350, height: 180 }} />;
+    /* return <img src={imageSrc} alt="Preview" />; */
+    return <img src={imageSrc} alt="Preview" style={{ width: 350, height: 180 }} />;
 };
 
 export default PreviewImage;
