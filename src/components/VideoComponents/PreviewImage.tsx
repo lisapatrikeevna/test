@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react';
 import { showImage } from '../../services/videoServices/video.previewImage.service.ts';
-//import styles from "../../styles/VideosStyles/Videos.module.css";
 import { Skeleton } from "@mui/material";  // Imported Skeleton from MUI
 
 interface PreviewImageProps {
@@ -28,12 +27,11 @@ const PreviewImage: FC<PreviewImageProps> = ({ videoId, style }) => {
 
     return (
         <>
-            {loading && <Skeleton variant="rectangular" width={350} height={180} />}  // Added Skeleton component
+            {loading && <Skeleton variant="rectangular" width={350} height={180} />}
             {imageSrc && (
                 <img
                     src={imageSrc}
                     alt="Preview"
-                    /* className={styles.videoPreview} */
                     style={{ ...style, display: loading ? 'none' : 'block', width: 350, height: 180 }}
                     onLoad={handleImageLoad}  // Added onLoad handler
                 />
