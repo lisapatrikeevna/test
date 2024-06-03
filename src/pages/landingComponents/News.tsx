@@ -1,13 +1,13 @@
+import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { FC } from "react";
 
 const News: FC = () => {
     return (
-
-            <div>
-            <h1>News</h1>
-            <p>Here will be news</p>
-            </div>
-
+        <Box>
+            <Typography variant="h4">News</Typography>
+            <Typography variant="body1">Here will be news</Typography>
+        </Box>
     );
 };
 

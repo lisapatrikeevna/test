@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Box, Container, Modal, styled } from '@mui/material';
 import Home from './Home'; 
 import Partners from './Partners.tsx';
-import Pricing from '../../components/Pricing.tsx';
+import Pricing from './Pricing.tsx';
 import Contacts from './Contacts';
 import Footer from './Footer';
 import Impressum from './Impressum';

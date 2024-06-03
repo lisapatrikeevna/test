@@ -58,7 +58,9 @@ const Partners: React.FC = memo(() => {
 
   return (
     <Container sx={{ padding: '20px', maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}>
-      <Typography variant="h4" sx={{ mb: 2, pl: 3 }}>Partners</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+        <Typography variant="h4">Partners</Typography>
+      </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Grid
           columnCount={4}

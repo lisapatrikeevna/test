@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
 import { mediaPath } from "../../configs/RouteConfig.tsx";
-import { Grid, Card, CardContent, Typography, Skeleton, Box, Button } from "@mui/material";
+import { Grid, Card, CardContent, Typography, Box, Button } from "@mui/material";
 import { Contacts } from "@mui/icons-material";
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Skeletons from '../Skeletons.tsx'; // Import the skeleton component
 
 export interface IVideo {
     id: string;
@@ -18,6 +19,7 @@ export interface IVideo {
         contentViewsByUsers: string[];
     };
 }
+
 interface VideoListHorizontalProps {
     currentVideoId: string;
 }
@@ -25,6 +27,7 @@ interface VideoListHorizontalProps {
 const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoId }) => {
     const [videos, setVideos] = useState<IVideo[]>([]);
     const [loading, setLoading] = useState(true);
+    const [loadingMore, setLoadingMore] = useState(false);
     const [visibleCount, setVisibleCount] = useState(0);
 
     const fetchVideo = async (id: string) => {
@@ -43,95 +46,104 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
         }
     };
 
-    useEffect(() => {
-        const fetchVideos = async (videoIds: string[] = []) => {
-            setLoading(true); // Initialize loading state to true in beginning of fetching videos
-            if (videoIds.length === 0) {
-                // Query to fetch all videos
-                try {
-                    const response = await instance.get(`video/all`, {});
-                    if (response.status !== 200) {
-                        throw new Error(`Failed to fetch all videos`);
-                    }
-                    const data = await response.data;
-                    setVideos(data);
-                } catch (error) {
-                    console.error(`Error fetching all videos:`, error);
+    const fetchVideos = async (videoIds: string[] = []) => {
+        if (videoIds.length === 0) {
+            try {
+                const response = await instance.get(`video/all`, {});
+                if (response.status !== 200) {
+                    throw new Error(`Failed to fetch all videos`);
                 }
-            } else {
-                // Fetch videos by ids
-                const fetchPromises = videoIds.map(fetchVideo);
-                const results = await Promise.allSettled(fetchPromises);
-                const videos = results
-                    .filter((result): result is PromiseFulfilledResult<IVideo> => result.status === 'fulfilled')
-                    .map(result => result.value);
-                setVideos(videos);
+                const data = await response.data;
+                setVideos(data);
+            } catch (error) {
+                console.error(`Error fetching all videos:`, error);
             }
-            setLoading(false); // Initialize loading state to false after fetching videos
+        } else {
+            const fetchPromises = videoIds.map(fetchVideo);
+            const results = await Promise.allSettled(fetchPromises);
+            const videos = results
+                .filter((result): result is PromiseFulfilledResult<IVideo> => result.status === 'fulfilled')
+                .map(result => result.value);
+            setVideos(videos);
+        }
+    };
+
+    useEffect(() => {
+        const loadVideos = async () => {
+            setLoading(true);
+            await fetchVideos();
+            setLoading(false);
         };
 
-        const timer = setTimeout(() => {
-            fetchVideos();
-        }, 500);
+        const timer = setTimeout(loadVideos, 500);
 
-        // Clear the timer when the component is unmounted
         return () => clearTimeout(timer);
-    }, []); // Empty dependency array to run the effect only once when the component mounts
+    }, []);
 
-    // Define media queries for different screen sizes
     const isXSmall = useMediaQuery('(max-width:400px)');
     const isSmall = useMediaQuery('(max-width:600px)');
     const isMedium = useMediaQuery('(max-width:960px)');
     const isLarge = useMediaQuery('(max-width:1280px)');
+    const isXLarge = useMediaQuery('(max-width:1600px)');
 
-
-    // Determine the number of columns based on the screen size
-    const columns = isXSmall ? 1 : isSmall ? 2 : isMedium ? 3 : isLarge ? 5 : 6;
-
-    // Determine the number of videos to show based on the columns
-    const initialVisibleCount = columns === 6 ? 12 : columns === 5 ? 10 : columns === 3 ? 6 : columns === 2 ? 4 : 2;
+    const columns = isXSmall ? 1 : isSmall ? 2 : isMedium ? 3 : isLarge ? 4 : isXLarge ? 5 : 6;
+    const initialVisibleCount = columns * 2;
 
     useEffect(() => {
         setVisibleCount(initialVisibleCount);
-    }, [initialVisibleCount]);
+    }, [columns]);
 
-    const handleButton = () => {
-        setVisibleCount((prevCount) => {
-            return prevCount + columns;
-        });
+    const handleButton = async () => {
+        setLoadingMore(true);
+        await new Promise(resolve => setTimeout(resolve, 500)); // Simulating loading delay
+        setVisibleCount((prevCount) => prevCount + columns * 2);
+        setLoadingMore(false);
     };
 
     const filteredVideos = videos.filter(video => video.id !== currentVideoId);
+
     return (
         <Box sx={{ padding: "10px" }}>
             <Box sx={{ maxWidth: "100%", margin: "0 auto" }}>
                 <Grid container spacing={2} sx={{ justifyContent: "center" }}>
-                    {!loading
-                        ? filteredVideos.slice(0, visibleCount).map((video) => (
-                            <Grid item key={video.id} xs={12} sm={6} md={4} lg={2.4} xl={2}>
+                    {loading ? (
+                        Array.from({ length: initialVisibleCount }).map((_, index) => (
+                            <Skeletons key={index} />
+                        ))
+                    ) : (
+                        filteredVideos.slice(0, visibleCount).map((video) => (
+                            <Grid item key={video.id} xs={12 / columns}>
                                 <Card sx={{ height: "100%" }}>
                                     <Link to={`${mediaPath}/${video.id}`}>
                                         <PreviewImage videoId={video.id} />
                                     </Link>
                                     <CardContent>
-                                        <Typography variant="h5">{video.videoName}</Typography>
+                                        <Typography
+                                            variant="h5"
+                                            sx={{
+                                                fontSize: isXSmall ? "1rem" : isSmall ? "1.1rem" : isMedium ? "1.2rem" : isLarge ? "1.3rem" : "1.4rem"
+                                            }}
+                                        >
+                                            {video.videoName}
+                                        </Typography>
                                         <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                                             <Contacts />
-                                            <Typography>UnknownUser</Typography>
+                                            <Typography variant="caption">UnknownUser</Typography>
                                         </Box>
                                         <Box style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-                                            <Typography>{video.videoInfo.contentViewsByUsers ? video.videoInfo.contentViewsByUsers.length : 0} views</Typography>
-                                            <Typography>2 weeks ago</Typography>
+                                            <Typography variant="caption">{video.videoInfo.contentViewsByUsers ? video.videoInfo.contentViewsByUsers.length : 0} views</Typography>
+                                            <Typography variant="caption">2 weeks ago</Typography>
                                         </Box>
                                     </CardContent>
                                 </Card>
                             </Grid>
                         ))
-                        : Array.from({ length: visibleCount }).map((_, index) => (
-                            <Grid item key={index} xs={12} sm={6} md={4} lg={2.4} xl={2}>
-                                <Skeleton variant="rectangular" width="100%" height={180} />
-                            </Grid>
-                        ))}
+                    )}
+                    {loadingMore && (
+                        Array.from({ length: columns * 2 }).map((_, index) => (
+                            <Skeletons key={`loading-more-${index}`} />
+                        ))
+                    )}
                 </Grid>
             </Box>
             <Box display="flex" justifyContent="center" mt={2}>
