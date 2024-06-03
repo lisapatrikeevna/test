@@ -37,7 +37,7 @@ const Partners: React.FC = memo(() => {
     const partner = partners[index];
 
     return (
-      <div key={index} style={{ ...style, padding: '16px', boxSizing: 'border-box' }}>
+      <Box key={index} style={{ ...style, padding: '16px', boxSizing: 'border-box' }}>
         {loading ? (
           <Skeleton variant="rectangular" height={100} sx={{ borderRadius: '25px' }} />
         ) : (
@@ -52,7 +52,7 @@ const Partners: React.FC = memo(() => {
             </NeuCard>
           </Box>
         )}
-      </div>
+      </Box>
     );
   };
 

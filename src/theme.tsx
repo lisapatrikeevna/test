@@ -39,7 +39,7 @@ export interface Theme {
 // Function for generation of fixed length shadow array
 const generateShadows = (shadow: string): Shadows => {
     return [
-        "none", // первая тень
+        "none", // first shadow
         ...Array(24).fill(shadow)
     ] as Shadows;
 };
