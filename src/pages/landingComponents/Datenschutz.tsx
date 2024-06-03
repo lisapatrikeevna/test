@@ -40,7 +40,7 @@ const Datenschutz: FC = () => {
                     <Box component="span" fontWeight="bold">Name des Verantwortlichen:</Box> Verantwortlicher für die Verarbeitung Ihrer personenbezogenen Daten ist die Am Meisenberg 14, 51491 Overath
                 </Typography>
                 <Typography>
-                    <Box component="span" fontWeight="bold">Datenschutzbeauftragte(r):</Box> Roman Snimshchikov, neox@it-assistent.eu, +491623067782
+                    <Box component="span" fontWeight="bold">Datenschutzbeauftragte(r):</Box> Roman Snimshchikov, info@neoxonline.com, +491623067782
                 </Typography>
             </Box>
             <NeuDivider sx={{ my: 2 }} />
