@@ -20,12 +20,24 @@ const PreviewImage: FC<PreviewImageProps> = ({ videoId, style }) => {
         fetchImage();
     }, [videoId]);
 
-    if (!imageSrc) {
-        return null;
-    }
+    // Handler to set loading to false once the image is fully loaded
+    const handleImageLoad = () => {
+        setLoading(false);
+    };
 
     /* return <img src={imageSrc} alt="Preview" className={styles.videoPreview}  />; */
-    return <img src={imageSrc} alt="Preview" className={styles.videoPreview} style={{ width: 350, height: 180 }} />;
-};
+    return <>
+        {loading && <Skeleton variant="rectangular" width={350} height={180} />}  // Added Skeleton component
+        {imageSrc && (
+            <img
+                src={imageSrc}
+                alt="Preview"
+                /* className={styles.videoPreview} */
+                style={{ ...style, display: loading ? 'none' : 'block', width: 350, height: 180 }}
+                onLoad={handleImageLoad}  // Added onLoad handler
+            />
+        )}
+    </>
 
-export default PreviewImage;
+
+    export default PreviewImage;
