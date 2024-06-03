@@ -4,8 +4,8 @@ import { FC } from "react";
 
 const News: FC = () => {
     return (
-        <Box>
-            <Typography variant="h4">News</Typography>
+        <Box sx={{ padding: '20px' }}>
+            <Typography variant="h4" gutterBottom>News</Typography>
             <Typography variant="body1">Here will be news</Typography>
         </Box>
     );
