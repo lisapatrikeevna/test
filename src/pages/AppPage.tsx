@@ -32,13 +32,14 @@ const AppPage = () => {
   const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
+  const [, setIsChatPanelOpen] = useState(false);
   const [users] = useState(data);
 
   const chatsPanelRef = useRef<ImperativePanelHandle>(null);
   const rightPanel = useRef<ImperativePanelHandle>(null);
 
   const toggleChatsPanel = () => {
-    setIsOpenSideBar((prev) => {
+    setIsChatPanelOpen((prev) => {
       const newIsOpen = !prev;
       if (newIsOpen) {
         chatsPanelRef.current?.expand();
@@ -74,6 +75,7 @@ const AppPage = () => {
         setIsOpenSideBar={setIsOpenSideBar}
         setIsOpenMainSideBar={setIsOpenMainSideBar}
         toggleChatsPanel={toggleChatsPanel}
+        setIsChatPanelOpen={setIsChatPanelOpen}
       />
       <Divider />
       <Box flex={1} display="flex" position="relative">
@@ -84,7 +86,7 @@ const AppPage = () => {
           direction="column"
           spacing={2}
           padding={1}
-          borderRight="1px solid black"
+          // borderRight="1px solid black"
           alignItems="center"
         >
           <Avatar
@@ -110,8 +112,6 @@ const AppPage = () => {
             collapsible={true}
             onExpand={() => setIsChatPanelOpen(true)}
             onCollapse={() => setIsChatPanelOpen(false)}
-            minSize={4}
-            collapsible
           >
             <AppPageChats />
           </Panel>
