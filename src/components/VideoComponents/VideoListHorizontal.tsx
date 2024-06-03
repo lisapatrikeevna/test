@@ -6,7 +6,7 @@ import { mediaPath } from "../../configs/RouteConfig.tsx";
 import { Grid, Card, CardContent, Typography, Box, Button } from "@mui/material";
 import { Contacts } from "@mui/icons-material";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Skeletons from '../Skeletons.tsx'; // Import the skeleton component
+import Skeletons from './Skeletons.tsx';
 
 export interface IVideo {
     id: string;
@@ -107,9 +107,7 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
             <Box sx={{ maxWidth: "100%", margin: "0 auto" }}>
                 <Grid container spacing={2} sx={{ justifyContent: "center" }}>
                     {loading ? (
-                        Array.from({ length: initialVisibleCount }).map((_, index) => (
-                            <Skeletons key={index} />
-                        ))
+                        <Skeletons columns={columns} />
                     ) : (
                         filteredVideos.slice(0, visibleCount).map((video) => (
                             <Grid item key={video.id} xs={12 / columns}>
@@ -140,9 +138,7 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
                         ))
                     )}
                     {loadingMore && (
-                        Array.from({ length: columns * 2 }).map((_, index) => (
-                            <Skeletons key={`loading-more-${index}`} />
-                        ))
+                        <Skeletons columns={columns} />
                     )}
                 </Grid>
             </Box>
