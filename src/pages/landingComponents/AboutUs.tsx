@@ -1,4 +1,4 @@
-import { Container, Typography, Paper, Grid, Card, CardMedia } from '@mui/material';
+import { Container, Typography, Paper, Grid, Card, CardMedia, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import aboutUsImage from '../../assets/qrcode.jpg';
 
@@ -12,12 +12,14 @@ const AboutUsPage = () => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
                         <Card>
-                            <CardMedia
-                                component="img"
-                                height="auto"
-                                image={aboutUsImage}
-                                alt="About Us"
-                            />
+                            <Box sx={{ backgroundColor: 'white' }}>
+                                <CardMedia
+                                    component="img"
+                                    height="auto"
+                                    image={aboutUsImage}
+                                    alt="About Us"
+                                />
+                            </Box>
                         </Card>
                     </Grid>
                     <Grid item xs={12} md={6}>
