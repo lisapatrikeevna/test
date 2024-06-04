@@ -41,7 +41,7 @@ const Home: FC = () => {
           variant="h4"
           sx={textStyle}
         >
-          communication deserves the best – it deserves to be on NeoX!
+          communication deserves the best – it deserves to be on NeoXonline!
         </Typography>
         <Typography
           variant="h4"

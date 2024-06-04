@@ -76,7 +76,7 @@ const WriteToUsForm = () => {
                                 <Mail />
                             </NeuIconButton>
                             <Typography variant="h6">Email</Typography>
-                            <Typography>neox@it-assistent.eu</Typography>
+                            <Typography>info@neoxonline.com</Typography>
                         </Box>
                     </Grid>
                 </Grid>

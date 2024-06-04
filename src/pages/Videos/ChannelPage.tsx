@@ -18,7 +18,7 @@ const ChannelPage: FC = () => {
     //     //TODO Выгружать видео конкретно этого пользователя
     //     const fetchVideos = async () => {
     //         try {
-    //             const response = await axios.get('/api/videos'); // Подставьте свой реальный эндпоинт
+    //             const response = await axios.get('/api/videos'); // Substitute your real endpoint.
     //             setVideos(response.data);
     //         } catch (error) {
     //             console.error('Error fetching videos:', error);

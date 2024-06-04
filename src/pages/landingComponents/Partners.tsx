@@ -1,23 +1,25 @@
 import React, { useState, useEffect, memo } from 'react';
-import { Box, Container, Typography, Skeleton } from '@mui/material';
+import { Box, Container, Typography, Skeleton, Link } from '@mui/material';
 import { FixedSizeGrid as Grid, GridChildComponentProps } from 'react-window';
 import NeuCard from '../../components/neumorphism/card/NeuCard';
 import NeuCardContent from '../../components/neumorphism/card/NeuCardContent';
-import logo from '../../assets/neox-logo.svg';
+import ionosLogo from '../../assets/ionosLogo.jpg';
+import aitLogo from '../../assets/aitLogo.svg';
+import neoxLogo from '../../assets/neox-logo.svg';
 
 const partners = [
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
-  { name: 'NeoX', logo: logo },
+  { logo: ionosLogo, link: 'https://acn.ionos.de/aff_c?offer_id=2&aff_id=7772' },
+  { logo: aitLogo, link: 'https://ait.hopp.to/it-assistant' },
+  { logo: neoxLogo, link: 'https://neoxonline.com/' },
+  { logo: neoxLogo, link: 'https://neoxonline.com/' },
+  { logo: neoxLogo, link: 'https://neoxonline.com/' },
+  { logo: neoxLogo, link: 'https://neoxonline.com/' },
+  { logo: neoxLogo, link: 'https://neoxonline.com/' },
+  { logo: neoxLogo, link: 'https://neoxonline.com/' },
+  { logo: neoxLogo, link: 'https://neoxonline.com/' },
+  { logo: neoxLogo, link: 'https://neoxonline.com/' },
+  { logo: neoxLogo, link: 'https://neoxonline.com/' },
+  { logo: neoxLogo, link: 'https://neoxonline.com/' },
 ];
 
 const Partners: React.FC = memo(() => {
@@ -37,28 +39,40 @@ const Partners: React.FC = memo(() => {
     const partner = partners[index];
 
     return (
-      <div key={index} style={{ ...style, padding: '16px', boxSizing: 'border-box' }}>
+      <Box key={index} style={{ ...style, padding: '16px', boxSizing: 'border-box' }}>
         {loading ? (
           <Skeleton variant="rectangular" height={100} sx={{ borderRadius: '25px' }} />
         ) : (
-          <Box sx={{ boxShadow: 'none', overflow: 'visible' }}>
-            <NeuCard elevation={3} rounded>
-              <NeuCardContent>
-                <Box display="flex" alignItems="center" sx={{ backgroundColor: 'transparent' }}>
-                  <img loading="lazy" src={partner.logo} alt={`${partner.name} Logo`} style={{ width: 50, height: 50, marginRight: 16 }} />
-                  <Typography variant="h6">{partner.name}</Typography>
-                </Box>
-              </NeuCardContent>
-            </NeuCard>
-          </Box>
+          <Link href={partner.link} target="_blank" rel="noopener noreferrer" underline="none">
+            <Box sx={{ boxShadow: 'none', overflow: 'visible' }}>
+              <NeuCard elevation={3} rounded sx={{ padding: '10px'}}>
+                <NeuCardContent>
+                  <Box display="flex" alignItems="center" sx={{ backgroundColor: 'transparent' }}>
+                    <Box 
+                      sx={{
+                        width: 150, 
+                        height: 70, 
+                        backgroundImage: `url(${partner.logo})`,
+                        backgroundSize: 'contain',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'center'
+                      }}
+                    />
+                  </Box>
+                </NeuCardContent>
+              </NeuCard>
+            </Box>
+          </Link>
         )}
-      </div>
+      </Box>
     );
   };
 
   return (
     <Container sx={{ padding: '20px', maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}>
-      <Typography variant="h4" sx={{ mb: 2, pl: 3 }}>Partners</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+        <Typography variant="h4">Partners</Typography>
+      </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Grid
           columnCount={4}

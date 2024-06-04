@@ -1,18 +1,28 @@
 // AppPageSideBar.tsx
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { RenderValues } from '../../pages/AppPage';
+import NeuButton from '../neumorphism/button/NeuButton';
 
 type Props = {
   isOpenSideBar: boolean;
   changeRender: (value: RenderValues) => void;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   setIsOpenSideBar: Function;
+  openRightPanel: () => void;
 };
 
 const AppPageSideBar = ({
   isOpenSideBar,
   changeRender,
   setIsOpenSideBar,
+  openRightPanel,
 }: Props) => {
+  const handleButtonClick = (value: RenderValues) => {
+    changeRender(value);
+    openRightPanel();
+    setIsOpenSideBar(false);
+  };
+
   return (
     <Box
       sx={{
@@ -23,61 +33,40 @@ const AppPageSideBar = ({
         visibility: isOpenSideBar ? 'visible' : 'hidden',
         display: 'flex',
         flexDirection: 'column',
-        gap: '10px',
+        gap: '20px',
         background: '#e0e0e0',
         padding: '10px',
         borderRadius: '5px',
         pointerEvents: isOpenSideBar ? 'auto' : 'none',
       }}
     >
-      <Button
+      <NeuButton
         variant="contained"
-        onClick={() => {
-          changeRender('comments'), setIsOpenSideBar(false);
-        }}
+        onClick={() => handleButtonClick('comments')}
       >
         Comments
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('chats'), setIsOpenSideBar(false);
-        }}
-      >
+      </NeuButton>
+      <NeuButton variant="contained" onClick={() => handleButtonClick('chats')}>
         Chats
-      </Button>
-      <Button
+      </NeuButton>
+      <NeuButton
         variant="contained"
-        onClick={() => {
-          changeRender('videos'), setIsOpenSideBar(false);
-        }}
+        onClick={() => handleButtonClick('videos')}
       >
         Video
-      </Button>
-      <Button
+      </NeuButton>
+      <NeuButton
         variant="contained"
-        onClick={() => {
-          changeRender('calendar'), setIsOpenSideBar(false);
-        }}
+        onClick={() => handleButtonClick('calendar')}
       >
         Calendar
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('audio'), setIsOpenSideBar(false);
-        }}
-      >
+      </NeuButton>
+      <NeuButton variant="contained" onClick={() => handleButtonClick('audio')}>
         Music
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          changeRender('radio'), setIsOpenSideBar(false);
-        }}
-      >
+      </NeuButton>
+      <NeuButton variant="contained" onClick={() => handleButtonClick('radio')}>
         Radio
-      </Button>
+      </NeuButton>
     </Box>
   );
 };

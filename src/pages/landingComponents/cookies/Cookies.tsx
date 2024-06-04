@@ -19,7 +19,7 @@ const Cookies = () => {
     if (acceptedCookies) {
         return null;
     }
-
+    //TODO to MUI
     return (
         <div className={styles.card} style={{ position: 'fixed', bottom: '20px', left: '20px' }}>
             <svg version="1.1" id="cookieSvg" x="0px" y="0px" viewBox="0 0 122.88 122.25" xmlSpace="preserve">
