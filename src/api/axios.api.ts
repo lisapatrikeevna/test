@@ -5,8 +5,8 @@ import { AuthService } from "../services/auth.service";
 import { login } from "../store/user/userSlice";
 import { userSliceMapper } from "../store/user/utilits/userUtilits";
 
-// export const API_URL = "http://212.132.99.188:8030";
-export const API_URL = "http://85.215.187.128:8030";
+// export const API_URL = "http://212.132.99.188:8030"; //Dev
+export const API_URL = "http://85.215.187.128:8030"; //Prod
 
 export const instanceAuth = axios.create({
   withCredentials: true,

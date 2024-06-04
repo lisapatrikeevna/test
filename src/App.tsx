@@ -33,7 +33,7 @@ import {
   // settingsPath,
   // callsPath,
   sideBarPath,
-  certificatePath,
+  certificatePath, VideoEditPathPrototype,
   // newGroupPath,
   // newChannelPath,
   // contactsPath,
@@ -49,6 +49,7 @@ import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
 import { ThemeContext } from './contexts/ThemeContext';
+import VideoEditPage from "./pages/Videos/VideoEditPage.tsx";
 
 const App: FC = () => {
   // Initialize theme state with light theme as default
@@ -132,6 +133,9 @@ const App: FC = () => {
                     <Route
                       path={channelEditPrototypePath}
                       element={<UserChannelPage />}
+                    />
+                    <Route path={VideoEditPathPrototype}
+                           element={<VideoEditPage/>}
                     />
                     {/*<Route path={productsPath} element={<ElementsShowroom />} />*/}
                     {/*<Route path={newGroupPath} element={<NewGroup />} />*/}
