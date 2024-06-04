@@ -20,6 +20,7 @@ type Props = {
   setIsOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   setIsOpenMainSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   toggleChatsPanel: () => void;
+  setIsChatPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AppPageHeader = ({

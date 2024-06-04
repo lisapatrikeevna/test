@@ -1,6 +1,7 @@
 // AppPageSideBar.tsx
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { RenderValues } from '../../pages/AppPage';
+import NeuButton from '../neumorphism/button/NeuButton';
 
 type Props = {
   isOpenSideBar: boolean;
@@ -32,31 +33,40 @@ const AppPageSideBar = ({
         visibility: isOpenSideBar ? 'visible' : 'hidden',
         display: 'flex',
         flexDirection: 'column',
-        gap: '10px',
+        gap: '20px',
         background: '#e0e0e0',
         padding: '10px',
         borderRadius: '5px',
         pointerEvents: isOpenSideBar ? 'auto' : 'none',
       }}
     >
-      <Button variant="contained" onClick={() => handleButtonClick('comments')}>
+      <NeuButton
+        variant="contained"
+        onClick={() => handleButtonClick('comments')}
+      >
         Comments
-      </Button>
-      <Button variant="contained" onClick={() => handleButtonClick('chats')}>
+      </NeuButton>
+      <NeuButton variant="contained" onClick={() => handleButtonClick('chats')}>
         Chats
-      </Button>
-      <Button variant="contained" onClick={() => handleButtonClick('videos')}>
+      </NeuButton>
+      <NeuButton
+        variant="contained"
+        onClick={() => handleButtonClick('videos')}
+      >
         Video
-      </Button>
-      <Button variant="contained" onClick={() => handleButtonClick('calendar')}>
+      </NeuButton>
+      <NeuButton
+        variant="contained"
+        onClick={() => handleButtonClick('calendar')}
+      >
         Calendar
-      </Button>
-      <Button variant="contained" onClick={() => handleButtonClick('audio')}>
+      </NeuButton>
+      <NeuButton variant="contained" onClick={() => handleButtonClick('audio')}>
         Music
-      </Button>
-      <Button variant="contained" onClick={() => handleButtonClick('radio')}>
+      </NeuButton>
+      <NeuButton variant="contained" onClick={() => handleButtonClick('radio')}>
         Radio
-      </Button>
+      </NeuButton>
     </Box>
   );
 };

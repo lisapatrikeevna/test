@@ -8,7 +8,7 @@ const AppPageChats = () => {
     <Stack
       direction="row"
       sx={{
-        border: '2px solid black',
+        // border: '2px solid black',
         width: '100%',
         borderRadius: '5px',
       }}

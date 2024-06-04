@@ -1,5 +1,10 @@
 import { Avatar, Box, Divider } from '@mui/material';
-import { Panel, PanelGroup, PanelResizeHandle, ImperativePanelHandle } from 'react-resizable-panels';
+import {
+  Panel,
+  PanelGroup,
+  PanelResizeHandle,
+  ImperativePanelHandle,
+} from 'react-resizable-panels';
 import AppPageHeader from '../components/AppPageComponents/AppPageHeader';
 import AppPageChats from '../components/AppPageComponents/AppPageChats';
 import AppPageComments from '../components/AppPageComponents/AppPageComments';
@@ -27,13 +32,14 @@ const AppPage = () => {
   const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
+  const [, setIsChatPanelOpen] = useState(false);
   const [users] = useState(data);
 
   const chatsPanelRef = useRef<ImperativePanelHandle>(null);
   const rightPanel = useRef<ImperativePanelHandle>(null);
 
   const toggleChatsPanel = () => {
-    setIsOpenSideBar((prev) => {
+    setIsChatPanelOpen((prev) => {
       const newIsOpen = !prev;
       if (newIsOpen) {
         chatsPanelRef.current?.expand();
@@ -69,6 +75,7 @@ const AppPage = () => {
         setIsOpenSideBar={setIsOpenSideBar}
         setIsOpenMainSideBar={setIsOpenMainSideBar}
         toggleChatsPanel={toggleChatsPanel}
+        setIsChatPanelOpen={setIsChatPanelOpen}
       />
       <Divider />
       <Box flex={1} display="flex" position="relative">
@@ -79,7 +86,7 @@ const AppPage = () => {
           direction="column"
           spacing={2}
           padding={1}
-          borderRight="1px solid black"
+          // borderRight="1px solid black"
           alignItems="center"
         >
           <Avatar
@@ -101,8 +108,10 @@ const AppPage = () => {
             ref={chatsPanelRef}
             defaultSize={25}
             maxSize={100}
-            minSize={4}
-            collapsible
+            minSize={10}
+            collapsible={true}
+            onExpand={() => setIsChatPanelOpen(true)}
+            onCollapse={() => setIsChatPanelOpen(false)}
           >
             <AppPageChats />
           </Panel>
@@ -137,7 +146,7 @@ const AppPage = () => {
             left={0}
             right={0}
             bottom={0}
-            bgcolor="rgba(0, 0, 0, 0.5)"
+            bgcolor="rgba(0, 0, 0, 0.2)"
             zIndex={999}
             onClick={() => {
               setIsOpenSideBar(false);
@@ -151,7 +160,12 @@ const AppPage = () => {
             }}
           />
         )}
-        <Box position="absolute" top={0} right={0} zIndex={1000}>
+        <Box
+          position="absolute"
+          top={0}
+          right={0}
+          zIndex={isOpenSideBar ? 1000 : -1}
+        >
           <AppPageSideBar
             openRightPanel={openRightPanel}
             isOpenSideBar={isOpenSideBar}
