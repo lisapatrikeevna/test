@@ -50,6 +50,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
 import { ThemeContext } from './contexts/ThemeContext';
 import VideoEditPage from "./pages/Videos/VideoEditPage.tsx";
+import AnimatedRipple from "./components/neumorphism/animatedRipple/AnimatedRipple.tsx";
 
 const App: FC = () => {
   // Initialize theme state with light theme as default
@@ -158,10 +159,12 @@ const App: FC = () => {
               </Box>
             ) : (
               <>
+                <AnimatedRipple>
                 <HeaderAndMainPage
                   activeSection={activeSection}
                   setActiveSection={setActiveSection}
                 />
+                </AnimatedRipple>
               </>
             )}
 
