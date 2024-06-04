@@ -110,7 +110,7 @@ const Header: FC = () => {
                   {item === "#News" && <Apps />}
                   {item === "#Contacts" && <Call />}
                   {item === "#AboutUs" && <AccountBalance />}
-                  {item === "#Project" && <Build />} {/* Add icon for Project */}
+                  {item === "#Project" && <Build />} 
                 </ListItemIcon>
                 <ListItemText primary={item.substring(1)} sx={{ textAlign: 'center' }} />
               </Link>
@@ -119,7 +119,7 @@ const Header: FC = () => {
         </List>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-        <Box component="label" sx={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', color: '#394a56' }}>
+        <Box component="label" sx={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer'}}>
           <Box sx={{
             isolation: 'isolate',
             position: 'relative',
