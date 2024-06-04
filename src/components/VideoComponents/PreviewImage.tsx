@@ -2,14 +2,18 @@ import { FC, useEffect, useState } from 'react';
 import { showImage } from '../../services/videoServices/video.previewImage.service.ts';
 import { Skeleton } from "@mui/material";  // Imported Skeleton from MUI
 
+
 interface PreviewImageProps {
     videoId: string;
     style?: React.CSSProperties;
+    maxWidth?: number;
+    maxHeight?: number;
+    onClick?: () => void; // Add this line
 }
 
-const PreviewImage: FC<PreviewImageProps> = ({ videoId, style }) => {
+const PreviewImage: FC<PreviewImageProps> = ({ videoId, style, maxWidth = 350, maxHeight = 180, onClick }) => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);  // Added loading state
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchImage = async () => {
@@ -20,20 +24,20 @@ const PreviewImage: FC<PreviewImageProps> = ({ videoId, style }) => {
         fetchImage();
     }, [videoId]);
 
-    // Handler to set loading to false once the image is fully loaded
     const handleImageLoad = () => {
         setLoading(false);
     };
 
     return (
         <>
-            {loading && <Skeleton variant="rectangular" width={350} height={180} />}
+            {loading && <Skeleton variant="rectangular" width={maxWidth} height={maxHeight} />}
             {imageSrc && (
                 <img
                     src={imageSrc}
                     alt="Preview"
-                    style={{ ...style, display: loading ? 'none' : 'block', width: 350, height: 180 }}
-                    onLoad={handleImageLoad}  // Added onLoad handler
+                    style={{ ...style, display: loading ? 'none' : 'block', maxWidth, maxHeight }}
+                    onLoad={handleImageLoad}
+                    onClick={onClick} // Add this line
                 />
             )}
         </>

@@ -72,14 +72,13 @@ const MainPage = () => {
         return;
       }
 
-      const sections = ["Home", "Pricing", "News", "Contacts", "AboutUs", "Partners", "Project"];
+      const sections = ["Home", "AboutUs", "Project", "Pricing", "Partners", "Contacts", "News"];
       const currentIndex = sections.indexOf(activeSection as string);
       let newIndex = currentIndex;
 
       if (event.deltaY < 0) {
         newIndex = currentIndex > 0 ? currentIndex - 1 : 0;
-      }
-      else if (event.deltaY > 0) {
+      } else if (event.deltaY > 0) {
         newIndex = currentIndex < sections.length - 1 ? currentIndex + 1 : sections.length - 1;
       }
 
@@ -115,24 +114,19 @@ const MainPage = () => {
           <Home />
         </SectionContent>
       </Section>
-      <Section id="Pricing">
-        <SectionContent maxWidth="xl">
-          <Pricing />
-        </SectionContent>
-      </Section>
-      <Section id="News">
-        <SectionContent maxWidth="xl">
-          <News />
-        </SectionContent>
-      </Section>
-      <Section id="Contacts">
-        <SectionContent maxWidth="xl">
-          <Contacts />
-        </SectionContent>
-      </Section>
       <Section id="AboutUs">
         <SectionContent maxWidth="xl">
           <AboutUs />
+        </SectionContent>
+      </Section>
+      <Section id="Project">
+        <SectionContent maxWidth="xl">
+          <Project />
+        </SectionContent>
+      </Section>
+      <Section id="Pricing">
+        <SectionContent maxWidth="xl">
+          <Pricing />
         </SectionContent>
       </Section>
       <Section id="Partners">
@@ -140,9 +134,14 @@ const MainPage = () => {
           <Partners />
         </SectionContent>
       </Section>
-      <Section id="Project">
+      <Section id="Contacts">
         <SectionContent maxWidth="xl">
-          <Project />
+          <Contacts />
+        </SectionContent>
+      </Section>
+      <Section id="News">
+        <SectionContent maxWidth="xl">
+          <News />
         </SectionContent>
       </Section>
       <Footer
