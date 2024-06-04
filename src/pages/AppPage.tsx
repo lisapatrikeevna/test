@@ -18,6 +18,8 @@ import AppPageRadioComponent from '../components/AppPageComponents/AppPageRadioC
 import AppPageMainSideBar from '../components/AppPageComponents/AppPageMainSideBar';
 import { Stack } from '@mui/system';
 import { data } from '../components/ProfileComponents/utils';
+import NeuAvatar from '../components/neumorphism/avatar/NeuAvatar';
+import NeuDivider from '../components/neumorphism/divider/NeuDivider';
 
 export type RenderValues =
   | 'comments'
@@ -82,28 +84,41 @@ const AppPage = () => {
         <Box position="absolute" top={0} left={0} zIndex={1000}>
           <AppPageMainSideBar isOpenMainSideBar={isOpenMainSideBar} />
         </Box>
-        <Stack
-          direction="column"
-          spacing={2}
-          padding={1}
-          // borderRight="1px solid black"
-          alignItems="center"
-        >
-          <Avatar
-            src={data[0].img}
-            alt="avatar"
-            sx={{
-              width: 50,
-              height: 50,
-              cursor: 'pointer',
-              position: 'relative',
-            }}
-          />
-          {users.map((elem) => (
-            <Avatar key={elem.id} src={elem.img} />
-          ))}
-        </Stack>
         <PanelGroup direction="horizontal" style={{ flex: 1 }}>
+          <Stack direction="column" spacing={2} padding={1} alignItems="center">
+            <Box>
+              <Avatar
+                src={data[0].img}
+                alt="avatar"
+                sx={{
+                  width: 50,
+                  height: 50,
+                  cursor: 'pointer',
+                  position: 'relative',
+                }}
+              />
+            </Box>
+            <NeuDivider
+              dark
+              sx={{ width: 'calc(100% + 16px)', backgroundColor: 'black' }}
+            />
+            {users.map((elem) => (
+              <Stack key={elem.id}>
+                <NeuAvatar key={elem.id} src={elem.img} size="small" />
+              </Stack>
+            ))}
+          </Stack>
+          <Panel>
+            <Box marginTop={10}>
+              {users.map((elem) => (
+                <Stack key={elem.id} height="58px" padding="10px 0">
+                  {elem.name}
+                </Stack>
+              ))}
+            </Box>
+          </Panel>
+
+          <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
           <Panel
             ref={chatsPanelRef}
             defaultSize={25}

@@ -2,22 +2,27 @@ export const data = [
   {
     id: 0,
     img: '/src/assets/img.webp',
+    name: 'Asya',
   },
   {
     id: 1,
     img: '/src/assets/img.webp',
+    name: 'Adrian',
   },
   {
     id: 2,
     img: '/src/assets/img.webp',
+    name: 'Mihail',
   },
   {
     id: 3,
     img: '/src/assets/img.webp',
+    name: 'Stepan',
   },
   {
     id: 4,
     img: '/src/assets/img.webp',
+    name: 'Roman',
   },
 ];
 
@@ -53,23 +58,5 @@ export const hashTagsData = [
   {
     id: 7,
     title: 'travel',
-  },
-];
-
-export const dataSocials = [
-  {
-    id: 0,
-    title: 'Instagram',
-    href: 'https://www.instagram.com',
-  },
-  {
-    id: 1,
-    title: 'Facebook',
-    href: 'https://www.facebook.com',
-  },
-  {
-    id: 2,
-    title: 'Telegramm',
-    href: 'https://web.telegram.org/',
   },
 ];
