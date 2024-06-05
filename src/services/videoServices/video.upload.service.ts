@@ -13,3 +13,27 @@ export async function uploadVideo(formData: FormData, ): Promise<void> {
         // Handle the error
     }
 }
+
+export async function updateVideo(videoDetails: {
+    videoId: string;
+    videoName: string;
+    description: string;
+    isAccessibleToAll: boolean;
+}): Promise<void> {
+    try {
+        const response = await instance.put('/video/update', videoDetails, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status !== 200) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = response.data;
+        console.log('Video update response:', data);
+    } catch (error) {
+        console.error(`Error updating video details: ${error}`);
+    }
+}
