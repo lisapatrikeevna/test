@@ -2,6 +2,7 @@ import { useEffect, useRef, useContext, useState, FC } from 'react';
 import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { Handshake, Apps, Call, AccountBalance, AttachMoney, Build } from '@mui/icons-material';
 import { Link } from "react-router-dom";
+import { useTheme as useMuiTheme } from '@mui/material/styles';
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import LoginModal from '../../components/LoginModal.tsx';
@@ -10,6 +11,7 @@ import NeuButton from "../../components/neumorphism/button/NeuButton.tsx";
 import NeuSwitch from '../../components/neumorphism/switch/NeuSwitch.tsx';
 
 const Header: FC = () => {
+  const muiTheme = useMuiTheme();
   const { theme, setTheme } = useCustomTheme();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
@@ -102,9 +104,16 @@ const Header: FC = () => {
                 ref={el => linksRef.current[index] = el}
                 data-to={item}
                 onClick={() => { handleClick(item); }}
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}
+                style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center', 
+                  textDecoration: 'none', 
+                  color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit',
+                  transition: 'color 0.3s ease',
+                }}
               >
-                <ListItemIcon sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: 'auto', marginBottom: '4px' }}>
+                <ListItemIcon sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: 'auto', marginBottom: '4px', color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' }}>
                   {item === "#Partners" && <Handshake />}
                   {item === "#Pricing" && <AttachMoney />}
                   {item === "#News" && <Apps />}
@@ -112,7 +121,7 @@ const Header: FC = () => {
                   {item === "#AboutUs" && <AccountBalance />}
                   {item === "#Project" && <Build />} 
                 </ListItemIcon>
-                <ListItemText primary={item.substring(1)} sx={{ textAlign: 'center' }} />
+                <ListItemText primary={item.substring(1)} sx={{ textAlign: 'center', color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' }} />
               </Link>
             </ListItem>
           ))}
