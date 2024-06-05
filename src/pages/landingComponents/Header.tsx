@@ -78,7 +78,7 @@ const Header: FC = () => {
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
     }}>
-      <img src={logo} alt="NeoX" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
+      <img src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
       <Box sx={{
         transformOrigin: 'left',
         display: 'flex',
