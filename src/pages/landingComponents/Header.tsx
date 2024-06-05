@@ -67,7 +67,7 @@ const Header: FC = () => {
       '@media (max-width: 830px)': {
         paddingRight: '1vw'
       },
-      height: '10vh',
+      height: '95px',
       zIndex: 100,
       display: 'flex',
       justifyContent: 'space-between',
