@@ -2,6 +2,7 @@ import { useEffect, useRef, useContext, useState, FC } from 'react';
 import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { Handshake, Apps, Call, AccountBalance, AttachMoney, Build } from '@mui/icons-material';
 import { Link } from "react-router-dom";
+import { useTheme as useMuiTheme } from '@mui/material/styles';
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import LoginModal from '../../components/LoginModal.tsx';
@@ -10,6 +11,7 @@ import NeuButton from "../../components/neumorphism/button/NeuButton.tsx";
 import NeuSwitch from '../../components/neumorphism/switch/NeuSwitch.tsx';
 
 const Header: FC = () => {
+  const muiTheme = useMuiTheme();
   const { theme, setTheme } = useCustomTheme();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
@@ -65,18 +67,18 @@ const Header: FC = () => {
       '@media (max-width: 830px)': {
         paddingRight: '1vw'
       },
-      height: '10vh',
+      height: '95px',
       zIndex: 100,
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
       backgroundColor: 'var(--body)',
-      boxShadow: theme => theme.shadows[1],
+      boxShadow: muiTheme.shadows[1],
       transition: '0.5s',
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
     }}>
-      <img src={logo} alt="NeoX" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
+      <img src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
       <Box sx={{
         transformOrigin: 'left',
         display: 'flex',
@@ -97,29 +99,82 @@ const Header: FC = () => {
           },
         }}>
           {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News"].map((item, index) => (
-            <ListItem key={item} sx={{ transform: 'translateY(70px)' }}>
+            <ListItem 
+              key={item} 
+              sx={{ 
+                transform: 'translateY(70px)', 
+                position: 'relative',
+                borderRadius: '10px',
+                transition: 'all 0.3s ease',
+                padding: '10px 10px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                ...(activeSection === item.substring(1) && {
+                  color: muiTheme.palette.primary.main,
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '70%', 
+                    height: '100%', 
+                    borderRadius: '15px',
+                    backgroundColor: muiTheme.palette.background.default,
+                    boxShadow: theme === 'light'
+                      ? muiTheme.shadows[1]
+                      : muiTheme.shadows[2],
+                    zIndex: -1,
+                  }
+                })
+              }}
+            >
               <Link to={item}
                 ref={el => linksRef.current[index] = el}
                 data-to={item}
                 onClick={() => { handleClick(item); }}
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}
+                style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center', 
+                  textDecoration: 'none', 
+                  width: '100%', 
+                  height: '100%',
+                  zIndex: 1,
+                }}
               >
-                <ListItemIcon sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: 'auto', marginBottom: '4px' }}>
+                <ListItemIcon sx={{ 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center', 
+                  minWidth: 'auto', 
+                  marginBottom: '2px',
+                  color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' 
+                }}>
                   {item === "#Partners" && <Handshake />}
                   {item === "#Pricing" && <AttachMoney />}
                   {item === "#News" && <Apps />}
                   {item === "#Contacts" && <Call />}
                   {item === "#AboutUs" && <AccountBalance />}
-                  {item === "#Project" && <Build />} {/* Add icon for Project */}
+                  {item === "#Project" && <Build />} 
                 </ListItemIcon>
-                <ListItemText primary={item.substring(1)} sx={{ textAlign: 'center' }} />
+                <ListItemText 
+                primary={item.substring(1)} 
+                sx={{ 
+                  textAlign: 'center', 
+                  color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit',
+                  padding: '0', 
+                  marginBottom: '0',   
+                  }} />
               </Link>
             </ListItem>
           ))}
         </List>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-        <Box component="label" sx={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', color: '#394a56' }}>
+        <Box component="label" sx={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer'}}>
           <Box sx={{
             isolation: 'isolate',
             position: 'relative',

@@ -113,7 +113,7 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
                             <Grid item key={video.id} xs={12 / columns}>
                                 <Card sx={{ height: "100%" }}>
                                     <Link to={`${mediaPath}/${video.id}`}>
-                                        <PreviewImage videoId={video.id} />
+                                        <PreviewImage videoId={video.id} maxWidth={350} maxHeight={180} />
                                     </Link>
                                     <CardContent>
                                         <Typography

@@ -6,7 +6,7 @@ import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setError, setLoading, setVideoUrl, setBuffering } from '../../store/video/videoSlice';
-import { Grid, Paper, Typography, Container, Skeleton, Button, Box, TextField, IconButton } from "@mui/material";
+import {Grid, Paper, Typography, Container, Skeleton, Button, Box, TextField, IconButton, Avatar} from "@mui/material";
 import {
     Contacts,
     ContentCopy,
@@ -27,6 +27,11 @@ import HandleShareOnFacebook from "../../components/VideoComponents/VideoShare/H
 import HandleShareOnX from "../../components/VideoComponents/VideoShare/HandleShareOnX.tsx";
 import HandleShareOnLinkedIn from "../../components/VideoComponents/VideoShare/HandleShareOnLinkedIn.tsx";
 
+import { getUserAvatar } from '../../services/userServices/getUserAvatar.service';
+// import {getUserById} from "../../services/userServices/getUserById.service.ts";
+import { getAllUsers } from "../../services/userServices/getAllUsers.service.ts";
+
+
 const VideoPage: FC = () => {
     const { id } = useParams<{ id: string }>();
     const videoId = id as string;
@@ -44,6 +49,10 @@ const VideoPage: FC = () => {
 
     const link = window.location.href;
 
+    const [userId, setUserId] = useState<string | null>(null);
+    const [userName, setUserName] = useState('No user found');
+    const [avatar, setAvatar] = useState<string | null>(null);
+
     const handleOpenModal = () => {
         setIsModalOpen(true);
     };
@@ -58,6 +67,29 @@ const VideoPage: FC = () => {
     };
 
     useEffect(() => {
+        const loadAvatar = async () => {
+            if (userId) {
+                try {
+                    const userAvatar = await getUserAvatar(userId);
+                    if (userAvatar) {
+                        setAvatar(userAvatar.id);
+                    } else {
+                        console.error('Avatar not found');
+                    }
+                } catch (error) {
+                    console.error('Error loading avatar:', error);
+                }
+            }
+        };
+
+        loadAvatar();
+    }, [userId]);
+
+    //TODO change user.login for user.userName
+
+
+
+    useEffect(() => {
         const loadVideo = async () => {
             if (videoId) {
                 dispatch(setLoading(true));
@@ -68,7 +100,9 @@ const VideoPage: FC = () => {
                     setDescription(metadata.description);
                     setViews(metadata.videoInfo.contentViewsByUsers.length);
                     setLikes(metadata.videoInfo.contentLikesByUsers.length);
-
+                    setUserId(metadata.ownerId);
+                    console.log('userId = ',userId)
+                    console.log('ownerId = ',metadata.ownerId)
                     let blobUrl = '';
                     if (videoData) {
                         blobUrl = URL.createObjectURL(videoData);
@@ -87,7 +121,47 @@ const VideoPage: FC = () => {
         };
 
         loadVideo();
-    }, [videoId, dispatch, setLikes]);
+    }, [videoId, dispatch, setLikes, setUserId]);
+
+    useEffect(() => {
+        const loadUser = async () => {
+            try {
+                const users = await getAllUsers();
+                const user = users.find(user => user.id === userId);
+                if (user) {
+                    setUserName(user.login);
+                } else {
+                    console.error('User not found');
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+        };
+
+        if (userId) {
+            loadUser();
+        }
+    }, [userId]);
+
+
+    // useEffect(() => {
+    //     const loadUser = async () => {
+    //         if (userId) {
+    //             try {
+    //                 const user = await getUserById(userId);
+    //                 if (user) {
+    //                     setUserName(user.login);
+    //                 } else {
+    //                     console.error('User not found');
+    //                 }
+    //             } catch (error) {
+    //                 console.error('Error loading user:', error);
+    //             }
+    //         }
+    //     };
+    //
+    //     loadUser();
+    // }, [userId]); // Добавляем userId в массив зависимостей
 
     if (loading) {
         return (
@@ -130,7 +204,20 @@ const VideoPage: FC = () => {
                                 {/*Place for Avatar (first in a row)*/}
                                 <Box style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
                                     {/*TODO AVATAR and press on it, navigate to thisUserChannel*/}
-                                    <Contacts sx={{ fontSize: '34px' }} />
+                                    {avatar ? (
+                                        <Avatar
+                                            src={avatar}
+                                            alt="avatar"
+                                            sx={{
+                                                width: 34,
+                                                height: 34,
+                                                cursor: 'pointer',
+                                                position: 'relative',
+                                            }}
+                                        />
+                                    ) : (
+                                        <Contacts sx={{ fontSize: 34 }} />
+                                    )}
 
                                 </Box>
                                 <Container style={{ display: 'flex', flexDirection: 'column' }}>
@@ -138,8 +225,9 @@ const VideoPage: FC = () => {
                                         <Typography>{views} views</Typography>
                                         <Typography>2 weeks ago</Typography>
                                     </Container>
+                                    {/*TODO измени отображение login на UserName*/}
                                     <Container style={{ display: 'flex', flexDirection: 'row' }}>
-                                        <Typography>UnknownUser</Typography>
+                                        <Typography>{userName}</Typography>
                                     </Container>
                                 </Container>
                                 <Container style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
