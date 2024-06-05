@@ -73,7 +73,7 @@ const Header: FC = () => {
       justifyContent: 'space-between',
       alignItems: 'center',
       backgroundColor: 'var(--body)',
-      boxShadow: theme => theme.shadows[1],
+      boxShadow: muiTheme.shadows[1],
       transition: '0.5s',
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
@@ -99,7 +99,34 @@ const Header: FC = () => {
           },
         }}>
           {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News"].map((item, index) => (
-            <ListItem key={item} sx={{ transform: 'translateY(70px)' }}>
+            <ListItem 
+              key={item} 
+              sx={{ 
+                transform: 'translateY(70px)', 
+                position: 'relative',
+                borderRadius: '10px',
+                transition: 'all 0.3s ease',
+                padding: '5px 10px',
+                ...(activeSection === item.substring(1) && {
+                  color: muiTheme.palette.primary.main,
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '70%',
+                    height: '100%',
+                    borderRadius: '10px',
+                    backgroundColor: muiTheme.palette.background.default,
+                    boxShadow: theme === 'light'
+                      ? 'inset 5px 5px 10px rgba(0,0,0,0.2), inset -5px -5px 10px rgba(255,255,255,0.5)'
+                      : 'inset 5px 5px 10px rgba(0,0,0,0.5), inset -5px -5px 10px rgba(255,255,255,0.1)',
+                    zIndex: -1,
+                  }
+                })
+              }}
+            >
               <Link to={item}
                 ref={el => linksRef.current[index] = el}
                 data-to={item}
@@ -109,11 +136,19 @@ const Header: FC = () => {
                   flexDirection: 'column', 
                   alignItems: 'center', 
                   textDecoration: 'none', 
-                  color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit',
-                  transition: 'color 0.3s ease',
+                  width: '100%', 
+                  height: '100%',
+                  zIndex: 1,
                 }}
               >
-                <ListItemIcon sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: 'auto', marginBottom: '4px', color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' }}>
+                <ListItemIcon sx={{ 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center', 
+                  minWidth: 'auto', 
+                  marginBottom: '4px',
+                  color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' 
+                }}>
                   {item === "#Partners" && <Handshake />}
                   {item === "#Pricing" && <AttachMoney />}
                   {item === "#News" && <Apps />}
