@@ -21,7 +21,7 @@ import { data } from '../components/ProfileComponents/utils';
 import NeuAvatar from '../components/neumorphism/avatar/NeuAvatar';
 import NeuDivider from '../components/neumorphism/divider/NeuDivider';
 import Fon3 from '../assets/Fon3.jpg';
-import Fon1 from '../assets/Fon5.jpg';
+import Fon5 from '../assets/Fon5.jpg';
 import { useTheme } from '@mui/material/styles';
 
 export type RenderValues =
@@ -123,7 +123,7 @@ const AppPage = () => {
           </Panel>
 
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
-          <Panel  style={{ backgroundImage: `url(${Fon1})` }}
+          <Panel  style={{ backgroundImage: `url(${Fon5})` }}
             ref={chatsPanelRef}
             defaultSize={25}
             maxSize={100}
@@ -148,7 +148,7 @@ const AppPage = () => {
             minSize={20}
             collapsible
           >
-            <Box height="100vh" style={{ backgroundImage: `url(${Fon1})` }} padding="5px" >
+            <Box height="100vh" style={{ backgroundImage: `url(${Fon5})` }} padding="5px" >
               {renderValues === 'chats' && <AppPageChats />}
               {renderValues === 'comments' && <AppPageComments />}
               {renderValues === 'videos' && <VideoInSideBareAppPage />}
