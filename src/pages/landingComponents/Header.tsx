@@ -106,7 +106,11 @@ const Header: FC = () => {
                 position: 'relative',
                 borderRadius: '10px',
                 transition: 'all 0.3s ease',
-                padding: '5px 10px',
+                padding: '10px 10px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
                 ...(activeSection === item.substring(1) && {
                   color: muiTheme.palette.primary.main,
                   '&::before': {
@@ -115,13 +119,13 @@ const Header: FC = () => {
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '70%',
-                    height: '100%',
-                    borderRadius: '10px',
+                    width: '70%', 
+                    height: '100%', 
+                    borderRadius: '15px',
                     backgroundColor: muiTheme.palette.background.default,
                     boxShadow: theme === 'light'
-                      ? 'inset 5px 5px 10px rgba(0,0,0,0.2), inset -5px -5px 10px rgba(255,255,255,0.5)'
-                      : 'inset 5px 5px 10px rgba(0,0,0,0.5), inset -5px -5px 10px rgba(255,255,255,0.1)',
+                      ? muiTheme.shadows[1]
+                      : muiTheme.shadows[2],
                     zIndex: -1,
                   }
                 })
@@ -146,7 +150,7 @@ const Header: FC = () => {
                   justifyContent: 'center', 
                   alignItems: 'center', 
                   minWidth: 'auto', 
-                  marginBottom: '4px',
+                  marginBottom: '2px',
                   color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' 
                 }}>
                   {item === "#Partners" && <Handshake />}
@@ -156,7 +160,14 @@ const Header: FC = () => {
                   {item === "#AboutUs" && <AccountBalance />}
                   {item === "#Project" && <Build />} 
                 </ListItemIcon>
-                <ListItemText primary={item.substring(1)} sx={{ textAlign: 'center', color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' }} />
+                <ListItemText 
+                primary={item.substring(1)} 
+                sx={{ 
+                  textAlign: 'center', 
+                  color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit',
+                  padding: '0', 
+                  marginBottom: '0',   
+                  }} />
               </Link>
             </ListItem>
           ))}
