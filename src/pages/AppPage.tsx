@@ -20,6 +20,9 @@ import { Stack } from '@mui/system';
 import { data } from '../components/ProfileComponents/utils';
 import NeuAvatar from '../components/neumorphism/avatar/NeuAvatar';
 import NeuDivider from '../components/neumorphism/divider/NeuDivider';
+import Fon3 from '../assets/Fon3.jpg';
+import Fon1 from '../assets/Fon5.jpg';
+import { useTheme } from '@mui/material/styles';
 
 export type RenderValues =
   | 'comments'
@@ -36,7 +39,7 @@ const AppPage = () => {
   const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
   const [, setIsChatPanelOpen] = useState(false);
   const [users] = useState(data);
-
+  const theme = useTheme();
   const chatsPanelRef = useRef<ImperativePanelHandle>(null);
   const rightPanel = useRef<ImperativePanelHandle>(null);
 
@@ -72,7 +75,8 @@ const AppPage = () => {
   }
 
   return (
-    <Box height="100vh" display="flex" flexDirection="column">
+      <Box display="flex" flexDirection="column" style={{ backgroundColor: theme.palette.background.default }}
+      >
       <AppPageHeader
         setIsOpenSideBar={setIsOpenSideBar}
         setIsOpenMainSideBar={setIsOpenMainSideBar}
@@ -80,7 +84,7 @@ const AppPage = () => {
         setIsChatPanelOpen={setIsChatPanelOpen}
       />
       <Divider />
-      <Box flex={1} display="flex" position="relative">
+      <Box flex={1} display="flex" position="relative" >
         <Box position="absolute" top={0} left={0} zIndex={1000}>
           <AppPageMainSideBar isOpenMainSideBar={isOpenMainSideBar} />
         </Box>
@@ -109,7 +113,7 @@ const AppPage = () => {
             ))}
           </Stack>
           <Panel>
-            <Box marginTop={10}>
+            <Box marginTop={10} >
               {users.map((elem) => (
                 <Stack key={elem.id} height="58px" padding="10px 0">
                   {elem.name}
@@ -119,7 +123,7 @@ const AppPage = () => {
           </Panel>
 
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
-          <Panel
+          <Panel  style={{ backgroundImage: `url(${Fon1})` }}
             ref={chatsPanelRef}
             defaultSize={25}
             maxSize={100}
@@ -133,7 +137,7 @@ const AppPage = () => {
 
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
 
-          <Panel defaultSize={50}>
+          <Panel style={{ backgroundImage: `url(${Fon3})` }} defaultSize={50}>
             <AppPageCentralComponent />
           </Panel>
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
@@ -144,7 +148,7 @@ const AppPage = () => {
             minSize={20}
             collapsible
           >
-            <Box padding="5px">
+            <Box height="100vh" style={{ backgroundImage: `url(${Fon1})` }} padding="5px" >
               {renderValues === 'chats' && <AppPageChats />}
               {renderValues === 'comments' && <AppPageComments />}
               {renderValues === 'videos' && <VideoInSideBareAppPage />}
