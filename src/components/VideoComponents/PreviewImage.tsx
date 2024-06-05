@@ -10,8 +10,8 @@ interface PreviewImageProps {
     maxHeight?: number;
     onClick?: () => void; // Add this line
 }
-
-const PreviewImage: FC<PreviewImageProps> = ({ videoId, style, maxWidth = 350, maxHeight = 180, onClick }) => {
+// We need to give maxWidth and maxHeight in components where use PreviewImage)
+const PreviewImage: FC<PreviewImageProps> = ({ videoId, style, maxWidth, maxHeight , onClick }) => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -35,7 +35,7 @@ const PreviewImage: FC<PreviewImageProps> = ({ videoId, style, maxWidth = 350, m
                 <img
                     src={imageSrc}
                     alt="Preview"
-                    style={{ ...style, display: loading ? 'none' : 'block', maxWidth: "100%", height: "auto" }} // Ensure image is responsive
+                    style={{ ...style, display: loading ? 'none' : 'block', maxWidth, maxHeight }}
                     onLoad={handleImageLoad}
                     onClick={onClick} // Add this line
                 />
