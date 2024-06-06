@@ -93,15 +93,22 @@ const AppPage = () => {
       flexDirection="column"
       style={{ backgroundColor: theme.palette.background.default }}
     >
-      <AppPageHeader
-        setIsOpenSideBar={setIsOpenSideBar}
-        setIsOpenMainSideBar={setIsOpenMainSideBar}
-        toggleChatsPanel={toggleChatsPanel}
-        setIsChatPanelOpen={setIsChatPanelOpen}
-      />
-      <Divider />
-      <Box flex={1} display="flex" position="relative">
-        <Box position="absolute" top={0} left={0} zIndex={1000}>
+      <Box sx={{ position: 'fixed', width: '100%', zIndex: 1000 }}>
+        <AppPageHeader
+          setIsOpenSideBar={setIsOpenSideBar}
+          setIsOpenMainSideBar={setIsOpenMainSideBar}
+          toggleChatsPanel={toggleChatsPanel}
+          setIsChatPanelOpen={setIsChatPanelOpen}
+        />
+        <Divider />
+      </Box>
+      <Box
+        flex={1}
+        display="flex"
+        position="relative"
+        sx={{ marginTop: '60px' }}
+      >
+        <Box position="absolute" left={0} zIndex={1000}>
           <AppPageMainSideBar
             isOpenMainSideBar={isOpenMainSideBar}
             changeRenderCentralComponent={changeRenderCentralComponent}
@@ -123,7 +130,12 @@ const AppPage = () => {
             </Box>
             <NeuDivider
               dark
-              sx={{ width: 'calc(100% + 16px)', backgroundColor: 'black' }}
+              sx={{
+                width: '100%',
+                height: '2px',
+                backgroundColor:
+                  theme.palette.mode === 'dark' ? 'gray' : 'black',
+              }}
             />
             {users.map((elem) => (
               <Stack key={elem.id}>
@@ -158,7 +170,11 @@ const AppPage = () => {
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
 
           <Panel
-            style={{ backgroundImage: `url(${Fon3})`, padding: '10px' }}
+            style={{
+              backgroundImage: `url(${Fon3})`,
+              padding: '10px',
+              position: 'relative',
+            }}
             defaultSize={50}
           >
             {renderValuesCentralComponent === 'videospage' && (
@@ -169,7 +185,10 @@ const AppPage = () => {
             )}
             <Box
               sx={{
-                margin: '0 auto',
+                position: 'absolute',
+                bottom: '50px',
+                left: '50%',
+                transform: 'translateX(-50%)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',

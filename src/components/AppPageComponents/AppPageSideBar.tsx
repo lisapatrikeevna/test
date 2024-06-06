@@ -2,6 +2,7 @@
 import { Box } from '@mui/material';
 import { RenderValues } from '../../pages/AppPage';
 import NeuButton from '../neumorphism/button/NeuButton';
+import { useTheme } from '@mui/material/styles';
 
 type Props = {
   isOpenSideBar: boolean;
@@ -22,11 +23,11 @@ const AppPageSideBar = ({
     openRightPanel();
     setIsOpenSideBar(false);
   };
-
+    const theme = useTheme();
   return (
     <Box
       sx={{
-        height: '80vh',
+          height: 'calc(100vh - 60px)',
         width: '250px',
         transition: 'opacity 0.5s ease, visibility 0.5s ease',
         opacity: isOpenSideBar ? 1 : 0,
@@ -34,10 +35,11 @@ const AppPageSideBar = ({
         display: 'flex',
         flexDirection: 'column',
         gap: '20px',
-        background: '#e0e0e0',
         padding: '10px',
         borderRadius: '5px',
+          position: 'relative',
         pointerEvents: isOpenSideBar ? 'auto' : 'none',
+          backgroundColor: theme.palette.background.default
       }}
     >
       <NeuButton
@@ -53,7 +55,7 @@ const AppPageSideBar = ({
         variant="contained"
         onClick={() => handleButtonClick('videos')}
       >
-        Video
+        Search Video
       </NeuButton>
       <NeuButton
         variant="contained"
