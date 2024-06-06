@@ -81,7 +81,7 @@ const Header: React.FC = () => {
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
     }}>
-      <img src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
+      <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
       <Box sx={{
         transformOrigin: 'left',
         display: { xs: 'none', md: 'flex' },
