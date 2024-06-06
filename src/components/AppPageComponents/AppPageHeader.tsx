@@ -66,7 +66,12 @@ const AppPageHeader = ({
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      sx={{ zIndex: 1100, position: 'relative', padding: '10px 20px' }}
+      sx={{
+        zIndex: 1100,
+        position: 'relative',
+        padding: '10px 20px',
+        background: '#e0e0e0',
+      }}
     >
       <Stack direction="row" spacing={2} alignItems="center">
         <MenuIcon
