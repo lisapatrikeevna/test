@@ -74,8 +74,8 @@ const Header: React.FC = () => {
       width: '100%',
       position: 'absolute',
       top: 0,
-      paddingLeft: '1vw',
-      paddingRight: '5vw',
+      paddingLeft: '3vw',
+      paddingRight: '3vw',
       '@media (max-width: 830px)': {
         paddingRight: '1vw'
       },
@@ -100,6 +100,7 @@ const Header: React.FC = () => {
         </Typography>
       </Box>
       <Box sx={{
+        paddingLeft: '20px',
         transformOrigin: 'left',
         display: { xs: 'none', md: 'flex' },
         justifyContent: 'center',
