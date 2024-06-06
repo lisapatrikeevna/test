@@ -1,4 +1,4 @@
-import { Avatar, Box, Divider } from '@mui/material';
+import { Avatar, Box, Button, Collapse, Divider } from '@mui/material';
 import {
   Panel,
   PanelGroup,
@@ -20,6 +20,13 @@ import { Stack } from '@mui/system';
 import { data } from '../components/ProfileComponents/utils';
 import NeuAvatar from '../components/neumorphism/avatar/NeuAvatar';
 import NeuDivider from '../components/neumorphism/divider/NeuDivider';
+import Fon3 from '../assets/Fon3.jpg';
+import Fon5 from '../assets/Fon5.jpg';
+import { useTheme } from '@mui/material/styles';
+import VideosMainPage from './Videos/VideosMainPage';
+import AppPageButtonsComponent from '../components/AppPageComponents/AppPageButtonsComponent';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export type RenderValues =
   | 'comments'
@@ -29,16 +36,21 @@ export type RenderValues =
   | 'audio'
   | 'radio';
 
+export type RenderValuesCentralComponent = 'home' | 'videospage';
+
 const AppPage = () => {
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
   const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
+  const [renderValuesCentralComponent, setRenderValuesCentralComponent] =
+    useState<RenderValuesCentralComponent>('home');
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
   const [, setIsChatPanelOpen] = useState(false);
   const [users] = useState(data);
-
+  const theme = useTheme();
   const chatsPanelRef = useRef<ImperativePanelHandle>(null);
   const rightPanel = useRef<ImperativePanelHandle>(null);
+  const [showOptionsButton, setShowOptionsButton] = useState(false);
 
   const toggleChatsPanel = () => {
     setIsChatPanelOpen((prev) => {
@@ -71,18 +83,36 @@ const AppPage = () => {
     setRenderValues(value);
   }
 
+  function changeRenderCentralComponent(value: RenderValuesCentralComponent) {
+    setRenderValuesCentralComponent(value);
+  }
+
   return (
-    <Box height="100vh" display="flex" flexDirection="column">
-      <AppPageHeader
-        setIsOpenSideBar={setIsOpenSideBar}
-        setIsOpenMainSideBar={setIsOpenMainSideBar}
-        toggleChatsPanel={toggleChatsPanel}
-        setIsChatPanelOpen={setIsChatPanelOpen}
-      />
-      <Divider />
-      <Box flex={1} display="flex" position="relative">
-        <Box position="absolute" top={0} left={0} zIndex={1000}>
-          <AppPageMainSideBar isOpenMainSideBar={isOpenMainSideBar} />
+    <Box
+      display="flex"
+      flexDirection="column"
+      style={{ backgroundColor: theme.palette.background.default }}
+    >
+      <Box sx={{ position: 'fixed', width: '100%', zIndex: 1000 }}>
+        <AppPageHeader
+          setIsOpenSideBar={setIsOpenSideBar}
+          setIsOpenMainSideBar={setIsOpenMainSideBar}
+          toggleChatsPanel={toggleChatsPanel}
+          setIsChatPanelOpen={setIsChatPanelOpen}
+        />
+        <Divider />
+      </Box>
+      <Box
+        flex={1}
+        display="flex"
+        position="relative"
+        sx={{ marginTop: '60px' }}
+      >
+        <Box position="absolute" left={0} zIndex={1000}>
+          <AppPageMainSideBar
+            isOpenMainSideBar={isOpenMainSideBar}
+            changeRenderCentralComponent={changeRenderCentralComponent}
+          />
         </Box>
         <PanelGroup direction="horizontal" style={{ flex: 1 }}>
           <Stack direction="column" spacing={2} padding={1} alignItems="center">
@@ -100,7 +130,12 @@ const AppPage = () => {
             </Box>
             <NeuDivider
               dark
-              sx={{ width: 'calc(100% + 16px)', backgroundColor: 'black' }}
+              sx={{
+                width: '100%',
+                height: '2px',
+                backgroundColor:
+                  theme.palette.mode === 'dark' ? 'gray' : 'black',
+              }}
             />
             {users.map((elem) => (
               <Stack key={elem.id}>
@@ -120,6 +155,7 @@ const AppPage = () => {
 
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
           <Panel
+            style={{ backgroundImage: `url(${Fon5})` }}
             ref={chatsPanelRef}
             defaultSize={25}
             maxSize={100}
@@ -133,9 +169,52 @@ const AppPage = () => {
 
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
 
-          <Panel defaultSize={50}>
-            <AppPageCentralComponent />
+          <Panel
+            style={{
+              backgroundImage: `url(${Fon3})`,
+              padding: '10px',
+              position: 'relative',
+            }}
+            defaultSize={50}
+          >
+            {renderValuesCentralComponent === 'videospage' && (
+              <VideosMainPage />
+            )}
+            {renderValuesCentralComponent === 'home' && (
+              <AppPageCentralComponent />
+            )}
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: '50px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '20px',
+              }}
+            >
+              <Button
+                variant="outlined"
+                endIcon={
+                  showOptionsButton ? (
+                    <KeyboardArrowDownIcon />
+                  ) : (
+                    <KeyboardArrowUpIcon />
+                  )
+                }
+                sx={{ width: '300px' }}
+                onClick={() => setShowOptionsButton((prev) => !prev)}
+              >
+                Options
+              </Button>
+              <Collapse in={showOptionsButton}>
+                <AppPageButtonsComponent />
+              </Collapse>
+            </Box>
           </Panel>
+
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
           <Panel
             ref={rightPanel}
@@ -144,7 +223,11 @@ const AppPage = () => {
             minSize={20}
             collapsible
           >
-            <Box padding="5px">
+            <Box
+              height="100vh"
+              style={{ backgroundImage: `url(${Fon5})` }}
+              padding="5px"
+            >
               {renderValues === 'chats' && <AppPageChats />}
               {renderValues === 'comments' && <AppPageComments />}
               {renderValues === 'videos' && <VideoInSideBareAppPage />}

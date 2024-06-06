@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-
 import {
     Box,
     Table,
@@ -10,12 +9,13 @@ import {
     TableRow,
     Paper,
     Button,
-    Checkbox
+    Checkbox,
+    CircularProgress
 } from '@mui/material';
 import AddVideoModal from "../../components/VideoComponents/AddVideoModal.tsx";
 import { getVideosOfUser } from '../../services/videoServices/videoShow.service';
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/store.ts";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store.ts";
 import PreviewImage from '../../components/VideoComponents/PreviewImage';
 import UpdateVideoModal from "../../components/VideoComponents/UpdateVideoModal.tsx";
 
@@ -41,14 +41,29 @@ const VideoEditPage: FC = () => {
     const [isUpdateVideoModalOpen, setIsUpdateVideoModalOpen] = useState(false);
     const userId = useSelector((state: RootState) => state.user.user?.userId);
     const [editingVideo, setEditingVideo] = useState<VideoData | null>(null);
+    const [rows, setRows] = useState<VideoData[]>([]);
 
     const handlePreviewImageClick = (video: VideoData) => {
         setEditingVideo(video);
         setIsUpdateVideoModalOpen(true);
     };
-    const [rows, setRows] = useState<VideoData[]>([]);
 
-    //Code for autoOpen AddVideoModal when click AddVideo on different page
+    const handleVideoUploaded = (newVideo: VideoData) => {
+        setRows((prevRows) => {
+            // Check if the video already exists in the rows
+            const videoIndex = prevRows.findIndex(video => video.id === newVideo.id);
+            if (videoIndex !== -1) {
+                // Update the existing row with the new video data
+                const updatedRows = [...prevRows];
+                updatedRows[videoIndex] = newVideo;
+                return updatedRows;
+            }
+            // Add the new video row
+            return [...prevRows, newVideo];
+        });
+    };
+
+    // Code for autoOpen AddVideoModal when click AddVideo on different page
     const [shouldOpenAddVideoModal, setShouldOpenAddVideoModal] = useState(false);
     useEffect(() => {
         if (shouldOpenAddVideoModal) {
@@ -56,7 +71,6 @@ const VideoEditPage: FC = () => {
             setShouldOpenAddVideoModal(false); // Reset the flag after opening the modal
         }
     }, [shouldOpenAddVideoModal]);
-
 
     useEffect(() => {
         if (!isAddVideoModalOpen && editingVideo) {
@@ -99,7 +113,7 @@ const VideoEditPage: FC = () => {
                     Add Video
                 </Button>
             </Box>
-            <AddVideoModal isOpen={isAddVideoModalOpen} onClose={() => setIsAddVideoModalOpen(false)} onVideoUploaded={() => setIsAddVideoModalOpen(false)} />
+            <AddVideoModal isOpen={isAddVideoModalOpen} onClose={() => setIsAddVideoModalOpen(false)} onVideoUploaded={handleVideoUploaded} />
             <UpdateVideoModal isOpen={isUpdateVideoModalOpen} onClose={() => setIsUpdateVideoModalOpen(false)} video={editingVideo} />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -121,14 +135,18 @@ const VideoEditPage: FC = () => {
                                     <Checkbox />
                                 </TableCell>
                                 <TableCell>
-                                    <PreviewImage videoId={row.id} maxWidth={153} maxHeight={86} onClick={() => handlePreviewImageClick(row)} />
+                                    {row.previewUrl ? (
+                                        <PreviewImage videoId={row.id} maxWidth={153} maxHeight={86} onClick={() => handlePreviewImageClick(row)} />
+                                    ) : (
+                                        <CircularProgress />
+                                    )}
                                 </TableCell>
                                 <TableCell>
                                     <h5>{row.videoName}</h5>
                                     <h6>{row.description}</h6>
                                 </TableCell>
                                 <TableCell>
-                                    {/*{row.videoInfo.isAccessibleToAll ? 'Доступно всем' : 'Не доступно всем'}*/}
+                                    {/* {row.videoInfo.isAccessibleToAll ? 'Доступно всем' : 'Не доступно всем'} */}
                                 </TableCell>
                                 <TableCell>
                                     Текст

@@ -30,8 +30,8 @@ import { Link } from 'react-router-dom';
 import {
   chatsPath,
   contactsPath,
-  homePath,
-  mediaPath,
+  // homePath,
+  // mediaPath,
   newChannelPath,
   newGroupPath,
   settingsPath,
@@ -43,12 +43,17 @@ import { useAppSelector } from '../../store/hooks';
 import { selectUsername } from '../../store/user/userSlice';
 // import UserModalProfile from '../../pages/UserModalProfile';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
+import { RenderValuesCentralComponent } from '../../pages/AppPage';
 
 type Props = {
   isOpenMainSideBar: boolean;
+  changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
 };
 
-const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
+const AppPageMainSideBar = ({
+  isOpenMainSideBar,
+  changeRenderCentralComponent,
+}: Props) => {
   const username = useAppSelector(selectUsername) || 'Guest';
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [isAccountsDropdownOpen, setIsAccountsDropdownOpen] = useState(false);
@@ -70,7 +75,7 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
   return (
     <Box
       sx={{
-        height: '89vh',
+        height: 'calc(100vh - 60px)',
         width: isOpenMainSideBar ? '250px' : '0px',
         transition: 'width 0.5s ease',
         display: 'flex',
@@ -131,10 +136,13 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
                 open={openProfileModal}
                 onClose={() => setOpenProfileModal(false)}
               /> */}
-          <ListItem disablePadding>
+          <ListItem
+            disablePadding
+            onClick={() => changeRenderCentralComponent('home')}
+          >
             <ListItemButton
-              component={Link}
-              to={homePath}
+              // component={Link}
+              // to={homePath}
               disableRipple
               sx={{ padding: '5px 16px' }}
             >
@@ -208,10 +216,13 @@ const AppPageMainSideBar = ({ isOpenMainSideBar }: Props) => {
               <ListItemText primary="Chats" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem
+            disablePadding
+            onClick={() => changeRenderCentralComponent('videospage')}
+          >
             <ListItemButton
-              component={Link}
-              to={mediaPath}
+              // component={Link}
+              // to={mediaPath}
               disableRipple
               sx={{ padding: '5px 16px' }}
             >

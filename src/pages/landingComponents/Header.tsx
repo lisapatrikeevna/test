@@ -1,8 +1,6 @@
-import { useEffect, useRef, useContext, useState, FC } from 'react';
-import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { Handshake, Apps, Call, AccountBalance, AttachMoney, Build } from '@mui/icons-material';
-import { Link } from "react-router-dom";
-import { useTheme as useMuiTheme } from '@mui/material/styles';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { Box, IconButton, List, ListItem, ListItemIcon, ListItemText, Drawer, Link as MuiLink, useTheme as useMuiTheme } from '@mui/material';
+import { Menu as MenuIcon, Handshake, Apps, Call, AccountBalance, AttachMoney, Build } from '@mui/icons-material';
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import LoginModal from '../../components/LoginModal.tsx';
@@ -10,10 +8,11 @@ import logo from '../../assets/neox-logo.svg';
 import NeuButton from "../../components/neumorphism/button/NeuButton.tsx";
 import NeuSwitch from '../../components/neumorphism/switch/NeuSwitch.tsx';
 
-const Header: FC = () => {
+const Header: React.FC = () => {
   const muiTheme = useMuiTheme();
   const { theme, setTheme } = useCustomTheme();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
@@ -57,6 +56,10 @@ const Header: FC = () => {
     }
   }, [activeSection]);
 
+  const handleDrawerToggle = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
   return (
     <Box sx={{
       width: '100%',
@@ -81,7 +84,7 @@ const Header: FC = () => {
       <img src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
       <Box sx={{
         transformOrigin: 'left',
-        display: 'flex',
+        display: { xs: 'none', md: 'flex' },
         justifyContent: 'center',
         alignItems: 'center',
       }} >
@@ -111,6 +114,9 @@ const Header: FC = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
+                '&:hover': {
+                  color: muiTheme.palette.primary.main,
+                },
                 ...(activeSection === item.substring(1) && {
                   color: muiTheme.palette.primary.main,
                   '&::before': {
@@ -131,7 +137,8 @@ const Header: FC = () => {
                 })
               }}
             >
-              <Link to={item}
+              <MuiLink
+                href={item}
                 ref={el => linksRef.current[index] = el}
                 data-to={item}
                 onClick={() => { handleClick(item); }}
@@ -143,6 +150,7 @@ const Header: FC = () => {
                   width: '100%', 
                   height: '100%',
                   zIndex: 1,
+                  color: 'inherit'
                 }}
               >
                 <ListItemIcon sx={{ 
@@ -168,12 +176,12 @@ const Header: FC = () => {
                   padding: '0', 
                   marginBottom: '0',   
                   }} />
-              </Link>
+              </MuiLink>
             </ListItem>
           ))}
         </List>
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <Box component="label" sx={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer'}}>
           <Box sx={{
             isolation: 'isolate',
@@ -214,7 +222,85 @@ const Header: FC = () => {
         >
           Login
         </NeuButton>
+        <IconButton sx={{ display: { xs: 'flex', md: 'none' } }} onClick={handleDrawerToggle}>
+          <MenuIcon />
+        </IconButton>
       </Box>
+      <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerToggle}>
+        <Box sx={{ width: 250, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', backgroundColor: 'var(--body)' }}>
+          <List>
+            {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News"].map((item) => (
+              <ListItem
+                button
+                key={item}
+                onClick={() => { handleClick(item); handleDrawerToggle(); }}
+                sx={{
+                  padding: '15px 10px', // увеличиваем отступы между элементами меню
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  '&:hover': {
+                    color: muiTheme.palette.primary.main,
+                    backgroundColor: muiTheme.palette.action.hover,
+                  },
+                  ...(activeSection === item.substring(1) && {
+                    color: muiTheme.palette.primary.main,
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '100%', 
+                      height: '100%', 
+                      borderRadius: '15px',
+                      backgroundColor: 'var(--body)', 
+                      boxShadow: theme === 'light'
+                        ? muiTheme.shadows[1]
+                        : muiTheme.shadows[2],
+                      zIndex: -1,
+                    }
+                  })
+                }}
+              >
+                <MuiLink
+                  href={item}
+                  underline="none"
+                  color="inherit"
+                  onClick={() => { handleClick(item); handleDrawerToggle(); }}
+                  sx={{ 
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textDecoration: 'none',
+                    width: '100%',
+                    height: '100%',
+                    zIndex: 1
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth: 'auto', margin: '8px', justifyContent: 'center', display: 'flex', color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' }}>
+                    {item === "#Partners" && <Handshake />}
+                    {item === "#Pricing" && <AttachMoney />}
+                    {item === "#News" && <Apps />}
+                    {item === "#Contacts" && <Call />}
+                    {item === "#AboutUs" && <AccountBalance />}
+                    {item === "#Project" && <Build />}
+                  </ListItemIcon>
+                  <ListItemText 
+                    primary={item.substring(1)} 
+                    sx={{ 
+                      textAlign: 'center', 
+                      color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit',
+                      padding: '0', 
+                      marginBottom: '0', 
+                    }} 
+                  />
+                </MuiLink>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </Box>
   );
