@@ -114,9 +114,6 @@ const Header: React.FC = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                '&:hover': {
-                  color: muiTheme.palette.primary.main,
-                },
                 ...(activeSection === item.substring(1) && {
                   color: muiTheme.palette.primary.main,
                   '&::before': {
@@ -235,7 +232,7 @@ const Header: React.FC = () => {
                 key={item}
                 onClick={() => { handleClick(item); handleDrawerToggle(); }}
                 sx={{
-                  padding: '15px 10px', // увеличиваем отступы между элементами меню
+                  padding: '15px 10px', 
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
