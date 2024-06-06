@@ -111,6 +111,7 @@ const Header: React.FC = () => {
           flexDirection: 'row',
           position: 'absolute',
           top: '-65px',
+          marginLeft: '360px',
           width: "850px",
           '@media (max-width: 1250px)': {
             width: '700px'
@@ -132,9 +133,6 @@ const Header: React.FC = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                '&:hover': {
-                  color: muiTheme.palette.primary.main,
-                },
                 ...(activeSection === item.substring(1) && {
                   color: muiTheme.palette.primary.main,
                   '&::before': {
@@ -168,7 +166,7 @@ const Header: React.FC = () => {
                   width: '100%', 
                   height: '100%',
                   zIndex: 1,
-                  color: 'inherit'
+                  color: 'inherit',
                 }}
               >
                 <ListItemIcon sx={{ 
