@@ -23,11 +23,11 @@ const AppPageSideBar = ({
     openRightPanel();
     setIsOpenSideBar(false);
   };
-    const theme = useTheme();
+  const theme = useTheme();
   return (
     <Box
       sx={{
-          height: 'calc(100vh - 60px)',
+        height: '100vh',
         width: '250px',
         transition: 'opacity 0.5s ease, visibility 0.5s ease',
         opacity: isOpenSideBar ? 1 : 0,
@@ -37,9 +37,9 @@ const AppPageSideBar = ({
         gap: '20px',
         padding: '10px',
         borderRadius: '5px',
-          position: 'relative',
+        position: 'relative',
         pointerEvents: isOpenSideBar ? 'auto' : 'none',
-          backgroundColor: theme.palette.background.default
+        backgroundColor: theme.palette.background.default,
       }}
     >
       <NeuButton
