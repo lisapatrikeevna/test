@@ -283,7 +283,7 @@ const VideoPage: FC = () => {
                             <Typography>{description}</Typography>
                         </Box>
                     </Box>
-                    <Box style={{ padding: 0 }}>
+                    <Box style={{ padding: 0, marginTop: 15 }}>
                         <Paper elevation={3}>
                             <VideoListHorizontal currentVideoId={videoId} />
                         </Paper>
