@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { Box, IconButton, List, ListItem, ListItemIcon, ListItemText, Drawer, Link as MuiLink, useTheme as useMuiTheme } from '@mui/material';
+import { Box, IconButton, List, ListItem, ListItemIcon, ListItemText, Drawer, Link as MuiLink, Typography, useTheme as useMuiTheme } from '@mui/material';
 import {
   Menu as MenuIcon,
   Handshake,
@@ -91,10 +91,13 @@ const Header: React.FC = () => {
       borderBottomLeftRadius: '25px'
     }}>
       <IconButton sx={{ display: { xs: 'flex', md: 'none' } }} onClick={handleDrawerToggle}>
-        <MenuIcon />
+        <MenuIcon sx={{width: '32px', height: '32px'}}/>
       </IconButton>
-      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+      <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: '10px' }}>
         <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
+        <Typography variant="h5"  sx={{ cursor: 'pointer', fontWeight: '550' }} onClick={() => { handleClick("#Home") }}>
+          NeoXonline
+        </Typography>
       </Box>
       <Box sx={{
         transformOrigin: 'left',
@@ -272,6 +275,9 @@ const Header: React.FC = () => {
               >
                 <ListItemIcon sx={{ minWidth: 'auto', margin: '8px', justifyContent: 'center', display: 'flex' }}>
                   <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 50, height: 50 }} />
+                  <Typography variant="h5" alignContent="center" sx={{ marginLeft: '10px', color: muiTheme.palette.text.primary }}>
+                    NeoXonline
+                  </Typography>
                 </ListItemIcon>
               </MuiLink>
             </ListItem>
