@@ -13,7 +13,8 @@ import Cookies from './cookies/Cookies.tsx';
 import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
 import News from "./News.tsx";
 import AboutUs from "./AboutUs.tsx";
-import Project from './Project'; 
+import Project from './Project';
+import Donate from "./Donate.tsx";
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -72,7 +73,7 @@ const MainPage = () => {
         return;
       }
 
-      const sections = ["Home", "AboutUs", "Project", "Pricing", "Partners", "Contacts", "News"];
+      const sections = ["Home", "AboutUs", "Project", "Pricing", "Partners", "Contacts", "News", "Donate"];
       const currentIndex = sections.indexOf(activeSection as string);
       let newIndex = currentIndex;
 
@@ -142,6 +143,11 @@ const MainPage = () => {
       <Section id="News">
         <SectionContent maxWidth="xl">
           <News />
+        </SectionContent>
+      </Section>
+      <Section id="Donate">
+        <SectionContent maxWidth="xl">
+          <Donate />
         </SectionContent>
       </Section>
       <Footer
