@@ -108,7 +108,7 @@ const AppPage = () => {
         position="relative"
         sx={{ marginTop: '60px' }}
       >
-        <Box position="absolute" left={0} zIndex={1000}>
+        <Box position="fixed" top="60px" bottom={0} left={0} zIndex={1000}>
           <AppPageMainSideBar
             isOpenMainSideBar={isOpenMainSideBar}
             changeRenderCentralComponent={changeRenderCentralComponent}
@@ -259,8 +259,9 @@ const AppPage = () => {
           />
         )}
         <Box
-          position="absolute"
-          top={0}
+          position="fixed"
+          top="60px"
+          bottom={0}
           right={0}
           zIndex={isOpenSideBar ? 1000 : -1}
         >

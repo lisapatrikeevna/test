@@ -1,6 +1,15 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Box, IconButton, List, ListItem, ListItemIcon, ListItemText, Drawer, Link as MuiLink, useTheme as useMuiTheme } from '@mui/material';
-import { Menu as MenuIcon, Handshake, Apps, Call, AccountBalance, AttachMoney, Build } from '@mui/icons-material';
+import {
+  Menu as MenuIcon,
+  Handshake,
+  Apps,
+  Call,
+  AccountBalance,
+  AttachMoney,
+  Build,
+  LunchDining
+} from '@mui/icons-material';
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import LoginModal from '../../components/LoginModal.tsx';
@@ -49,7 +58,7 @@ const Header: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const activeIndex = activeSection ? ["Home", "AboutUs", "Project", "Pricing", "Partners", "Contacts", "News"].indexOf(activeSection) : -1;
+    const activeIndex = activeSection ? ["Home", "AboutUs", "Project", "Pricing", "Partners", "Contacts", "News", "Donate"].indexOf(activeSection) : -1;
     const activeLink = linksRef.current[activeIndex];
     if (activeLink) {
       moveIndicator(activeLink);
@@ -81,7 +90,12 @@ const Header: React.FC = () => {
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
     }}>
-      <img src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
+      <IconButton sx={{ display: { xs: 'flex', md: 'none' } }} onClick={handleDrawerToggle}>
+        <MenuIcon />
+      </IconButton>
+      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+        <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
+      </Box>
       <Box sx={{
         transformOrigin: 'left',
         display: { xs: 'none', md: 'flex' },
@@ -101,7 +115,7 @@ const Header: React.FC = () => {
             width: '500px'
           },
         }}>
-          {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News"].map((item, index) => (
+          {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News", "#Donate"].map((item, index) => (
             <ListItem 
               key={item} 
               sx={{ 
@@ -167,6 +181,7 @@ const Header: React.FC = () => {
                   {item === "#Contacts" && <Call />}
                   {item === "#AboutUs" && <AccountBalance />}
                   {item === "#Project" && <Build />} 
+                  {item === "#Donate" && <LunchDining />}
                 </ListItemIcon>
                 <ListItemText 
                 primary={item.substring(1)} 
@@ -222,20 +237,51 @@ const Header: React.FC = () => {
         >
           Login
         </NeuButton>
-        <IconButton sx={{ display: { xs: 'flex', md: 'none' } }} onClick={handleDrawerToggle}>
-          <MenuIcon />
-        </IconButton>
       </Box>
-      <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerToggle}>
+      <Drawer anchor="left" open={isDrawerOpen} onClose={handleDrawerToggle}>
         <Box sx={{ width: 250, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', backgroundColor: 'var(--body)' }}>
           <List>
-            {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News"].map((item) => (
+            <ListItem
+              button
+              onClick={() => { handleClick("#Home"); handleDrawerToggle(); }}
+              sx={{
+                padding: '15px 10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                '&:hover': {
+                  color: muiTheme.palette.primary.main,
+                  backgroundColor: muiTheme.palette.action.hover,
+                }
+              }}
+            >
+              <MuiLink
+                href="#Home"
+                underline="none"
+                color="inherit"
+                onClick={() => { handleClick("#Home"); handleDrawerToggle(); }}
+                sx={{ 
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  width: '100%',
+                  height: '100%',
+                  zIndex: 1
+                }}
+              >
+                <ListItemIcon sx={{ minWidth: 'auto', margin: '8px', justifyContent: 'center', display: 'flex' }}>
+                  <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 50, height: 50 }} />
+                </ListItemIcon>
+              </MuiLink>
+            </ListItem>
+            {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News", "#Donate"].map((item) => (
               <ListItem
                 button
                 key={item}
                 onClick={() => { handleClick(item); handleDrawerToggle(); }}
                 sx={{
-                  padding: '15px 10px', // увеличиваем отступы между элементами меню
+                  padding: '15px 10px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -285,6 +331,7 @@ const Header: React.FC = () => {
                     {item === "#Contacts" && <Call />}
                     {item === "#AboutUs" && <AccountBalance />}
                     {item === "#Project" && <Build />}
+                    {item === "#Donate" && <LunchDining />}
                   </ListItemIcon>
                   <ListItemText 
                     primary={item.substring(1)} 

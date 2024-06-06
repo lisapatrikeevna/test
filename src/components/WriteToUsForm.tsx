@@ -94,6 +94,7 @@ const WriteToUsForm = () => {
                             label="Your name"
                             placeholder="Letters here"
                             value={userName}
+                            outlined
                             onChange={(e) => setUserName(e.target.value)}
                             fullWidth
                             margin="normal"
@@ -110,6 +111,7 @@ const WriteToUsForm = () => {
                         <NeuTextField
                             label="Enter email"
                             placeholder="xxxx@xxxxx.xx"
+                            outlined
                             value={userEmail}
                             onChange={(e) => setUserEmail(e.target.value)}
                             fullWidth
@@ -127,6 +129,7 @@ const WriteToUsForm = () => {
                         <NeuTextField
                             label="Enter your phone number"
                             placeholder="+49-XXX-XXXXXXXX"
+                            outlined
                             value={userPhone}
                             onChange={(e) => setUserPhone(e.target.value)}
                             fullWidth
@@ -142,6 +145,7 @@ const WriteToUsForm = () => {
                         <NeuTextArea
                             label="Message"
                             placeholder="Tell us"
+                            outlined
                             value={userMsg}
                             onChange={(e) => setUserMsg(e.target.value)}
                             fullWidth
