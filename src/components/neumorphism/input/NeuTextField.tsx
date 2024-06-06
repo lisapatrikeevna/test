@@ -54,6 +54,13 @@ const getTextFieldStyles = (theme: Theme, props: NeuTextFieldProps) => {
       padding: '0',
       display: 'flex',
       alignItems: 'center',
+      '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+        '-webkit-appearance': 'none',
+        margin: 0,
+      },
+      '&[type=number]': {
+        '-moz-appearance': 'textfield',
+      },
     },
     '& .MuiOutlinedInput-root': {
       borderRadius: props.rounded ? '24px' : '8px',
