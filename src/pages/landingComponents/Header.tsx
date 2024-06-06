@@ -77,7 +77,8 @@ const Header: React.FC = () => {
       paddingLeft: '3vw',
       paddingRight: '3vw',
       '@media (max-width: 830px)': {
-        paddingRight: '1vw'
+        paddingRight: '1vw',
+        paddingLeft: '1vw'
       },
       height: '95px',
       zIndex: 100,
@@ -90,10 +91,10 @@ const Header: React.FC = () => {
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
     }}>
-      <IconButton sx={{ display: { xs: 'flex', md: 'none' } }} onClick={handleDrawerToggle}>
-        <MenuIcon sx={{width: '32px', height: '32px'}}/>
+      <IconButton sx={{ display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none', '@media (max-width: 1070px)': { display: 'flex' } } }} onClick={handleDrawerToggle}>
+        <MenuIcon sx={{ width: '32px', height: '32px' }}/>
       </IconButton>
-      <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: '10px' }}>
+      <Box sx={{ display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex', '@media (max-width: 1070px)': { display: 'none' } }, alignItems: 'center', gap: '10px' }}>
         <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
         <Typography variant="h5"  sx={{ cursor: 'pointer', fontWeight: '550' }} onClick={() => { handleClick("#Home") }}>
           NeoXonline
@@ -102,21 +103,29 @@ const Header: React.FC = () => {
       <Box sx={{
         paddingLeft: '20px',
         transformOrigin: 'left',
-        display: { xs: 'none', md: 'flex' },
+        display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex', '@media (max-width: 1070px)': { display: 'none' } },
         justifyContent: 'center',
         alignItems: 'center',
+        marginLeft: 'auto',
       }} >
         <List sx={{
           display: 'flex',
           flexDirection: 'row',
-          position: 'absolute',
+          position: 'relative',
           top: '-65px',
           width: "850px",
-          '@media (max-width: 1250px)': {
+          '@media (max-width: 1500px)': {
             width: '700px'
           },
-          '@media (max-width: 1100px)': {
-            width: '500px'
+          '@media (max-width: 1337px)': {
+            width: '640px'
+          },
+          '@media (max-width: 1160px)': {
+            width: '600px'
+          },
+          '@media (max-width: 1070px)': {
+            width: '100%',
+            display: 'none'
           },
         }}>
           {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News", "#Donate"].map((item, index) => (
@@ -132,9 +141,6 @@ const Header: React.FC = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                '&:hover': {
-                  color: muiTheme.palette.primary.main,
-                },
                 ...(activeSection === item.substring(1) && {
                   color: muiTheme.palette.primary.main,
                   '&::before': {
@@ -168,7 +174,7 @@ const Header: React.FC = () => {
                   width: '100%', 
                   height: '100%',
                   zIndex: 1,
-                  color: 'inherit'
+                  color: 'inherit',
                 }}
               >
                 <ListItemIcon sx={{ 
@@ -200,7 +206,15 @@ const Header: React.FC = () => {
           ))}
         </List>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <Box sx={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '10px', 
+        marginLeft: '67px',
+        '@media (max-width: 1270px)': {
+          marginLeft: '8px'
+        },
+        }}>
         <Box component="label" sx={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer'}}>
           <Box sx={{
             isolation: 'isolate',
@@ -209,7 +223,7 @@ const Header: React.FC = () => {
             alignItems: 'center',
             height: '60px',
             width: '120px',
-            '@media (max-width: 930px)': {
+            '@media (max-width: 1270px)': {
               width: '70px'
             },
             borderRadius: '25px',
@@ -233,7 +247,7 @@ const Header: React.FC = () => {
           sx={{ 
             padding: "10px", 
             width: "130px",
-            '@media (max-width: 930px)': {
+            '@media (max-width: 1115px)': {
               width: '90px'
             }, 
           }}
