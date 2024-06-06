@@ -6,7 +6,7 @@ import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setError, setLoading, setVideoUrl, setBuffering } from '../../store/video/videoSlice';
-import {Grid, Paper, Typography, Container, Skeleton, Button, Box, TextField, IconButton, Avatar} from "@mui/material";
+import { Grid, Paper, Typography, Container, Skeleton, Button, Box, TextField, IconButton, Avatar } from "@mui/material";
 import {
     Contacts,
     ContentCopy,
@@ -26,7 +26,6 @@ import Modal from "../../components/Modal.tsx";
 import HandleShareOnFacebook from "../../components/VideoComponents/VideoShare/HandleShareOnFacebook.tsx";
 import HandleShareOnX from "../../components/VideoComponents/VideoShare/HandleShareOnX.tsx";
 import HandleShareOnLinkedIn from "../../components/VideoComponents/VideoShare/HandleShareOnLinkedIn.tsx";
-
 import { getUserAvatar } from '../../services/userServices/getUserAvatar.service';
 // import {getUserById} from "../../services/userServices/getUserById.service.ts";
 import { getAllUsers } from "../../services/userServices/getAllUsers.service.ts";
@@ -101,8 +100,8 @@ const VideoPage: FC = () => {
                     setViews(metadata.videoInfo.contentViewsByUsers.length);
                     setLikes(metadata.videoInfo.contentLikesByUsers.length);
                     setUserId(metadata.ownerId);
-                    console.log('userId = ',userId)
-                    console.log('ownerId = ',metadata.ownerId)
+                    console.log('userId = ', userId)
+                    console.log('ownerId = ', metadata.ownerId)
                     let blobUrl = '';
                     if (videoData) {
                         blobUrl = URL.createObjectURL(videoData);
