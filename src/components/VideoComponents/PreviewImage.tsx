@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from 'react';
 import { showImage } from '../../services/videoServices/video.previewImage.service.ts';
 import { Skeleton } from "@mui/material";  // Imported Skeleton from MUI
 
-
 interface PreviewImageProps {
     videoId: string;
     style?: React.CSSProperties;
@@ -11,7 +10,7 @@ interface PreviewImageProps {
     onClick?: () => void; // Add this line
 }
 // We need to give maxWidth and maxHeight in components where use PreviewImage)
-const PreviewImage: FC<PreviewImageProps> = ({ videoId, style, maxWidth, maxHeight , onClick }) => {
+const PreviewImage: FC<PreviewImageProps> = ({ videoId, style, maxWidth, maxHeight, onClick }) => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
