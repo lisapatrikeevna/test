@@ -19,7 +19,9 @@ const WriteToUsForm = () => {
 
     const handleCaptchaResult = (result: boolean) => {
         setCaptchaPassed(result);
-        if (!result) {
+        if (result) {
+            setMessage('');
+        } else {
             setMessage('Error: captcha is not passed');
         }
     };
