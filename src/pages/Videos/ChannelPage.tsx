@@ -9,6 +9,9 @@ import NeuButton from "../../components/neumorphism/button/NeuButton";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import banner from "../../assets/banner.jpg";
+import NeuIonButton from "../../components/neumorphism/button/NeuIconButton";
+
+
 
 const ChannelPage: FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -115,6 +118,16 @@ const ChannelPage: FC = () => {
                             onClick={handleClick}   >
                             Subscribe <ArrowDropDownIcon fontSize="large" sx={{ color: 'black' }} />
                         </NeuButton>
+                        <NeuButton sx={{
+                            margin: "10px",
+                            padding: "5px",
+                            width: { xs: "160px", sm: "200px" },
+                            fontSize: { xs: "14px", sm: "16px" },
+                            position: "absolute",
+                            right: "0",
+                            borderRadius: "20px"
+                        }}>Add Video</NeuButton>
+
                         <Menu
                             anchorEl={anchorEl}
                             open={Boolean(anchorEl)}
