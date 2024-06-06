@@ -91,7 +91,7 @@ const Header: React.FC = () => {
       borderBottomLeftRadius: '25px'
     }}>
       <IconButton sx={{ display: { xs: 'flex', md: 'none' } }} onClick={handleDrawerToggle}>
-        <MenuIcon />
+        <MenuIcon sx={{width: '32px', height: '32px'}}/>
       </IconButton>
       <Box sx={{ display: { xs: 'none', md: 'block' } }}>
         <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
