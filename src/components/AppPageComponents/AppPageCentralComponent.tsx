@@ -1,19 +1,14 @@
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useEffect, useState } from 'react';
-import { Box, Button, Typography, Collapse } from '@mui/material';
-import AppPageButtonsComponent from './AppPageButtonsComponent';
-import axios from 'axios';
+// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+// import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+// import { useEffect, useState } from 'react';
+import { Box, Typography } from '@mui/material';
+// import AppPageButtonsComponent from './AppPageButtonsComponent';
+
 
 const AppPageCentralComponent = () => {
-  const [showOptionsButton, setShowOptionsButton] = useState(false);
+  // const [showOptionsButton, setShowOptionsButton] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get('http://neoxonline.com:8030/video/all', { params: { offset: 0 } })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  }, []);
+ 
 
   return (
     <Box
@@ -28,7 +23,7 @@ const AppPageCentralComponent = () => {
       <Box>
         <Typography>Central container</Typography>
       </Box>
-      <Box
+      {/* <Box
         sx={{
           margin: '0 auto',
           display: 'flex',
@@ -54,7 +49,7 @@ const AppPageCentralComponent = () => {
         <Collapse in={showOptionsButton}>
           <AppPageButtonsComponent />
         </Collapse>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

@@ -35,7 +35,7 @@ const PreviewImage: FC<PreviewImageProps> = ({ videoId, style, maxWidth, maxHeig
                 <img
                     src={imageSrc}
                     alt="Preview"
-                    style={{ ...style, display: loading ? 'none' : 'block', maxWidth, maxHeight }}
+                    style={{ ...style, display: loading ? 'none' : 'block', maxWidth: '100%', maxHeight, height: "auto" }} // Ensure image is responsive
                     onLoad={handleImageLoad}
                     onClick={onClick} // Add this line
                 />

@@ -1,5 +1,5 @@
 import { FC, useState, MouseEvent } from 'react';
-import { Grid, Box, Typography, Link, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Grid, Box, Typography, Link, Menu, MenuItem, ListItemIcon, ListItemText, Skeleton } from '@mui/material';
 import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal";
 import avatar from "../../assets/img.webp";
 import { grey } from '@mui/material/colors';
@@ -12,6 +12,8 @@ import banner from "../../assets/banner.jpg";
 
 const ChannelPage: FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [bannerLoaded, setBannerLoaded] = useState(false);
+    const [avatarLoaded, setAvatarLoaded] = useState(false);
 
     const videoId = '';
 
@@ -27,10 +29,13 @@ const ChannelPage: FC = () => {
         <Grid container spacing={2} justifyContent="center" sx={{ maxWidth: '1200px', margin: '0 auto' }}>
             <Grid item xs={12}>
                 <Box component="section">
-                    <img src={banner} alt="banner" style={{
-                        width: "100%", height: "210px", objectFit: "cover", padding: 0,
-                        margin: 0, borderRadius: "15px"
-                    }} />
+                    {!bannerLoaded && <Skeleton variant="rectangular" width="100%" height={210} sx={{ borderRadius: "15px" }} />}
+                    <img
+                        src={banner}
+                        alt="banner"
+                        style={{ width: "100%", height: "210px", objectFit: "cover", padding: 0, margin: 0, borderRadius: "15px", display: bannerLoaded ? 'block' : 'none' }}
+                        onLoad={() => setBannerLoaded(true)}
+                    />
                 </Box>
                 <Box component="section" sx={{
                     display: "flex",
@@ -42,7 +47,13 @@ const ChannelPage: FC = () => {
                     alignItems: "center",
                     px: 2
                 }}>
-                    <img src={avatar} alt="Avatar" style={{ width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }} />
+                    {!avatarLoaded && <Skeleton variant="circular" width={120} height={120} />}
+                    <img
+                        src={avatar}
+                        alt="Avatar"
+                        style={{ width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover", display: avatarLoaded ? 'block' : 'none' }}
+                        onLoad={() => setAvatarLoaded(true)}
+                    />
                     <Box component="section" sx={{ ml: { xs: 0, sm: 2 }, mt: { xs: 2, sm: 0 }, textAlign: { xs: 'center', sm: 'left' } }}>
                         <Typography variant="h1" sx={{ fontSize: { xs: "24px", sm: "30px" }, paddingLeft: { xs: "0", sm: "15px" } }}>SHASTUN</Typography>
                         <CheckCircleIcon sx={{ color: grey[500], fontSize: { xs: "12px", sm: "15px" }, position: "absolute", top: { xs: "8px", sm: "10px" }, left: { xs: "50%", sm: "310px" }, transform: { xs: "translateX(-50%)", sm: "none" } }} />

@@ -1,4 +1,4 @@
-import { Avatar, Box, Divider } from '@mui/material';
+import { Avatar, Box, Button, Collapse, Divider } from '@mui/material';
 import {
   Panel,
   PanelGroup,
@@ -23,6 +23,10 @@ import NeuDivider from '../components/neumorphism/divider/NeuDivider';
 import Fon3 from '../assets/Fon3.jpg';
 import Fon5 from '../assets/Fon5.jpg';
 import { useTheme } from '@mui/material/styles';
+import VideosMainPage from './Videos/VideosMainPage';
+import AppPageButtonsComponent from '../components/AppPageComponents/AppPageButtonsComponent';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export type RenderValues =
   | 'comments'
@@ -32,9 +36,13 @@ export type RenderValues =
   | 'audio'
   | 'radio';
 
+export type RenderValuesCentralComponent = 'home' | 'videospage';
+
 const AppPage = () => {
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
   const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
+  const [renderValuesCentralComponent, setRenderValuesCentralComponent] =
+    useState<RenderValuesCentralComponent>('home');
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
   const [, setIsChatPanelOpen] = useState(false);
@@ -42,6 +50,7 @@ const AppPage = () => {
   const theme = useTheme();
   const chatsPanelRef = useRef<ImperativePanelHandle>(null);
   const rightPanel = useRef<ImperativePanelHandle>(null);
+  const [showOptionsButton, setShowOptionsButton] = useState(false);
 
   const toggleChatsPanel = () => {
     setIsChatPanelOpen((prev) => {
@@ -74,9 +83,16 @@ const AppPage = () => {
     setRenderValues(value);
   }
 
+  function changeRenderCentralComponent(value: RenderValuesCentralComponent) {
+    setRenderValuesCentralComponent(value);
+  }
+
   return (
-      <Box display="flex" flexDirection="column" style={{ backgroundColor: theme.palette.background.default }}
-      >
+    <Box
+      display="flex"
+      flexDirection="column"
+      style={{ backgroundColor: theme.palette.background.default }}
+    >
       <AppPageHeader
         setIsOpenSideBar={setIsOpenSideBar}
         setIsOpenMainSideBar={setIsOpenMainSideBar}
@@ -84,9 +100,12 @@ const AppPage = () => {
         setIsChatPanelOpen={setIsChatPanelOpen}
       />
       <Divider />
-      <Box flex={1} display="flex" position="relative" >
+      <Box flex={1} display="flex" position="relative">
         <Box position="absolute" top={0} left={0} zIndex={1000}>
-          <AppPageMainSideBar isOpenMainSideBar={isOpenMainSideBar} />
+          <AppPageMainSideBar
+            isOpenMainSideBar={isOpenMainSideBar}
+            changeRenderCentralComponent={changeRenderCentralComponent}
+          />
         </Box>
         <PanelGroup direction="horizontal" style={{ flex: 1 }}>
           <Stack direction="column" spacing={2} padding={1} alignItems="center">
@@ -113,7 +132,7 @@ const AppPage = () => {
             ))}
           </Stack>
           <Panel>
-            <Box marginTop={10} >
+            <Box marginTop={10}>
               {users.map((elem) => (
                 <Stack key={elem.id} height="58px" padding="10px 0">
                   {elem.name}
@@ -123,7 +142,8 @@ const AppPage = () => {
           </Panel>
 
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
-          <Panel  style={{ backgroundImage: `url(${Fon5})` }}
+          <Panel
+            style={{ backgroundImage: `url(${Fon5})` }}
             ref={chatsPanelRef}
             defaultSize={25}
             maxSize={100}
@@ -137,9 +157,45 @@ const AppPage = () => {
 
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
 
-          <Panel style={{ backgroundImage: `url(${Fon3})` }} defaultSize={50}>
-            <AppPageCentralComponent />
+          <Panel
+            style={{ backgroundImage: `url(${Fon3})`, padding: '10px' }}
+            defaultSize={50}
+          >
+            {renderValuesCentralComponent === 'videospage' && (
+              <VideosMainPage />
+            )}
+            {renderValuesCentralComponent === 'home' && (
+              <AppPageCentralComponent />
+            )}
+            <Box
+              sx={{
+                margin: '0 auto',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '20px',
+              }}
+            >
+              <Button
+                variant="outlined"
+                endIcon={
+                  showOptionsButton ? (
+                    <KeyboardArrowDownIcon />
+                  ) : (
+                    <KeyboardArrowUpIcon />
+                  )
+                }
+                sx={{ width: '300px' }}
+                onClick={() => setShowOptionsButton((prev) => !prev)}
+              >
+                Options
+              </Button>
+              <Collapse in={showOptionsButton}>
+                <AppPageButtonsComponent />
+              </Collapse>
+            </Box>
           </Panel>
+
           <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
           <Panel
             ref={rightPanel}
@@ -148,7 +204,11 @@ const AppPage = () => {
             minSize={20}
             collapsible
           >
-            <Box height="100vh" style={{ backgroundImage: `url(${Fon5})` }} padding="5px" >
+            <Box
+              height="100vh"
+              style={{ backgroundImage: `url(${Fon5})` }}
+              padding="5px"
+            >
               {renderValues === 'chats' && <AppPageChats />}
               {renderValues === 'comments' && <AppPageComments />}
               {renderValues === 'videos' && <VideoInSideBareAppPage />}
