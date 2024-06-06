@@ -259,8 +259,9 @@ const AppPage = () => {
           />
         )}
         <Box
-          position="absolute"
-          top={0}
+          position="fixed"
+          top="60px"
+          bottom={0}
           right={0}
           zIndex={isOpenSideBar ? 1000 : -1}
         >

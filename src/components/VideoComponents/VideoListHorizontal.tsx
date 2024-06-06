@@ -7,6 +7,7 @@ import { Grid, Card, CardContent, Typography, Box, Button } from "@mui/material"
 import { Contacts } from "@mui/icons-material";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Skeletons from './Skeletons.tsx';
+import { getAllUsers } from "../../services/userServices/getAllUsers.service.ts";
 
 export interface IVideo {
     id: string;
@@ -18,6 +19,7 @@ export interface IVideo {
     videoInfo: {
         contentViewsByUsers: string[];
     };
+    ownerId: string; // Add ownerId to IVideo interface
 }
 
 interface VideoListHorizontalProps {
@@ -29,6 +31,7 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [visibleCount, setVisibleCount] = useState(0);
+    const [users, setUsers] = useState<{ [key: string]: string }>({}); // To store user data
 
     const fetchVideo = async (id: string) => {
         try {
@@ -68,14 +71,27 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
         }
     };
 
+    const fetchUsers = async () => {
+        try {
+            const usersData = await getAllUsers();
+            const usersMap = usersData.reduce((acc, user) => {
+                acc[user.id] = user.login;
+                return acc;
+            }, {} as { [key: string]: string });
+            setUsers(usersMap);
+        } catch (error) {
+            console.error(`Error fetching users:`, error);
+        }
+    };
+
     useEffect(() => {
-        const loadVideos = async () => {
+        const loadVideosAndUsers = async () => {
             setLoading(true);
-            await fetchVideos();
+            await Promise.all([fetchVideos(), fetchUsers()]);
             setLoading(false);
         };
 
-        const timer = setTimeout(loadVideos, 500);
+        const timer = setTimeout(loadVideosAndUsers, 500);
 
         return () => clearTimeout(timer);
     }, []);
@@ -115,22 +131,31 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
                                     <Link to={`${mediaPath}/${video.id}`}>
                                         <PreviewImage videoId={video.id} maxWidth={350} maxHeight={180} />
                                     </Link>
-                                    <CardContent>
+                                    <CardContent sx={{ paddingBottom: '16px !important' }}>
                                         <Typography
                                             variant="h5"
                                             sx={{
-                                                fontSize: isXSmall ? "1rem" : isSmall ? "1.1rem" : isMedium ? "1.2rem" : isLarge ? "1.3rem" : "1.4rem"
-                                            }}
-                                        >
+                                                fontSize: '16px',
+                                                display: '-webkit-box',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                WebkitBoxOrient: 'vertical',
+                                                WebkitLineClamp: 2 // This will limit the text to 2 lines
+                                            }}>
+
                                             {video.videoName}
                                         </Typography>
                                         <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                                             <Contacts />
-                                            <Typography variant="caption">UnknownUser</Typography>
+                                            <Typography variant="caption" sx={{ fontSize: '14px' }}>
+                                                {users[video.ownerId] || 'Unknown User'}
+                                            </Typography>
                                         </Box>
                                         <Box style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-                                            <Typography variant="caption">{video.videoInfo.contentViewsByUsers ? video.videoInfo.contentViewsByUsers.length : 0} views</Typography>
-                                            <Typography variant="caption">2 weeks ago</Typography>
+                                            <Typography variant="caption" sx={{ fontSize: '14px' }}>
+                                                {video.videoInfo.contentViewsByUsers ? video.videoInfo.contentViewsByUsers.length : 0} views
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ fontSize: '14px' }}>2 weeks ago</Typography>
                                         </Box>
                                     </CardContent>
                                 </Card>
