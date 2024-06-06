@@ -9,7 +9,6 @@ import NeuButton from "../../components/neumorphism/button/NeuButton";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import banner from "../../assets/banner.jpg";
-import NeuIonButton from "../../components/neumorphism/button/NeuIconButton";
 
 
 
