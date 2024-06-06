@@ -81,7 +81,12 @@ const Header: React.FC = () => {
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
     }}>
-      <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
+      <IconButton sx={{ display: { xs: 'flex', md: 'none' } }} onClick={handleDrawerToggle}>
+        <MenuIcon />
+      </IconButton>
+      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+        <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
+      </Box>
       <Box sx={{
         transformOrigin: 'left',
         display: { xs: 'none', md: 'flex' },
@@ -114,6 +119,9 @@ const Header: React.FC = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
+                '&:hover': {
+                  color: muiTheme.palette.primary.main,
+                },
                 ...(activeSection === item.substring(1) && {
                   color: muiTheme.palette.primary.main,
                   '&::before': {
@@ -219,20 +227,51 @@ const Header: React.FC = () => {
         >
           Login
         </NeuButton>
-        <IconButton sx={{ display: { xs: 'flex', md: 'none' } }} onClick={handleDrawerToggle}>
-          <MenuIcon />
-        </IconButton>
       </Box>
-      <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerToggle}>
+      <Drawer anchor="left" open={isDrawerOpen} onClose={handleDrawerToggle}>
         <Box sx={{ width: 250, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', backgroundColor: 'var(--body)' }}>
           <List>
+            <ListItem
+              button
+              onClick={() => { handleClick("#Home"); handleDrawerToggle(); }}
+              sx={{
+                padding: '15px 10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                '&:hover': {
+                  color: muiTheme.palette.primary.main,
+                  backgroundColor: muiTheme.palette.action.hover,
+                }
+              }}
+            >
+              <MuiLink
+                href="#Home"
+                underline="none"
+                color="inherit"
+                onClick={() => { handleClick("#Home"); handleDrawerToggle(); }}
+                sx={{ 
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  width: '100%',
+                  height: '100%',
+                  zIndex: 1
+                }}
+              >
+                <ListItemIcon sx={{ minWidth: 'auto', margin: '8px', justifyContent: 'center', display: 'flex' }}>
+                  <img src={logo} alt="NeoXonline" style={{ width: 50, height: 50 }} />
+                </ListItemIcon>
+              </MuiLink>
+            </ListItem>
             {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News"].map((item) => (
               <ListItem
                 button
                 key={item}
                 onClick={() => { handleClick(item); handleDrawerToggle(); }}
                 sx={{
-                  padding: '15px 10px', 
+                  padding: '15px 10px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
