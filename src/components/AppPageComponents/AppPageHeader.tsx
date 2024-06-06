@@ -15,6 +15,8 @@ import { useState } from 'react';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import KeyboardAltOutlinedIcon from '@mui/icons-material/KeyboardAltOutlined';
 import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
+import NeuSwitch from '../neumorphism/switch/NeuSwitch';
+import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 
 type Props = {
   setIsOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,6 +34,7 @@ const AppPageHeader = ({
     useState(false);
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
   const [searchQuery, setSearchQuery] = useState('');
+  const { theme, setTheme } = useCustomTheme();
 
   const handleModal = (event: React.MouseEvent<SVGSVGElement>) => {
     const target = event.currentTarget as unknown as HTMLElement;
@@ -61,6 +64,10 @@ const AppPageHeader = ({
     }
   };
 
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
   return (
     <Stack
       direction="row"
@@ -69,7 +76,7 @@ const AppPageHeader = ({
       sx={{
         zIndex: 1100,
         position: 'relative',
-        padding: '10px 20px',
+        padding: '0px 20px',
         background: '#e0e0e0',
       }}
     >
@@ -81,26 +88,59 @@ const AppPageHeader = ({
 
         <EmailIcon cursor="pointer" onClick={toggleChatsPanel} />
       </Stack>
-      <TextField
-        id="outlined-basic"
-        label="Search"
-        variant="outlined"
-        size="small"
-        sx={{ width: '500px', maxHeight: '40px' }}
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        onKeyPress={handleKeyPress}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <SearchOutlinedIcon cursor="pointer" onClick={handleSearch} />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={2} alignItems="center">
+        <TextField
+          id="outlined-basic"
+          label="Search"
+          variant="outlined"
+          size="small"
+          sx={{ width: '500px', maxHeight: '40px' }}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyPress={handleKeyPress}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment
+                position="end"
+                sx={{ display: 'flex', gap: '20px', alignItems: 'center' }}
+              >
+                <KeyboardAltOutlinedIcon sx={{ cursor: 'pointer' }} />
+                <SearchOutlinedIcon cursor="pointer" onClick={handleSearch} />
+              </InputAdornment>
+            ),
+          }}
+        />
         <KeyboardVoiceOutlinedIcon sx={{ cursor: 'pointer' }} />
-        <KeyboardAltOutlinedIcon sx={{ cursor: 'pointer' }} />
+      </Stack>
+      <Stack direction="row" spacing={2} alignItems="center">
+        <Box
+          sx={{
+            isolation: 'isolate',
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            height: '60px',
+            width: '120px',
+            '@media (max-width: 930px)': {
+              width: '70px',
+            },
+            borderRadius: '25px',
+            overflow: 'hidden',
+            background: 'var(--toggle_background)',
+            boxShadow:
+              '-10px -10px 25px var(--shadow_outer_light), 10px 10px 25px var(--shadow_outer_dark)',
+          }}
+          component="div"
+        >
+          <NeuSwitch
+            checked={theme === 'light'}
+            onChange={toggleTheme}
+            name="check"
+            color="primary"
+            size="large"
+            inputProps={{ 'aria-label': 'theme switch' }}
+          />
+        </Box>
         <Badge badgeContent={10} color="primary" max={9}>
           <NotificationsIcon
             cursor="pointer"

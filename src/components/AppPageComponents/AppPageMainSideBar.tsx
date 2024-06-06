@@ -75,7 +75,7 @@ const AppPageMainSideBar = ({
   return (
     <Box
       sx={{
-        height: 'calc(100vh - 60px)',
+        height: '100vh',
         width: isOpenMainSideBar ? '250px' : '0px',
         transition: 'width 0.5s ease',
         display: 'flex',
