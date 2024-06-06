@@ -20,14 +20,14 @@ const WriteToUsForm = () => {
     const handleCaptchaResult = (result: boolean) => {
         setCaptchaPassed(result);
         if (!result) {
-            setMessage('Ошибка: капча не пройдена');
+            setMessage('Error: captcha is not passed');
         }
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (!captchaPassed) {
-            setMessage('Ошибка: капча не пройдена');
+            setMessage('Error: captcha is not passed');
             return;
         }
 
