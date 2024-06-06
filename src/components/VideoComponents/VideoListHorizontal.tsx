@@ -131,24 +131,31 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
                                     <Link to={`${mediaPath}/${video.id}`}>
                                         <PreviewImage videoId={video.id} maxWidth={350} maxHeight={180} />
                                     </Link>
-                                    <CardContent>
+                                    <CardContent sx={{ paddingBottom: '16px !important' }}>
                                         <Typography
                                             variant="h5"
                                             sx={{
-                                                fontSize: isXSmall ? "1rem" : isSmall ? "1.1rem" : isMedium ? "1.2rem" : isLarge ? "1.3rem" : "1.4rem"
-                                            }}
-                                        >
+                                                fontSize: '16px',
+                                                display: '-webkit-box',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                WebkitBoxOrient: 'vertical',
+                                                WebkitLineClamp: 2 // This will limit the text to 2 lines
+                                            }}>
+
                                             {video.videoName}
                                         </Typography>
                                         <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                                             <Contacts />
-                                            <Typography variant="caption">
+                                            <Typography variant="caption" sx={{ fontSize: '14px' }}>
                                                 {users[video.ownerId] || 'Unknown User'}
                                             </Typography>
                                         </Box>
                                         <Box style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-                                            <Typography variant="caption">{video.videoInfo.contentViewsByUsers ? video.videoInfo.contentViewsByUsers.length : 0} views</Typography>
-                                            <Typography variant="caption">2 weeks ago</Typography>
+                                            <Typography variant="caption" sx={{ fontSize: '14px' }}>
+                                                {video.videoInfo.contentViewsByUsers ? video.videoInfo.contentViewsByUsers.length : 0} views
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ fontSize: '14px' }}>2 weeks ago</Typography>
                                         </Box>
                                     </CardContent>
                                 </Card>
