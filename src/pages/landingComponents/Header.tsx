@@ -1,12 +1,22 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Box, IconButton, List, ListItem, ListItemIcon, ListItemText, Drawer, Link as MuiLink, useTheme as useMuiTheme } from '@mui/material';
-import { Menu as MenuIcon, Handshake, Apps, Call, AccountBalance, AttachMoney, Build } from '@mui/icons-material';
+import {
+  Menu as MenuIcon,
+  Handshake,
+  Apps,
+  Call,
+  AccountBalance,
+  AttachMoney,
+  Build,
+  LunchDining
+} from '@mui/icons-material';
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import LoginModal from '../../components/LoginModal.tsx';
 import logo from '../../assets/neox-logo.svg';
 import NeuButton from "../../components/neumorphism/button/NeuButton.tsx";
 import NeuSwitch from '../../components/neumorphism/switch/NeuSwitch.tsx';
+
 
 const Header: React.FC = () => {
   const muiTheme = useMuiTheme();
@@ -49,7 +59,7 @@ const Header: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const activeIndex = activeSection ? ["Home", "AboutUs", "Project", "Pricing", "Partners", "Contacts", "News"].indexOf(activeSection) : -1;
+    const activeIndex = activeSection ? ["Home", "AboutUs", "Project", "Pricing", "Partners", "Contacts", "News", "Donate"].indexOf(activeSection) : -1;
     const activeLink = linksRef.current[activeIndex];
     if (activeLink) {
       moveIndicator(activeLink);
@@ -101,7 +111,7 @@ const Header: React.FC = () => {
             width: '500px'
           },
         }}>
-          {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News"].map((item, index) => (
+          {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News", "#Donate"].map((item, index) => (
             <ListItem 
               key={item} 
               sx={{ 
@@ -166,7 +176,8 @@ const Header: React.FC = () => {
                   {item === "#News" && <Apps />}
                   {item === "#Contacts" && <Call />}
                   {item === "#AboutUs" && <AccountBalance />}
-                  {item === "#Project" && <Build />} 
+                  {item === "#Project" && <Build />}
+                  {item === "#Donate" && <LunchDining />}
                 </ListItemIcon>
                 <ListItemText 
                 primary={item.substring(1)} 
@@ -229,7 +240,7 @@ const Header: React.FC = () => {
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerToggle}>
         <Box sx={{ width: 250, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', backgroundColor: 'var(--body)' }}>
           <List>
-            {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News"].map((item) => (
+            {["#AboutUs", "#Project", "#Pricing", "#Partners", "#Contacts", "#News", "#Donate"].map((item) => (
               <ListItem
                 button
                 key={item}
@@ -285,6 +296,7 @@ const Header: React.FC = () => {
                     {item === "#Contacts" && <Call />}
                     {item === "#AboutUs" && <AccountBalance />}
                     {item === "#Project" && <Build />}
+                    {item === "#Donate" && <LunchDining />}
                   </ListItemIcon>
                   <ListItemText 
                     primary={item.substring(1)} 
