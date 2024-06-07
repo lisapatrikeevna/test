@@ -17,6 +17,7 @@ import KeyboardAltOutlinedIcon from '@mui/icons-material/KeyboardAltOutlined';
 import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
 import NeuSwitch from '../neumorphism/switch/NeuSwitch';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
+import { useTheme } from '@mui/material/styles';
 
 type Props = {
   setIsOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,6 +36,7 @@ const AppPageHeader = ({
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
   const [searchQuery, setSearchQuery] = useState('');
   const { theme, setTheme } = useCustomTheme();
+  const themeMui = useTheme();
 
   const handleModal = (event: React.MouseEvent<SVGSVGElement>) => {
     const target = event.currentTarget as unknown as HTMLElement;
@@ -79,14 +81,24 @@ const AppPageHeader = ({
         padding: '0px 20px',
         background: '#e0e0e0',
       }}
+      style={{ backgroundColor: themeMui.palette.background.default }}
     >
       <Stack direction="row" spacing={2} alignItems="center">
         <MenuIcon
           cursor="pointer"
           onClick={() => setIsOpenMainSideBar((prev) => !prev)}
+          sx={{
+            color: themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+          }}
         />
 
-        <EmailIcon cursor="pointer" onClick={toggleChatsPanel} />
+        <EmailIcon
+          cursor="pointer"
+          onClick={toggleChatsPanel}
+          sx={{
+            color: themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+          }}
+        />
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center">
         <TextField
@@ -110,7 +122,12 @@ const AppPageHeader = ({
             ),
           }}
         />
-        <KeyboardVoiceOutlinedIcon sx={{ cursor: 'pointer' }} />
+        <KeyboardVoiceOutlinedIcon
+          sx={{
+            cursor: 'pointer',
+            color: themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+          }}
+        />
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center">
         <Box
@@ -145,7 +162,10 @@ const AppPageHeader = ({
           <NotificationsIcon
             cursor="pointer"
             onClick={handleModal}
-            sx={{ position: 'relative' }}
+            sx={{
+              position: 'relative',
+              color: themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+            }}
           />
         </Badge>
         <Modal
@@ -177,6 +197,9 @@ const AppPageHeader = ({
         <MoreVertIcon
           cursor="pointer"
           onClick={() => setIsOpenSideBar((prev) => !prev)}
+          sx={{
+            color: themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+          }}
         />
       </Stack>
     </Stack>

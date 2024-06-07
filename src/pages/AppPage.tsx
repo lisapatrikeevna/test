@@ -1,4 +1,11 @@
-import { Avatar, Box, Button, Collapse, Divider } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Collapse,
+  Divider,
+  TextField,
+} from '@mui/material';
 import {
   Panel,
   PanelGroup,
@@ -116,45 +123,82 @@ const AppPage = () => {
           />
         </Box>
         <PanelGroup direction="horizontal" style={{ flex: 1 }}>
-          <Stack direction="column" spacing={2} padding={1} alignItems="center">
-            <Box>
-              <Avatar
-                src={data[0].img}
-                alt="avatar"
+          <Panel minSize={4.3} defaultSize={1}>
+            <Stack direction="column" padding={1}>
+              <Box sx={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                <Avatar
+                  src={data[0].img}
+                  alt="avatar"
+                  sx={{
+                    width: 50,
+                    height: 50,
+                    cursor: 'pointer',
+                    position: 'relative',
+                  }}
+                />
+                <TextField size="small" label="Search" variant="outlined" />
+              </Box>
+              <NeuDivider
+                baseColor={
+                  theme.palette.mode === 'dark' ? '#bebebe' : '#333333'
+                }
+                lightShadow={
+                  theme.palette.mode === 'dark' ? '#ffffff' : '#1a1a1a'
+                }
                 sx={{
-                  width: 50,
-                  height: 50,
-                  cursor: 'pointer',
-                  position: 'relative',
+                  width: '50px',
+                  height: '2px',
+                  marginTop: '20px',
                 }}
               />
-            </Box>
-            <NeuDivider
-                baseColor={theme.palette.mode === 'dark' ? '#bebebe' : '#333333'}
-                lightShadow={theme.palette.mode === 'dark' ? '#ffffff' : '#1a1a1a'}
+              <Box
+                marginTop={2}
                 sx={{
-                  width: '100%',
-                  height: '2px',
-
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '20px',
+                  marginLeft: '5px',
                 }}
-            />
-            {users.map((elem) => (
-              <Stack key={elem.id}>
-                <NeuAvatar key={elem.id} src={elem.img} size="small" />
-              </Stack>
-            ))}
-          </Stack>
-          <Panel>
-            <Box marginTop={10}>
-              {users.map((elem) => (
-                <Stack key={elem.id} height="58px" padding="10px 0">
-                  {elem.name}
-                </Stack>
-              ))}
-            </Box>
+              >
+                {users.map((elem) => (
+                  <Box
+                    key={elem.id}
+                    sx={{
+                      display: 'flex',
+                      gap: '20px',
+                      alignItems: 'center',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <Stack
+                      key={elem.id}
+                      sx={{
+                        width: '50px',
+                      }}
+                    >
+                      <NeuAvatar key={elem.id} src={elem.img} size="small" />
+                    </Stack>
+                    <Stack
+                      key={elem.id}
+                      sx={{
+                        color:
+                          theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                      }}
+                    >
+                      {elem.name}
+                    </Stack>
+                  </Box>
+                ))}
+              </Box>
+            </Stack>
           </Panel>
 
-          <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
+          <PanelResizeHandle
+            style={{
+              width: '3px',
+              background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
+            }}
+          />
           <Panel
             style={{ backgroundImage: `url(${Fon5})` }}
             ref={chatsPanelRef}
@@ -168,7 +212,12 @@ const AppPage = () => {
             <AppPageChats />
           </Panel>
 
-          <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
+          <PanelResizeHandle
+            style={{
+              width: '3px',
+              background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
+            }}
+          />
 
           <Panel
             style={{
@@ -219,7 +268,12 @@ const AppPage = () => {
             </Box>
           </Panel>
 
-          <PanelResizeHandle style={{ width: '5px', background: 'black' }} />
+          <PanelResizeHandle
+            style={{
+              width: '3px',
+              background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
+            }}
+          />
           <Panel
             ref={rightPanel}
             defaultSize={25}
