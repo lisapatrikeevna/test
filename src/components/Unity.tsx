@@ -37,7 +37,7 @@ const Unity: React.FC = () => {
                 unityInstanceRef.current = unityInstance;
 
                 const canvas = document.getElementById("unity-canvas") as HTMLCanvasElement;
-                canvas.width = 960;
+                canvas.width = 900;
                 canvas.height = 600;
                 const loadingBar = document.getElementById("unity-loading-bar") as HTMLDivElement;
                 loadingBar.style.display = "none";
@@ -67,8 +67,9 @@ const Unity: React.FC = () => {
     };
 
     return (
-        <div id="unity-container" className="unity-desktop">
-            <canvas id="unity-canvas"  tabIndex={-1}></canvas>
+        <div id="unity-container" className="unity-desktop"
+             style={{display: 'flex', justifyContent: 'center', alignItems: 'flex-start', height: '100vh'}}>
+            <canvas id="unity-canvas" tabIndex={-1}></canvas>
             <div id="unity-loading-bar">
                 <div id="unity-logo"></div>
                 <div id="unity-progress-bar-empty">
@@ -79,7 +80,6 @@ const Unity: React.FC = () => {
             <div id="unity-footer">
                 <div id="unity-webgl-logo"></div>
                 <div id="unity-fullscreen-button"></div>
-                <div id="unity-build-title">NeoXonline</div>
             </div>
         </div>
     );
