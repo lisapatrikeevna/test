@@ -1,135 +1,48 @@
-import React, { useState } from "react";
-import { Box, Container, Typography, Grid } from "@mui/material";
-import Modal from "../../components/Modal";
+import React from "react";
+import { Box, Container, Typography, Grid, IconButton } from "@mui/material";
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+
 import NeuCard from "../../components/neumorphism/card/NeuCard";
 import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
 import NeuCardHeader from "../../components/neumorphism/card/NeuCardHeader";
-import NeuButton from "../../components/neumorphism/button/NeuButton";
 
-interface NewsItem {
+
+interface DonatesItem {
     title: string;
     content: string;
-    fullContent: string;
 }
 
-const news: NewsItem[] = [
+const donates: DonatesItem[] = [
     {
-        title: "Some news 1",
+        title: "Sparkasse",
         content:
-            `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Sed eget risus porta, tincidunt turpis at, interdum tortor.
-     `,
-        fullContent:
-            `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
+            `Mastercard\nBIC: COKSDE33XXX\nIBAN: DE46370502991329072051`
     },
     {
-        title: "Some news 2",
-        content: "Sed eget risus porta, tincidunt turpis at, interdum tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        fullContent:
-            `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
+        title: "Revolut",
+        content: "Visa\nBIC: PBNKDEFF\nIBAN: DE25100100100754785135",
     },
     {
-        title: "Some news 3",
-        content: "Pellentesque habitant morbi tristique senectus et netus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        fullContent:
-            `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
+        title: "Paypal",
+        content: "incomgrp@outlook.com",
     },
     {
-        title: "Some news 4",
+        title: "Binance",
+        content: " incomgrp@outlook.com",
+    },
+    {
+        title: "Terminal",
         content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        fullContent:
-            `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
     },
-    {
-        title: "Some news 5",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        fullContent:
-            `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    },
-    {
-        title: "Some news 6",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        fullContent:
-            `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    },
+
 ];
 
+const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+};
+
 const Donate: React.FC = () => {
-    const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
 
-    const handleOpenModal = (newsItem: NewsItem) => {
-        setSelectedNews(newsItem);
-    };
-
-    const handleCloseModal = () => {
-        setSelectedNews(null);
-    };
 
     return (
         <Container sx={{ padding: "20px" }}>
@@ -139,7 +52,7 @@ const Donate: React.FC = () => {
                 </Typography>
             </Box>
             <Grid container spacing={2}>
-                {news.map((item, index) => (
+                {donates.map((item, index) => (
                     <Grid key={index} xs={6} md={4}>
                         <NeuCard
                             elevation={3}
@@ -155,42 +68,28 @@ const Donate: React.FC = () => {
                             <NeuCardHeader title={item.title} sx={{ pb: 0, mt: 1,  }}/>
                             <NeuCardContent>
                                 <Box sx={{}}>
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                        sx={{ flexGrow: 1, marginBottom: "16px" }}
-                                    >
-                                        {item.content}
-                                    </Typography>
-                                    <NeuButton
-                                        onClick={() => handleOpenModal(item)}
-                                        rounded
-                                    >
-                                        Read more
-                                    </NeuButton>
+                                    {item.content.split('\n').map((line, index) => (
+                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <Typography
+                                                key={index}
+                                                variant="body2"
+                                                color="text.secondary"
+                                                sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                            >
+                                                {line}
+                                            </Typography>
+                                            
+                                            <IconButton onClick={() => copyToClipboard(line)}>
+                                                <FileCopyIcon />
+                                            </IconButton>
+                                        </Box>
+                                    ))}
                                 </Box>
                             </NeuCardContent>
                         </NeuCard>
                     </Grid>
                 ))}
             </Grid>
-            <Modal
-                isOpen={selectedNews !== null}
-                onClose={handleCloseModal}
-                height="auto"
-                width="600px"
-            >
-                {selectedNews && (
-                    <>
-                        <Typography variant="h6" gutterBottom>
-                            {selectedNews.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            {selectedNews.fullContent}
-                        </Typography>
-                    </>
-                )}
-            </Modal>
         </Container>
     );
 };
