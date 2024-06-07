@@ -19,8 +19,12 @@ const donates: DonatesItem[] = [
             `Mastercard\nBIC: COKSDE33XXX\nIBAN: DE46370502991329072051`
     },
     {
+        title: "PostBank",
+        content: "Maestro\nBIC: PBNKDEFF\nIBAN: LT843250050964665543",
+    },
+    {
         title: "Revolut",
-        content: "Visa\nBIC: PBNKDEFF\nIBAN: DE25100100100754785135",
+        content: "Visa\nBIC: REVOLT21\nIBAN: LT843250050964665543",
     },
     {
         title: "Paypal",
