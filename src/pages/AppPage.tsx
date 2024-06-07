@@ -129,13 +129,13 @@ const AppPage = () => {
               />
             </Box>
             <NeuDivider
-              dark
-              sx={{
-                width: '100%',
-                height: '2px',
-                backgroundColor:
-                  theme.palette.mode === 'dark' ? 'gray' : 'black',
-              }}
+                baseColor={theme.palette.mode === 'dark' ? '#bebebe' : '#333333'}
+                lightShadow={theme.palette.mode === 'dark' ? '#ffffff' : '#1a1a1a'}
+                sx={{
+                  width: '100%',
+                  height: '2px',
+
+                }}
             />
             {users.map((elem) => (
               <Stack key={elem.id}>
