@@ -13,7 +13,6 @@ import avatar from '../../assets/img.webp';
 import {
   AccountCircleOutlined,
   AddCircleOutline,
-  BlurOnOutlined,
   CallOutlined,
   CampaignOutlined,
   ForumOutlined,
@@ -30,12 +29,9 @@ import { Link } from 'react-router-dom';
 import {
   chatsPath,
   contactsPath,
-  // homePath,
-  // mediaPath,
   newChannelPath,
   newGroupPath,
   settingsPath,
-  vrPath,
 } from '../../configs/RouteConfig';
 import { useState } from 'react';
 import MyModalProfile from '../../pages/MyModalProfile';
@@ -141,8 +137,6 @@ const AppPageMainSideBar = ({
             onClick={() => changeRenderCentralComponent('home')}
           >
             <ListItemButton
-              // component={Link}
-              // to={homePath}
               disableRipple
               sx={{ padding: '5px 16px' }}
             >
@@ -221,8 +215,7 @@ const AppPageMainSideBar = ({
             onClick={() => changeRenderCentralComponent('videospage')}
           >
             <ListItemButton
-              // component={Link}
-              // to={mediaPath}
+
               disableRipple
               sx={{ padding: '5px 16px' }}
             >
@@ -244,14 +237,21 @@ const AppPageMainSideBar = ({
               <ListItemText primary="Calls" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding sx={{ padding: '0px' }}>
-            <ListItemButton component={Link} to={vrPath} disableRipple>
+          <ListItem
+              disablePadding
+              onClick={() => changeRenderCentralComponent('VR')}
+          >
+            <ListItemButton
+
+                disableRipple
+                sx={{ padding: '5px 16px' }}
+            >
               <ListItemIcon sx={{ minWidth: '45px' }}>
-                <BlurOnOutlined
-                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                <PlayCircleOutline
+                    sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
                 />
               </ListItemIcon>
-              <ListItemText primary="VR board" />
+              <ListItemText primary="VR" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>

@@ -27,6 +27,7 @@ import VideosMainPage from './Videos/VideosMainPage';
 import AppPageButtonsComponent from '../components/AppPageComponents/AppPageButtonsComponent';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import VR from "./VR.tsx";
 
 export type RenderValues =
   | 'comments'
@@ -36,7 +37,7 @@ export type RenderValues =
   | 'audio'
   | 'radio';
 
-export type RenderValuesCentralComponent = 'home' | 'videospage';
+export type RenderValuesCentralComponent = 'home' | 'videospage' | 'VR';
 
 const AppPage = () => {
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
@@ -179,6 +180,9 @@ const AppPage = () => {
           >
             {renderValuesCentralComponent === 'videospage' && (
               <VideosMainPage />
+            )}
+            {renderValuesCentralComponent === 'VR' && (
+                <VR />
             )}
             {renderValuesCentralComponent === 'home' && (
               <AppPageCentralComponent />
