@@ -10,8 +10,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import banner from "../../assets/banner.jpg";
 
-
-
 const ChannelPage: FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [bannerLoaded, setBannerLoaded] = useState(false);

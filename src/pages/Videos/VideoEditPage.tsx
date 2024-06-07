@@ -103,7 +103,7 @@ const VideoEditPage: FC = () => {
                     setRows(transformedData);
                 }
             });
-    }, [userId]); // Добавляем userId в массив зависимостей
+    }, [userId]);
 
     return (
         <Box>

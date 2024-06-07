@@ -315,7 +315,7 @@ const AppPageMainSideBar = ({
           >
             <Box sx={{ marginBottom: '5px' }}>
               <a
-                href="https://checkout.revolut.com/payment-link/b6119bca-620b-4007-b726-f9fb91c6acbb"
+                href="https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb"
                 rel="noopener noreferrer"
               >
                 Support the project

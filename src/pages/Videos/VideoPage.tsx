@@ -27,7 +27,6 @@ import HandleShareOnFacebook from "../../components/VideoComponents/VideoShare/H
 import HandleShareOnX from "../../components/VideoComponents/VideoShare/HandleShareOnX.tsx";
 import HandleShareOnLinkedIn from "../../components/VideoComponents/VideoShare/HandleShareOnLinkedIn.tsx";
 import { getUserAvatar } from '../../services/userServices/getUserAvatar.service';
-// import {getUserById} from "../../services/userServices/getUserById.service.ts";
 import { getAllUsers } from "../../services/userServices/getAllUsers.service.ts";
 
 
@@ -143,24 +142,6 @@ const VideoPage: FC = () => {
     }, [userId]);
 
 
-    // useEffect(() => {
-    //     const loadUser = async () => {
-    //         if (userId) {
-    //             try {
-    //                 const user = await getUserById(userId);
-    //                 if (user) {
-    //                     setUserName(user.login);
-    //                 } else {
-    //                     console.error('User not found');
-    //                 }
-    //             } catch (error) {
-    //                 console.error('Error loading user:', error);
-    //             }
-    //         }
-    //     };
-    //
-    //     loadUser();
-    // }, [userId]); // Добавляем userId в массив зависимостей
 
     if (loading) {
         return (
