@@ -103,7 +103,6 @@ const App: FC = () => {
                     <Route path={mediaPath} element={<VideosMainPage />} />
                     <Route path={mediaIdPath} element={<VideoPage />} />
 
-                    <Route path={sideBarPath} element={<SideBar />} />
                     <Route path={appPagePath} element={<AppPage />} />
                     <Route
                       path={channelPagePrototypePath}
