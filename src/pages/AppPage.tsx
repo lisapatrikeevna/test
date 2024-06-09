@@ -1,11 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Collapse,
-  Divider,
-  TextField,
-} from '@mui/material';
+import { Box, Button, Collapse, Divider } from '@mui/material';
 import {
   Panel,
   PanelGroup,
@@ -23,10 +16,10 @@ import AppPageCentralComponent from '../components/AppPageComponents/AppPageCent
 import AppPageAudioComponent from '../components/AppPageComponents/AppPageAudioComponent';
 import AppPageRadioComponent from '../components/AppPageComponents/AppPageRadioComponent';
 import AppPageMainSideBar from '../components/AppPageComponents/AppPageMainSideBar';
-import { Stack } from '@mui/system';
-import { data } from '../components/ProfileComponents/utils';
-import NeuAvatar from '../components/neumorphism/avatar/NeuAvatar';
-import NeuDivider from '../components/neumorphism/divider/NeuDivider';
+
+// import { data } from '../components/ProfileComponents/utils';
+// // import NeuAvatar from '../components/neumorphism/avatar/NeuAvatar';
+// // import NeuDivider from '../components/neumorphism/divider/NeuDivider';
 import Fon3 from '../assets/Fon3.jpg';
 import Fon5 from '../assets/Fon5.jpg';
 import { useTheme } from '@mui/material/styles';
@@ -34,7 +27,8 @@ import VideosMainPage from './Videos/VideosMainPage';
 import AppPageButtonsComponent from '../components/AppPageComponents/AppPageButtonsComponent';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import VR from "./VR.tsx";
+import VR from './VR.tsx';
+import AppPageChatsComponent from '../components/AppPageComponents/AppPageChatsComponent.tsx';
 
 export type RenderValues =
   | 'comments'
@@ -54,7 +48,7 @@ const AppPage = () => {
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
   const [, setIsChatPanelOpen] = useState(false);
-  const [users] = useState(data);
+  // const [users] = useState(data);
   const theme = useTheme();
   const chatsPanelRef = useRef<ImperativePanelHandle>(null);
   const rightPanel = useRef<ImperativePanelHandle>(null);
@@ -99,7 +93,9 @@ const AppPage = () => {
     <Box
       display="flex"
       flexDirection="column"
-      style={{ backgroundColor: theme.palette.background.default }}
+      style={{
+        backgroundColor: theme.palette.background.default,
+      }}
     >
       <Box sx={{ position: 'fixed', width: '100%', zIndex: 1000 }}>
         <AppPageHeader
@@ -111,10 +107,11 @@ const AppPage = () => {
         <Divider />
       </Box>
       <Box
-        flex={1}
         display="flex"
         position="relative"
-        sx={{ marginTop: '60px' }}
+        sx={{ height: 'calc(100vh - 60px)', marginTop: '60px' }}
+        flex={renderValuesCentralComponent === 'videospage' ? 1 : ''}
+        overflow="auto"
       >
         <Box position="fixed" top="60px" bottom={0} left={0} zIndex={1000}>
           <AppPageMainSideBar
@@ -122,8 +119,17 @@ const AppPage = () => {
             changeRenderCentralComponent={changeRenderCentralComponent}
           />
         </Box>
+
         <PanelGroup direction="horizontal" style={{ flex: 1 }}>
-          <Panel minSize={4.3} defaultSize={1}>
+          <Panel
+            minSize={15}
+            defaultSize={1}
+            collapsible={true}
+            style={{ flex: 1 }}
+          >
+            <AppPageChatsComponent />
+
+            {/*
             <Stack direction="column" padding={1}>
               <Box sx={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                 <Avatar
@@ -191,15 +197,15 @@ const AppPage = () => {
                 ))}
               </Box>
             </Stack>
+            */}
           </Panel>
-
-          <PanelResizeHandle
+          {/* <PanelResizeHandle
             style={{
               width: '3px',
               background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
             }}
-          />
-          <Panel
+          /> */}
+          {/* <Panel
             style={{ backgroundImage: `url(${Fon5})` }}
             ref={chatsPanelRef}
             defaultSize={25}
@@ -210,7 +216,8 @@ const AppPage = () => {
             onCollapse={() => setIsChatPanelOpen(false)}
           >
             <AppPageChats />
-          </Panel>
+            
+          </Panel> */}
 
           <PanelResizeHandle
             style={{
@@ -230,16 +237,14 @@ const AppPage = () => {
             {renderValuesCentralComponent === 'videospage' && (
               <VideosMainPage />
             )}
-            {renderValuesCentralComponent === 'VR' && (
-                <VR />
-            )}
+            {renderValuesCentralComponent === 'VR' && <VR />}
             {renderValuesCentralComponent === 'home' && (
               <AppPageCentralComponent />
             )}
             <Box
               sx={{
                 position: 'absolute',
-                bottom: '50px',
+                bottom: '80px',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 display: 'flex',

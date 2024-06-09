@@ -18,8 +18,8 @@ import {
   channelPagePrototypePath,
   mediaIdPath,
   mediaPath,
-  certificatePath, VideoEditPathPrototype,
-
+  certificatePath,
+  VideoEditPathPrototype,
 } from './configs/RouteConfig.tsx';
 import ChannelPage from './pages/Videos/ChannelPage.tsx';
 import CertificateGenerator from './pages/cert/CertificateGenerator.tsx';
@@ -29,8 +29,8 @@ import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
 import { ThemeContext } from './contexts/ThemeContext';
-import VideoEditPage from "./pages/Videos/VideoEditPage.tsx";
-import AnimatedRipple from "./components/neumorphism/animatedRipple/AnimatedRipple.tsx";
+import VideoEditPage from './pages/Videos/VideoEditPage.tsx';
+import AnimatedRipple from './components/neumorphism/animatedRipple/AnimatedRipple.tsx';
 
 const App: FC = () => {
   // Initialize theme state with light theme as default
@@ -78,73 +78,71 @@ const App: FC = () => {
   const allowedUsernames = ['AdrianAdrian', 'Adrian Lieblich', 'RomarioFisch'];
 
   return (
-      <ThemeContext.Provider value={{ theme: theme, setTheme }}>
-        <ThemeProvider theme={muiTheme}>
-          <Router>
-            <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-              {isLoggedIn ? (
-                  <Box
-                      sx={{
-                        display: 'flex',
-                        height: '100vh',
-                      }}
-                  >
+    <ThemeContext.Provider value={{ theme: theme, setTheme }}>
+      <ThemeProvider theme={muiTheme}>
+        <Router>
+          <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+            {isLoggedIn ? (
+              <Box
+                sx={{
+                  display: 'flex',
+                  height: '100vh',
+                }}
+              >
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    overflow: 'auto',
+                    width: '100%',
+                  }}
+                >
+                  <Routes>
+                    <Route path={mediaPath} element={<VideosMainPage />} />
+                    <Route path={mediaIdPath} element={<VideoPage />} />
 
-                    <Box
-                        sx={{
-                          flexGrow: 1,
-                          overflow: 'auto',
-                          width: '100%',
-                        }}
-                    >
-                      <Routes>
+                    <Route path={appPagePath} element={<AppPage />} />
+                    <Route
+                      path={channelPagePrototypePath}
+                      element={<ChannelPage />}
+                    />
+                    <Route
+                      path={channelEditPrototypePath}
+                      element={<UserChannelPage />}
+                    />
+                    <Route
+                      path={VideoEditPathPrototype}
+                      element={<VideoEditPage />}
+                    />
 
-                        <Route path={mediaPath} element={<VideosMainPage />} />
-                        <Route path={mediaIdPath} element={<VideoPage />} />
+                    <Route
+                      path={certificatePath}
+                      element={
+                        allowedUsernames.includes(username) ? (
+                          <CertificateGenerator />
+                        ) : (
+                          ''
+                        )
+                      }
+                    />
+                  </Routes>
+                </Box>
+              </Box>
+            ) : (
+              <>
+                <AnimatedRipple>
+                  <HeaderAndMainPage
+                    activeSection={activeSection}
+                    setActiveSection={setActiveSection}
+                  />
+                </AnimatedRipple>
+              </>
+            )}
 
-                        <Route path={appPagePath} element={<AppPage />} />
-                        <Route
-                            path={channelPagePrototypePath}
-                            element={<ChannelPage />}
-                        />
-                        <Route
-                            path={channelEditPrototypePath}
-                            element={<UserChannelPage />}
-                        />
-                        <Route path={VideoEditPathPrototype}
-                               element={<VideoEditPage/>}
-                        />
-
-
-                        <Route
-                            path={certificatePath}
-                            element={
-                              allowedUsernames.includes(username) ? (
-                                  <CertificateGenerator />
-                              ) : (
-                                  ''
-                              )
-                            }
-                        />
-                      </Routes>
-                    </Box>
-                  </Box>
-              ) : (
-                  <>
-                    <AnimatedRipple>
-                      <HeaderAndMainPage
-                          activeSection={activeSection}
-                          setActiveSection={setActiveSection}
-                      />
-                    </AnimatedRipple>
-                  </>
-              )}
-
-              <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
-            </AuthContext.Provider>
-          </Router>
-        </ThemeProvider>
-      </ThemeContext.Provider>
+            <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
+          </AuthContext.Provider>
+        </Router>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 };
 
@@ -152,9 +150,9 @@ const HeaderAndMainPage: React.FC<{
   activeSection: string | null;
   setActiveSection: React.Dispatch<React.SetStateAction<string | null>>;
 }> = ({ activeSection, setActiveSection }) => (
-    <ActiveSectionContext.Provider value={{ activeSection, setActiveSection }}>
-      <Header />
-      <MainPage />
-    </ActiveSectionContext.Provider>
+  <ActiveSectionContext.Provider value={{ activeSection, setActiveSection }}>
+    <Header />
+    <MainPage />
+  </ActiveSectionContext.Provider>
 );
 export default App;

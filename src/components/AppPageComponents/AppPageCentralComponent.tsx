@@ -7,7 +7,7 @@ const AppPageCentralComponent = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: '90vh',
+        height: '100%',
         padding: '20px',
       }}
     >
