@@ -18,9 +18,8 @@ import {
   channelPagePrototypePath,
   mediaIdPath,
   mediaPath,
-  sideBarPath,
-  certificatePath, VideoEditPathPrototype,
-
+  certificatePath,
+  VideoEditPathPrototype,
 } from './configs/RouteConfig.tsx';
 import ChannelPage from './pages/Videos/ChannelPage.tsx';
 import CertificateGenerator from './pages/cert/CertificateGenerator.tsx';
@@ -30,8 +29,8 @@ import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
 import { ThemeContext } from './contexts/ThemeContext';
-import VideoEditPage from "./pages/Videos/VideoEditPage.tsx";
-import AnimatedRipple from "./components/neumorphism/animatedRipple/AnimatedRipple.tsx";
+import VideoEditPage from './pages/Videos/VideoEditPage.tsx';
+import AnimatedRipple from './components/neumorphism/animatedRipple/AnimatedRipple.tsx';
 
 const App: FC = () => {
   // Initialize theme state with light theme as default
@@ -90,7 +89,6 @@ const App: FC = () => {
                   height: '100vh',
                 }}
               >
-
                 <Box
                   sx={{
                     flexGrow: 1,
@@ -99,7 +97,6 @@ const App: FC = () => {
                   }}
                 >
                   <Routes>
-
                     <Route path={mediaPath} element={<VideosMainPage />} />
                     <Route path={mediaIdPath} element={<VideoPage />} />
 
@@ -112,10 +109,10 @@ const App: FC = () => {
                       path={channelEditPrototypePath}
                       element={<UserChannelPage />}
                     />
-                    <Route path={VideoEditPathPrototype}
-                           element={<VideoEditPage/>}
+                    <Route
+                      path={VideoEditPathPrototype}
+                      element={<VideoEditPage />}
                     />
-
 
                     <Route
                       path={certificatePath}
@@ -133,10 +130,10 @@ const App: FC = () => {
             ) : (
               <>
                 <AnimatedRipple>
-                <HeaderAndMainPage
-                  activeSection={activeSection}
-                  setActiveSection={setActiveSection}
-                />
+                  <HeaderAndMainPage
+                    activeSection={activeSection}
+                    setActiveSection={setActiveSection}
+                  />
                 </AnimatedRipple>
               </>
             )}
