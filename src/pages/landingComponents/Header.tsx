@@ -100,7 +100,7 @@ const Header: React.FC = () => {
         <Typography variant="h4" sx={{ cursor: 'pointer', fontWeight: '550', marginBottom: 0, lineHeight: 1 }} onClick={() => { handleClick("#Home") }}>
           NeoX
         </Typography>
-        <Typography variant="h6" sx={{ cursor: 'pointer', fontWeight: '500', marginTop: 0, lineHeight: 1, letterSpacing: 6.5 }} onClick={() => { handleClick("#Home") }}>
+        <Typography variant="h6" sx={{ cursor: 'pointer', fontWeight: '500', marginTop: 0, lineHeight: 1, letterSpacing: 6 }} onClick={() => { handleClick("#Home") }}>
           online
         </Typography>
         </Box>
