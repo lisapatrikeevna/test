@@ -1,268 +1,167 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Container, Typography, Grid, IconButton } from "@mui/material";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+import { useSpring, animated } from 'react-spring';
 
 import NeuCard from "../../components/neumorphism/card/NeuCard";
 import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
 import NeuCardHeader from "../../components/neumorphism/card/NeuCardHeader";
+import useOnScreen from "../../components/hooks/useOnScreen";
 
 const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
 };
 
 const Donate: React.FC = () => {
+    const [visibleCards, setVisibleCards] = useState<number[]>([]);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const isVisible = useOnScreen(containerRef);
+
+    useEffect(() => {
+        let timer: number;
+
+        if (isVisible && visibleCards.length < 6) { // Убедитесь, что здесь указано правильное количество карточек
+            timer = window.setTimeout(() => {
+                setVisibleCards((prev) => [...prev, prev.length]);
+            }, 150);
+        } else if (!isVisible) {
+            setVisibleCards([]);
+        }
+
+        return () => clearTimeout(timer);
+    }, [isVisible, visibleCards]);
+
+    const cardsData = [
+        {
+            title: "Sparkasse",
+            cardType: "Mastercard",
+            bic: "BIC: COKSDE33XXX",
+            iban: "IBAN: DE46370502991329072051"
+        },
+        {
+            title: "PostBank",
+            cardType: "Maestro",
+            bic: "BIC: PBNKDEFF",
+            iban: "IBAN: LT843250050964665543"
+        },
+        {
+            title: "Revolut",
+            cardType: "Visa",
+            bic: "BIC: REVOLT21",
+            iban: "IBAN: LT843250050964665543"
+        },
+        {
+            title: "Paypal",
+            email: "incomgrp@outlook.com"
+        },
+        {
+            title: "Binance",
+            email: "incomgrp@outlook.com"
+        },
+        {
+            title: "Donate 4.99",
+            link: "https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb"
+        }
+    ];
+
+    const animationProps = useSpring({
+        transform: isVisible ? 'scale(1)' : 'scale(0)',
+        opacity: isVisible ? 1 : 0,
+        config: { tension: 170, friction: 26 },
+    });
 
     return (
-        <Container sx={{ padding: "20px" }}>
+        <Container sx={{ padding: "20px" }} ref={containerRef}>
             <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
                 <Typography variant="h4" sx={{ paddingBottom: "20px" }}>
                     Donates
                 </Typography>
             </Box>
             <Grid container spacing={2}>
-
-                <Grid xs={6} md={4}>
-                    <NeuCard
-                        elevation={3}
-                        rounded
-                        sx={{
-                            padding: "0",
-                            margin: "16px",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: 'start'
-                        }}
-                    >
-                        <NeuCardHeader title="Sparkasse" sx={{ pb: 0, mt: 1 }} />
-                        <NeuCardContent sx={{justifyContent: 'start', alignItems: 'start', flexDirection: 'column', display: 'flex'}}>
-                            <Box>
-                            <Typography
-                                variant="body2"
-                                color="text.secondary"
-                                sx={{  marginBottom: "16px" }}
+                {cardsData.map((card, index) => (
+                    <Grid key={index} xs={6} md={4}>
+                        <animated.div style={visibleCards.includes(index) ? animationProps : { opacity: 0, transform: 'scale(0)' }}>
+                            <NeuCard
+                                in={visibleCards.includes(index)}
+                                elevation={3}
+                                rounded
+                                sx={{
+                                    padding: "0",
+                                    margin: "16px",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: 'start'
+                                }}
                             >
-                                Mastercard
-                            </Typography>
-                            </Box>
-                            <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                            <Typography
-                                variant="body2"
-                                color="text.secondary"
-                                sx={{ flexGrow: 1, marginBottom: "16px" }}
-                            >
-                                BIC: COKSDE33XXX
-                            </Typography>
-
-                            <IconButton onClick={() => copyToClipboard("BIC: COKSDE33XXX")}>
-                                <FileCopyIcon />
-                            </IconButton>
-                            </Box>
-                            <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                            <Typography
-                                variant="body2"
-                                color="text.secondary"
-                                sx={{ flexGrow: 1, marginBottom: "16px" }}
-                            >
-                                IBAN: DE46370502991329072051
-                            </Typography>
-                            <IconButton onClick={() => copyToClipboard("IBAN: DE46370502991329072051")}>
-                                <FileCopyIcon />
-                            </IconButton>
-                            </Box>
-                        </NeuCardContent>
-                    </NeuCard>
-                </Grid>
-
-                <Grid xs={6} md={4}>
-                    <NeuCard
-                        elevation={3}
-                        rounded
-                        sx={{
-                            padding: "0",
-                            margin: "16px",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: 'start'
-                        }}
-                    >
-                        <NeuCardHeader title="PostBank" sx={{ pb: 0, mt: 1 }} />
-                        <NeuCardContent sx={{justifyContent: 'start', alignItems: 'start', flexDirection: 'column', display: 'flex'}}>
-                            <Box>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{  marginBottom: "16px" }}
-                                >
-                                    Maestro
-                                </Typography>
-                            </Box>
-                            <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{ flexGrow: 1, marginBottom: "16px" }}
-                                >
-                                    BIC: PBNKDEFF
-                                </Typography>
-
-                                <IconButton onClick={() => copyToClipboard("BIC: PBNKDEFF")}>
-                                    <FileCopyIcon />
-                                </IconButton>
-                            </Box>
-                            <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{ flexGrow: 1, marginBottom: "16px" }}
-                                >
-                                    IBAN: LT843250050964665543
-                                </Typography>
-                                <IconButton onClick={() => copyToClipboard("IBAN: LT843250050964665543")}>
-                                    <FileCopyIcon />
-                                </IconButton>
-                            </Box>
-                        </NeuCardContent>
-                    </NeuCard>
-                </Grid>
-
-                <Grid xs={6} md={4}>
-                    <NeuCard
-                        elevation={3}
-                        rounded
-                        sx={{
-                            padding: "0",
-                            margin: "16px",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: 'start'
-                        }}
-                    >
-                        <NeuCardHeader title="Revolut" sx={{ pb: 0, mt: 1 }} />
-                        <NeuCardContent sx={{justifyContent: 'start', alignItems: 'start', flexDirection: 'column', display: 'flex'}}>
-                            <Box>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{  marginBottom: "16px" }}
-                                >
-                                    Visa
-                                </Typography>
-                            </Box>
-                            <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{ flexGrow: 1, marginBottom: "16px" }}
-                                >
-                                    BIC: REVOLT21
-                                </Typography>
-
-                                <IconButton onClick={() => copyToClipboard("BIC: REVOLT21")}>
-                                    <FileCopyIcon />
-                                </IconButton>
-                            </Box>
-                            <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{ flexGrow: 1, marginBottom: "16px" }}
-                                >
-                                    IBAN: LT843250050964665543
-                                </Typography>
-                                <IconButton onClick={() => copyToClipboard("IBAN: LT843250050964665543")}>
-                                    <FileCopyIcon />
-                                </IconButton>
-                            </Box>
-                        </NeuCardContent>
-                    </NeuCard>
-                </Grid>
-
-                <Grid xs={6} md={4}>
-                    <NeuCard
-                        elevation={3}
-                        rounded
-                        sx={{
-                            padding: "0",
-                            margin: "16px",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: 'start'
-                        }}
-                    >
-                        <NeuCardHeader title="Paypal" sx={{ pb: 0, mt: 1 }} />
-                        <NeuCardContent>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{ flexGrow: 1, marginBottom: "16px" }}
-                                >
-                                    incomgrp@outlook.com
-                                </Typography>
-                                <IconButton onClick={() => copyToClipboard("incomgrp@outlook.com")}>
-                                    <FileCopyIcon />
-                                </IconButton>
-                            </Box>
-                        </NeuCardContent>
-                    </NeuCard>
-                </Grid>
-
-                <Grid xs={6} md={4}>
-                    <NeuCard
-                        elevation={3}
-                        rounded
-                        sx={{
-                            padding: "0",
-                            margin: "16px",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: 'start'
-                        }}
-                    >
-                        <NeuCardHeader title="Binance" sx={{ pb: 0, mt: 1 }} />
-                        <NeuCardContent>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{ flexGrow: 1, marginBottom: "16px" }}
-                                >
-                                    incomgrp@outlook.com
-                                </Typography>
-                                <IconButton onClick={() => copyToClipboard("incomgrp@outlook.com")}>
-                                    <FileCopyIcon />
-                                </IconButton>
-                            </Box>
-                        </NeuCardContent>
-                    </NeuCard>
-                </Grid>
-
-                <Grid xs={6} md={4}>
-                    <NeuCard
-                        elevation={3}
-                        rounded
-                        sx={{
-                            padding: "0",
-                            margin: "16px",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: 'start'
-                        }}
-                    >
-                        <NeuCardHeader title="Donate 4.99" sx={{ pb: 0, mt: 1 }} />
-                        <NeuCardContent>
-                            <Box sx={{}}>
-                                <span>
-                                    <a href="https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb" target="_blank"
-                                       rel="noopener noreferrer">
-                                        Click here
-                                    </a>
-                                </span>
-                            </Box>
-                        </NeuCardContent>
-                    </NeuCard>
-                </Grid>
-
+                                <NeuCardHeader title={card.title} sx={{ pb: 0, mt: 1 }} />
+                                <NeuCardContent sx={{ justifyContent: 'start', alignItems: 'start', flexDirection: 'column', display: 'flex' }}>
+                                    {card.cardType && (
+                                        <Box>
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                                sx={{ marginBottom: "16px" }}
+                                            >
+                                                {card.cardType}
+                                            </Typography>
+                                        </Box>
+                                    )}
+                                    {card.bic && (
+                                        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                                sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                            >
+                                                {card.bic}
+                                            </Typography>
+                                            <IconButton onClick={() => copyToClipboard(card.bic)}>
+                                                <FileCopyIcon />
+                                            </IconButton>
+                                        </Box>
+                                    )}
+                                    {card.iban && (
+                                        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                                sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                            >
+                                                {card.iban}
+                                            </Typography>
+                                            <IconButton onClick={() => copyToClipboard(card.iban)}>
+                                                <FileCopyIcon />
+                                            </IconButton>
+                                        </Box>
+                                    )}
+                                    {card.email && (
+                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                                sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                            >
+                                                {card.email}
+                                            </Typography>
+                                            <IconButton onClick={() => copyToClipboard(card.email)}>
+                                                <FileCopyIcon />
+                                            </IconButton>
+                                        </Box>
+                                    )}
+                                    {card.link && (
+                                        <Box sx={{}}>
+                                            <span>
+                                                <a href={card.link} target="_blank" rel="noopener noreferrer">
+                                                    Click here
+                                                </a>
+                                            </span>
+                                        </Box>
+                                    )}
+                                </NeuCardContent>
+                            </NeuCard>
+                        </animated.div>
+                    </Grid>
+                ))}
             </Grid>
         </Container>
     );
