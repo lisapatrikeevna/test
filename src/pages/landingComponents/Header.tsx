@@ -94,11 +94,16 @@ const Header: React.FC = () => {
       <IconButton sx={{ display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none', '@media (max-width: 1070px)': { display: 'flex' } } }} onClick={handleDrawerToggle}>
         <MenuIcon sx={{ width: '32px', height: '32px' }}/>
       </IconButton>
-      <Box sx={{ display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex', '@media (max-width: 1070px)': { display: 'none' } }, alignItems: 'center', gap: '10px' }}>
+      <Box sx={{ display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex', '@media (max-width: 1070px)': { display: 'none' } }, alignItems: 'center', gap: '10px'}}>
         <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
-        <Typography variant="h5"  sx={{ cursor: 'pointer', fontWeight: '550' }} onClick={() => { handleClick("#Home") }}>
-          NeoXonline
+        <Box sx={{ mt: '5px'}}> 
+        <Typography variant="h4" sx={{ cursor: 'pointer', fontWeight: '550', marginBottom: 0, lineHeight: 1 }} onClick={() => { handleClick("#Home") }}>
+          NeoX
         </Typography>
+        <Typography variant="h6" sx={{ cursor: 'pointer', fontWeight: '500', marginTop: 0, lineHeight: 1, letterSpacing: 6.5 }} onClick={() => { handleClick("#Home") }}>
+          online
+        </Typography>
+        </Box>
       </Box>
       <Box sx={{
         paddingLeft: '20px',
