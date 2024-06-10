@@ -142,9 +142,10 @@ const Donate: React.FC = () => {
                                 {card.link && (
                                     <Box sx={{}}>
                                         <span>
-                                            <a href={card.link} target="_blank" rel="noopener noreferrer">
+                                            <a href={card.link} target="_blank" rel="noopener noreferrer"
+                                               style={{fontSize: '150%'}}>
                                                 Click here
-                                            </a>
+<                                           /a>
                                         </span>
                                     </Box>
                                 )}
