@@ -19,10 +19,10 @@ const Home: FC = () => {
                 width: '115%',
                 height: '100%',
                 padding: {
-                    xs: '20px 15px',
-                    sm: '20px 15px',
-                    lg: '1vh 2vw',
-                    xl: '15px 0px 15px',
+                    xs: '1vw 0.8vw',
+                    sm: '1vw 0.8vw',
+                    lg: '0.8vh 1.2vw',
+                    xl: '1vw 0px 0.8vw',
                 },
             }}
         >
@@ -43,10 +43,10 @@ const Home: FC = () => {
             </Box>
             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginRight: '2rem',
                 padding: {
-                    xs: '20px 15px',
-                    sm: '20px 15px',
-                    lg: '1vh 2vw',
-                    xl: '15px 0px 15px',
+                    xs: '1.2vw 1vw',
+                    sm: '1.2vw 1vw',
+                    lg: '0.8vh 1.2vw',
+                    xl: '1vw 0px 1vw',
                     justifyContent: 'space-between',
                 },}}>
                 <Box
