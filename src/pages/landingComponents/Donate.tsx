@@ -59,7 +59,7 @@ const Donate: React.FC = () => {
             email: "incomgrp@outlook.com"
         },
         {
-            title: "Donate",
+            title: "Fixed 4.99 Euro donation",
             link: "https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb"
         }
     ];
@@ -71,7 +71,7 @@ const Donate: React.FC = () => {
     });
 
     return (
-        <Container sx={{ padding: "20px 0px 20px",display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
+        <Container sx={{ padding: "1vw 0px 1vw",display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
             <Box sx={{ display: "flex", justifyContent: "center", mb: 2, flexDirection: 'column' }}>
                 <Typography variant="h4" sx={{ paddingBottom: "20px"}}>
                     Donates
@@ -87,7 +87,7 @@ const Donate: React.FC = () => {
                                 rounded
                                 sx={{
                                     padding: "0",
-                                    margin: "16px",
+                                    margin: "0.8vw",
                                     display: "flex",
                                     flexDirection: "column",
                                     alignItems: 'start'
@@ -100,7 +100,7 @@ const Donate: React.FC = () => {
                                             <Typography
                                                 variant="body2"
                                                 color="text.secondary"
-                                                sx={{ marginBottom: "16px" }}
+                                                sx={{ marginBottom: "0.8vw" }}
                                             >
                                                 {card.cardType}
                                             </Typography>
@@ -111,7 +111,7 @@ const Donate: React.FC = () => {
                                             <Typography
                                                 variant="body2"
                                                 color="text.secondary"
-                                                sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                                sx={{ flexGrow: 1, marginBottom: "0.8vw" }}
                                             >
                                                 {card.bic}
                                             </Typography>
@@ -125,7 +125,7 @@ const Donate: React.FC = () => {
                                             <Typography
                                                 variant="body2"
                                                 color="text.secondary"
-                                                sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                                sx={{ flexGrow: 1, marginBottom: "0.8vw" }}
                                             >
                                                 {card.iban}
                                             </Typography>
@@ -163,9 +163,11 @@ const Donate: React.FC = () => {
                     </Grid>
                 ))}
             </Grid>
-            <Typography variant="h4" sx={{ paddingTop: '25px', paddingBottom: "20px" }}>
+            <Box sx={{paddingLeft: '0.5vw'}}>
+            <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
                 Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
             </Typography>
+            </Box>
         </Container>
     );
 };
