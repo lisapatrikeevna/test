@@ -162,9 +162,9 @@ const Pricing = () => {
                                                 {tier.title === 'Enterprise' || tier.title === 'Free' ? '' : `${isYearly ? 'yr' : 'mo'}`}
                                             </Typography>
                                         </Box>
-                                        <List sx={{ width: '100%', padding: 0 }}>
+                                        <List sx={{ width: '100%', padding: 0, listStyleType: 'disc', paddingLeft: '15px' }}>
                                             {tier.description.map((line) => (
-                                                <ListItem key={line} sx={{ padding: 0 }}>
+                                                <ListItem key={line} sx={{ display: 'list-item', padding: 0 }}>
                                                     <ListItemText primary={line} sx={{ textAlign: 'left' }} />
                                                 </ListItem>
                                             ))}
