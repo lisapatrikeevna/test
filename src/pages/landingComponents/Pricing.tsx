@@ -101,7 +101,7 @@ const Pricing = () => {
     const calculateOldPrice = (price: number) => {
         if (isYearly) {
             const yearlyOldPrice = price * 12;
-            return yearlyOldPrice.toFixed(2);
+            return (Math.floor(yearlyOldPrice) + 0.99).toFixed(2);
         }
         return price.toFixed(2);
     };
@@ -118,7 +118,7 @@ const Pricing = () => {
             <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
                 <Toolbar sx={{ flexWrap: 'wrap' }}>
                     <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                        NeoXonline
+                        NeoXonline pricing
                     </Typography>
                     <FormControlLabel
                         control={<Switch checked={isYearly} onChange={toggleYearly} />}
@@ -129,10 +129,10 @@ const Pricing = () => {
             </AppBar>
 
             <CustomContainer className="Pricing-container" sx={{ pb: 2 }} maxWidth="xl">
-                <Typography component="h1" variant="h2" align="center" color="text.primary">
+                {/* <Typography component="h1" variant="h2" align="center" color="text.primary">
                     Pricing
-                </Typography>
-                <Typography variant="h5" align="center" color="text.secondary" component="p">
+                </Typography> */}
+                <Typography variant="h5" align="center" color="text.secondary" component="p" mt={'20px'}>
                     Since the platform is at the development stage, this list of features and prices may change.
                 </Typography>
             </CustomContainer>
@@ -162,7 +162,7 @@ const Pricing = () => {
                                                 {tier.title === 'Enterprise' || tier.title === 'Free' ? '' : `${isYearly ? 'yr' : 'mo'}`}
                                             </Typography>
                                         </Box>
-                                        <List sx={{ width: '100%', padding: 0, listStyleType: 'disc', paddingLeft: '15px' }}>
+                                        <List sx={{ width: '190px', padding: 0, listStyleType: 'disc', paddingLeft: '15px' }}>
                                             {tier.description.map((line) => (
                                                 <ListItem key={line} sx={{ display: 'list-item', padding: 0 }}>
                                                     <ListItemText primary={line} sx={{ textAlign: 'left' }} />

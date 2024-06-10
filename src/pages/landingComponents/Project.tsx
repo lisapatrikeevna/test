@@ -19,7 +19,7 @@ const Project = () => {
     const isVisible = useOnScreen(containerRef);
 
     const title = [
-        "Communication and Learning in One Place",
+        "About NeoXonline Communication and Learning in One Place",
         "Communication: The Key to Success",
         "Features of NeoXonline",
         "The NeoXonline Community",
@@ -64,9 +64,9 @@ const Project = () => {
             }}
             ref={containerRef}
         >
-            <Typography variant={isSmallScreen ? 'h4' : 'h2'} gutterBottom>
+            {/* <Typography variant={isSmallScreen ? 'h4' : 'h2'} gutterBottom>
                 About NeoXonline
-            </Typography>
+            </Typography> */}
             <NeuCard
                 in={visible}
                 sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '65vh' }}

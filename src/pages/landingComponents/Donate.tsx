@@ -65,9 +65,14 @@ const Donate: React.FC = () => {
     return (
         <Container sx={{ padding: "1vw 0px 1vw",display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
             <Box sx={{ display: "flex", justifyContent: "center", mb: 2, flexDirection: 'column' }}>
-                <Typography variant="h4" sx={{ paddingBottom: "20px"}}>
+                {/* <Typography variant="h4" sx={{ paddingBottom: "20px"}}>
                     Donates
-                </Typography>
+                </Typography> */}
+            </Box>
+            <Box sx={{paddingLeft: '0.5vw'}}>
+            <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
+                Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
+            </Typography>
             </Box>
             <Grid container spacing={2}>
                 {cardsData.map((card, index) => (
@@ -154,11 +159,11 @@ const Donate: React.FC = () => {
                     </Grid>
                 ))}
             </Grid>
-            <Box sx={{paddingLeft: '0.5vw'}}>
+            {/* <Box sx={{paddingLeft: '0.5vw'}}>
             <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
                 Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
             </Typography>
-            </Box>
+            </Box> */}
         </Container>
     );
 };

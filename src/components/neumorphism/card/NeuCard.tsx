@@ -54,7 +54,7 @@ const StyledCard = styled(Card, {
   justifyContent: 'center',
   height: 'auto',
   boxSizing: 'border-box',
-  backgroundColor: 'inherit',
+  backgroundColor: theme.palette.background.paper,
   boxShadow: 'var(--box-shadow)',
   color: 'var(--text-color)',
   transition: 'box-shadow 200ms ease-in-out',
@@ -67,6 +67,7 @@ const StyledCard = styled(Card, {
   }),
   ...(props.flat && { boxShadow: 'none !important' }),
   ...(props.inset && { boxShadow: 'var(--box-shadow-inset)' }),
+  backgroundImage: 'none !important',
 }));
 
 const ContentWrapper = styled('div')<{ inProp: boolean }>(({ inProp }) => ({

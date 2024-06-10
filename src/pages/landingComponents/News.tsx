@@ -40,9 +40,9 @@ const News: React.FC = () => {
   return (
       <Container sx={{ padding: "1vw" }} ref={containerRef}>
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-          <Typography variant="h4" sx={{ paddingBottom: "1.2vw" }}>
+          {/* <Typography variant="h4" sx={{ paddingBottom: "1.2vw" }}>
             News
-          </Typography>
+          </Typography> */}
         </Box>
         <Grid container spacing={2}>
           {news.map((item, index) => (
