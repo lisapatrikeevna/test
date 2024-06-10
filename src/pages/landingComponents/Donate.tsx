@@ -57,15 +57,15 @@ const Donate: React.FC = () => {
             email: "incomgrp@outlook.com"
         },
         {
-            title: "Donate 4.99",
+            title: "Donate",
             link: "https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb"
         }
     ];
 
     return (
-        <Container sx={{ padding: "20px" }} ref={containerRef}>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-                <Typography variant="h4" sx={{ paddingBottom: "20px" }}>
+        <Container sx={{ padding: "20px 0px 20px",display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 2, flexDirection: 'column' }}>
+                <Typography variant="h4" sx={{ paddingBottom: "20px"}}>
                     Donates
                 </Typography>
             </Box>
@@ -153,6 +153,9 @@ const Donate: React.FC = () => {
                     </Grid>
                 ))}
             </Grid>
+            <Typography variant="h4" sx={{ paddingTop: '25px', paddingBottom: "20px" }}>
+                Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
+            </Typography>
         </Container>
     );
 };
