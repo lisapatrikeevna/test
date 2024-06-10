@@ -145,7 +145,7 @@ const Donate: React.FC = () => {
                                             <a href={card.link} target="_blank" rel="noopener noreferrer"
                                                style={{fontSize: '150%'}}>
                                                 Click here
-<                                           /a>
+                                            </a>
                                         </span>
                                     </Box>
                                 )}
