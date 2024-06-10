@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Container, Typography, Grid } from "@mui/material";
 import Modal from "../../components/Modal";
 import NeuCard from "../../components/neumorphism/card/NeuCard";
@@ -16,108 +16,44 @@ interface NewsItem {
 const news: NewsItem[] = [
   {
     title: "Some news 1",
-    content:
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Sed eget risus porta, tincidunt turpis at, interdum tortor.
-     `,
-    fullContent:
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Sed eget risus porta, tincidunt turpis at, interdum tortor.`,
+    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
   },
   {
     title: "Some news 2",
     content: "Sed eget risus porta, tincidunt turpis at, interdum tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    fullContent:
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
+    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
   },
   {
     title: "Some news 3",
     content: "Pellentesque habitant morbi tristique senectus et netus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    fullContent:
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
+    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
   },
   {
     title: "Some news 4",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    fullContent:
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
+    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
   },
   {
     title: "Some news 5",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    fullContent:
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
+    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
+       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
   },
   {
     title: "Some news 6",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    fullContent:
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
+    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
+       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
   },
 ];
 
@@ -128,18 +64,18 @@ const News: React.FC = () => {
   const isVisible = useOnScreen(containerRef);
 
   useEffect(() => {
-    let timer: number;
+    let timer: number | undefined;
 
     if (isVisible && visibleCards.length < news.length) {
       timer = window.setTimeout(() => {
         setVisibleCards((prev) => [...prev, prev.length]);
       }, 150);
-    } else if (!isVisible) {
+    } else if (!isVisible && visibleCards.length !== 0) {
       setVisibleCards([]);
     }
 
     return () => clearTimeout(timer);
-  }, [isVisible, visibleCards]);
+  }, [isVisible, visibleCards.length]); // Убедитесь, что зависимости указаны корректно
 
   const handleOpenModal = (newsItem: NewsItem) => {
     setSelectedNews(newsItem);
@@ -158,7 +94,7 @@ const News: React.FC = () => {
         </Box>
         <Grid container spacing={2}>
           {news.map((item, index) => (
-              <Grid key={index} xs={6} md={4}>
+              <Grid item key={index} xs={6} md={4}>
                 <NeuCard
                     in={visibleCards.includes(index)} // Передаем состояние видимости
                     elevation={3}
