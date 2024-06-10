@@ -16,7 +16,7 @@ interface NeuCardMediaProps extends BoxProps {
 const getMediaStyles = (theme: Theme, props: NeuCardMediaProps) => {
   const typedTheme = theme as Theme & { shadows: Shadows };
   return {
-    backgroundColor: typedTheme.palette.background.default,
+    backgroundColor: typedTheme.palette.background.paper,
     color: typedTheme.palette.text.primary,
     borderRadius: props.rounded ? '24px' : '0px',
     backgroundImage: `url(${props.src})`,
@@ -42,7 +42,7 @@ const StyledCardMedia = styled(Box, {
   alignItems: 'center',
   justifyContent: 'center',
   boxSizing: 'border-box',
-  backgroundColor: 'var(--bg-color)',
+  backgroundColor: theme.palette.background.paper,
   color: 'var(--text-color)',
   borderRadius: props.rounded ? '24px' : '0px',
 }));

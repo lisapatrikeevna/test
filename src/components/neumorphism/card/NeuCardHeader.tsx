@@ -16,7 +16,7 @@ interface NeuCardHeaderProps extends BoxProps {
 const getHeaderStyles = (theme: Theme, props: NeuCardHeaderProps) => {
   const typedTheme = theme as Theme & { shadows: Shadows };
   return {
-    backgroundColor: typedTheme.palette.background.default,
+    backgroundColor: typedTheme.palette.background.paper,
     color: typedTheme.palette.text.primary,
     borderRadius: props.rounded ? '24px' : '8px',
   };
@@ -38,7 +38,7 @@ const StyledCardHeader = styled(Box, {
   alignItems: 'center',
   justifyContent: 'space-between',
   boxSizing: 'border-box',
-  backgroundColor: 'var(--bg-color)',
+  backgroundColor: theme.palette.background.paper,
   color: 'var(--text-color)',
   borderRadius: props.rounded ? '24px' : '8px',
 }));
