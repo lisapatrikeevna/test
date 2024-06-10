@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { Box, Container, Typography, Skeleton, Link, Grid } from '@mui/material';
 import NeuCard from '../../components/neumorphism/card/NeuCard';
 import NeuCardContent from '../../components/neumorphism/card/NeuCardContent';
@@ -15,6 +15,7 @@ import VSCode from '../../assets/partners/VSCode-logo.png';
 import Reactlogo from '../../assets/partners/React-logo.svg';
 import Unity from '../../assets/partners/unity-logo.png';
 import Netflix from '../../assets/partners/Netflix-Logo.png';
+import useOnScreen from "../../components/hooks/useOnScreen";
 
 const partners = [
   { logo: ionosLogo, link: 'https://acn.ionos.de/aff_c?offer_id=2&aff_id=7772' },
@@ -34,6 +35,9 @@ const partners = [
 
 const Partners: React.FC = memo(() => {
   const [loading, setLoading] = useState(true);
+  const [visibleCards, setVisibleCards] = useState<number[]>([]);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const isVisible = useOnScreen(containerRef);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -43,46 +47,63 @@ const Partners: React.FC = memo(() => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    let timer: number | undefined;
+
+    if (isVisible && visibleCards.length < partners.length) {
+      timer = window.setTimeout(() => {
+        setVisibleCards((prev) => [...prev, prev.length]);
+      }, 150);
+    } else if (!isVisible && visibleCards.length !== 0) {
+      setVisibleCards([]);
+    }
+
+    return () => clearTimeout(timer);
+  }, [isVisible, visibleCards.length]);
+
   return (
-    <Container sx={{ zIndex:'100', padding: '15px 0px 15px', maxHeight: 'calc(100vh - 200px)', overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-        <Typography variant="h4">Partners</Typography>
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-        <Grid container spacing={2} justifyContent="center">
-          {partners.map((partner, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index} sx={{display: 'flex', justifyContent: 'center',}}>
-              <Box sx={{ padding: '13px', boxSizing: 'border-box' }}>
-                {loading ? (
-                  <Skeleton variant="rectangular" height={130} sx={{ borderRadius: '10px' }} />
-                ) : (
-                  <Link href={partner.link} target="_blank" rel="noopener noreferrer" underline="none">
-                    <Box sx={{ boxShadow: 'none', overflow: 'visible' }}>
-                      <NeuCard elevation={3} rounded sx={{ padding: '5px'}}>
-                        <NeuCardContent>
-                          <Box display="flex" alignItems="center" sx={{ backgroundColor: 'transparent' }}>
-                            <Box 
-                              sx={{
-                                width: 150, 
-                                height: 70, 
-                                backgroundImage: `url(${partner.logo})`,
-                                backgroundSize: 'contain',
-                                backgroundRepeat: 'no-repeat',
-                                backgroundPosition: 'center'
-                              }}
-                            />
-                          </Box>
-                        </NeuCardContent>
-                      </NeuCard>
-                    </Box>
-                  </Link>
-                )}
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </Container>
+      <Container sx={{ zIndex:'100', padding: '15px 0px 15px', maxHeight: 'calc(100vh - 200px)', overflowY: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} ref={containerRef}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+          <Typography variant="h4">Partners</Typography>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100%'}}>
+          <Grid container spacing={4} justifyContent="center">
+            {partners.map((partner, index) => (
+                <Grid item xs={12} sm={6} md={3} key={index} sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Box sx={{ padding: '13px', boxSizing: 'border-box', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                    {loading ? (
+                        <Skeleton variant="rectangular" height={130} sx={{ borderRadius: '10px', width: '100%' }} />
+                    ) : (
+                        <Link href={partner.link} target="_blank" rel="noopener noreferrer" underline="none">
+                          <NeuCard
+                              in={visibleCards.includes(index)}
+                              elevation={3}
+                              rounded
+                              sx={{ borderRadius: '10px', width: '100%' }}
+                          >
+                            <NeuCardContent>
+                              <Box display="flex" alignItems="center" sx={{ backgroundColor: 'transparent', width: '100%' }}>
+                                <Box
+                                    sx={{
+                                      width: 80,
+                                      height: 80,
+                                      backgroundImage: `url(${partner.logo})`,
+                                      backgroundSize: 'contain',
+                                      backgroundRepeat: 'no-repeat',
+                                      backgroundPosition: 'center'
+                                    }}
+                                />
+                              </Box>
+                            </NeuCardContent>
+                          </NeuCard>
+                        </Link>
+                    )}
+                  </Box>
+                </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Container>
   );
 });
 
