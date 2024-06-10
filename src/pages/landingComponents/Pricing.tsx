@@ -14,7 +14,7 @@ const CustomContainer = styled(Container)({
 const ScrollableContainer = styled(Box)({
     width: '100%',
     overflowY: 'auto',
-    maxHeight: 'calc(100vh - 440px)', 
+    maxHeight: 'calc(100vh - 420px)', 
     paddingTop: '10px',
     paddingBottom: '10px'
 });
@@ -138,7 +138,7 @@ const Pricing = () => {
                     <Grid container spacing={4} alignItems="flex-end" justifyContent={'center'}>
                         {tiers.map((tier) => (
                             <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2} sx={{ display: 'flex', justifyContent: 'center' }}>
-                                <Card sx={{ width: 300 }}>
+                                <Card sx={{ width: 300, height: tier.title === 'Prime' ? '520px' : '500px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                     <CardHeader
                                         title={tier.title}
                                         subheader={tier.subheader}
@@ -154,21 +154,19 @@ const Pricing = () => {
                                                     : theme.palette.grey[700],
                                         }}
                                     />
-                                    <CardContent>
-                                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
-                                            {tier.oldPrice && (
-                                                <Typography component="span" variant="subtitle1" color="text.secondary" sx={{ textDecoration: 'line-through' }}>
-                                                    {`$${calculateOldPrice(tier.oldPrice)}`}
-                                                </Typography>
-                                            )}
-                                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline' }}>
-                                                <Typography component="h2" variant={tier.title === 'Enterprise' ? "h6" : "h3"} color="text.primary">
-                                                    {tier.price ? `$${calculatePrice(tier.price)}` : tier.title === 'Enterprise' ? 'Contact us' : 'Free'}
-                                                </Typography>
-                                                <Typography variant="h6" color="text.secondary">
-                                                    {tier.title === 'Enterprise' || tier.title === 'Free' ? '' : `${isYearly ? 'yr' : 'mo'}`}
-                                                </Typography>
-                                            </Box>
+                                    <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                                        {tier.oldPrice && (
+                                            <Typography component="span" variant="subtitle1" color="text.secondary" sx={{ textDecoration: 'line-through', fontSize: '1.25rem' }}>
+                                                {`$${calculateOldPrice(tier.oldPrice)}`}
+                                            </Typography>
+                                        )}
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', mb: 2 }}>
+                                            <Typography component="h2" variant={tier.title === 'Enterprise' ? "h6" : "h3"} color="text.primary">
+                                                {tier.price ? `$${calculatePrice(tier.price)}` : tier.title === 'Enterprise' ? 'Contact us' : 'Free'}
+                                            </Typography>
+                                            <Typography variant="h6" color="text.secondary">
+                                                {tier.title === 'Enterprise' || tier.title === 'Free' ? '' : `${isYearly ? 'yr' : 'mo'}`}
+                                            </Typography>
                                         </Box>
                                         <ul>
                                             {tier.description.map((line) => (
@@ -176,12 +174,6 @@ const Pricing = () => {
                                                     {line}
                                                 </Typography>
                                             ))}
-                                            {/* <Typography component="li" variant="subtitle1" align="center">
-                                                <CheckCircleOutlineIcon sx={{ verticalAlign: 'middle' }} /> Feature 1
-                                            </Typography>
-                                            <Typography component="li" variant="subtitle1" align="center">
-                                                <CheckCircleOutlineIcon sx={{ verticalAlign: 'middle' }} /> Feature 2
-                                            </Typography> */}
                                         </ul>
                                     </CardContent>
                                     <CardActions>
