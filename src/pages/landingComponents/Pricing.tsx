@@ -3,7 +3,6 @@ import {
     AppBar, Box, Button, Card, CardActions, CardContent, CardHeader, CssBaseline,
     Grid, Toolbar, Typography, GlobalStyles, Container, Switch, FormControlLabel
 } from '@mui/material';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import StarIcon from '@mui/icons-material/StarBorder';
 import { styled } from '@mui/system';
 
@@ -24,23 +23,20 @@ const tiers = [
     {
         title: 'Free',
         price: 0,
-        description: [
-            'Unlimited chats',
-            'Unlimited contacts',
-            'Help center access',
-            'Email support',
-        ],
+        description: [],
         buttonText: 'Sign up for free',
         buttonVariant: 'outlined',
     },
     {
         title: 'Basic',
-        price: 15,
+        price: 11.99,
+        oldPrice: 17.99,
         description: [
-            '10 Private chats',
-            'Unlimited contacts',
-            'Help center access',
-            'Priority email support',
+            'Access to chats',
+            'Access to videos',
+            'Access to conferences',
+            'Access to calendar',
+            'Access to notes'
         ],
         buttonText: 'Get started',
         buttonVariant: 'contained',
@@ -48,24 +44,26 @@ const tiers = [
     {
         title: 'Prime',
         subheader: 'Most popular',
-        price: 15,
+        price: 21.99,
+        oldPrice: 27.99,
         description: [
-            '10 Private chats',
-            'Unlimited contacts',
-            'Help center access',
-            'Priority email support',
+            'Access to interactive board',
+            'Ability to create 5 private groups',
+            'Possibility to post 10 videos',
+            'Ability to start a group conference for 1 hour',
         ],
         buttonText: 'Get started',
         buttonVariant: 'contained',
     },
     {
         title: 'Business',
-        price: 15,
+        price: 31.99,
+        oldPrice: 41.99,
         description: [
-            '10 Private chats',
-            'Unlimited contacts',
-            'Help center access',
-            'Priority email support',
+            'Access to interactive board',
+            'Ability to create 5 private groups',
+            'Possibility to post 10 videos',
+            'Ability to start a group conference for 1 hour',
         ],
         buttonText: 'Get started',
         buttonVariant: 'contained',
@@ -73,10 +71,7 @@ const tiers = [
     {
         title: 'Enterprise',
         description: [
-            '50 users included',
-            '30 GB of storage',
-            'Help center access',
-            'Phone & email support',
+            'Contact us to arrange all the functionality you need.'
         ],
         buttonText: 'Contact us',
         buttonVariant: 'outlined',
@@ -91,7 +86,19 @@ const Pricing = () => {
     };
 
     const calculatePrice = (price: number) => {
-        return isYearly ? (price * 12 * 0.8).toFixed(2) : price.toFixed(2);
+        if (isYearly) {
+            const yearlyPrice = price * 12 * 0.8;
+            return (Math.floor(yearlyPrice) + 0.99).toFixed(2);
+        }
+        return price.toFixed(2);
+    };
+
+    const calculateOldPrice = (price: number) => {
+        if (isYearly) {
+            const yearlyOldPrice = price * 12;
+            return yearlyOldPrice.toFixed(2);
+        }
+        return price.toFixed(2);
     };
 
     return (
@@ -118,13 +125,11 @@ const Pricing = () => {
             </AppBar>
 
             <CustomContainer className="Pricing-container" sx={{ pb: 2 }} maxWidth="xl">
-                <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
+                <Typography component="h1" variant="h2" align="center" color="text.primary">
                     Pricing
                 </Typography>
                 <Typography variant="h5" align="center" color="text.secondary" component="p">
-                    Quickly build an effective pricing table for your potential customers with
-                    this layout. It's built with default MUI components with little
-                    customization.
+                    Since the platform is at the development stage, this list of features and prices may change.
                 </Typography>
             </CustomContainer>
 
@@ -132,8 +137,8 @@ const Pricing = () => {
                 <CustomContainer className="Pricing-container" maxWidth="xl">
                     <Grid container spacing={4} alignItems="flex-end" justifyContent={'center'}>
                         {tiers.map((tier) => (
-                            <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2}>
-                                <Card>
+                            <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                <Card sx={{ width: 300 }}>
                                     <CardHeader
                                         title={tier.title}
                                         subheader={tier.subheader}
@@ -150,13 +155,20 @@ const Pricing = () => {
                                         }}
                                     />
                                     <CardContent>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', mb: 2 }}>
-                                            <Typography component="h2" variant={tier.title === 'Enterprise' ? "h6" : "h3"} color="text.primary">
-                                                {tier.price ? `$${calculatePrice(tier.price)}` : tier.title === 'Enterprise' ? 'Contact us' : 'Free'}
-                                            </Typography>
-                                            <Typography variant="h6" color="text.secondary">
-                                                {tier.title === 'Enterprise' || tier.title === 'Free' ? '' : `${isYearly ? 'yr' : 'mo'}`}
-                                            </Typography>
+                                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                                            {tier.oldPrice && (
+                                                <Typography component="span" variant="subtitle1" color="text.secondary" sx={{ textDecoration: 'line-through' }}>
+                                                    {`$${calculateOldPrice(tier.oldPrice)}`}
+                                                </Typography>
+                                            )}
+                                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline' }}>
+                                                <Typography component="h2" variant={tier.title === 'Enterprise' ? "h6" : "h3"} color="text.primary">
+                                                    {tier.price ? `$${calculatePrice(tier.price)}` : tier.title === 'Enterprise' ? 'Contact us' : 'Free'}
+                                                </Typography>
+                                                <Typography variant="h6" color="text.secondary">
+                                                    {tier.title === 'Enterprise' || tier.title === 'Free' ? '' : `${isYearly ? 'yr' : 'mo'}`}
+                                                </Typography>
+                                            </Box>
                                         </Box>
                                         <ul>
                                             {tier.description.map((line) => (
@@ -164,12 +176,12 @@ const Pricing = () => {
                                                     {line}
                                                 </Typography>
                                             ))}
-                                            <Typography component="li" variant="subtitle1" align="center">
+                                            {/* <Typography component="li" variant="subtitle1" align="center">
                                                 <CheckCircleOutlineIcon sx={{ verticalAlign: 'middle' }} /> Feature 1
                                             </Typography>
                                             <Typography component="li" variant="subtitle1" align="center">
                                                 <CheckCircleOutlineIcon sx={{ verticalAlign: 'middle' }} /> Feature 2
-                                            </Typography>
+                                            </Typography> */}
                                         </ul>
                                     </CardContent>
                                     <CardActions>
