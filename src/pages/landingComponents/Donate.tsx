@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Container, Typography, Grid, IconButton } from "@mui/material";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { useSpring, animated } from 'react-spring';
-
 import NeuCard from "../../components/neumorphism/card/NeuCard";
 import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
 import NeuCardHeader from "../../components/neumorphism/card/NeuCardHeader";
@@ -18,18 +16,18 @@ const Donate: React.FC = () => {
     const isVisible = useOnScreen(containerRef);
 
     useEffect(() => {
-        let timer: number;
+        let timer: number | undefined;
 
-        if (isVisible && visibleCards.length < 6) { // Убедитесь, что здесь указано правильное количество карточек
+        if (isVisible && visibleCards.length < 6) {
             timer = window.setTimeout(() => {
                 setVisibleCards((prev) => [...prev, prev.length]);
             }, 150);
-        } else if (!isVisible) {
+        } else if (!isVisible && visibleCards.length !== 0) {
             setVisibleCards([]);
         }
 
         return () => clearTimeout(timer);
-    }, [isVisible, visibleCards.length]); // Убедитесь, что зависимости указаны корректно
+    }, [isVisible, visibleCards.length]);
 
     const cardsData = [
         {
@@ -64,12 +62,6 @@ const Donate: React.FC = () => {
         }
     ];
 
-    const animationProps = useSpring({
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'scale(1)' : 'scale(0)',
-        config: { tension: 170, friction: 26 },
-    });
-
     return (
         <Container sx={{ padding: "20px" }} ref={containerRef}>
             <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
@@ -80,86 +72,84 @@ const Donate: React.FC = () => {
             <Grid container spacing={2}>
                 {cardsData.map((card, index) => (
                     <Grid item key={index} xs={6} md={4}>
-                        <animated.div style={visibleCards.includes(index) ? animationProps : { opacity: 0, transform: 'scale(0)' }}>
-                            <NeuCard
-                                in={visibleCards.includes(index)}
-                                elevation={3}
-                                rounded
-                                sx={{
-                                    padding: "0",
-                                    margin: "16px",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: 'start'
-                                }}
-                            >
-                                <NeuCardHeader title={card.title} sx={{ pb: 0, mt: 1 }} />
-                                <NeuCardContent sx={{ justifyContent: 'start', alignItems: 'start', flexDirection: 'column', display: 'flex' }}>
-                                    {card.cardType && (
-                                        <Box>
-                                            <Typography
-                                                variant="body2"
-                                                color="text.secondary"
-                                                sx={{ marginBottom: "16px" }}
-                                            >
-                                                {card.cardType}
-                                            </Typography>
-                                        </Box>
-                                    )}
-                                    {card.bic && (
-                                        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                                            <Typography
-                                                variant="body2"
-                                                color="text.secondary"
-                                                sx={{ flexGrow: 1, marginBottom: "16px" }}
-                                            >
-                                                {card.bic}
-                                            </Typography>
-                                            <IconButton onClick={() => copyToClipboard(card.bic)}>
-                                                <FileCopyIcon />
-                                            </IconButton>
-                                        </Box>
-                                    )}
-                                    {card.iban && (
-                                        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                                            <Typography
-                                                variant="body2"
-                                                color="text.secondary"
-                                                sx={{ flexGrow: 1, marginBottom: "16px" }}
-                                            >
-                                                {card.iban}
-                                            </Typography>
-                                            <IconButton onClick={() => copyToClipboard(card.iban)}>
-                                                <FileCopyIcon />
-                                            </IconButton>
-                                        </Box>
-                                    )}
-                                    {card.email && (
-                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Typography
-                                                variant="body2"
-                                                color="text.secondary"
-                                                sx={{ flexGrow: 1, marginBottom: "16px" }}
-                                            >
-                                                {card.email}
-                                            </Typography>
-                                            <IconButton onClick={() => copyToClipboard(card.email)}>
-                                                <FileCopyIcon />
-                                            </IconButton>
-                                        </Box>
-                                    )}
-                                    {card.link && (
-                                        <Box sx={{}}>
-                                            <span>
-                                                <a href={card.link} target="_blank" rel="noopener noreferrer">
-                                                    Click here
-                                                </a>
-                                            </span>
-                                        </Box>
-                                    )}
-                                </NeuCardContent>
-                            </NeuCard>
-                        </animated.div>
+                        <NeuCard
+                            in={visibleCards.includes(index)} // Передаем состояние видимости
+                            elevation={3}
+                            rounded
+                            sx={{
+                                padding: "0",
+                                margin: "16px",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: 'start'
+                            }}
+                        >
+                            <NeuCardHeader title={card.title} sx={{ pb: 0, mt: 1 }} />
+                            <NeuCardContent sx={{ justifyContent: 'start', alignItems: 'start', flexDirection: 'column', display: 'flex' }}>
+                                {card.cardType && (
+                                    <Box>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            sx={{ marginBottom: "16px" }}
+                                        >
+                                            {card.cardType}
+                                        </Typography>
+                                    </Box>
+                                )}
+                                {card.bic && (
+                                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                        >
+                                            {card.bic}
+                                        </Typography>
+                                        <IconButton onClick={() => copyToClipboard(card.bic)}>
+                                            <FileCopyIcon />
+                                        </IconButton>
+                                    </Box>
+                                )}
+                                {card.iban && (
+                                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                        >
+                                            {card.iban}
+                                        </Typography>
+                                        <IconButton onClick={() => copyToClipboard(card.iban)}>
+                                            <FileCopyIcon />
+                                        </IconButton>
+                                    </Box>
+                                )}
+                                {card.email && (
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                        >
+                                            {card.email}
+                                        </Typography>
+                                        <IconButton onClick={() => copyToClipboard(card.email)}>
+                                            <FileCopyIcon />
+                                        </IconButton>
+                                    </Box>
+                                )}
+                                {card.link && (
+                                    <Box sx={{}}>
+                                        <span>
+                                            <a href={card.link} target="_blank" rel="noopener noreferrer">
+                                                Click here
+                                            </a>
+                                        </span>
+                                    </Box>
+                                )}
+                            </NeuCardContent>
+                        </NeuCard>
                     </Grid>
                 ))}
             </Grid>
