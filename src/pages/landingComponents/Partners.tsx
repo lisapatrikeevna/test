@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
-import { Box, Container, Typography, Skeleton, Link, Grid } from '@mui/material';
+import { Box, Container, Skeleton, Link, Grid } from '@mui/material';
 import NeuCard from '../../components/neumorphism/card/NeuCard';
 import NeuCardContent from '../../components/neumorphism/card/NeuCardContent';
 import ionosLogo from '../../assets/partners/ionosLogo.jpg';
@@ -64,7 +64,7 @@ const Partners: React.FC = memo(() => {
   return (
       <Container sx={{ zIndex:'100', padding: '15px 0px 15px', maxHeight: 'calc(100vh - 200px)', overflowY: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} ref={containerRef}>
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-          <Typography variant="h4">Partners</Typography>
+          {/* <Typography variant="h4">Partners</Typography> */}
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100%'}}>
           <Grid container spacing={4} justifyContent="center">
