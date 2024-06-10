@@ -3,7 +3,6 @@ import {
     AppBar, Box, Button, Card, CardActions, CardContent, CardHeader, CssBaseline,
     Grid, Toolbar, Typography, GlobalStyles, Container, Switch, FormControlLabel
 } from '@mui/material';
-// import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import StarIcon from '@mui/icons-material/StarBorder';
 import { styled } from '@mui/system';
 
@@ -24,14 +23,14 @@ const tiers = [
     {
         title: 'Free',
         price: 0,
-        description: [
-        ],
+        description: [],
         buttonText: 'Sign up for free',
         buttonVariant: 'outlined',
     },
     {
         title: 'Basic',
         price: 11.99,
+        oldPrice: 17.99,
         description: [
             'Access to chats',
             'Access to videos',
@@ -46,6 +45,7 @@ const tiers = [
         title: 'Prime',
         subheader: 'Most popular',
         price: 21.99,
+        oldPrice: 27.99,
         description: [
             'Access to interactive board',
             'Ability to create 5 private groups',
@@ -58,6 +58,7 @@ const tiers = [
     {
         title: 'Business',
         price: 31.99,
+        oldPrice: 41.99,
         description: [
             'Access to interactive board',
             'Ability to create 5 private groups',
@@ -92,6 +93,14 @@ const Pricing = () => {
         return price.toFixed(2);
     };
 
+    const calculateOldPrice = (price: number) => {
+        if (isYearly) {
+            const yearlyOldPrice = price * 12;
+            return yearlyOldPrice.toFixed(2);
+        }
+        return price.toFixed(2);
+    };
+
     return (
         <Box>
             <GlobalStyles styles={{
@@ -116,7 +125,7 @@ const Pricing = () => {
             </AppBar>
 
             <CustomContainer className="Pricing-container" sx={{ pb: 2 }} maxWidth="xl">
-                <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
+                <Typography component="h1" variant="h2" align="center" color="text.primary">
                     Pricing
                 </Typography>
                 <Typography variant="h5" align="center" color="text.secondary" component="p">
@@ -146,13 +155,20 @@ const Pricing = () => {
                                         }}
                                     />
                                     <CardContent>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', mb: 2 }}>
-                                            <Typography component="h2" variant={tier.title === 'Enterprise' ? "h6" : "h3"} color="text.primary">
-                                                {tier.price ? `$${calculatePrice(tier.price)}` : tier.title === 'Enterprise' ? 'Contact us' : 'Free'}
-                                            </Typography>
-                                            <Typography variant="h6" color="text.secondary">
-                                                {tier.title === 'Enterprise' || tier.title === 'Free' ? '' : `${isYearly ? 'yr' : 'mo'}`}
-                                            </Typography>
+                                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                                            {tier.oldPrice && (
+                                                <Typography component="span" variant="subtitle1" color="text.secondary" sx={{ textDecoration: 'line-through' }}>
+                                                    {`$${calculateOldPrice(tier.oldPrice)}`}
+                                                </Typography>
+                                            )}
+                                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline' }}>
+                                                <Typography component="h2" variant={tier.title === 'Enterprise' ? "h6" : "h3"} color="text.primary">
+                                                    {tier.price ? `$${calculatePrice(tier.price)}` : tier.title === 'Enterprise' ? 'Contact us' : 'Free'}
+                                                </Typography>
+                                                <Typography variant="h6" color="text.secondary">
+                                                    {tier.title === 'Enterprise' || tier.title === 'Free' ? '' : `${isYearly ? 'yr' : 'mo'}`}
+                                                </Typography>
+                                            </Box>
                                         </Box>
                                         <ul>
                                             {tier.description.map((line) => (
