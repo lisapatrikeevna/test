@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import {
-    AppBar, Box, Button, Card, CardActions, CardContent, CardHeader, CssBaseline,
-    Grid, Toolbar, Typography, GlobalStyles, Container, Switch, FormControlLabel
+    AppBar, Box, Grid, Toolbar, Typography, GlobalStyles, Container, Switch, FormControlLabel,
+    CssBaseline, List, ListItem, ListItemText
 } from '@mui/material';
 import StarIcon from '@mui/icons-material/StarBorder';
 import { styled } from '@mui/system';
+import NeuCard from '../../components/neumorphism/card/NeuCard';
+import NeuCardHeader from '../../components/neumorphism/card/NeuCardHeader';
+import NeuCardContent from '../../components/neumorphism/card/NeuCardContent';
+import NeuCardAction from '../../components/neumorphism/card/NeuCardAction';
+import NeuButton from '../../components/neumorphism/button/NeuButton';
 
 const CustomContainer = styled(Container)({
     width: '100%',
@@ -14,7 +19,7 @@ const CustomContainer = styled(Container)({
 const ScrollableContainer = styled(Box)({
     width: '100%',
     overflowY: 'auto',
-    maxHeight: 'calc(100vh - 420px)', 
+    maxHeight: 'calc(100vh - 400px)', 
     paddingTop: '10px',
     paddingBottom: '10px'
 });
@@ -32,11 +37,11 @@ const tiers = [
         price: 11.99,
         oldPrice: 17.99,
         description: [
-            'Access to chats',
-            'Access to videos',
-            'Access to conferences',
-            'Access to calendar',
-            'Access to notes'
+            'Access to chats.',
+            'Access to videos.',
+            'Access to conferences.',
+            'Access to calendar.',
+            'Access to notes.'
         ],
         buttonText: 'Get started',
         buttonVariant: 'contained',
@@ -47,10 +52,10 @@ const tiers = [
         price: 21.99,
         oldPrice: 27.99,
         description: [
-            'Access to interactive board',
-            'Ability to create 5 private groups',
-            'Possibility to post 10 videos',
-            'Ability to start a group conference for 1 hour',
+            'Access to interactive board.',
+            'Ability to create 5 private groups.',
+            'Possibility to post 10 videos.',
+            'Ability to start a group conference for 1 hour.',
         ],
         buttonText: 'Get started',
         buttonVariant: 'contained',
@@ -60,10 +65,10 @@ const tiers = [
         price: 31.99,
         oldPrice: 41.99,
         description: [
-            'Access to interactive board',
-            'Ability to create 5 private groups',
-            'Possibility to post 10 videos',
-            'Ability to start a group conference for 1 hour',
+            'Access to interactive board.',
+            'Ability to create 5 private groups.',
+            'Possibility to post 10 videos.',
+            'Ability to start a group conference for 1 hour.',
         ],
         buttonText: 'Get started',
         buttonVariant: 'contained',
@@ -107,8 +112,7 @@ const Pricing = () => {
                 '.MuiContainer-root.Pricing-container': {
                     maxWidth: '1920px !important',
                     maxHeight: '1080px !important',
-                },
-                ul: { margin: 0, padding: 0, listStyle: 'none' }
+                }
             }} />
             <CssBaseline />
             <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
@@ -138,23 +142,13 @@ const Pricing = () => {
                     <Grid container spacing={4} alignItems="flex-end" justifyContent={'center'}>
                         {tiers.map((tier) => (
                             <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2} sx={{ display: 'flex', justifyContent: 'center' }}>
-                                <Card sx={{ width: 300, height: tier.title === 'Prime' ? '520px' : '500px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                    <CardHeader
+                                <NeuCard sx={{ width: 300, height: tier.title === 'Prime' ? '540px' : '500px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                    <NeuCardHeader
                                         title={tier.title}
-                                        subheader={tier.subheader}
-                                        titleTypographyProps={{ align: 'center' }}
-                                        action={tier.title === 'Prime' ? <StarIcon /> : null}
-                                        subheaderTypographyProps={{
-                                            align: 'center',
-                                        }}
-                                        sx={{
-                                            backgroundColor: (theme) =>
-                                                theme.palette.mode === 'light'
-                                                    ? theme.palette.grey[200]
-                                                    : theme.palette.grey[700],
-                                        }}
+                                        avatar={tier.title === 'Prime' ? <StarIcon /> : null}
+                                        subtitle={tier.subheader}
                                     />
-                                    <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                                    <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
                                         {tier.oldPrice && (
                                             <Typography component="span" variant="subtitle1" color="text.secondary" sx={{ textDecoration: 'line-through', fontSize: '1.25rem' }}>
                                                 {`$${calculateOldPrice(tier.oldPrice)}`}
@@ -168,20 +162,20 @@ const Pricing = () => {
                                                 {tier.title === 'Enterprise' || tier.title === 'Free' ? '' : `${isYearly ? 'yr' : 'mo'}`}
                                             </Typography>
                                         </Box>
-                                        <ul>
+                                        <List sx={{ width: '100%', padding: 0 }}>
                                             {tier.description.map((line) => (
-                                                <Typography component="li" variant="subtitle1" align="center" key={line}>
-                                                    {line}
-                                                </Typography>
+                                                <ListItem key={line} sx={{ padding: 0 }}>
+                                                    <ListItemText primary={line} sx={{ textAlign: 'left' }} />
+                                                </ListItem>
                                             ))}
-                                        </ul>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Button fullWidth variant={tier.buttonVariant as 'text' | 'outlined' | 'contained'}>
+                                        </List>
+                                    </NeuCardContent>
+                                    <NeuCardAction>
+                                        <NeuButton fullWidth rounded variant={tier.buttonVariant as 'text' | 'outlined' | 'contained'}>
                                             {tier.buttonText}
-                                        </Button>
-                                    </CardActions>
-                                </Card>
+                                        </NeuButton>
+                                    </NeuCardAction>
+                                </NeuCard>
                             </Grid>
                         ))}
                     </Grid>
