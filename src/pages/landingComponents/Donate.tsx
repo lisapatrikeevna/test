@@ -29,7 +29,7 @@ const Donate: React.FC = () => {
         }
 
         return () => clearTimeout(timer);
-    }, [isVisible, visibleCards]);
+    }, [isVisible, visibleCards.length]); // Убедитесь, что зависимости указаны корректно
 
     const cardsData = [
         {
@@ -65,8 +65,8 @@ const Donate: React.FC = () => {
     ];
 
     const animationProps = useSpring({
-        transform: isVisible ? 'scale(1)' : 'scale(0)',
         opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'scale(1)' : 'scale(0)',
         config: { tension: 170, friction: 26 },
     });
 
@@ -79,7 +79,7 @@ const Donate: React.FC = () => {
             </Box>
             <Grid container spacing={2}>
                 {cardsData.map((card, index) => (
-                    <Grid key={index} xs={6} md={4}>
+                    <Grid item key={index} xs={6} md={4}>
                         <animated.div style={visibleCards.includes(index) ? animationProps : { opacity: 0, transform: 'scale(0)' }}>
                             <NeuCard
                                 in={visibleCards.includes(index)}
