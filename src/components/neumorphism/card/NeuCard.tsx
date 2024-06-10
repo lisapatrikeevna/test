@@ -3,6 +3,7 @@ import { Card, CardProps } from '@mui/material';
 import { styled } from '@mui/system';
 import { Theme } from '@mui/material/styles';
 import { Shadows } from '../../../types/types';
+import { useSpring, animated } from 'react-spring';
 
 interface NeuCardProps extends CardProps {
   dark?: boolean;
@@ -12,6 +13,7 @@ interface NeuCardProps extends CardProps {
   outlined?: boolean;
   bordered?: boolean;
   elevation?: number;
+  in?: boolean;
 }
 
 const getCardStyles = (theme: Theme, props: NeuCardProps) => {
@@ -20,7 +22,7 @@ const getCardStyles = (theme: Theme, props: NeuCardProps) => {
     boxShadow: typedTheme.shadows[1],
     color: typedTheme.palette.text.primary,
     borderRadius: typedTheme.shape.borderRadius,
-    transition: 'box-shadow 200ms ease-in-out',
+    transition: 'box-shadow 100ms ease-in-out',
   };
 
   const shadowLevel = props.elevation ? props.elevation : 1;
@@ -35,13 +37,13 @@ const getCardStyles = (theme: Theme, props: NeuCardProps) => {
 
 const StyledCard = styled(Card, {
   shouldForwardProp: (prop) =>
-    prop !== 'dark' &&
-    prop !== 'flat' &&
-    prop !== 'inset' &&
-    prop !== 'rounded' &&
-    prop !== 'outlined' &&
-    prop !== 'bordered' &&
-    prop !== 'elevation',
+      prop !== 'dark' &&
+      prop !== 'flat' &&
+      prop !== 'inset' &&
+      prop !== 'rounded' &&
+      prop !== 'outlined' &&
+      prop !== 'bordered' &&
+      prop !== 'elevation',
 })<NeuCardProps>(({ theme, ...props }) => ({
   ...getCardStyles(theme as Theme, props),
   outline: 'none',
@@ -67,8 +69,27 @@ const StyledCard = styled(Card, {
   ...(props.inset && { boxShadow: 'var(--box-shadow-inset)' }),
 }));
 
+const ContentWrapper = styled('div')<{ in: boolean }>(({ in: inProp }) => ({
+  opacity: inProp ? 1 : 0,
+  transition: 'opacity 300ms ease-in-out',
+}));
+
 const NeuCard: React.FC<NeuCardProps> = (props) => {
-  return <StyledCard {...props} />;
+  const { in: inProp, children, ...rest } = props;
+
+  const animationProps = useSpring({
+    transform: inProp ? 'scale(1)' : 'scale(0)',
+    opacity: inProp ? 1 : 0,
+    config: { tension: 170, friction: 26 },
+  });
+
+  return (
+      <animated.div style={animationProps}>
+        <StyledCard {...rest}>
+          <ContentWrapper in={inProp ?? true}>{children}</ContentWrapper>
+        </StyledCard>
+      </animated.div>
+  );
 };
 
 export default NeuCard;
