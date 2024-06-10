@@ -43,7 +43,7 @@ const Project = () => {
     return (
         <Box
             sx={{
-                padding: '20px',
+                padding: '20px 0px 20px 0px',
                 height: '78vh',
                 width: '80vw',
                 justifyContent: 'center',

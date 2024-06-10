@@ -44,7 +44,7 @@ const Partners: React.FC = memo(() => {
   }, []);
 
   return (
-    <Container sx={{ padding: '15px', maxHeight: 'calc(100vh - 200px)', overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Container sx={{ zIndex:'100', padding: '15px 0px 15px', maxHeight: 'calc(100vh - 200px)', overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
         <Typography variant="h4">Partners</Typography>
       </Box>

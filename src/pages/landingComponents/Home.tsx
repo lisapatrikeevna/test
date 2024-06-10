@@ -14,14 +14,14 @@ const Home: FC = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
         justifyContent: 'space-between',
-        width: '100%',
+        width: '115%',
         height: '100%',
         padding: {
           xs: '20px 15px',
           sm: '20px 15px',
           lg: '1vh 2vw',
+            xl: '15px 0px 15px',
         },
       }}
     >
@@ -40,9 +40,20 @@ const Home: FC = () => {
           Connect and learn with us!
         </Typography>
       </Box>
+        <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+            padding: {
+                xs: '20px 15px',
+                sm: '20px 15px',
+                lg: '1vh 2vw',
+                xl: '15px 0px 15px',
+                justifyContent: 'space-between',
+            },}}>
+            <Typography variant='h2' sx={{textStyle}}>
+            Beta Version, updates planned for 2024
+        </Typography>
       <Box
         sx={{
-            display: 'flex', justifyContent: 'center', alignItems: 'center',
+            display: 'flex', justifyContent: 'flex-end', alignItems: 'center',
             width: { xs: '100%',
                 sm: '60%',
                 md: '550px',
@@ -56,9 +67,10 @@ const Home: FC = () => {
             xl: '430px'
           },
 
-            marginTop: '1vw'
+            marginTop: '1vw', marginRight: '1vw'
         }}
       >
+
         <iframe
           src="https://www.youtube.com/embed/SMAlg2DKCbU?si=esX7eF6Hqj8mNRlu"
           title="YouTube video player"
@@ -68,6 +80,7 @@ const Home: FC = () => {
           style={{ width: '100%', height: '100%', borderRadius: '10px' }}
         ></iframe>
       </Box>
+    </Box>
     </Box>
   );
 };
