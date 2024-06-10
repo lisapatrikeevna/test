@@ -6,56 +6,8 @@ import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
 import NeuCardHeader from "../../components/neumorphism/card/NeuCardHeader";
 import NeuButton from "../../components/neumorphism/button/NeuButton";
 import useOnScreen from "../../components/hooks/useOnScreen.ts";
+import { news, NewsItem } from '../../configs/newsConfig';
 
-interface NewsItem {
-  title: string;
-  content: string;
-  fullContent: string;
-}
-
-const news: NewsItem[] = [
-  {
-    title: "Some news 1",
-    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Sed eget risus porta, tincidunt turpis at, interdum tortor.`,
-    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. 
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-  },
-  {
-    title: "Some news 2",
-    content: "Sed eget risus porta, tincidunt turpis at, interdum tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-  },
-  {
-    title: "Some news 3",
-    content: "Pellentesque habitant morbi tristique senectus et netus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-  },
-  {
-    title: "Some news 4",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-  },
-  {
-    title: "Some news 5",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-  },
-  {
-    title: "Some news 6",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    fullContent: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
-       Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-  },
-];
 
 const News: React.FC = () => {
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
@@ -75,7 +27,7 @@ const News: React.FC = () => {
     }
 
     return () => clearTimeout(timer);
-  }, [isVisible, visibleCards.length]); // Убедитесь, что зависимости указаны корректно
+  }, [isVisible, visibleCards.length]); // Need to check, that dependencies are correct
 
   const handleOpenModal = (newsItem: NewsItem) => {
     setSelectedNews(newsItem);
@@ -86,9 +38,9 @@ const News: React.FC = () => {
   };
 
   return (
-      <Container sx={{ padding: "20px" }} ref={containerRef}>
+      <Container sx={{ padding: "1vw" }} ref={containerRef}>
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-          <Typography variant="h4" sx={{ paddingBottom: "20px" }}>
+          <Typography variant="h4" sx={{ paddingBottom: "1.2vw" }}>
             News
           </Typography>
         </Box>
@@ -96,24 +48,24 @@ const News: React.FC = () => {
           {news.map((item, index) => (
               <Grid item key={index} xs={6} md={4}>
                 <NeuCard
-                    in={visibleCards.includes(index)} // Передаем состояние видимости
+                    in={visibleCards.includes(index)} // Giving state of visibility
                     elevation={3}
                     rounded
                     sx={{
                       padding: "0",
-                      margin: "16px",
+                      margin: "0.8vw",
                       display: "flex",
                       flexDirection: "column",
                       alignItems: 'start'
                     }}
                 >
-                  <NeuCardHeader title={item.title} sx={{ pb: 0, mt: 1 }} />
+                  <NeuCardHeader title={item.title} sx={{ pb: 0}} />
                   <NeuCardContent>
                     <Box sx={{}}>
                       <Typography
                           variant="body2"
                           color="text.secondary"
-                          sx={{ flexGrow: 1, marginBottom: "16px" }}
+                          sx={{ flexGrow: 1 }}
                       >
                         {item.content}
                       </Typography>
