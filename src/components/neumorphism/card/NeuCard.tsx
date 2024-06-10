@@ -69,7 +69,7 @@ const StyledCard = styled(Card, {
   ...(props.inset && { boxShadow: 'var(--box-shadow-inset)' }),
 }));
 
-const ContentWrapper = styled('div')<{ in: boolean }>(({ in: inProp }) => ({
+const ContentWrapper = styled('div')<{ inProp: boolean }>(({ inProp }) => ({
   opacity: inProp ? 1 : 0,
   transition: 'opacity 300ms ease-in-out',
 }));
@@ -86,7 +86,7 @@ const NeuCard: React.FC<NeuCardProps> = (props) => {
   return (
       <animated.div style={animationProps}>
         <StyledCard {...rest}>
-          <ContentWrapper in={inProp ?? true}>{children}</ContentWrapper>
+          <ContentWrapper inProp={inProp ?? true}>{children}</ContentWrapper>
         </StyledCard>
       </animated.div>
   );
