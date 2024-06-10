@@ -101,7 +101,7 @@ const Pricing = () => {
     const calculateOldPrice = (price: number) => {
         if (isYearly) {
             const yearlyOldPrice = price * 12;
-            return yearlyOldPrice.toFixed(2);
+            return (Math.floor(yearlyOldPrice) + 0.99).toFixed(2);
         }
         return price.toFixed(2);
     };
