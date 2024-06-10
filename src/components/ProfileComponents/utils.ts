@@ -49,7 +49,7 @@ export const hashTagsData = [
   },
   {
     id: 5,
-    title: 'coocking',
+    title: 'cooking',
   },
   {
     id: 6,

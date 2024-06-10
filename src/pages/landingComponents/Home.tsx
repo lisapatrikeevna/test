@@ -13,7 +13,7 @@ const Home: FC = () => {
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
         width: '100%',
@@ -27,7 +27,7 @@ const Home: FC = () => {
     >
       <Box
         sx={{
-          flex: '1 1 50%',
+          display: 'flex',
           marginRight: '2rem',
         }}
       >
@@ -36,30 +36,18 @@ const Home: FC = () => {
           sx={textStyle}
         >
           Your
-        </Typography>
-        <Typography
-          variant="h4"
-          sx={textStyle}
-        >
           communication deserves the best – it deserves to be on NeoXonline!
-        </Typography>
-        <Typography
-          variant="h4"
-          sx={textStyle}
-        >
           Connect and learn with us!
         </Typography>
       </Box>
       <Box
         sx={{
-          flex: '1 1 50%',
-          maxWidth: {
-            xs: '100%',
-            sm: '60%',
-            md: '550px',
-            lg: '700px',
-            xl: '830px'
-          },
+            display: 'flex', justifyContent: 'center', alignItems: 'center',
+            width: { xs: '100%',
+                sm: '60%',
+                md: '550px',
+                lg: '700px',
+                xl: '830px'},
           height: {
             xs: '200px',
             sm: '300px',
@@ -67,16 +55,8 @@ const Home: FC = () => {
             lg: '350px',
             xl: '430px'
           },
-          borderRadius: '25px',
-          boxShadow: `
-            -13px -13px 20px var(--shadow_outer_dark),
-            13px 13px 20px var(--shadow_outer_light),
-            -8px -8px 20px var(--shadow_outer_dark),
-            13px 13px 20px var(--shadow_outer_light),
-            inset -9px -9px 17px var(--shadow_inner_dark),
-            inset 9px 9px 17px var(--shadow_inner_light)
-          `,
-          marginTop: '15vw' 
+
+            marginTop: '1vw'
         }}
       >
         <iframe
@@ -85,7 +65,7 @@ const Home: FC = () => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
-          style={{ width: '100%', height: '100%', borderRadius: '25px' }}
+          style={{ width: '100%', height: '100%', borderRadius: '10px' }}
         ></iframe>
       </Box>
     </Box>
