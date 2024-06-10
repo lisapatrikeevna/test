@@ -13,7 +13,7 @@ import {
 import ActiveSectionContext from '../../contexts/ActiveSectionContext.tsx';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import LoginModal from '../../components/LoginModal.tsx';
-import logo from '../../assets/neox-logo.svg';
+import logo from '../../assets/partners/neox-logo.svg';
 import NeuButton from "../../components/neumorphism/button/NeuButton.tsx";
 import NeuSwitch from '../../components/neumorphism/switch/NeuSwitch.tsx';
 
