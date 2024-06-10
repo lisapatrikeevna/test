@@ -12,7 +12,7 @@ interface NeuCardActionProps extends BoxProps {
 const getActionStyles = (theme: Theme, props: NeuCardActionProps) => {
   const typedTheme = theme as Theme & { shadows: Shadows };
   return {
-    backgroundColor: typedTheme.palette.background.default,
+    backgroundColor: typedTheme.palette.background.default, // используем background.default вместо background.paper
     color: typedTheme.palette.text.primary,
     borderRadius: props.rounded ? '24px' : '8px',
   };

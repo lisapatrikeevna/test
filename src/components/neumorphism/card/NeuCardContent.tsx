@@ -28,8 +28,8 @@ const StyledCardContent = styled(Box, {
   alignItems: 'center',
   justifyContent: 'center',
   boxSizing: 'border-box',
-  backgroundColor: 'inherit',
-  color: 'inherit',
+  backgroundColor: theme.palette.background.paper,
+  color: 'var(--text-color)',
   borderRadius: props.rounded ? '24px' : '8px',
 }));
 
