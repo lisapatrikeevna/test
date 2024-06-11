@@ -56,7 +56,7 @@ const Captcha = ({ onResult, reset }: CaptchaProps) => {
             {isPassed ? (
                 <Typography variant="body1">Passed</Typography>
             ) : (
-                <>
+                <div>
                     <Typography gutterBottom sx={{ mt: 1, ml: 1 }} variant="body1">Answer the question:</Typography>
                     <Typography sx={{ mt: 1, ml: 1 }} gutterBottom variant="body1">{`${num1} ${operator} ${num2} = ?`}</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -73,9 +73,9 @@ const Captcha = ({ onResult, reset }: CaptchaProps) => {
                             onChange={(e) => setUserAnswer(e.target.value)}
                             onKeyDown={handleKeyDown} // Add the keydown event listener
                         />
-                        <NeuButton rounded sx={{ color: 'var(--text)', backgroundColor: 'var(--body)' }}  onClick={checkAnswer}>Check</NeuButton>
+                        <NeuButton rounded variant="contained" onClick={checkAnswer}>Check</NeuButton>
                     </Box>
-                </>
+                </div>
             )}
         </Box>
     );
