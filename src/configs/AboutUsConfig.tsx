@@ -3,7 +3,8 @@ export const title = [
     "Our Vision",
     "Our Team",
     "Our Commitment",
-    "Join Us"
+    "Join Us",
+    ""
 ];
 
 export const text = [

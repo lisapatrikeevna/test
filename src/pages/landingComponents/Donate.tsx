@@ -6,6 +6,7 @@ import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
 import NeuCardHeader from "../../components/neumorphism/card/NeuCardHeader";
 import useOnScreen from "../../components/hooks/useOnScreen";
 import { cardsData } from '../../configs/DonateConfig';
+import NeuButton from "../../components/neumorphism/button/NeuButton.tsx";
 
 const copyToClipboard = (text: string) => {
     // Finding ": " in text
@@ -20,6 +21,10 @@ const copyToClipboard = (text: string) => {
         // If symbol ": " not found or he is the last in the string, then copy whole text
         navigator.clipboard.writeText(text);
     }
+};
+const checkAnswer = () => {
+    const url = 'https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb'; // Укажите здесь нужную вам ссылку
+    window.open(url, '_blank', 'noopener,noreferrer');
 };
 
 
@@ -49,7 +54,7 @@ const Donate: React.FC = () => {
             {/*        Donates*/}
             {/*    </Typography>*/}
             {/*</Box>*/}
-            <Box sx={{ paddingLeft: '0.8vw' }}>
+            <Box sx={{ paddingLeft: '1vw' }}>
                 <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1.2vw" }}>
                     Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
                 </Typography>
@@ -152,12 +157,10 @@ const Donate: React.FC = () => {
                                 )}
                                 {card.link && (
                                     <Box sx={{}}>
-                            <span>
-                                <a href={card.link} target="_blank" rel="noopener noreferrer"
-                                   style={{fontSize: '165%'}}>
-                                    Click here
-                                </a>
-                            </span>
+                                        <NeuButton rounded sx={{ color: 'var(--text)', backgroundColor: 'var(--body)', fontSize: '125%' }}
+                                                    onClick={checkAnswer}>
+                                            Support Us
+                                        </NeuButton>
                                     </Box>
                                 )}
                             </NeuCardContent>
