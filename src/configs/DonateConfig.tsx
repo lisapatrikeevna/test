@@ -1,11 +1,11 @@
-import SparkasseLogo from '../assets/donate/Sparkassen-Logo.jpg';
+import SparkasseLogo from '../assets/donate/Sparkasse.png';
 import PostBankLogo from '../assets/donate/Postbank-Logo.svg';
 import MasterCardLogo from '../assets/donate/MasterCard_Logo.svg';
 import MaestroLogo from '../assets/donate/Maestro_Logo.svg';
 import VisaLogo from '../assets/donate/Visa_Inc._logo.svg';
 import RevolutLogo from '../assets/donate/revolute-logo.png';
 import PaypalLogo from '../assets/donate/Paypal_logo.svg';
-import BinanceLogo from '../assets/donate/Binance-logo.png';
+import BinanceLogo from '../assets/donate/Binance_logo.svg';
 
 export const cardsData = [
     {
