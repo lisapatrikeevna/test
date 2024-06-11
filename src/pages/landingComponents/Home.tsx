@@ -33,7 +33,7 @@ const Home: FC = () => {
                 }}
             >
                 <Typography
-                    variant="h4"
+                    variant="h1"
                     sx={textStyle}
                 >
                     Your

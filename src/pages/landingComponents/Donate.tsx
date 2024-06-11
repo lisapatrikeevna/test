@@ -43,16 +43,16 @@ const Donate: React.FC = () => {
     }, [isVisible, visibleCards.length]);
 
     return (
-        <Container sx={{ padding: "1vw 0px 1vw", display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 2, flexDirection: 'column' }}>
-                <Typography variant="h4" sx={{ paddingBottom: "20px" }}>
-                    Donates
-                </Typography>
-            </Box>
-            <Box sx={{ paddingLeft: '0.5vw' }}>
-                {/*<Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
+        <Container sx={{  display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
+            {/*<Box sx={{ display: "flex", justifyContent: "center", mb: 2, flexDirection: 'column' }}>*/}
+            {/*    <Typography variant="h4" sx={{ paddingBottom: "20px" }}>*/}
+            {/*        Donates*/}
+            {/*    </Typography>*/}
+            {/*</Box>*/}
+            <Box sx={{ paddingLeft: '0.8vw' }}>
+                <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1.2vw" }}>
                     Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
-                </Typography>*/}
+                </Typography>
             </Box>
             <Grid container spacing={2}>
                 {cardsData.map((card, index) => (
@@ -97,7 +97,11 @@ const Donate: React.FC = () => {
                                             {card.bic}
                                         </Typography>
                                         <IconButton
-
+                                            sx={{
+                                                fontSize: "inherit",
+                                                padding: 0,
+                                                marginLeft: '10px'
+                                            }}
                                             onClick={() => copyToClipboard(card.bic)}
                                         >
                                             <ContentCopyIcon />
@@ -116,7 +120,8 @@ const Donate: React.FC = () => {
                                         <IconButton
                                             sx={{
                                                 fontSize: "inherit",
-                                                padding: 0
+                                                padding: 0,
+                                                marginLeft: '10px'
                                             }}
                                             onClick={() => copyToClipboard(card.iban)}
                                         >
@@ -129,14 +134,15 @@ const Donate: React.FC = () => {
                                         <Typography
                                             variant="body1"
                                             color="text.secondary"
-                                            sx={{ flexGrow: 1 }}
+                                            sx={{ flexGrow: 1}}
                                         >
                                             {card.email}
                                         </Typography>
                                         <IconButton
                                             sx={{
                                                 fontSize: "inherit",
-                                                padding: 0
+                                                padding: 0,
+                                                marginLeft: '10px'
                                             }}
                                             onClick={() => copyToClipboard(card.email)}
                                         >
@@ -159,11 +165,11 @@ const Donate: React.FC = () => {
                     </Grid>
                 ))}
             </Grid>
-            <Box sx={{ paddingLeft: '0.5vw' }}>
-                <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
-                    Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
-                </Typography>
-            </Box>
+            {/*<Box sx={{ paddingLeft: '0.5vw' }}>*/}
+            {/*    <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>*/}
+            {/*        Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.*/}
+            {/*    </Typography>*/}
+            {/*</Box>*/}
         </Container>
     );
 };

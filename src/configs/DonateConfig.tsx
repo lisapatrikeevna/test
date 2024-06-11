@@ -1,16 +1,16 @@
-// import SparkasseLogo from '../assets/donate/Sparkasse.png';
-// import PostBankLogo from '../assets/donate/Postbank-Logo.svg';
+import SparkasseLogo from '../assets/donate/Sparkasse.png';
+import PostBankLogo from '../assets/donate/Postbank-Logo.svg';
 import MasterCardLogo from '../assets/donate/MasterCard_Logo.svg';
 import MaestroLogo from '../assets/donate/Maestro_Logo.svg';
 import VisaLogo from '../assets/donate/Visa_Inc._logo.svg';
-// import RevolutLogo from '../assets/donate/revolute-logo.png';
+import RevolutLogo from '../assets/donate/revolute-logo.png';
 import PaypalLogo from '../assets/donate/Paypal_logo.svg';
 import BinanceLogo from '../assets/donate/Binance_logo.svg';
 
 export const cardsData = [
     {
         title: "Sparkasse",
-        // titleImage: SparkasseLogo, // Add image URL here
+        titleImage: SparkasseLogo, // Add image URL here
         cardType: "Mastercard",
         cardTypeImage: MasterCardLogo, // Add image URL here
         bic: "BIC: COKSDE33XXX",
@@ -18,7 +18,7 @@ export const cardsData = [
     },
     {
         title: "PostBank",
-        // titleImage: PostBankLogo, // Add image URL here
+        titleImage: PostBankLogo, // Add image URL here
         cardType: "Maestro",
         cardTypeImage: MaestroLogo, // Add image URL here
         bic: "BIC: PBNKDEFF",
@@ -26,7 +26,7 @@ export const cardsData = [
     },
     {
         title: "Revolut",
-        // titleImage: RevolutLogo, // Add image URL here
+        titleImage: RevolutLogo, // Add image URL here
         cardType: "Visa",
         cardTypeImage: VisaLogo, // Add image URL here
         bic: "BIC: REVOLT21",
