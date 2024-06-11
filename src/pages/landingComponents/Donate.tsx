@@ -5,6 +5,8 @@ import NeuCard from "../../components/neumorphism/card/NeuCard";
 import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
 import NeuCardHeader from "../../components/neumorphism/card/NeuCardHeader";
 import useOnScreen from "../../components/hooks/useOnScreen";
+import { cardsData } from '../../configs/DonateConfig';
+
 
 const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -29,50 +31,17 @@ const Donate: React.FC = () => {
         return () => clearTimeout(timer);
     }, [isVisible, visibleCards.length]);
 
-    const cardsData = [
-        {
-            title: "Sparkasse",
-            cardType: "Mastercard",
-            bic: "BIC: COKSDE33XXX",
-            iban: "IBAN: DE46370502991329072051"
-        },
-        {
-            title: "PostBank",
-            cardType: "Maestro",
-            bic: "BIC: PBNKDEFF",
-            iban: "IBAN: LT843250050964665543"
-        },
-        {
-            title: "Revolut",
-            cardType: "Visa",
-            bic: "BIC: REVOLT21",
-            iban: "IBAN: LT843250050964665543"
-        },
-        {
-            title: "Paypal",
-            email: "incomgrp@outlook.com"
-        },
-        {
-            title: "Binance",
-            email: "incomgrp@outlook.com"
-        },
-        {
-            title: "Fixed 4.99€ donation",
-            link: "https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb"
-        }
-    ];
-
     return (
         <Container sx={{ padding: "1vw 0px 1vw",display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
             <Box sx={{ display: "flex", justifyContent: "center", mb: 2, flexDirection: 'column' }}>
-                {/* <Typography variant="h4" sx={{ paddingBottom: "20px"}}>
+                 <Typography variant="h4" sx={{ paddingBottom: "20px"}}>
                     Donates
-                </Typography> */}
+                </Typography>
             </Box>
             <Box sx={{paddingLeft: '0.5vw'}}>
-            <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
-                Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
-            </Typography>
+                {/*<Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>*/}
+                {/*    Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.*/}
+                {/*</Typography>*/}
             </Box>
             <Grid container spacing={2}>
                 {cardsData.map((card, index) => (
@@ -89,17 +58,28 @@ const Donate: React.FC = () => {
                                 alignItems: 'start'
                             }}
                         >
-                            <NeuCardHeader title={card.title} sx={{ pb: 0, mt: 1 }} />
+                            <NeuCardHeader
+                                title={
+                                    card.titleImage ?
+                                        <img src={card.titleImage} alt={card.title} style={{ width: '100px', height: 'auto' }} /> :
+                                        card.title
+                                }
+                                sx={{ pb: 0, mt: 1 }}
+                            />
                             <NeuCardContent sx={{ justifyContent: 'start', alignItems: 'start', flexDirection: 'column', display: 'flex' }}>
                                 {card.cardType && (
                                     <Box>
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                            sx={{ marginBottom: "16px" }}
-                                        >
-                                            {card.cardType}
-                                        </Typography>
+                                        {card.cardTypeImage ? (
+                                            <img src={card.cardTypeImage} alt={card.cardType} style={{ width: '50px', height: 'auto' }} />
+                                        ) : (
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                                sx={{ marginBottom: "16px" }}
+                                            >
+                                                {card.cardType}
+                                            </Typography>
+                                        )}
                                     </Box>
                                 )}
                                 {card.bic && (
@@ -159,11 +139,11 @@ const Donate: React.FC = () => {
                     </Grid>
                 ))}
             </Grid>
-            {/* <Box sx={{paddingLeft: '0.5vw'}}>
+           <Box sx={{paddingLeft: '0.5vw'}}>
             <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
                 Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
             </Typography>
-            </Box> */}
+            </Box>
         </Container>
     );
 };
