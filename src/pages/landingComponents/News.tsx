@@ -38,7 +38,7 @@ const News: React.FC = () => {
   };
 
   return (
-      <Container sx={{ padding: "1vw" }} ref={containerRef}>
+      <Container  ref={containerRef}>
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
           {/* <Typography variant="h4" sx={{ paddingBottom: "1.2vw" }}>
             News
@@ -59,11 +59,11 @@ const News: React.FC = () => {
                       alignItems: 'start'
                     }}
                 >
-                  <NeuCardHeader title={item.title} sx={{ pb: 0}} />
-                  <NeuCardContent>
+                    <NeuCardHeader title={<Typography variant="h4">{item.title}</Typography>} sx={{ pb: 0}} />
+                    <NeuCardContent>
                     <Box sx={{}}>
                       <Typography
-                          variant="body2"
+                          variant="body1"
                           color="text.secondary"
                           sx={{ flexGrow: 1 }}
                       >
@@ -89,10 +89,10 @@ const News: React.FC = () => {
         >
           {selectedNews && (
               <>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                   {selectedNews.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body1" color="text.secondary">
                   {selectedNews.fullContent}
                 </Typography>
               </>

@@ -1,57 +1,114 @@
-import { Typography, Paper, Grid, Card, CardMedia, Box } from '@mui/material';
-import aboutUsImage from '../../assets/qrcode.jpg';
+import React, { useState, useEffect, useRef } from "react";
+import { Box, CardMedia, Grid, Pagination, Typography, useMediaQuery, useTheme } from '@mui/material';
+import Fon1 from '../../assets/Fon.jpg';
+import Fon2 from '../../assets/Fon2.jpg';
+import Fon3 from '../../assets/Fon3.jpg';
+import Fon4 from '../../assets/Fon4.jpg';
+import Fon5 from '../../assets/Fon5.jpg';
+import Fon6 from '../../assets/Fon.jpg';
+import NeuCard from "../../components/neumorphism/card/NeuCard";
+import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
+import useOnScreen from "../../components/hooks/useOnScreen";
+import { title, text } from '../../configs/AboutUsConfig';
 
 const AboutUsPage = () => {
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const [page, setPage] = useState(1);
+    const [visible, setVisible] = useState(false);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const isVisible = useOnScreen(containerRef);
+
+    const images = [Fon1, Fon2, Fon3, Fon4, Fon5, Fon6];
+
+    useEffect(() => {
+        if (isVisible) {
+            setVisible(true);
+        } else {
+            setVisible(false);
+        }
+    }, [isVisible]);
+
+    const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value);
+    };
+
+    const splitText: string[][] = text.map(str => str.split('|').map(subStr => subStr.trim()));
 
     return (
-        <Box style={{ marginTop: '.2rem', height: '75vh'  }}>
-            <Paper style={{ padding: '1rem' }}>
-
-                <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
-                        <Card>
-                            <Box sx={{ backgroundColor: 'white',justifyContent: 'center', display: 'flex' }}>
+        <Box
+            sx={{
+                padding: '1.2vw 0px 1.2vw 0px',
+                height: '78vh',
+                width: '80vw',
+                justifyContent: 'center',
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'column'
+            }}
+            ref={containerRef}
+        >
+            <NeuCard
+                in={visible}
+                sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '65vh' }}
+            >
+                <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {page % 2 === 0 ? (
+                        <>
+                            <Grid item xs={12} md={6}>
+                                <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'start' }}>
+                                    <Typography variant={isSmallScreen ? 'h5' : 'h4'} sx={{ marginBottom: '10px' }}>
+                                        {title[page - 1]}
+                                    </Typography>
+                                    {splitText[page - 1].map((str, index) => (
+                                        <Typography key={index} variant="body1" paragraph>
+                                            {str}
+                                        </Typography>
+                                    ))}
+                                </NeuCardContent>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
                                 <CardMedia
                                     component="img"
-                                    image={aboutUsImage}
-                                    alt="About Us"
-                                    sx={{ width: '70%' }}
+                                    image={images[page - 1]}
+                                    alt={`Image ${page}`}
+                                    sx={{ maxWidth: '30vw', maxHeight: '30vw' }}
                                 />
-                            </Box>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Typography variant="h4" gutterBottom sx={{ fontSize: '1.2rem' }}>About Us</Typography>
-                        <Typography variant="body1" paragraph >
-                            We are NeoXonline, a super team dedicated to developing this innovative project. Our mission is to create a platform that seamlessly integrates communication and learning, providing unparalleled opportunities for personal and professional growth.
-                        </Typography>
-
-                        <Typography variant="h4" gutterBottom sx={{ fontSize: '1.2rem' }}>Our Vision</Typography>
-                        <Typography variant="body1" paragraph >
-                            We believe in the power of effective communication and continuous learning. Our team is committed to building a platform that empowers individuals and communities to connect, share knowledge, and grow together.
-                        </Typography>
-
-                        <Typography variant="h4" gutterBottom sx={{ fontSize: '1.2rem' }}>Our Team</Typography>
-                        <Typography variant="body1" paragraph >
-                            Our team consists of passionate professionals with diverse expertise in technology, education, and communication. We are united by a common goal: to create a user-friendly and feature-rich platform that meets the evolving needs of our users.
-                        </Typography>
-
-                        <Typography variant="h4" gutterBottom sx={{ fontSize: '1.2rem' }}>Our Commitment</Typography>
-                        <Typography variant="body1" paragraph >
-                            We are ready to face new challenges and continuously improve our platform to provide the best possible experience for our users. Innovation, dedication, and user satisfaction are at the core of everything we do.
-                        </Typography>
-
-                        <Typography variant="h4" gutterBottom sx={{ fontSize: '1.2rem' }}>Join Us</Typography>
-                        <Typography variant="body1" paragraph >
-                            As we continue to develop NeoXonline, we invite you to join us on this exciting journey. Together, we can achieve great things and make a significant impact in the world of communication and learning.
-                        </Typography>
-
-                        <Typography variant="body1" paragraph >
-                            NeoXonline — Connecting People, Empowering Growth.
-                        </Typography>
-                    </Grid>
+                            </Grid>
+                        </>
+                    ) : (
+                        <>
+                            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <CardMedia
+                                    component="img"
+                                    image={images[page - 1]}
+                                    alt={`Image ${page}`}
+                                    sx={{ maxWidth: '30vw', maxHeight: '30vw' }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'start' }}>
+                                    <Typography variant={isSmallScreen ? 'h5' : 'h4'} sx={{ marginBottom: '10px' }}>
+                                        {title[page - 1]}
+                                    </Typography>
+                                    {splitText[page - 1].map((str, index) => (
+                                        <Typography key={index} variant="body1" paragraph>
+                                            {str}
+                                        </Typography>
+                                    ))}
+                                </NeuCardContent>
+                            </Grid>
+                        </>
+                    )}
                 </Grid>
-            </Paper>
+            </NeuCard>
+            <Pagination
+                count={title.length}
+                color="primary"
+                page={page}
+                onChange={handleChange}
+                style={{ marginTop: "16px" }}
+            />
         </Box>
     );
 };
