@@ -8,37 +8,19 @@ import { useState } from 'react';
 import NeuAvatar from '../neumorphism/avatar/NeuAvatar';
 import AppPageChats from './AppPageChats';
 import Fon5 from '../../assets/Fon5.jpg';
-import { RefObject } from 'react';
-import { ImperativePanelHandle } from 'react-resizable-panels';
 
-type AppPageChatsComponentProps = {
-  chatsPanelRef: RefObject<ImperativePanelHandle>;
-  setIsChatPanelOpen: (isOpen: boolean) => void;
-};
-
-const AppPageChatsComponent: React.FC<AppPageChatsComponentProps> = (
-  {
-    // chatsPanelRef,
-    // setIsChatPanelOpen,
-  }
-) => {
+const AppPageChatsComponent = () => {
   const [users] = useState(data);
   const theme = useTheme();
 
   return (
-    <Box sx={{ height: '100%' }}>
+    <Box sx={{ height: '100%', display: 'flex' }}>
       <PanelGroup direction="horizontal">
-        <Panel
-          // ref={chatsPanelRef}
-          minSize={13}
-          defaultSize={5}
-          // collapsible={true}
-          // onExpand={() => setIsChatPanelOpen(true)}
-          // onCollapse={() => setIsChatPanelOpen(false)}
-          // collapsedSize={10}
-        >
-          <Stack direction="column" padding={1}>
-            <Box sx={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+        <Panel minSize={30} defaultSize={15} collapsible collapsedSize={7}>
+          {/* main wrapper for avatars and names */}
+          <Stack direction="column" padding={1} sx={{ minWidth: '80px' }}>
+            {/* wrapper for my avatar */}
+            <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
               <Avatar
                 src={data[0].img}
                 alt="avatar"
@@ -62,6 +44,7 @@ const AppPageChatsComponent: React.FC<AppPageChatsComponentProps> = (
                 marginTop: '20px',
               }}
             />
+            {/* wrapper for usersAvatars and names*/}
             <Box
               marginTop={2}
               sx={{
@@ -76,7 +59,7 @@ const AppPageChatsComponent: React.FC<AppPageChatsComponentProps> = (
                   key={elem.id}
                   sx={{
                     display: 'flex',
-                    gap: '20px',
+                    gap: '10px',
                     alignItems: 'center',
                     cursor: 'pointer',
                   }}
@@ -111,14 +94,10 @@ const AppPageChatsComponent: React.FC<AppPageChatsComponentProps> = (
         />
         <Panel
           style={{ backgroundImage: `url(${Fon5})` }}
-          // ref={chatsPanelRef}
           defaultSize={5}
           maxSize={100}
           minSize={5}
           collapsible={true}
-          // onExpand={() => setIsChatPanelOpen(true)}
-          // onCollapse={() => setIsChatPanelOpen(false)}
-          // collapsedSize={60}
         >
           <AppPageChats />
         </Panel>
@@ -126,4 +105,5 @@ const AppPageChatsComponent: React.FC<AppPageChatsComponentProps> = (
     </Box>
   );
 };
+
 export default AppPageChatsComponent;

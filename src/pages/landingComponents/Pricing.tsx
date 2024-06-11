@@ -28,7 +28,13 @@ const tiers = [
     {
         title: 'Free',
         price: 0,
-        description: [],
+        description: [
+            'Access to chats.',
+            'Access to videos.',
+            'Access to conferences.',
+            'Access to calendar.',
+            'Access to notes.'
+        ],
         buttonText: 'Sign up for free',
         buttonVariant: 'outlined',
     },
@@ -37,11 +43,12 @@ const tiers = [
         price: 11.99,
         oldPrice: 17.99,
         description: [
-            'Access to chats.',
-            'Access to videos.',
-            'Access to conferences.',
-            'Access to calendar.',
-            'Access to notes.'
+
+            'All in Free +',
+            'Access to interactive board.',
+            'Ability to create 5 private groups.',
+            'Possibility to post 15 GB of video content.',
+            'Ability to start a group conference.'
         ],
         buttonText: 'Get started',
         buttonVariant: '',
@@ -52,10 +59,11 @@ const tiers = [
         price: 21.99,
         oldPrice: 27.99,
         description: [
+            'All in Free +',
             'Access to interactive board.',
-            'Ability to create 5 private groups.',
-            'Possibility to post 10 videos.',
-            'Ability to start a group conference for 1 hour.',
+            'Ability to create 10 private groups.',
+            'Possibility to post 30 GB of video content.',
+            'Ability to start a group conference.',
         ],
         buttonText: 'Get started',
         buttonVariant: '',
@@ -65,10 +73,11 @@ const tiers = [
         price: 31.99,
         oldPrice: 41.99,
         description: [
+            'All in Free +',
             'Access to interactive board.',
-            'Ability to create 5 private groups.',
-            'Possibility to post 10 videos.',
-            'Ability to start a group conference for 1 hour.',
+            'Ability to create an unlimited number of private groups.',
+            'Possibility to post 50 GB of video content.',
+            'Ability to start a group conference.',
         ],
         buttonText: 'Get started',
         buttonVariant: '',
@@ -130,7 +139,7 @@ const Pricing = () => {
 
             <CustomContainer className="Pricing-container" sx={{ pb: 2 }} maxWidth="xl">
                 <Typography variant="h5" align="center" color="text.secondary" component="p" mt={'20px'}>
-                    Since the platform is at the development stage, this list of features and prices may change.
+                Limits on gigabytes and chats are set until the end of beta testing. We also welcome your suggestions for changes or additions
                 </Typography>
             </CustomContainer>
 
@@ -139,7 +148,7 @@ const Pricing = () => {
                     <Grid container spacing={4} alignItems="flex-end" justifyContent={'center'}>
                         {tiers.map((tier) => (
                             <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2}>
-                                <NeuCard sx={{ width: '300', height: tier.title === 'Prime' ? '540px' : '500px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                <NeuCard sx={{ width: '300', height: tier.title === 'Prime' ? '585px' : '570px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                     <NeuCardHeader
                                         title={tier.title}
                                         avatar={tier.title === 'Prime' ? <StarIcon sx={{ ml: '5px' }}/> : null}

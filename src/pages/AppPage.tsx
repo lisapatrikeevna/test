@@ -48,7 +48,6 @@ const AppPage = () => {
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
   const [, setIsChatPanelOpen] = useState(false);
-  // const [users] = useState(data);
   const theme = useTheme();
   const chatsPanelRef = useRef<ImperativePanelHandle>(null);
   const rightPanel = useRef<ImperativePanelHandle>(null);
@@ -123,18 +122,13 @@ const AppPage = () => {
         <PanelGroup direction="horizontal" style={{ flex: 1 }}>
           <Panel
             ref={chatsPanelRef}
-            minSize={0}
-            // defaultSize={1}
+            minSize={25}
             style={{ flex: 1 }}
             collapsible={true}
             onExpand={() => setIsChatPanelOpen(true)}
             onCollapse={() => setIsChatPanelOpen(false)}
-            collapsedSize={10}
           >
-            <AppPageChatsComponent
-              setIsChatPanelOpen={setIsChatPanelOpen}
-              chatsPanelRef={chatsPanelRef}
-            />
+            <AppPageChatsComponent />
           </Panel>
 
           <PanelResizeHandle
