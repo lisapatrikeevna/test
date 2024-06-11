@@ -31,9 +31,9 @@ const FooterContainer = styled('div')(({ theme }) => ({
 
 const Copyright = styled('div')(({ theme }) => ({
     position: 'absolute',
-    '@media (max-width: 1150px)': {
-        position: 'relative',
-    },
+    // '@media (max-width: 1150px)': {
+    //     position: 'relative',
+    // },
     left: theme.spacing(1),
     bottom: theme.spacing(1),
     fontFamily: theme.typography.fontFamily,
@@ -47,10 +47,29 @@ const SocialLink = styled('a')(({ theme }) => ({
     justifyContent: 'center',
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+    '@media (min-width: 1151px)': {
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+    },
     '@media (max-width: 1150px)': {
         margin: theme.spacing(0.5, 0),
     }
 }));
+
+
+const SocialLinksContainer = styled('div')(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    '@media (max-width: 1150px)': {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: '100%',
+        marginBottom: theme.spacing(2),
+        marginTop: theme.spacing(1),
+    },
+}));
+
 
 const NeuButtonStyled = styled(NeuButton)(({ theme }) => ({
     margin: theme.spacing(1),
@@ -90,6 +109,7 @@ const Footer: FC<FooterProps> = ({ theme, onImpressumClick, onPrivacyPolicyClick
             <NeuButtonStyled rounded onClick={onPrivacyPolicyClick}>Privacy</NeuButtonStyled>
             <NeuButtonStyled rounded onClick={onDatenschutzClick}>Datenschutz</NeuButtonStyled>
             <NeuButtonStyled rounded onClick={contact}>Contact</NeuButtonStyled>
+            <SocialLinksContainer>
             <SocialLink href="https://www.instagram.com/neox_online/" target="_blank" rel="noopener noreferrer">
                 <NeuIconButton rounded >
                     <Instagram />
@@ -115,6 +135,7 @@ const Footer: FC<FooterProps> = ({ theme, onImpressumClick, onPrivacyPolicyClick
                     <YouTube />
                 </NeuIconButton>
             </SocialLink>
+            </SocialLinksContainer>
         </FooterContainer>
     );
 };
