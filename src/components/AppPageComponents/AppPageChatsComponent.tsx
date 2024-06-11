@@ -7,14 +7,36 @@ import NeuDivider from '../neumorphism/divider/NeuDivider';
 import { useState } from 'react';
 import NeuAvatar from '../neumorphism/avatar/NeuAvatar';
 import AppPageChats from './AppPageChats';
+import Fon5 from '../../assets/Fon5.jpg';
+import { RefObject } from 'react';
+import { ImperativePanelHandle } from 'react-resizable-panels';
 
-const AppPageChatsComponent = () => {
+type AppPageChatsComponentProps = {
+  chatsPanelRef: RefObject<ImperativePanelHandle>;
+  setIsChatPanelOpen: (isOpen: boolean) => void;
+};
+
+const AppPageChatsComponent: React.FC<AppPageChatsComponentProps> = (
+  {
+    // chatsPanelRef,
+    // setIsChatPanelOpen,
+  }
+) => {
   const [users] = useState(data);
   const theme = useTheme();
+
   return (
     <Box sx={{ height: '100%' }}>
       <PanelGroup direction="horizontal">
-        <Panel minSize={15} defaultSize={1} collapsible={true}>
+        <Panel
+          // ref={chatsPanelRef}
+          minSize={13}
+          defaultSize={5}
+          // collapsible={true}
+          // onExpand={() => setIsChatPanelOpen(true)}
+          // onCollapse={() => setIsChatPanelOpen(false)}
+          // collapsedSize={10}
+        >
           <Stack direction="column" padding={1}>
             <Box sx={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
               <Avatar
@@ -35,7 +57,7 @@ const AppPageChatsComponent = () => {
                 theme.palette.mode === 'dark' ? '#ffffff' : '#1a1a1a'
               }
               sx={{
-                width: '50px',
+                width: '100%',
                 height: '2px',
                 marginTop: '20px',
               }}
@@ -87,7 +109,17 @@ const AppPageChatsComponent = () => {
             background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
           }}
         />
-        <Panel>
+        <Panel
+          style={{ backgroundImage: `url(${Fon5})` }}
+          // ref={chatsPanelRef}
+          defaultSize={5}
+          maxSize={100}
+          minSize={5}
+          collapsible={true}
+          // onExpand={() => setIsChatPanelOpen(true)}
+          // onCollapse={() => setIsChatPanelOpen(false)}
+          // collapsedSize={60}
+        >
           <AppPageChats />
         </Panel>
       </PanelGroup>

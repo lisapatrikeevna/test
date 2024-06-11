@@ -1,5 +1,15 @@
-import { Divider, Stack, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
+import {
+  Divider,
+  Stack,
+  TextField,
+  Typography,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
 
 const AppPageChats = () => {
   return (
@@ -39,8 +49,21 @@ const AppPageChats = () => {
             size="small"
             fullWidth
             InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <IconButton edge="start">
+                    <AttachFileIcon sx={{ transform: 'rotate(45deg)' }} />
+                  </IconButton>
+                </InputAdornment>
+              ),
               endAdornment: (
                 <InputAdornment position="end">
+                  <IconButton edge="end">
+                    <SentimentSatisfiedAltIcon />
+                  </IconButton>
+                  <IconButton edge="end">
+                    <KeyboardVoiceOutlinedIcon />
+                  </IconButton>
                   <IconButton edge="end">
                     <SendIcon />
                   </IconButton>
