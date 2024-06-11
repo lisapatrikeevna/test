@@ -27,8 +27,8 @@ jobs:
         username: ${{ secrets.PLESK_DEV_USERNAME }}
         password: ${{ secrets.PLESK_DEV_PASSWORD }}
         script: |
-          if [ -d "/var/www/vhosts/hungry-carver.212-132-99-188.plesk.page/httpdocs/assets" ]; then
-          rm -rf /var/www/vhosts/hungry-carver.212-132-99-188.plesk.page/httpdocs/assets/*
+          if [ -d "/var/www/vhosts/vibrant-lumiere.85-215-241-41.plesk.page/httpdocs/assets" ]; then
+          rm -rf /var/www/vhosts/vibrant-lumiere.85-215-241-41.plesk.page/httpdocs/assets/*
           fi
 
     - name: Deploy to dev Plesk
@@ -38,7 +38,7 @@ jobs:
         username: ${{ secrets.PLESK_DEV_USERNAME }}
         password: ${{ secrets.PLESK_DEV_PASSWORD }}
         source: "dist/**,dist/*.*" 
-        target: "/var/www/vhosts/hungry-carver.212-132-99-188.plesk.page/httpdocs"
+        target: "/var/www/vhosts/vibrant-lumiere.85-215-241-41.plesk.page/httpdocs"
         strip_components: 1
 
   deploy-prod:
