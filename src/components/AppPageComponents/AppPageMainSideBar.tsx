@@ -40,6 +40,8 @@ import { selectUsername } from '../../store/user/userSlice';
 // import UserModalProfile from '../../pages/UserModalProfile';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import { RenderValuesCentralComponent } from '../../pages/AppPage';
+import { useTheme } from '@mui/material/styles';
+import { styled } from '@mui/system';
 
 type Props = {
   isOpenMainSideBar: boolean;
@@ -54,11 +56,15 @@ const AppPageMainSideBar = ({
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [isAccountsDropdownOpen, setIsAccountsDropdownOpen] = useState(false);
   const { theme, setTheme } = useCustomTheme();
+  const themeMui = useTheme();
 
   const handleAvatarClick = () => {
     setOpenProfileModal(true); // Open profile modal
   };
 
+  const ThemedListItemText = styled(ListItemText)(({ theme }) => ({
+    color: theme.palette.mode === 'dark' ? '#fff' : '#000',
+  }));
   const toggleAccountsDropdown = () => {
     setIsAccountsDropdownOpen(!isAccountsDropdownOpen);
   };
@@ -80,6 +86,7 @@ const AppPageMainSideBar = ({
         background: '#e0e0e0',
         padding: isOpenMainSideBar ? '7px' : '0px',
         overflow: 'hidden',
+        backgroundColor: themeMui.palette.background.default,
       }}
     >
       {isOpenMainSideBar && (
@@ -104,11 +111,21 @@ const AppPageMainSideBar = ({
               onClick={handleAvatarClick}
             />
             <ListItemButton onClick={toggleAccountsDropdown} disableRipple>
-              <ListItemText primary={username} />
+              <ThemedListItemText primary={username} />
               {isAccountsDropdownOpen ? (
-                <KeyboardArrowUpOutlined />
+                <KeyboardArrowUpOutlined
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
+                />
               ) : (
-                <KeyboardArrowDownOutlined />
+                <KeyboardArrowDownOutlined
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
+                />
               )}
             </ListItemButton>
           </Box>
@@ -117,10 +134,15 @@ const AppPageMainSideBar = ({
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon>
                   <AddCircleOutline
-                    sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                    sx={{
+                      color:
+                        themeMui.palette.mode === 'dark'
+                          ? '#bebebe'
+                          : '#333333',
+                    }}
                   />
                 </ListItemIcon>
-                <ListItemText primary="Add account" />
+                <ThemedListItemText primary="Add account" />
               </ListItemButton>
             </List>
           </Collapse>
@@ -136,18 +158,20 @@ const AppPageMainSideBar = ({
             disablePadding
             onClick={() => changeRenderCentralComponent('home')}
           >
-            <ListItemButton
-              disableRipple
-              sx={{ padding: '5px 16px' }}
-            >
-              <ListItemIcon sx={{ minWidth: '45px' }}>
+            <ListItemButton disableRipple sx={{ padding: '5px 16px' }}>
+              <ListItemIcon
+                sx={{
+                  minWidth: '45px',
+                }}
+              >
                 <HomeOutlined
                   sx={{
-                    color: theme === 'dark' ? 'black' : 'inherit',
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
                   }}
                 />
               </ListItemIcon>
-              <ListItemText primary="Home" />
+              <ThemedListItemText primary="Home" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -159,10 +183,13 @@ const AppPageMainSideBar = ({
             >
               <ListItemIcon sx={{ minWidth: '45px' }}>
                 <PeopleOutline
-                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
                 />
               </ListItemIcon>
-              <ListItemText primary="New group" />
+              <ThemedListItemText primary="New group" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -174,10 +201,13 @@ const AppPageMainSideBar = ({
             >
               <ListItemIcon sx={{ minWidth: '45px' }}>
                 <CampaignOutlined
-                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
                 />
               </ListItemIcon>
-              <ListItemText primary="New channel" />
+              <ThemedListItemText primary="New channel" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -189,10 +219,13 @@ const AppPageMainSideBar = ({
             >
               <ListItemIcon sx={{ minWidth: '45px' }}>
                 <AccountCircleOutlined
-                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
                 />
               </ListItemIcon>
-              <ListItemText primary="Contacts" />
+              <ThemedListItemText primary="Contacts" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -204,54 +237,58 @@ const AppPageMainSideBar = ({
             >
               <ListItemIcon sx={{ minWidth: '45px' }}>
                 <ForumOutlined
-                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
                 />
               </ListItemIcon>
-              <ListItemText primary="Chats" />
+              <ThemedListItemText primary="Chats" />
             </ListItemButton>
           </ListItem>
           <ListItem
             disablePadding
             onClick={() => changeRenderCentralComponent('videospage')}
           >
-            <ListItemButton
-
-              disableRipple
-              sx={{ padding: '5px 16px' }}
-            >
+            <ListItemButton disableRipple sx={{ padding: '5px 16px' }}>
               <ListItemIcon sx={{ minWidth: '45px' }}>
                 <PlayCircleOutline
-                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
                 />
               </ListItemIcon>
-              <ListItemText primary="Videos" />
+              <ThemedListItemText primary="Videos" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton disableRipple sx={{ padding: '5px 16px' }}>
               <ListItemIcon sx={{ minWidth: '45px' }}>
                 <CallOutlined
-                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
                 />
               </ListItemIcon>
-              <ListItemText primary="Calls" />
+              <ThemedListItemText primary="Calls" />
             </ListItemButton>
           </ListItem>
           <ListItem
-              disablePadding
-              onClick={() => changeRenderCentralComponent('VR')}
+            disablePadding
+            onClick={() => changeRenderCentralComponent('VR')}
           >
-            <ListItemButton
-
-                disableRipple
-                sx={{ padding: '5px 16px' }}
-            >
+            <ListItemButton disableRipple sx={{ padding: '5px 16px' }}>
               <ListItemIcon sx={{ minWidth: '45px' }}>
                 <PlayCircleOutline
-                    sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
                 />
               </ListItemIcon>
-              <ListItemText primary="VR" />
+              <ThemedListItemText primary="VR" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -263,10 +300,13 @@ const AppPageMainSideBar = ({
             >
               <ListItemIcon sx={{ minWidth: '45px' }}>
                 <SettingsOutlined
-                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
                 />
               </ListItemIcon>
-              <ListItemText primary="Settings" />
+              <ThemedListItemText primary="Settings" />
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -276,10 +316,13 @@ const AppPageMainSideBar = ({
           >
             <ListItemIcon sx={{ minWidth: '45px' }}>
               <NightsStayOutlined
-                sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                sx={{
+                  color:
+                    themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                }}
               />
             </ListItemIcon>
-            <ListItemText primary="Theme" />
+            <ThemedListItemText primary="Theme" />
             <Switch
               checked={theme === 'dark'}
               name="themeSwitch"
@@ -295,10 +338,13 @@ const AppPageMainSideBar = ({
             >
               <ListItemIcon sx={{ minWidth: '45px' }}>
                 <LogoutOutlined
-                  sx={{ color: theme === 'dark' ? 'black' : 'inherit' }}
+                  sx={{
+                    color:
+                      themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                  }}
                 />
               </ListItemIcon>
-              <ListItemText primary="Logout" />
+              <ThemedListItemText primary="Logout" />
             </ListItemButton>
           </ListItem>
 
@@ -321,7 +367,13 @@ const AppPageMainSideBar = ({
                 Support the project
               </a>
             </Box>
-            <Box>NeoX version 1.0</Box>
+            <Box
+              sx={{
+                color: themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
+              }}
+            >
+              NeoX version 1.0
+            </Box>
           </Box>
         </Box>
       )}
