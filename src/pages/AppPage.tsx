@@ -122,102 +122,20 @@ const AppPage = () => {
 
         <PanelGroup direction="horizontal" style={{ flex: 1 }}>
           <Panel
-            minSize={15}
-            defaultSize={1}
-            collapsible={true}
-            style={{ flex: 1 }}
-          >
-            <AppPageChatsComponent />
-
-            {/*
-            <Stack direction="column" padding={1}>
-              <Box sx={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                <Avatar
-                  src={data[0].img}
-                  alt="avatar"
-                  sx={{
-                    width: 50,
-                    height: 50,
-                    cursor: 'pointer',
-                    position: 'relative',
-                  }}
-                />
-                <TextField size="small" label="Search" variant="outlined" />
-              </Box>
-              <NeuDivider
-                baseColor={
-                  theme.palette.mode === 'dark' ? '#bebebe' : '#333333'
-                }
-                lightShadow={
-                  theme.palette.mode === 'dark' ? '#ffffff' : '#1a1a1a'
-                }
-                sx={{
-                  width: '50px',
-                  height: '2px',
-                  marginTop: '20px',
-                }}
-              />
-              <Box
-                marginTop={2}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '20px',
-                  marginLeft: '5px',
-                }}
-              >
-                {users.map((elem) => (
-                  <Box
-                    key={elem.id}
-                    sx={{
-                      display: 'flex',
-                      gap: '20px',
-                      alignItems: 'center',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <Stack
-                      key={elem.id}
-                      sx={{
-                        width: '50px',
-                      }}
-                    >
-                      <NeuAvatar key={elem.id} src={elem.img} size="small" />
-                    </Stack>
-                    <Stack
-                      key={elem.id}
-                      sx={{
-                        color:
-                          theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
-                      }}
-                    >
-                      {elem.name}
-                    </Stack>
-                  </Box>
-                ))}
-              </Box>
-            </Stack>
-            */}
-          </Panel>
-          {/* <PanelResizeHandle
-            style={{
-              width: '3px',
-              background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
-            }}
-          /> */}
-          {/* <Panel
-            style={{ backgroundImage: `url(${Fon5})` }}
             ref={chatsPanelRef}
-            defaultSize={25}
-            maxSize={100}
-            minSize={10}
+            minSize={0}
+            // defaultSize={1}
+            style={{ flex: 1 }}
             collapsible={true}
             onExpand={() => setIsChatPanelOpen(true)}
             onCollapse={() => setIsChatPanelOpen(false)}
+            collapsedSize={10}
           >
-            <AppPageChats />
-            
-          </Panel> */}
+            <AppPageChatsComponent
+              setIsChatPanelOpen={setIsChatPanelOpen}
+              chatsPanelRef={chatsPanelRef}
+            />
+          </Panel>
 
           <PanelResizeHandle
             style={{
