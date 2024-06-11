@@ -56,17 +56,18 @@ const WriteToUsForm = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 4, maxWidth: 400,  }}>
                 <Grid container spacing={2} sx={{ flexDirection: 'column', width: 500 }}>
                     <Grid item xs={12} md={4} sx={{marginBottom: '1.2vw'}}>
-                        <NeuCard sx={{ textAlign: 'center', width: '230px', minHeight: '170px' }}>
-                            <NeuIconButton disabled rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                        <NeuCard rounded sx={{ textAlign: 'center', width: '230px', minHeight: '170px' }}>
+                            <NeuIconButton disabled rounded sx={{ minWidth: '40px', padding: '6px', marginBottom: '10px' }}>
                                 <Map />
                             </NeuIconButton>
                             <Typography variant="h4">Address</Typography>
                             <Typography variant="body1">Am Meisenberg 14, 51491 Overath</Typography>
                         </NeuCard>
+
                     </Grid>
                     <Grid item xs={12} md={4}  sx={{marginBottom: '1.2vw'}}>
-                        <NeuCard sx={{ textAlign: 'center', width: '230px', minHeight: '170px' }}>
-                            <NeuIconButton disabled rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                        <NeuCard rounded sx={{ textAlign: 'center', width: '230px', minHeight: '170px' }}>
+                            <NeuIconButton disabled rounded sx={{ minWidth: '40px', padding: '6px', marginBottom: '10px' }}>
                                 <Call/>
                             </NeuIconButton>
                             <Typography variant="h4">Phone</Typography>
@@ -74,8 +75,8 @@ const WriteToUsForm = () => {
                         </NeuCard>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <NeuCard sx={{ textAlign: 'center', width: '230px', minHeight: '170px' }}>
-                            <NeuIconButton disabled rounded sx={{ minWidth: '40px', padding: '6px' }}>
+                        <NeuCard rounded sx={{ textAlign: 'center', width: '230px', minHeight: '170px' }}>
+                            <NeuIconButton disabled rounded sx={{ minWidth: '40px', padding: '6px', marginBottom: '10px' }}>
                                 <Mail />
                             </NeuIconButton>
                             <Typography variant="h4">Email</Typography>

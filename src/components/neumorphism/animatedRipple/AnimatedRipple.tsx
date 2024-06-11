@@ -43,17 +43,36 @@ const RippleElement = styled('div')(({ theme }) => ({
 const AnimatedRipple: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [ripples, setRipples] = React.useState<React.ReactElement[]>([]);
 
+  const throttle = (func: (ev: MouseEvent) => void, limit: number) => {
+    let lastFunc: NodeJS.Timeout;
+    let lastRan: number;
+    return function (ev: MouseEvent) {
+      if (!lastRan) {
+        func(ev);
+        lastRan = Date.now();
+      } else {
+        clearTimeout(lastFunc);
+        lastFunc = setTimeout(function () {
+          if ((Date.now() - lastRan) >= limit) {
+            func(ev);
+            lastRan = Date.now();
+          }
+        }, limit - (Date.now() - lastRan));
+      }
+    }
+  };
+
   React.useEffect(() => {
-    const handleClick = (ev: MouseEvent) => {
+    const handleClick = throttle((ev: MouseEvent) => {
       const rippleElement = (
-        <RippleElement
-          key={Date.now()}
-          style={{ top: ev.clientY, left: ev.clientX }}
-          onAnimationEnd={() => setRipples((prev) => prev.filter((ripple) => ripple.key !== rippleElement.key))}
-        />
+          <RippleElement
+              key={Date.now()}
+              style={{ top: ev.clientY, left: ev.clientX }}
+              onAnimationEnd={() => setRipples((prev) => prev.filter((ripple) => ripple.key !== rippleElement.key))}
+          />
       );
       setRipples((prev) => [...prev, rippleElement]);
-    };
+    }, 500); // 200ms delay corresponds to 5 times per second
 
     window.addEventListener('click', handleClick);
 
@@ -63,10 +82,10 @@ const AnimatedRipple: React.FC<{ children: React.ReactNode }> = ({ children }) =
   }, []);
 
   return (
-    <div style={{ overflow: 'hidden', position: 'relative' }}>
-      {ripples}
-      {children}
-    </div>
+      <div style={{ overflow: 'hidden', position: 'relative' }}>
+        {ripples}
+        {children}
+      </div>
   );
 };
 

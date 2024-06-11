@@ -61,20 +61,22 @@ const News: React.FC = () => {
                 >
                     <NeuCardHeader title={<Typography variant="h4">{item.title}</Typography>} sx={{ pb: 0}} />
                     <NeuCardContent>
-                    <Box sx={{}}>
-                      <Typography
-                          variant="body1"
-                          color="text.secondary"
-                          sx={{ flexGrow: 1 }}
-                      >
-                        {item.content}
-                      </Typography>
-                      <NeuButton
-                          onClick={() => handleOpenModal(item)}
-                          rounded
-                      >
-                        Read more
-                      </NeuButton>
+                    <Box >
+                            <Typography
+                                variant="body1"
+                                color="text.secondary"
+                                sx={{ flexGrow: 1, marginBottom: '10px'}}
+                            >
+                                {item.content}
+                            </Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <NeuButton
+                                onClick={() => handleOpenModal(item)}
+                                rounded
+                            >
+                                Read more
+                            </NeuButton>
+                        </Box>
                     </Box>
                   </NeuCardContent>
                 </NeuCard>

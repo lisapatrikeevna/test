@@ -14,7 +14,7 @@ import JetBrains from '../../assets/partners/JetBrains_logo.svg';
 import VSCode from '../../assets/partners/VSCode-logo.png';
 import Reactlogo from '../../assets/partners/React-logo.svg';
 import Unity from '../../assets/partners/unity-logo.png';
-import Netflix from '../../assets/partners/Netflix-Logo.png';
+// import Netflix from '../../assets/partners/Netflix-Logo.png';
 import useOnScreen from "../../components/hooks/useOnScreen";
 
 const partners = [
@@ -30,7 +30,7 @@ const partners = [
   { logo: LinkedIn, link: 'https://linkedin.com/' },
   { logo: YouTube, link: 'https://youtube.com/' },
   { logo: Unity, link: 'https://unity.com/' },
-  { logo: Netflix, link: 'https://netflix.com/' },
+  // { logo: Netflix, link: 'https://netflix.com/' },
 ];
 
 const Partners: React.FC = memo(() => {
