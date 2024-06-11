@@ -6,7 +6,7 @@ import {
   Apps,
   Call,
   AccountBalance,
-  AttachMoney,
+  EuroSymbol,
   Build,
   LunchDining
 } from '@mui/icons-material';
@@ -191,7 +191,7 @@ const Header: React.FC = () => {
                   color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' 
                 }}>
                   {item === "#Partners" && <Handshake />}
-                  {item === "#Pricing" && <AttachMoney />}
+                  {item === "#Pricing" && <EuroSymbol />}
                   {item === "#News" && <Apps />}
                   {item === "#Contacts" && <Call />}
                   {item === "#AboutUs" && <AccountBalance />}
@@ -352,7 +352,7 @@ const Header: React.FC = () => {
                 >
                   <ListItemIcon sx={{ minWidth: 'auto', margin: '8px', justifyContent: 'center', display: 'flex', color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' }}>
                     {item === "#Partners" && <Handshake />}
-                    {item === "#Pricing" && <AttachMoney />}
+                    {item === "#Pricing" && <EuroSymbol />}
                     {item === "#News" && <Apps />}
                     {item === "#Contacts" && <Call />}
                     {item === "#AboutUs" && <AccountBalance />}
