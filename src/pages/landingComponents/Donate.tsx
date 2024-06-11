@@ -1,14 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Container, Typography, Grid, IconButton } from "@mui/material";
-import FileCopyIcon from '@mui/icons-material/FileCopy';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NeuCard from "../../components/neumorphism/card/NeuCard";
 import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
 import NeuCardHeader from "../../components/neumorphism/card/NeuCardHeader";
 import useOnScreen from "../../components/hooks/useOnScreen";
+import { cardsData } from '../../configs/DonateConfig';
 
 const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+    // Finding ": " in text
+    const colonIndex = text.indexOf(': ');
+
+    // If ": " finded and he is not the last in the string
+    if (colonIndex !== -1 && colonIndex !== text.length - 1) {
+        // Copy substring, begining from symbol after ": "
+        const textToCopy = text.substring(colonIndex + 1);
+        navigator.clipboard.writeText(textToCopy);
+    } else {
+        // If symbol ": " not found or he is the last in the string, then copy whole text
+        navigator.clipboard.writeText(text);
+    }
 };
+
 
 const Donate: React.FC = () => {
     const [visibleCards, setVisibleCards] = useState<number[]>([]);
@@ -29,50 +42,17 @@ const Donate: React.FC = () => {
         return () => clearTimeout(timer);
     }, [isVisible, visibleCards.length]);
 
-    const cardsData = [
-        {
-            title: "Sparkasse",
-            cardType: "Mastercard",
-            bic: "BIC: COKSDE33XXX",
-            iban: "IBAN: DE46370502991329072051"
-        },
-        {
-            title: "PostBank",
-            cardType: "Maestro",
-            bic: "BIC: PBNKDEFF",
-            iban: "IBAN: LT843250050964665543"
-        },
-        {
-            title: "Revolut",
-            cardType: "Visa",
-            bic: "BIC: REVOLT21",
-            iban: "IBAN: LT843250050964665543"
-        },
-        {
-            title: "Paypal",
-            email: "incomgrp@outlook.com"
-        },
-        {
-            title: "Binance",
-            email: "incomgrp@outlook.com"
-        },
-        {
-            title: "Fixed 4.99€ donation",
-            link: "https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb"
-        }
-    ];
-
     return (
-        <Container sx={{ padding: "1vw 0px 1vw",display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
+        <Container sx={{ padding: "1vw 0px 1vw", display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
             <Box sx={{ display: "flex", justifyContent: "center", mb: 2, flexDirection: 'column' }}>
-                {/* <Typography variant="h4" sx={{ paddingBottom: "20px"}}>
+                <Typography variant="h4" sx={{ paddingBottom: "20px" }}>
                     Donates
-                </Typography> */}
+                </Typography>
             </Box>
-            <Box sx={{paddingLeft: '0.5vw'}}>
-            <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
-                Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
-            </Typography>
+            <Box sx={{ paddingLeft: '0.5vw' }}>
+                {/*<Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
+                    Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
+                </Typography>*/}
             </Box>
             <Grid container spacing={2}>
                 {cardsData.map((card, index) => (
@@ -86,72 +66,92 @@ const Donate: React.FC = () => {
                                 margin: "16px",
                                 display: "flex",
                                 flexDirection: "column",
-                                alignItems: 'start'
+                                alignItems: 'start',
                             }}
                         >
-                            <NeuCardHeader title={card.title} sx={{ pb: 0, mt: 1 }} />
-                            <NeuCardContent sx={{ justifyContent: 'start', alignItems: 'start', flexDirection: 'column', display: 'flex' }}>
-                                {card.cardType && (
-                                    <Box>
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                            sx={{ marginBottom: "16px" }}
-                                        >
-                                            {card.cardType}
-                                        </Typography>
+                            <NeuCardHeader
+                                title={
+                                    <Box sx={{ display: 'flex', alignItems: 'center', height: '30px' }}>
+                                        {card.titleImage ? (
+                                            <img src={card.titleImage} alt={card.title} style={{ width: '100px', height: 'auto', maxWidth: '100%' }} />
+                                        ) : (
+                                            <Typography variant="h6" sx={{ maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                {card.title}
+                                            </Typography>
+                                        )}
+                                        {card.cardTypeImage && (
+                                            <img src={card.cardTypeImage} alt={card.cardType} style={{ width: '50px', height: 'auto', maxWidth: '100%', marginLeft: '10px' }} />
+                                        )}
                                     </Box>
-                                )}
+                                }
+                                sx={{ pb: 0, mt: 1, width: '100%' }}
+                            />
+                            <NeuCardContent sx={{ justifyContent: 'start', alignItems: 'start', flexDirection: 'column', display: 'flex' }}>
                                 {card.bic && (
-                                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                    <Box sx={{ display: 'flex',  flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
                                         <Typography
-                                            variant="body2"
+                                            variant="body1"
                                             color="text.secondary"
-                                            sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                            sx={{ flexGrow: 1}}
                                         >
                                             {card.bic}
                                         </Typography>
-                                        <IconButton onClick={() => copyToClipboard(card.bic)}>
-                                            <FileCopyIcon />
+                                        <IconButton
+
+                                            onClick={() => copyToClipboard(card.bic)}
+                                        >
+                                            <ContentCopyIcon />
                                         </IconButton>
                                     </Box>
                                 )}
                                 {card.iban && (
-                                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                    <Box sx={{ display: 'flex', flexDirection: 'row', marginBottom: '16px' }}>
                                         <Typography
-                                            variant="body2"
+                                            variant="body1"
                                             color="text.secondary"
-                                            sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                            sx={{ flexGrow: 1 }}
                                         >
                                             {card.iban}
                                         </Typography>
-                                        <IconButton onClick={() => copyToClipboard(card.iban)}>
-                                            <FileCopyIcon />
+                                        <IconButton
+                                            sx={{
+                                                fontSize: "inherit",
+                                                padding: 0
+                                            }}
+                                            onClick={() => copyToClipboard(card.iban)}
+                                        >
+                                            <ContentCopyIcon />
                                         </IconButton>
                                     </Box>
                                 )}
                                 {card.email && (
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                                         <Typography
-                                            variant="body2"
+                                            variant="body1"
                                             color="text.secondary"
-                                            sx={{ flexGrow: 1, marginBottom: "16px" }}
+                                            sx={{ flexGrow: 1 }}
                                         >
                                             {card.email}
                                         </Typography>
-                                        <IconButton onClick={() => copyToClipboard(card.email)}>
-                                            <FileCopyIcon />
+                                        <IconButton
+                                            sx={{
+                                                fontSize: "inherit",
+                                                padding: 0
+                                            }}
+                                            onClick={() => copyToClipboard(card.email)}
+                                        >
+                                            <ContentCopyIcon />
                                         </IconButton>
                                     </Box>
                                 )}
                                 {card.link && (
                                     <Box sx={{}}>
-                                        <span>
-                                            <a href={card.link} target="_blank" rel="noopener noreferrer"
-                                               style={{fontSize: '150%'}}>
-                                                Click here
-                                            </a>
-                                        </span>
+                            <span>
+                                <a href={card.link} target="_blank" rel="noopener noreferrer"
+                                   style={{fontSize: '165%'}}>
+                                    Click here
+                                </a>
+                            </span>
                                     </Box>
                                 )}
                             </NeuCardContent>
@@ -159,11 +159,11 @@ const Donate: React.FC = () => {
                     </Grid>
                 ))}
             </Grid>
-            {/* <Box sx={{paddingLeft: '0.5vw'}}>
-            <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
-                Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
-            </Typography>
-            </Box> */}
+            <Box sx={{ paddingLeft: '0.5vw' }}>
+                <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>
+                    Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
+                </Typography>
+            </Box>
         </Container>
     );
 };
