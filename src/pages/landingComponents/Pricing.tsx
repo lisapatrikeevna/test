@@ -19,7 +19,7 @@ const CustomContainer = styled(Container)({
 const ScrollableContainer = styled(Box)({
     width: '100%',
     overflowY: 'auto',
-    maxHeight: 'calc(100vh - 400px)', 
+    maxHeight: 'calc(100vh - 275px)', 
     paddingTop: '10px',
     paddingBottom: '10px'
 });
