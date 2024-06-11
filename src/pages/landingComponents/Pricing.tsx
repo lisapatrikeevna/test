@@ -129,9 +129,6 @@ const Pricing = () => {
             </AppBar>
 
             <CustomContainer className="Pricing-container" sx={{ pb: 2 }} maxWidth="xl">
-                {/* <Typography component="h1" variant="h2" align="center" color="text.primary">
-                    Pricing
-                </Typography> */}
                 <Typography variant="h5" align="center" color="text.secondary" component="p" mt={'20px'}>
                     Since the platform is at the development stage, this list of features and prices may change.
                 </Typography>
@@ -141,17 +138,31 @@ const Pricing = () => {
                 <CustomContainer className="Pricing-container" maxWidth="xl">
                     <Grid container spacing={4} alignItems="flex-end" justifyContent={'center'}>
                         {tiers.map((tier) => (
-                            <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2} sx={{ display: 'flex', justifyContent: 'center' }}>
-                                <NeuCard sx={{ width: 300, height: tier.title === 'Prime' ? '540px' : '500px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2}>
+                                <NeuCard sx={{ width: '300', height: tier.title === 'Prime' ? '540px' : '500px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                     <NeuCardHeader
                                         title={tier.title}
-                                        avatar={tier.title === 'Prime' ? <StarIcon /> : null}
+                                        avatar={tier.title === 'Prime' ? <StarIcon sx={{ ml: '5px' }}/> : null}
                                         subtitle={tier.subheader}
+                                        sx={{ textAlign: 'center', alignItems: 'center', justifyContent: tier.title === 'Prime' ? '' : 'center' }}
                                     />
                                     <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
                                         {tier.oldPrice && (
-                                            <Typography component="span" variant="subtitle1" color="text.secondary" sx={{ textDecoration: 'line-through', fontSize: '1.25rem' }}>
+                                            <Typography component="span" variant="subtitle1" color="text.secondary" sx={{ position: 'relative', textDecoration: 'none', fontSize: '1.25rem' }}>
                                                 {`$${calculateOldPrice(tier.oldPrice)}`}
+                                                <Box
+                                                    component="span"
+                                                    sx={{
+                                                        position: 'absolute',
+                                                        left: 0,
+                                                        bottom: '50%',
+                                                        width: '100%',
+                                                        height: '1px',
+                                                        bgcolor: 'text.secondary',
+                                                        transform: 'rotate(-45deg)',
+                                                        transformOrigin: 'left bottom',
+                                                    }}
+                                                />
                                             </Typography>
                                         )}
                                         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', mb: 2 }}>
@@ -170,7 +181,7 @@ const Pricing = () => {
                                             ))}
                                         </List>
                                     </NeuCardContent>
-                                    <NeuCardAction>
+                                    <NeuCardAction >
                                         <NeuButton fullWidth rounded variant={tier.buttonVariant as 'text' | 'outlined' | 'contained'}>
                                             {tier.buttonText}
                                         </NeuButton>
