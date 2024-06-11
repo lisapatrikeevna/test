@@ -37,13 +37,13 @@ const getCardStyles = (theme: Theme, props: NeuCardProps) => {
 
 const StyledCard = styled(Card, {
   shouldForwardProp: (prop) =>
-      prop !== 'dark' &&
-      prop !== 'flat' &&
-      prop !== 'inset' &&
-      prop !== 'rounded' &&
-      prop !== 'outlined' &&
-      prop !== 'bordered' &&
-      prop !== 'elevation',
+    prop !== 'dark' &&
+    prop !== 'flat' &&
+    prop !== 'inset' &&
+    prop !== 'rounded' &&
+    prop !== 'outlined' &&
+    prop !== 'bordered' &&
+    prop !== 'elevation',
 })<NeuCardProps>(({ theme, ...props }) => ({
   ...getCardStyles(theme as Theme, props),
   outline: 'none',
@@ -76,7 +76,7 @@ const ContentWrapper = styled('div')<{ inProp: boolean }>(({ inProp }) => ({
 }));
 
 const NeuCard: React.FC<NeuCardProps> = (props) => {
-  const { in: inProp, children, ...rest } = props;
+  const { in: inProp = true, children, ...rest } = props;
 
   const animationProps = useSpring({
     transform: inProp ? 'scale(1)' : 'scale(0)',
@@ -85,11 +85,11 @@ const NeuCard: React.FC<NeuCardProps> = (props) => {
   });
 
   return (
-      <animated.div style={animationProps}>
-        <StyledCard {...rest}>
-          <ContentWrapper inProp={inProp ?? true}>{children}</ContentWrapper>
-        </StyledCard>
-      </animated.div>
+    <animated.div style={animationProps}>
+      <StyledCard {...rest}>
+        <ContentWrapper inProp={inProp}>{children}</ContentWrapper>
+      </StyledCard>
+    </animated.div>
   );
 };
 
