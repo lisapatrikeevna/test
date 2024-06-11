@@ -7,6 +7,7 @@ import NeuTextField from './neumorphism/input/NeuTextField';
 import NeuButton from './neumorphism/button/NeuButton';
 import NeuIconButton from './neumorphism/button/NeuIconButton';
 import NeuTextArea from './neumorphism/input/NeuTextArea';
+import NeuCard from "./neumorphism/card/NeuCard.tsx";
 
 const WriteToUsForm = () => {
     const [message, setMessage] = useState('');
@@ -50,44 +51,44 @@ const WriteToUsForm = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        <Box sx={{padding: '0.8vw 0px 0.8vw 0px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             {/* First block with address, phone and email */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 4, maxWidth: 400 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 4, maxWidth: 400,  }}>
                 <Grid container spacing={2} sx={{ flexDirection: 'column', width: 500 }}>
-                    <Grid item xs={12} md={4}>
-                        <Box sx={{ textAlign: 'center' }}>
+                    <Grid item xs={12} md={4} sx={{marginBottom: '1.2vw'}}>
+                        <NeuCard sx={{ textAlign: 'center', width: '230px', minHeight: '170px' }}>
                             <NeuIconButton disabled rounded sx={{ minWidth: '40px', padding: '6px' }}>
                                 <Map />
                             </NeuIconButton>
-                            <Typography variant="h6">Address</Typography>
-                            <Typography>Am Meisenberg 14, 51491 Overath</Typography>
-                        </Box>
+                            <Typography variant="h4">Address</Typography>
+                            <Typography variant="body1">Am Meisenberg 14, 51491 Overath</Typography>
+                        </NeuCard>
                     </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Box sx={{ textAlign: 'center' }}>
+                    <Grid item xs={12} md={4}  sx={{marginBottom: '1.2vw'}}>
+                        <NeuCard sx={{ textAlign: 'center', width: '230px', minHeight: '170px' }}>
                             <NeuIconButton disabled rounded sx={{ minWidth: '40px', padding: '6px' }}>
                                 <Call/>
                             </NeuIconButton>
-                            <Typography variant="h6">Phone</Typography>
-                            <Typography>+491623067782</Typography>
-                        </Box>
+                            <Typography variant="h4">Phone</Typography>
+                            <Typography variant="body1">+491623067782</Typography>
+                        </NeuCard>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ textAlign: 'center' }}>
+                        <NeuCard sx={{ textAlign: 'center', width: '230px', minHeight: '170px' }}>
                             <NeuIconButton disabled rounded sx={{ minWidth: '40px', padding: '6px' }}>
                                 <Mail />
                             </NeuIconButton>
-                            <Typography variant="h6">Email</Typography>
-                            <Typography>info@neoxonline.com</Typography>
-                        </Box>
+                            <Typography variant="h4">Email</Typography>
+                            <Typography variant="body1">info@neoxonline.com</Typography>
+                        </NeuCard>
                     </Grid>
                 </Grid>
             </Box>
 
             {/* Second block with form */}
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Typography variant="h5" sx={{ mb: 2 }}>Send us a message</Typography>
-                <Typography sx={{ mb: 2 }}>If you have any questions, fill out the form below</Typography>
+                <Typography variant="h4" sx={{ mb: 2 }}>Send us a message</Typography>
+                <Typography variant="body1" sx={{ mb: 2 }}>If you have any questions, fill out the form below</Typography>
                 <Box sx={{ width: '100%', maxWidth: 400 }}>
                     <FormControl component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
                         <NeuTextField
