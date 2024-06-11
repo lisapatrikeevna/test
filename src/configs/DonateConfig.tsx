@@ -10,7 +10,7 @@ import BinanceLogo from '../assets/donate/Binance_logo.svg';
 export const cardsData = [
     {
         title: "Sparkasse",
-        titleImage: SparkasseLogo, // Add image URL here
+        // titleImage: SparkasseLogo, // Add image URL here
         cardType: "Mastercard",
         cardTypeImage: MasterCardLogo, // Add image URL here
         bic: "BIC: COKSDE33XXX",
@@ -18,7 +18,7 @@ export const cardsData = [
     },
     {
         title: "PostBank",
-        titleImage: PostBankLogo, // Add image URL here
+        // titleImage: PostBankLogo, // Add image URL here
         cardType: "Maestro",
         cardTypeImage: MaestroLogo, // Add image URL here
         bic: "BIC: PBNKDEFF",
@@ -26,7 +26,7 @@ export const cardsData = [
     },
     {
         title: "Revolut",
-        titleImage: RevolutLogo, // Add image URL here
+        // titleImage: RevolutLogo, // Add image URL here
         cardType: "Visa",
         cardTypeImage: VisaLogo, // Add image URL here
         bic: "BIC: REVOLT21",
