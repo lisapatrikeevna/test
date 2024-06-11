@@ -22,10 +22,18 @@ const FooterContainer = styled('div')(({ theme }) => ({
     borderTopLeftRadius: theme.shape.borderRadius,
     borderTopRightRadius: theme.shape.borderRadius,
     color: theme.palette.text.primary,
+    '@media (max-width: 1150px)': {
+        flexDirection: 'column',
+        height: 'auto',
+        padding: theme.spacing(2),
+    },
 }));
 
 const Copyright = styled('div')(({ theme }) => ({
     position: 'absolute',
+    '@media (max-width: 1150px)': {
+        position: 'relative',
+    },
     left: theme.spacing(1),
     bottom: theme.spacing(1),
     fontFamily: theme.typography.fontFamily,
@@ -39,6 +47,16 @@ const SocialLink = styled('a')(({ theme }) => ({
     justifyContent: 'center',
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+    '@media (max-width: 1150px)': {
+        margin: theme.spacing(0.5, 0),
+    }
+}));
+
+const NeuButtonStyled = styled(NeuButton)(({ theme }) => ({
+    margin: theme.spacing(1),
+    '@media (max-width: 1150px)': {
+        margin: theme.spacing(0.5, 0),
+    },
 }));
 
 interface FooterProps {
@@ -68,10 +86,10 @@ const Footer: FC<FooterProps> = ({ theme, onImpressumClick, onPrivacyPolicyClick
     return (
         <FooterContainer theme={theme}>
             <Copyright>&copy; Copyright 2024 NeoXonline</Copyright>
-            <NeuButton rounded onClick={onImpressumClick}>Impressum</NeuButton>
-            <NeuButton rounded onClick={onPrivacyPolicyClick}>Privacy</NeuButton>
-            <NeuButton rounded onClick={onDatenschutzClick}>Datenschutz</NeuButton>
-            <NeuButton rounded onClick={contact}>Contact</NeuButton>
+            <NeuButtonStyled rounded onClick={onImpressumClick}>Impressum</NeuButtonStyled>
+            <NeuButtonStyled rounded onClick={onPrivacyPolicyClick}>Privacy</NeuButtonStyled>
+            <NeuButtonStyled rounded onClick={onDatenschutzClick}>Datenschutz</NeuButtonStyled>
+            <NeuButtonStyled rounded onClick={contact}>Contact</NeuButtonStyled>
             <SocialLink href="https://www.instagram.com/neox_online/" target="_blank" rel="noopener noreferrer">
                 <NeuIconButton rounded >
                     <Instagram />
