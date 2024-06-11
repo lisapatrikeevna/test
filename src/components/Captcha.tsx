@@ -73,7 +73,7 @@ const Captcha = ({ onResult, reset }: CaptchaProps) => {
                             onChange={(e) => setUserAnswer(e.target.value)}
                             onKeyDown={handleKeyDown} // Add the keydown event listener
                         />
-                        <NeuButton rounded sx={{ color: 'var(--text)', backgroundColor: 'var(--body)' }} variant="contained" onClick={checkAnswer}>Check</NeuButton>
+                        <NeuButton rounded sx={{ color: 'var(--text)', backgroundColor: 'var(--body)' }}  onClick={checkAnswer}>Check</NeuButton>
                     </Box>
                 </>
             )}
