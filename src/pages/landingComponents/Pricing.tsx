@@ -44,7 +44,7 @@ const tiers = [
             'Access to notes.'
         ],
         buttonText: 'Get started',
-        buttonVariant: 'contained',
+        buttonVariant: '',
     },
     {
         title: 'Prime',
@@ -58,7 +58,7 @@ const tiers = [
             'Ability to start a group conference for 1 hour.',
         ],
         buttonText: 'Get started',
-        buttonVariant: 'contained',
+        buttonVariant: '',
     },
     {
         title: 'Business',
@@ -71,7 +71,7 @@ const tiers = [
             'Ability to start a group conference for 1 hour.',
         ],
         buttonText: 'Get started',
-        buttonVariant: 'contained',
+        buttonVariant: '',
     },
     {
         title: 'Enterprise',
