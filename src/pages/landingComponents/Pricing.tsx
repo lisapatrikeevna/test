@@ -149,17 +149,17 @@ const Pricing = () => {
                                     <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
                                         {tier.oldPrice && (
                                             <Typography component="span" variant="subtitle1" color="text.secondary" sx={{ position: 'relative', textDecoration: 'none', fontSize: '1.25rem' }}>
-                                                {`$${calculateOldPrice(tier.oldPrice)}`}
+                                                {`€${calculateOldPrice(tier.oldPrice)}`}
                                                 <Box
                                                     component="span"
                                                     sx={{
                                                         position: 'absolute',
                                                         left: 0,
-                                                        bottom: '50%',
+                                                        bottom: '10%',
                                                         width: '100%',
                                                         height: '1px',
                                                         bgcolor: 'text.secondary',
-                                                        transform: 'rotate(-45deg)',
+                                                        transform: 'rotate(-30deg)',
                                                         transformOrigin: 'left bottom',
                                                     }}
                                                 />
@@ -167,7 +167,7 @@ const Pricing = () => {
                                         )}
                                         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', mb: 2 }}>
                                             <Typography component="h2" variant={tier.title === 'Enterprise' ? "h6" : "h3"} color="text.primary">
-                                                {tier.price ? `$${calculatePrice(tier.price)}` : tier.title === 'Enterprise' ? 'Contact us' : 'Free'}
+                                                {tier.price ? `€${calculatePrice(tier.price)}` : tier.title === 'Enterprise' ? 'Contact us' : 'Free'}
                                             </Typography>
                                             <Typography variant="h6" color="text.secondary">
                                                 {tier.title === 'Enterprise' || tier.title === 'Free' ? '' : `${isYearly ? 'yr' : 'mo'}`}
