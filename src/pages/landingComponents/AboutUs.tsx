@@ -52,54 +52,35 @@ const AboutUsPage = () => {
                 in={visible}
                 sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '65vh' }}
             >
-                <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {page % 2 === 0 ? (
-                        <>
-                            <Grid item xs={12} md={6}>
-                                <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'start' }}>
-                                    <Typography variant={isSmallScreen ? 'h5' : 'h4'} sx={{ marginBottom: '10px' }}>
-                                        {title[page - 1]}
-                                    </Typography>
-                                    {splitText[page - 1].map((str, index) => (
-                                        <Typography key={index} variant="body1" paragraph>
-                                            {str}
-                                        </Typography>
-                                    ))}
-                                </NeuCardContent>
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <CardMedia
-                                    component="img"
-                                    image={images[page - 1]}
-                                    alt={`Image ${page}`}
-                                    sx={{ maxWidth: '30vw', maxHeight: '30vw' }}
-                                />
-                            </Grid>
-                        </>
-                    ) : (
-                        <>
-                            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <CardMedia
-                                    component="img"
-                                    image={images[page - 1]}
-                                    alt={`Image ${page}`}
-                                    sx={{ maxWidth: '30vw', maxHeight: '30vw' }}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'start' }}>
-                                    <Typography variant={isSmallScreen ? 'h5' : 'h4'} sx={{ marginBottom: '10px' }}>
-                                        {title[page - 1]}
-                                    </Typography>
-                                    {splitText[page - 1].map((str, index) => (
-                                        <Typography key={index} variant="body1" paragraph>
-                                            {str}
-                                        </Typography>
-                                    ))}
-                                </NeuCardContent>
-                            </Grid>
-                        </>
-                    )}
+                <Grid
+                    container
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: page % 2 === 0 ? 'row-reverse' : 'row'
+                    }}
+                >
+                    <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <CardMedia
+                            component="img"
+                            image={images[page - 1]}
+                            alt={`Image ${page}`}
+                            sx={{ maxWidth: '30vw', maxHeight: '30vw' }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'start' }}>
+                            <Typography variant={isSmallScreen ? 'h5' : 'h4'} sx={{ marginBottom: '10px' }}>
+                                {title[page - 1]}
+                            </Typography>
+                            {splitText[page - 1].map((str, index) => (
+                                <Typography key={index} variant="body1" paragraph>
+                                    {str}
+                                </Typography>
+                            ))}
+                        </NeuCardContent>
+                    </Grid>
                 </Grid>
             </NeuCard>
             <Pagination
