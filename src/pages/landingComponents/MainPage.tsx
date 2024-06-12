@@ -15,6 +15,8 @@ import News from "./News.tsx";
 import AboutUs from "./AboutUs.tsx";
 import Project from './Project';
 import Donate from "./Donate.tsx";
+import OneNewsPage from "./OneNewsPage.tsx";
+
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -56,16 +58,27 @@ const ModalContent = styled(Box)(({ theme }) => ({
 }));
 
 const MainPage = () => {
-  const context = useContext(ActiveSectionContext);
-  const [isImpressumModalOpen, setIsImpressumModalOpen] = useState(false);
-  const [isPrivacyPolicyModalOpen, setIsPrivacyPolicyModalOpen] = useState(false);
-  const [isDatenschutzModalOpen, setIsDatenschutzModalOpen] = useState(false);
+    const context = useContext(ActiveSectionContext);
+    const [isImpressumModalOpen, setIsImpressumModalOpen] = useState(false);
+    const [isPrivacyPolicyModalOpen, setIsPrivacyPolicyModalOpen] = useState(false);
+    const [isDatenschutzModalOpen, setIsDatenschutzModalOpen] = useState(false);
+    const [selectedNewsId, setSelectedNewsId] = useState<string | null>(null);
 
-  if (!context) {
-    throw new Error('Header must be used within ActiveSectionContext');
-  }
-  const { activeSection, setActiveSection } = context;
-  const location = useLocation();
+
+
+    const handleReadMoreClick = (id: string) => {
+        setSelectedNewsId(id); // Устанавливаем ID выбранной новости
+    };
+
+    const handleBackToNewsClick = () => {
+        setSelectedNewsId(null); // Сбрасываем выбранную новость, чтобы отобразить список новостей
+    };
+
+    if (!context) {
+        throw new Error('Header must be used within ActiveSectionContext');
+    }
+    const { activeSection, setActiveSection } = context;
+    const location = useLocation();
 
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
@@ -108,6 +121,12 @@ const MainPage = () => {
     }
   }, [location.hash]);
 
+    useEffect(() => {
+        if (activeSection === 'News') {
+            handleBackToNewsClick();
+        }
+    }, [activeSection]);
+
   return (
     <PageContainer>
       <Section id="Home">
@@ -140,11 +159,16 @@ const MainPage = () => {
           <Contacts />
         </SectionContent>
       </Section>
-      <Section id="News">
-        <SectionContent maxWidth="xl">
-          <News />
-        </SectionContent>
-      </Section>
+        {/* Show News or OneNewsPage */}
+        <Section id="News">
+            <SectionContent maxWidth="xl">
+                {selectedNewsId ? (
+                    <OneNewsPage id={selectedNewsId} onBackClick={handleBackToNewsClick} />
+                ) : (
+                    <News onReadMoreClick={handleReadMoreClick} />
+                )}
+            </SectionContent>
+        </Section>
       <Section id="Donate">
         <SectionContent maxWidth="xl">
           <Donate />

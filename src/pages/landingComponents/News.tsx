@@ -1,107 +1,83 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Container, Typography, Grid } from "@mui/material";
-import Modal from "../../components/Modal";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import NeuCard from "../../components/neumorphism/card/NeuCard";
 import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
 import NeuCardHeader from "../../components/neumorphism/card/NeuCardHeader";
 import NeuButton from "../../components/neumorphism/button/NeuButton";
 import useOnScreen from "../../components/hooks/useOnScreen.ts";
-import { news, NewsItem } from '../../configs/newsConfig';
+import { news } from '../../configs/newsConfig';
 
+interface NewsProps {
+    onReadMoreClick: (id: string) => void;
+}
 
-const News: React.FC = () => {
-  const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
-  const [visibleCards, setVisibleCards] = useState<number[]>([]);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const isVisible = useOnScreen(containerRef);
+const News: React.FC<NewsProps> = ({ onReadMoreClick }) => {
+    const [visibleCards, setVisibleCards] = useState<number[]>([]);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const isVisible = useOnScreen(containerRef);
 
-  useEffect(() => {
-    let timer: number | undefined;
+    useEffect(() => {
+        let timer: number | undefined;
 
-    if (isVisible && visibleCards.length < news.length) {
-      timer = window.setTimeout(() => {
-        setVisibleCards((prev) => [...prev, prev.length]);
-      }, 150);
-    } else if (!isVisible && visibleCards.length !== 0) {
-      setVisibleCards([]);
-    }
+        if (isVisible && visibleCards.length < news.length) {
+            timer = window.setTimeout(() => {
+                setVisibleCards((prev) => [...prev, prev.length]);
+            }, 150);
+        } else if (!isVisible && visibleCards.length !== 0) {
+            setVisibleCards([]);
+        }
 
-    return () => clearTimeout(timer);
-  }, [isVisible, visibleCards.length]); // Need to check, that dependencies are correct
+        return () => clearTimeout(timer);
+    }, [isVisible, visibleCards.length]);
 
-  const handleOpenModal = (newsItem: NewsItem) => {
-    setSelectedNews(newsItem);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedNews(null);
-  };
-
-  return (
-      <Container  ref={containerRef}>
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-          {/* <Typography variant="h4" sx={{ paddingBottom: "1.2vw" }}>
-            News
-          </Typography> */}
-        </Box>
-        <Grid container spacing={2}>
-          {news.map((item, index) => (
-              <Grid item key={index} xs={6} md={4}>
-                <NeuCard
-                    in={visibleCards.includes(index)} // Giving state of visibility
-                    elevation={3}
-                    rounded
-                    sx={{
-                      padding: "0",
-                      margin: "0.8vw",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: 'start'
-                    }}
-                >
-                    <NeuCardHeader title={<Typography variant="h4">{item.title}</Typography>} sx={{ pb: 0}} />
-                    <NeuCardContent>
-                    <Box >
-                            <Typography
-                                variant="body1"
-                                color="text.secondary"
-                                sx={{ flexGrow: 1, marginBottom: '10px'}}
-                            >
-                                {item.content}
-                            </Typography>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <NeuButton
-                                onClick={() => handleOpenModal(item)}
-                                rounded
-                            >
-                                Read more
-                            </NeuButton>
-                        </Box>
-                    </Box>
-                  </NeuCardContent>
-                </NeuCard>
-              </Grid>
-          ))}
-        </Grid>
-        <Modal
-            isOpen={selectedNews !== null}
-            onClose={handleCloseModal}
-            height="auto"
-            width="600px"
-        >
-          {selectedNews && (
-              <>
-                <Typography variant="h4" gutterBottom>
-                  {selectedNews.title}
-                </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  {selectedNews.fullContent}
-                </Typography>
-              </>
-          )}
-        </Modal>
-      </Container>
-  );
+    return (
+        <Container ref={containerRef}>
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+                {/* <Typography variant="h4" sx={{ paddingBottom: "1.2vw" }}>
+                  News
+                </Typography> */}
+            </Box>
+            <Grid container spacing={2}>
+                {news.map((item, index) => (
+                    <Grid item key={index} xs={6} md={4}>
+                        <NeuCard
+                            in={visibleCards.includes(index)}
+                            elevation={3}
+                            rounded
+                            sx={{
+                                padding: "0",
+                                margin: "0.8vw",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: 'start'
+                            }}
+                        >
+                            <NeuCardHeader title={<Typography variant="h4">{item.title}</Typography>} sx={{ pb: 0}} />
+                            <NeuCardContent>
+                                <Box>
+                                    <Typography
+                                        variant="body1"
+                                        color="text.secondary"
+                                        sx={{ flexGrow: 1, marginBottom: '10px'}}
+                                    >
+                                        {item.content}
+                                    </Typography>
+                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                        <NeuButton
+                                            onClick={() => onReadMoreClick(item.id)}
+                                            rounded
+                                        >
+                                            Read more
+                                        </NeuButton>
+                                    </Box>
+                                </Box>
+                            </NeuCardContent>
+                        </NeuCard>
+                    </Grid>
+                ))}
+            </Grid>
+        </Container>
+    );
 };
 
 export default News;
