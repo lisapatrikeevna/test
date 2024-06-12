@@ -24,13 +24,17 @@ import {
 import ChannelPage from './pages/Videos/ChannelPage.tsx';
 import CertificateGenerator from './pages/cert/CertificateGenerator.tsx';
 import UserChannelPage from './pages/Videos/UserChannelPage.tsx';
-
 import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
 import { ThemeContext } from './contexts/ThemeContext';
 import VideoEditPage from './pages/Videos/VideoEditPage.tsx';
 import AnimatedRipple from './components/neumorphism/animatedRipple/AnimatedRipple.tsx';
+import PrivacyPolicy from "./pages/landingComponents/PrivacyPolicy.tsx";
+import Datenschutz from "./pages/landingComponents/Datenschutz.tsx";
+import Modal from './components/Modal';
+import Impressum from './pages/landingComponents/Impressum.tsx';
+import Footer from './pages/landingComponents/Footer';
 
 const App: FC = () => {
   // Initialize theme state with light theme as default
@@ -77,82 +81,133 @@ const App: FC = () => {
 
   const allowedUsernames = ['AdrianAdrian', 'Adrian Lieblich', 'RomarioFisch'];
 
+  const [isImpressumModalOpen, setIsImpressumModalOpen] = useState(false);
+  const [isPrivacyPolicyModalOpen, setIsPrivacyPolicyModalOpen] = useState(false);
+  const [isDatenschutzModalOpen, setIsDatenschutzModalOpen] = useState(false);
+
   return (
-    <ThemeContext.Provider value={{ theme: theme, setTheme }}>
-      <ThemeProvider theme={muiTheme}>
-        <Router>
-          <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-            {isLoggedIn ? (
-              <Box
-                sx={{
-                  display: 'flex',
-                  height: '100vh',
-                }}
+      <ThemeContext.Provider value={{ theme: theme, setTheme }}>
+        <ThemeProvider theme={muiTheme}>
+          <Router>
+            <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+              {isLoggedIn ? (
+                  <Box
+                      sx={{
+                        display: 'flex',
+                        height: '100vh',
+                      }}
+                  >
+                    <Box
+                        sx={{
+                          flexGrow: 1,
+                          overflow: 'auto',
+                          width: '100%',
+                        }}
+                    >
+                      <Routes>
+                        <Route path={mediaPath} element={<VideosMainPage />} />
+                        <Route path={mediaIdPath} element={<VideoPage />} />
+
+                        <Route path={appPagePath} element={<AppPage />} />
+                        <Route
+                            path={channelPagePrototypePath}
+                            element={<ChannelPage />}
+                        />
+                        <Route
+                            path={channelEditPrototypePath}
+                            element={<UserChannelPage />}
+                        />
+                        <Route
+                            path={VideoEditPathPrototype}
+                            element={<VideoEditPage />}
+                        />
+
+                        <Route
+                            path={certificatePath}
+                            element={
+                              allowedUsernames.includes(username) ? (
+                                  <CertificateGenerator />
+                              ) : (
+                                  ''
+                              )
+                            }
+                        />
+                      </Routes>
+                    </Box>
+                  </Box>
+              ) : (
+                  <>
+                    <AnimatedRipple>
+                      <HeaderAndMainPage
+                          activeSection={activeSection}
+                          setActiveSection={setActiveSection}
+                          setIsImpressumModalOpen={setIsImpressumModalOpen}
+                          setIsPrivacyPolicyModalOpen={setIsPrivacyPolicyModalOpen}
+                          setIsDatenschutzModalOpen={setIsDatenschutzModalOpen}
+                      />
+                    </AnimatedRipple>
+                  </>
+              )}
+
+              <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
+              <Modal
+                  isOpen={isImpressumModalOpen}
+                  onClose={() => setIsImpressumModalOpen(false)}
+                  aria-labelledby="impressum-modal"
+                  aria-describedby="impressum-modal-description"
               >
-                <Box
-                  sx={{
-                    flexGrow: 1,
-                    overflow: 'auto',
-                    width: '100%',
-                  }}
-                >
-                  <Routes>
-                    <Route path={mediaPath} element={<VideosMainPage />} />
-                    <Route path={mediaIdPath} element={<VideoPage />} />
-
-                    <Route path={appPagePath} element={<AppPage />} />
-                    <Route
-                      path={channelPagePrototypePath}
-                      element={<ChannelPage />}
-                    />
-                    <Route
-                      path={channelEditPrototypePath}
-                      element={<UserChannelPage />}
-                    />
-                    <Route
-                      path={VideoEditPathPrototype}
-                      element={<VideoEditPage />}
-                    />
-
-                    <Route
-                      path={certificatePath}
-                      element={
-                        allowedUsernames.includes(username) ? (
-                          <CertificateGenerator />
-                        ) : (
-                          ''
-                        )
-                      }
-                    />
-                  </Routes>
+                <Box sx={{ maxWidth: '500px' }}>
+                  <Impressum onClose={() => setIsImpressumModalOpen(false)} />
                 </Box>
-              </Box>
-            ) : (
-              <>
-                <AnimatedRipple>
-                  <HeaderAndMainPage
-                    activeSection={activeSection}
-                    setActiveSection={setActiveSection}
-                  />
-                </AnimatedRipple>
-              </>
-            )}
-
-            <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
-          </AuthContext.Provider>
-        </Router>
-      </ThemeProvider>
-    </ThemeContext.Provider>
+              </Modal>
+              <Modal
+                  isOpen={isPrivacyPolicyModalOpen}
+                  onClose={() => setIsPrivacyPolicyModalOpen(false)}
+                  aria-labelledby="privacy-policy-modal"
+                  aria-describedby="privacy-policy-modal-description"
+              >
+                <Box>
+                  <PrivacyPolicy />
+                </Box>
+              </Modal>
+              <Modal
+                  isOpen={isDatenschutzModalOpen}
+                  onClose={() => setIsDatenschutzModalOpen(false)}
+                  aria-labelledby="datenschutz-modal"
+                  aria-describedby="datenschutz-modal-description"
+              >
+                <Box>
+                  <Datenschutz />
+                </Box>
+              </Modal>
+            </AuthContext.Provider>
+          </Router>
+        </ThemeProvider>
+      </ThemeContext.Provider>
   );
 };
 
 const HeaderAndMainPage: React.FC<{
   activeSection: string | null;
   setActiveSection: React.Dispatch<React.SetStateAction<string | null>>;
-}> = ({ activeSection, setActiveSection }) => (
-  <ActiveSectionContext.Provider value={{ activeSection, setActiveSection }}>
-    <Header />
-    <MainPage />
-  </ActiveSectionContext.Provider>
+  setIsImpressumModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsPrivacyPolicyModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDatenschutzModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({
+        activeSection,
+        setActiveSection,
+        setIsImpressumModalOpen,
+        setIsPrivacyPolicyModalOpen,
+        setIsDatenschutzModalOpen,
+      }) => (
+    <ActiveSectionContext.Provider value={{ activeSection, setActiveSection }}>
+      <Header />
+      <MainPage />
+      <Footer
+          onImpressumClick={() => setIsImpressumModalOpen(true)}
+          onPrivacyPolicyClick={() => setIsPrivacyPolicyModalOpen(true)}
+          onDatenschutzClick={() => setIsDatenschutzModalOpen(true)}
+      />
+    </ActiveSectionContext.Provider>
 );
 export default App;

@@ -2,7 +2,7 @@ import { styled, Theme } from '@mui/material/styles';
 import { Instagram, Telegram, YouTube, Facebook, LinkedIn } from '@mui/icons-material';
 import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
 import { FC, useContext } from "react";
-import NeuIconButton from "../../components/neumorphism/button/NeuIconButton"; 
+import NeuIconButton from "../../components/neumorphism/button/NeuIconButton";
 import NeuButton from '../../components/neumorphism/button/NeuButton.tsx';
 import { Grid, Box } from '@mui/material';
 

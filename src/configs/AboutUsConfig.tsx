@@ -4,7 +4,7 @@ export const title = [
     "Our Team",
     "Our Commitment",
     "Join Us",
-    ""
+    "NeoXonline"
 ];
 
 export const text = [
@@ -13,5 +13,5 @@ export const text = [
     "Our team consists of passionate professionals with diverse expertise in technology, education, and communication. We are united by a common goal: to create a user-friendly and feature-rich platform that meets the evolving needs of our users.",
     "We are ready to face new challenges and continuously improve our platform to provide the best possible experience for our users. Innovation, dedication, and user satisfaction are at the core of everything we do.",
     "As we continue to develop NeoXonline, we invite you to join us on this exciting journey. Together, we can achieve great things and make a significant impact in the world of communication and learning.",
-    "NeoXonline — Connecting People, Empowering Growth."
+    "We bring people together and foster growth."
 ];
