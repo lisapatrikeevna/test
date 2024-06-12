@@ -72,7 +72,7 @@ const Header: React.FC = () => {
   return (
     <Box sx={{
       width: '100%',
-      position: 'absolute',
+      position: 'fixed',
       top: 0,
       paddingLeft: '3vw',
       paddingRight: '3vw',
@@ -81,14 +81,16 @@ const Header: React.FC = () => {
         paddingLeft: '1vw'
       },
       height: '95px',
-      zIndex: 100,
+      zIndex: 1000,
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
       boxShadow: muiTheme.shadows[1],
+      backgroundColor: muiTheme.palette.background.default,
       transition: '0.5s',
       borderBottomRightRadius: '25px',
-      borderBottomLeftRadius: '25px'
+      borderBottomLeftRadius: '25px',
+      overflow: 'auto'
     }}>
       <IconButton sx={{ display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none', '@media (max-width: 1280px)': { display: 'flex' } } }} onClick={handleDrawerToggle}>
         <MenuIcon sx={{ width: '32px', height: '32px' }}/>
@@ -213,7 +215,7 @@ const Header: React.FC = () => {
                   alignItems: 'center', 
                   minWidth: 'auto', 
                   marginBottom: '2px',
-                  color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit' 
+                  color: activeSection === item.substring(1) ? muiTheme.palette.primary.main : 'inherit'
                 }}>
                   {item === "#Partners" && <Handshake />}
                   {item === "#Pricing" && <EuroSymbol />}

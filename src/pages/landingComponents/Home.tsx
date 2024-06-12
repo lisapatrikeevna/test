@@ -10,22 +10,7 @@ const Home: FC = () => {
     };
 
     return (
-        <Box
-            sx={{
-                marginLeft: '1vw',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                width: '115%',
-                height: '100%',
-                padding: {
-                    xs: '1vw 0.8vw',
-                    sm: '1vw 0.8vw',
-                    lg: '0.8vh 1.2vw',
-                    xl: '1vw 0px 0.8vw',
-                },
-            }}
-        >
+        <>
             <Box
                 sx={{
                     display: 'flex',
@@ -89,7 +74,7 @@ const Home: FC = () => {
                     ></iframe>
                 </Box>
             </Box>
-        </Box>
+        </>
     );
 };
 
