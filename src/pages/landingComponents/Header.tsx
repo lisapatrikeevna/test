@@ -90,10 +90,10 @@ const Header: React.FC = () => {
       borderBottomRightRadius: '25px',
       borderBottomLeftRadius: '25px'
     }}>
-      <IconButton sx={{ display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none', '@media (max-width: 1070px)': { display: 'flex' } } }} onClick={handleDrawerToggle}>
+      <IconButton sx={{ display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none', '@media (max-width: 1280px)': { display: 'flex' } } }} onClick={handleDrawerToggle}>
         <MenuIcon sx={{ width: '32px', height: '32px' }}/>
       </IconButton>
-      <Box sx={{ display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex', '@media (max-width: 1070px)': { display: 'none' } }, alignItems: 'center', gap: '10px'}}>
+      <Box sx={{ display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex', '@media (max-width: 1280px)': { display: 'none' } }, alignItems: 'center', gap: '10px'}}>
         <img draggable="false" src={logo} alt="NeoXonline" style={{ width: 70, height: 70, cursor: 'pointer' }} onClick={() => { handleClick("#Home") }} />
         <Box sx={{ mt: '5px'}}> 
         <Typography variant="h4" sx={{ cursor: 'pointer', fontWeight: '550', marginBottom: 0, lineHeight: 1 }} onClick={() => { handleClick("#Home") }}>
@@ -107,7 +107,7 @@ const Header: React.FC = () => {
       <Box sx={{
         paddingLeft: '20px',
         transformOrigin: 'left',
-        display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex', '@media (max-width: 1070px)': { display: 'none' } },
+        display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex', '@media (max-width: 1280px)': { display: 'none' } },
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 'auto',
@@ -127,7 +127,7 @@ const Header: React.FC = () => {
           '@media (max-width: 1160px)': {
             width: '600px'
           },
-          '@media (max-width: 1070px)': {
+          '@media (max-width: 1280px)': {
             width: '100%',
             display: 'none'
           },
@@ -178,7 +178,7 @@ const Header: React.FC = () => {
                     },
                   },
                 },
-                '@media (max-width: 1070px)': {
+                '@media (max-width: 1280px)': {
                   '& .MuiListItemText-primary': {
                     fontSize: '0.75rem',
                   },
