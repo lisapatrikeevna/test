@@ -1,4 +1,4 @@
-import  {/*useContext,*/ useEffect } from 'react';
+import {/*useContext,*/ useEffect } from 'react';
 import {Box, Container/*, styled*/} from '@mui/material';
 import Home from './Home';
 import Partners from './Partners.tsx';
@@ -10,7 +10,6 @@ import News from "./News.tsx";
 import AboutUs from "./AboutUs.tsx";
 import Project from './Project';
 import Donate from "./Donate.tsx";
-import OneNewsPage from "./OneNewsPage.tsx";
 
 import ScrollSnap from "scroll-snap";
 
@@ -81,7 +80,6 @@ const MainPage = () => {
     return (
         <Container
             maxWidth='xl'
-
             sx={{
                 paddingTop: '10vh',
                 paddingBottom: '10vh',
@@ -136,9 +134,7 @@ const MainPage = () => {
                 {/*</BoxContent>*/}
             </Box>
             <Box id="News">
-                {/*<BoxContent maxWidth="xl">*/}
-                    <News />
-                {/*</BoxContent>*/}
+                <News onReadMoreClick={() => {}} />
             </Box>
             <Box id="Donate">
                 {/*<BoxContent maxWidth="xl">*/}
