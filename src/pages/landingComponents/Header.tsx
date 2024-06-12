@@ -85,7 +85,6 @@ const Header: React.FC = () => {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      backgroundColor: 'var(--body)',
       boxShadow: muiTheme.shadows[1],
       transition: '0.5s',
       borderBottomRightRadius: '25px',
@@ -154,18 +153,21 @@ const Header: React.FC = () => {
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '70%', 
-                    height: '100%', 
                     borderRadius: '15px',
                     backgroundColor: muiTheme.palette.background.default,
                     boxShadow: theme === 'light'
                       ? muiTheme.shadows[1]
                       : muiTheme.shadows[2],
                     zIndex: -1,
+                    width: '88px',  
+                    height: '72px',
+                    '@media (max-width: 1500px)': {
+                        width: '85px',  
+                        height: '69px',
+                      },  
                   }
                 }),
                 '@media (max-width: 1500px)': {
-                  // padding: '5px 5px',
                   '& .MuiListItemText-primary': {
                     fontSize: '0.83rem',
                   },
@@ -173,6 +175,17 @@ const Header: React.FC = () => {
                     minWidth: '40px',
                     '& svg': {
                       fontSize: '26px',
+                    },
+                  },
+                },
+                '@media (max-width: 1070px)': {
+                  '& .MuiListItemText-primary': {
+                    fontSize: '0.75rem',
+                  },
+                  '& .MuiListItemIcon-root': {
+                    minWidth: '30px',
+                    '& svg': {
+                      fontSize: '20px',
                     },
                   },
                 }
@@ -245,8 +258,6 @@ const Header: React.FC = () => {
             },
             borderRadius: '25px',
             overflow: 'hidden',
-            background: 'var(--toggle_background)',
-            boxShadow: '-10px -10px 25px var(--shadow_outer_light), 10px 10px 25px var(--shadow_outer_dark)'
           }} component="div">
             <NeuSwitch
               checked={theme === 'light'}
@@ -274,7 +285,7 @@ const Header: React.FC = () => {
         </NeuButton>
       </Box>
       <Drawer anchor="left" open={isDrawerOpen} onClose={handleDrawerToggle}>
-        <Box sx={{ width: 250, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', backgroundColor: 'var(--body)' }}>
+        <Box sx={{ width: 250, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px' }}>
           <List>
             <ListItem
               button
@@ -335,14 +346,17 @@ const Header: React.FC = () => {
                       top: '50%',
                       left: '50%',
                       transform: 'translate(-50%, -50%)',
-                      width: '100%', 
-                      height: '100%', 
                       borderRadius: '15px',
-                      backgroundColor: 'var(--body)', 
                       boxShadow: theme === 'light'
                         ? muiTheme.shadows[1]
                         : muiTheme.shadows[2],
                       zIndex: -1,
+                      width: '88px',  
+                      height: '72px',
+                      '@media (max-width: 1500px)': {
+                        width: '85px',  
+                        height: '69px',
+                      },  
                     }
                   })
                 }}
