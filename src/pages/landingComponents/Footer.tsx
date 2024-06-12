@@ -27,7 +27,7 @@ const FooterContainer = styled(Box)(({ theme }) => ({
     },
 }));
 
-const ContentContainer = styled(Grid)(({ theme }) => ({
+const GridContainer = styled(Grid)(({ theme }) => ({
     width: '100%',
     position: 'relative',
     paddingLeft: theme.spacing(27),
@@ -82,7 +82,7 @@ const Footer: FC<FooterProps> = ({ theme, onImpressumClick, onPrivacyPolicyClick
     return (
         <FooterContainer theme={theme}>
             <Copyright>&copy; Copyright 2024 NeoXonline</Copyright>
-            <ContentContainer container spacing={2} alignItems="center" justifyContent="space-between">
+            <GridContainer container spacing={2} alignItems="center" justifyContent="space-between">
                 <Grid item xs={12} md={6} container spacing={2} justifyContent="space-around">
                     <Grid item>
                         <NeuButton rounded onClick={onImpressumClick}>Impressum</NeuButton>
@@ -124,7 +124,7 @@ const Footer: FC<FooterProps> = ({ theme, onImpressumClick, onPrivacyPolicyClick
                         </NeuIconButton>
                     </SocialLink>
                 </Grid>
-            </ContentContainer>
+            </GridContainer>
         </FooterContainer>
     );
 };
