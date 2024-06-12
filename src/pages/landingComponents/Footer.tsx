@@ -93,7 +93,7 @@ const Footer: FC<FooterProps> = ({ theme, onImpressumClick, onPrivacyPolicyClick
                     <Grid item>
                         <NeuButton rounded onClick={onDatenschutzClick}>Datenschutz</NeuButton>
                     </Grid>
-                    <Grid item>
+                    <Grid item sx={{ display: { xs: 'none', md: 'none', lg: 'none', xl: 'block' } }}>
                         <NeuButton rounded onClick={contact}>Contact</NeuButton>
                     </Grid>
                 </Grid>
