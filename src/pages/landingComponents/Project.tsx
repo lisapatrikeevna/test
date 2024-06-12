@@ -36,23 +36,23 @@ const Project = () => {
 
     return (
         <Box
-            sx={{
-                padding: '1.2vw 0px 1.2vw 0px',
-                height: '78vh',
-                width: '80vw',
-                justifyContent: 'center',
-                alignItems: 'center',
-                display: 'flex',
-                flexDirection: 'column'
-            }}
             ref={containerRef}
         >
             <NeuCard
                 in={visible}
-                sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '65vh' }}
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '65vh',
+                    width: '80vw',
+                    padding: '5vw',
+            }}
             >
                 <Grid
                     container
+                    columnSpacing={10}
+                    rowSpacing={1}
                     sx={{
                         display: 'flex',
                         justifyContent: 'center',
@@ -60,7 +60,10 @@ const Project = () => {
                         flexDirection: page % 2 === 0 ? 'row-reverse' : 'row'
                     }}
                 >
-                    <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Grid item xs={12} md={6} sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center' }}>
                         <CardMedia
                             component="img"
                             image={images[page - 1]}
@@ -70,11 +73,11 @@ const Project = () => {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'start' }}>
-                            <Typography variant={isSmallScreen ? 'h5' : 'h4'} sx={{ marginBottom: '10px' }}>
+                            <Typography variant={isSmallScreen ? 'h4' : 'h3'} sx={{ marginBottom: '10px' }}>
                                 {title[page - 1]}
                             </Typography>
                             {splitText[page - 1].map((str, index) => (
-                                <Typography key={index} variant="body1" paragraph>
+                                <Typography key={index} variant="h6" paragraph>
                                     {str}
                                 </Typography>
                             ))}
@@ -87,7 +90,7 @@ const Project = () => {
                 color="primary"
                 page={page}
                 onChange={handleChange}
-                style={{ marginTop: "16px" }}
+                style={{ marginTop: "16px", display: 'flex', justifyContent: 'center', alignItems: 'center'}}
             />
         </Box>
     );
