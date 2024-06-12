@@ -163,7 +163,19 @@ const Header: React.FC = () => {
                       : muiTheme.shadows[2],
                     zIndex: -1,
                   }
-                })
+                }),
+                '@media (max-width: 1500px)': {
+                  // padding: '5px 5px',
+                  '& .MuiListItemText-primary': {
+                    fontSize: '0.83rem',
+                  },
+                  '& .MuiListItemIcon-root': {
+                    minWidth: '40px',
+                    '& svg': {
+                      fontSize: '26px',
+                    },
+                  },
+                }
               }}
             >
               <MuiLink
