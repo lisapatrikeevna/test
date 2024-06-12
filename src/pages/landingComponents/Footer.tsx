@@ -47,12 +47,8 @@ const SocialLink = styled('a')(({ theme }) => ({
     justifyContent: 'center',
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    '@media (min-width: 1151px)': {
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2),
-    },
     '@media (max-width: 1150px)': {
-        margin: theme.spacing(0.5, 0),
+        margin: theme.spacing(1),
     }
 }));
 
@@ -61,6 +57,7 @@ const SocialLinksContainer = styled('div')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: '40%',
     '@media (max-width: 1150px)': {
         flexDirection: 'row',
         justifyContent: 'center',
