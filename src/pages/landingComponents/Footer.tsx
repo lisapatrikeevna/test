@@ -4,17 +4,16 @@ import ActiveSectionContext from "../../contexts/ActiveSectionContext.tsx";
 import { FC, useContext } from "react";
 import NeuIconButton from "../../components/neumorphism/button/NeuIconButton"; 
 import NeuButton from '../../components/neumorphism/button/NeuButton.tsx';
+import { Grid, Box } from '@mui/material';
 
-const FooterContainer = styled('div')(({ theme }) => ({
-    position: 'absolute',
+const FooterContainer = styled(Box)(({ theme }) => ({
+    position: 'fixed',
     bottom: 0,
-    paddingRight: '5vw',
-    paddingLeft: '20vw',
     width: '100vw',
-    height: '6vh',
+    height: 'auto',
     zIndex: 100,
     display: 'flex',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: theme.palette.background.default,
     boxShadow: theme.shadows[1],
@@ -22,18 +21,23 @@ const FooterContainer = styled('div')(({ theme }) => ({
     borderTopLeftRadius: theme.shape.borderRadius,
     borderTopRightRadius: theme.shape.borderRadius,
     color: theme.palette.text.primary,
-    '@media (max-width: 1150px)': {
-        flexDirection: 'column',
-        height: 'auto',
+    padding: theme.spacing(2, 4),
+    [theme.breakpoints.down('sm')]: {
         padding: theme.spacing(2),
+    },
+}));
+
+const ContentContainer = styled(Grid)(({ theme }) => ({
+    width: '100%',
+    position: 'relative',
+    paddingLeft: theme.spacing(27),
+    [theme.breakpoints.down('md')]: {
+        paddingLeft: 0,
     },
 }));
 
 const Copyright = styled('div')(({ theme }) => ({
     position: 'absolute',
-    // '@media (max-width: 1150px)': {
-    //     position: 'relative',
-    // },
     left: theme.spacing(1),
     bottom: theme.spacing(1),
     fontFamily: theme.typography.fontFamily,
@@ -45,33 +49,9 @@ const SocialLink = styled('a')(({ theme }) => ({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    '@media (max-width: 1150px)': {
-        margin: theme.spacing(1),
-    }
-}));
-
-
-const SocialLinksContainer = styled('div')(({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '40%',
-    '@media (max-width: 1150px)': {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        width: '100%',
-        marginBottom: theme.spacing(2),
-        marginTop: theme.spacing(1),
-    },
-}));
-
-
-const NeuButtonStyled = styled(NeuButton)(({ theme }) => ({
-    margin: theme.spacing(1),
-    '@media (max-width: 1150px)': {
-        margin: theme.spacing(0.5, 0),
+    margin: theme.spacing(0.7),
+    [theme.breakpoints.down('md')]: {
+        marginBottom: theme.spacing(3.5),
     },
 }));
 
@@ -102,37 +82,49 @@ const Footer: FC<FooterProps> = ({ theme, onImpressumClick, onPrivacyPolicyClick
     return (
         <FooterContainer theme={theme}>
             <Copyright>&copy; Copyright 2024 NeoXonline</Copyright>
-            <NeuButtonStyled rounded onClick={onImpressumClick}>Impressum</NeuButtonStyled>
-            <NeuButtonStyled rounded onClick={onPrivacyPolicyClick}>Privacy</NeuButtonStyled>
-            <NeuButtonStyled rounded onClick={onDatenschutzClick}>Datenschutz</NeuButtonStyled>
-            <NeuButtonStyled rounded onClick={contact}>Contact</NeuButtonStyled>
-            <SocialLinksContainer>
-            <SocialLink href="https://www.instagram.com/neox_online/" target="_blank" rel="noopener noreferrer">
-                <NeuIconButton rounded >
-                    <Instagram />
-                </NeuIconButton>
-            </SocialLink>
-            <SocialLink href="https://t.me/neoxonline" target="_blank" rel="noopener noreferrer">
-                <NeuIconButton rounded >
-                    <Telegram />
-                </NeuIconButton>
-            </SocialLink>
-            <SocialLink href="https://www.facebook.com/profile.php?id=61557996420950" target="_blank" rel="noopener noreferrer">
-                <NeuIconButton rounded >
-                    <Facebook />
-                </NeuIconButton>
-            </SocialLink>
-            <SocialLink href="https://www.linkedin.com/company/103143013/admin/feed/posts/" target="_blank" rel="noopener noreferrer">
-                <NeuIconButton rounded >
-                    <LinkedIn />
-                </NeuIconButton>
-            </SocialLink>
-            <SocialLink href="https://www.youtube.com/channel/UC3YWemWS7WPJXReBBKOYfLQ" target="_blank" rel="noopener noreferrer">
-                <NeuIconButton rounded >
-                    <YouTube />
-                </NeuIconButton>
-            </SocialLink>
-            </SocialLinksContainer>
+            <ContentContainer container spacing={2} alignItems="center" justifyContent="space-between">
+                <Grid item xs={12} md={6} container spacing={2} justifyContent="space-around">
+                    <Grid item>
+                        <NeuButton rounded onClick={onImpressumClick}>Impressum</NeuButton>
+                    </Grid>
+                    <Grid item>
+                        <NeuButton rounded onClick={onPrivacyPolicyClick}>Privacy</NeuButton>
+                    </Grid>
+                    <Grid item>
+                        <NeuButton rounded onClick={onDatenschutzClick}>Datenschutz</NeuButton>
+                    </Grid>
+                    <Grid item>
+                        <NeuButton rounded onClick={contact}>Contact</NeuButton>
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} md={6} container justifyContent="space-around">
+                    <SocialLink href="https://www.instagram.com/neox_online/" target="_blank" rel="noopener noreferrer">
+                        <NeuIconButton rounded>
+                            <Instagram />
+                        </NeuIconButton>
+                    </SocialLink>
+                    <SocialLink href="https://t.me/neoxonline" target="_blank" rel="noopener noreferrer">
+                        <NeuIconButton rounded>
+                            <Telegram />
+                        </NeuIconButton>
+                    </SocialLink>
+                    <SocialLink href="https://www.facebook.com/profile.php?id=61557996420950" target="_blank" rel="noopener noreferrer">
+                        <NeuIconButton rounded>
+                            <Facebook />
+                        </NeuIconButton>
+                    </SocialLink>
+                    <SocialLink href="https://www.linkedin.com/company/103143013/admin/feed/posts/" target="_blank" rel="noopener noreferrer">
+                        <NeuIconButton rounded>
+                            <LinkedIn />
+                        </NeuIconButton>
+                    </SocialLink>
+                    <SocialLink href="https://www.youtube.com/channel/UC3YWemWS7WPJXReBBKOYfLQ" target="_blank" rel="noopener noreferrer">
+                        <NeuIconButton rounded>
+                            <YouTube />
+                        </NeuIconButton>
+                    </SocialLink>
+                </Grid>
+            </ContentContainer>
         </FooterContainer>
     );
 };
