@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Dialog, DialogContent, styled, Theme, Box } from '@mui/material';
+import React, {FC} from "react";
+import {Dialog, DialogContent, styled, Theme, Box} from '@mui/material';
 
 const StyledDialog = styled(Dialog)({
     width: '100%',
@@ -7,7 +7,7 @@ const StyledDialog = styled(Dialog)({
     backdropFilter: 'blur(5px)',
 });
 
-const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
+const StyledDialogContent = styled(DialogContent)(({theme}) => ({
     display: 'flex',
     backgroundColor: theme?.palette.background.default,
     padding: '0 !important',
@@ -16,22 +16,22 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
 }));
 
 interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    height?: string;
-    width?: string;
-    children: React.ReactNode;
-    showCloseButton?: boolean;
-    theme?: Theme;
+    onClose: () => void,
+    height?: string,
+    width?: string,
+    children: React.ReactNode,
+    showCloseButton?: boolean,
+    theme?: Theme,
+    isOpen?: boolean
 }
 
-const Modal: FC<ModalProps> = ({ isOpen, onClose, height, width, children, theme }) => {
+const Modal: FC<ModalProps> = ({isOpen, onClose, height, width, children, theme}) => {
     if (!isOpen) return null;
 
     return (
         <StyledDialog open={isOpen} onClose={onClose}>
             <StyledDialogContent theme={theme}>
-                <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
+                <Box sx={{position: 'relative', width: '100%', height: '100%'}}>
                     <Box
                         sx={{
                             height: height ? height : 'auto',

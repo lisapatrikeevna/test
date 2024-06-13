@@ -34,6 +34,7 @@
     "react-spring": "^9.7.3",
     "react-toastify": "^10.0.5",
     "react-window": "^1.8.10",
+    "scroll-snap": "^4.0.5",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.8"
   },
