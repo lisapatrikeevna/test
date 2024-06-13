@@ -45,8 +45,6 @@ const Project = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     height: '65vh',
-                    width: '80vw',
-                    padding: '5vw',
             }}
             >
                 <Grid

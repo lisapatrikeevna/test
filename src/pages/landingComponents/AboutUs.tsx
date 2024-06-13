@@ -36,9 +36,7 @@ const AboutUsPage = () => {
     const splitText: string[][] = text.map(str => str.split('|').map(subStr => subStr.trim()));
 
     return (
-        <Box
-            ref={containerRef}
-        >
+        <Box ref={containerRef}>
             <NeuCard
                 in={visible}
                 sx={{
@@ -46,9 +44,7 @@ const AboutUsPage = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     height: '65vh',
-                    width: '80vw',
-                    padding: '5vw',
-            }}
+                }}
             >
                 <Grid container
                       columnSpacing={10}
@@ -58,7 +54,7 @@ const AboutUsPage = () => {
                           justifyContent: 'space-between',
                           alignItems: 'center',
                           flexDirection: page % 2 === 0 ? 'row-reverse' : 'row'
-                    }}>
+                      }}>
                     <Grid item xs={12} md={6} sx={{
                         display: 'flex',
                         justifyContent: 'center',

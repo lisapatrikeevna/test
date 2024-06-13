@@ -1,5 +1,5 @@
 import {useEffect } from 'react';
-import {Box, Container} from '@mui/material';
+import {Box, Container, CssBaseline} from '@mui/material';
 import Home from './Home';
 import Partners from './Partners.tsx';
 import Pricing from './Pricing.tsx';
@@ -23,7 +23,7 @@ declare module "scroll-snap" {
 const snapConfig = {
     scrollSnapDestination: "10% 90%",
     scrollTimeout: 100,
-    scrollTime: 500
+    scrollTime: 500,
 };
 
 const MainPage = () => {
@@ -44,11 +44,11 @@ const MainPage = () => {
 
     return (
         <Container
-            maxWidth='xl'
+            maxWidth="xl"
             sx={{
                 paddingTop: {
-                    xs: '15vh',
-                    sm: '15vh',
+                    xs: '13vh',
+                    sm: '12vh',
                     lg: '10vh',
                     xl: '10vh',
                 },
@@ -60,12 +60,9 @@ const MainPage = () => {
                     xl: '10vh',
                 },
                 overflow: 'auto',
-                '&::-webkit-scrollbar': {
-                    display: 'none',
-                },
-                '-ms-overflow-style': 'none',
             }}
         >
+            <CssBaseline />
             <Box
                 id="Home"
                 sx={{
@@ -79,46 +76,51 @@ const MainPage = () => {
                         lg: '0.8vh 1.2vw',
                         xl: '1vw 0px 0.8vw',
                     },
+
                 }}
             >
                 <Home />
             </Box>
             <Box
                 id="AboutUs"
-                 sx={{
-                     padding: '1.2vw 0px 1.2vw 0px',
-                     height: '80vh',
-                     justifyContent: 'center',
-                     alignItems: 'center',
-                     display: 'flex',
-                     flexDirection: 'column'
-                 }}
-            >
-                    <AboutUs />
-            </Box>
-            <Box
-                id="Project"
                 sx={{
-                    padding: '1.2vw 0px 1.2vw 0px',
                     height: '80vh',
                     justifyContent: 'center',
                     alignItems: 'center',
                     display: 'flex',
                     flexDirection: 'column'
                 }}>
-                    <Project />
+                <AboutUs />
             </Box>
             <Box
-                id="Pricing">
-                    <Pricing />
+                id="Project"
+                sx={{
+                    height: '80vh',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                <Project />
+            </Box>
+            <Box
+                id="Pricing"
+                sx={{
+                    display: 'flex',
+                    overflowY: 'auto',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column'
+                }}>
+                <Pricing />
             </Box>
             <Box
                 id="Partners">
-                    <Partners />
+                <Partners />
             </Box>
             <Box
                 id="Contacts">
-                    <Contacts />
+                <Contacts />
             </Box>
             <Box
                 id="News">
@@ -126,7 +128,7 @@ const MainPage = () => {
             </Box>
             <Box
                 id="Donate">
-                    <Donate />
+                <Donate />
             </Box>
             <Cookies />
         </Container>
