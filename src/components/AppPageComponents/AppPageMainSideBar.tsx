@@ -248,7 +248,7 @@ const AppPageMainSideBar = ({
           </ListItem>
           <ListItem
             disablePadding
-            onClick={() => changeRenderCentralComponent('videospage')}
+            onClick={() => changeRenderCentralComponent('mevipa')}
           >
             <ListItemButton disableRipple sx={{ padding: '5px 16px' }}>
               <ListItemIcon sx={{ minWidth: '45px' }}>

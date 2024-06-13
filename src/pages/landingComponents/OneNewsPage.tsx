@@ -5,7 +5,7 @@ import { news } from '../../configs/newsConfig';
 
 interface OneNewsPageProps {
     id: string;
-    onBackClick: () => void; // Добавляем колбэк для обработки нажатия на кнопку "назад"
+    onBackClick: () => void; // Adding a callback to handle the click on the "back" button
 }
 
 const OneNewsPage: React.FC<OneNewsPageProps> = ({ id, onBackClick }) => {
@@ -16,7 +16,7 @@ const OneNewsPage: React.FC<OneNewsPageProps> = ({ id, onBackClick }) => {
     }
 
     const handleBackClick = () => {
-        onBackClick(); // Вызываем колбэк при нажатии на кнопку "назад"
+        onBackClick(); // When press this button, going back to previous page
     };
 
     return (
