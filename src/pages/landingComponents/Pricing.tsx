@@ -90,6 +90,14 @@ const tiers = [
         buttonText: 'Contact us',
         buttonVariant: 'outlined',
     },
+    {
+        title: 'Custom',
+        description: [
+            'Each user can select the features that suit them best, tailored to their individual needs.'
+        ],
+        buttonText: 'Constructor',
+        buttonVariant: 'outlined',
+    },
 ];
 
 const Pricing = () => {
@@ -139,14 +147,14 @@ const Pricing = () => {
 
             <CustomContainer className="Pricing-container" sx={{ pb: 2 }} maxWidth="xl">
                 <Typography variant="h5" align="center" color="text.secondary" component="p" mt={'20px'}>
-                Limits on gigabytes and chats are set until the end of beta testing. We also welcome your suggestions for changes or additions
+                    Limits on gigabytes and chats are set until the end of beta testing. We also welcome your suggestions for changes or additions
                 </Typography>
             </CustomContainer>
 
             <ScrollableContainer>
                 <CustomContainer className="Pricing-container" maxWidth="xl">
                     <Grid container spacing={4} alignItems="flex-end" justifyContent={'center'}>
-                        {tiers.map((tier) => (
+                        {tiers.slice(0, 5).map((tier) => (
                             <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2}>
                                 <NeuCard sx={{ width: '300', height: tier.title === 'Prime' ? '585px' : '570px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                     <NeuCardHeader
@@ -198,6 +206,31 @@ const Pricing = () => {
                                 </NeuCard>
                             </Grid>
                         ))}
+                        <Grid item xs={12} sm={6} md={4} lg={3} xl={2} sx={{ mt: 2 }}>
+                            <NeuCard sx={{ width: '300', height: '570px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                <NeuCardHeader
+                                    title="Custom"
+                                    sx={{ textAlign: 'center', alignItems: 'center', justifyContent: 'center' }}
+                                />
+                                <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', mb: 2 }}>
+                                        <Typography component="h2" variant="h6" color="text.primary">
+                                            Contact us
+                                        </Typography>
+                                    </Box>
+                                    <List sx={{ width: '190px', padding: 0, listStyleType: 'disc', paddingLeft: '15px' }}>
+                                        <ListItem sx={{ display: 'list-item', padding: 0 }}>
+                                            <ListItemText primary="Each user can select the features that suit them best, tailored to their individual needs." sx={{ textAlign: 'left' }} />
+                                        </ListItem>
+                                    </List>
+                                </NeuCardContent>
+                                <NeuCardAction>
+                                    <NeuButton fullWidth rounded variant="outlined">
+                                        Constructor
+                                    </NeuButton>
+                                </NeuCardAction>
+                            </NeuCard>
+                        </Grid>
                     </Grid>
                 </CustomContainer>
             </ScrollableContainer>
