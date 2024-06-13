@@ -8,11 +8,10 @@ import { Grid, Box } from '@mui/material';
 
 const FooterContainer = styled(Box)(({ theme }) => ({
     position: 'fixed',
-    // '@media (max-width: 1280px)': 
-    // { 
-    //     position: 'relative',
-    //     bottom: 'unset',
-    // },
+    '@media (max-width: 1280px)': 
+    { 
+        position: 'absolute',
+    },
     bottom: 0,
     width: '100vw',
     height: 'auto',
@@ -26,7 +25,7 @@ const FooterContainer = styled(Box)(({ theme }) => ({
     borderTopLeftRadius: theme.shape.borderRadius,
     borderTopRightRadius: theme.shape.borderRadius,
     color: theme.palette.text.primary,
-    padding: theme.spacing(0.7, 4),
+    padding: theme.spacing(0.8, 4),
     [theme.breakpoints.down('md')]: {
         padding: theme.spacing(2),
     },
