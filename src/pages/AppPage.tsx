@@ -29,6 +29,11 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import VR from './VR.tsx';
 import AppPageChatsComponent from '../components/AppPageComponents/AppPageChatsComponent.tsx';
+import VideoPage from "./Videos/VideoPage.tsx";
+import VideoEditPage from './Videos/VideoEditPage.tsx';
+import {useSelector} from "react-redux";
+import {RootState} from "../store/store.ts";
+import ChannelPage from './Videos/ChannelPage.tsx';
 
 export type RenderValues =
   | 'comments'
@@ -38,7 +43,7 @@ export type RenderValues =
   | 'audio'
   | 'radio';
 
-export type RenderValuesCentralComponent = 'home' | 'videospage' | 'VR';
+export type RenderValuesCentralComponent = 'home' | 'mevipa' | 'VR' | 'videopage' | 'videoeditpage' | 'videochannel';
 
 const AppPage = () => {
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
@@ -52,6 +57,7 @@ const AppPage = () => {
   const chatsPanelRef = useRef<ImperativePanelHandle>(null);
   const rightPanel = useRef<ImperativePanelHandle>(null);
   const [showOptionsButton, setShowOptionsButton] = useState(false);
+  const userId = useSelector((state: RootState) => state.user.user?.userId);
 
   const toggleChatsPanel = () => {
     setIsChatPanelOpen((prev) => {
@@ -84,9 +90,14 @@ const AppPage = () => {
     setRenderValues(value);
   }
 
-  function changeRenderCentralComponent(value: RenderValuesCentralComponent) {
+  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+
+  const changeRenderCentralComponent = (value: RenderValuesCentralComponent, videoId?: string) => {
     setRenderValuesCentralComponent(value);
-  }
+    if (videoId) {
+      setSelectedVideoId(videoId);
+    }
+  };
 
   return (
     <Box
@@ -109,7 +120,6 @@ const AppPage = () => {
         display="flex"
         position="relative"
         sx={{ height: 'calc(100vh - 60px)', marginTop: '60px' }}
-        flex={renderValuesCentralComponent === 'videospage' ? 1 : ''}
         overflow="auto"
       >
         <Box position="fixed" top="60px" bottom={0} left={0} zIndex={1000}>
@@ -143,12 +153,16 @@ const AppPage = () => {
               backgroundImage: `url(${Fon3})`,
               padding: '10px',
               position: 'relative',
+              overflowY: 'auto',
             }}
             defaultSize={50}
           >
-            {renderValuesCentralComponent === 'videospage' && (
-              <VideosMainPage />
+            {renderValuesCentralComponent === 'mevipa' && (
+                <VideosMainPage changeRenderCentralComponent={changeRenderCentralComponent} />
             )}
+            {renderValuesCentralComponent === 'videoeditpage' && <VideoEditPage userId={userId} />}
+            {renderValuesCentralComponent === 'videochannel' && <ChannelPage userId={userId} changeRenderCentralComponent={changeRenderCentralComponent} />}
+            {renderValuesCentralComponent === 'videopage' && <VideoPage videoId={selectedVideoId} changeRenderCentralComponent={changeRenderCentralComponent} />}
             {renderValuesCentralComponent === 'VR' && <VR />}
             {renderValuesCentralComponent === 'home' && (
               <AppPageCentralComponent />

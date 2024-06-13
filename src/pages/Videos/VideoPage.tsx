@@ -1,6 +1,4 @@
-
-import { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { getVideo, getVideoMetadata } from '../../services/videoServices/videoShow.service';
 import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,25 +26,24 @@ import HandleShareOnX from "../../components/VideoComponents/VideoShare/HandleSh
 import HandleShareOnLinkedIn from "../../components/VideoComponents/VideoShare/HandleShareOnLinkedIn.tsx";
 import { getUserAvatar } from '../../services/userServices/getUserAvatar.service';
 import { getAllUsers } from "../../services/userServices/getAllUsers.service.ts";
+import {RenderValuesCentralComponent} from "../AppPage.tsx";
 
+interface VideoPageProps {
+    videoId: string | null;
+    changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
+}
 
-const VideoPage: FC = () => {
-    const { id } = useParams<{ id: string }>();
-    const videoId = id as string;
+const VideoPage: React.FC<VideoPageProps> = ({ videoId, changeRenderCentralComponent }) => {
     const dispatch = useDispatch();
     const { videoUrl, buffering, loading } = useSelector((state: RootState) => state.video);
-
     const [videoName, setVideoName] = useState('');
     const [description, setDescription] = useState('');
     const [views, setViews] = useState(0);
     const [videoDuration, setVideoDuration] = useState(0);
-
-    const { handleVideoProgress } = useViewProgress(videoDuration, videoId);
-    const { likes, hasLiked, handleLike, hasDisliked, handleDislike, setLikes } = useLikeHandler(videoId);
+    const { handleVideoProgress } = useViewProgress(videoDuration, videoId || '');
+    const { likes, hasLiked, handleLike, hasDisliked, handleDislike, setLikes } = useLikeHandler(videoId || '');
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const link = window.location.href;
-
     const [userId, setUserId] = useState<string | null>(null);
     const [userName, setUserName] = useState('No user found');
     const [avatar, setAvatar] = useState<string | null>(null);
@@ -265,7 +262,7 @@ const VideoPage: FC = () => {
                     </Box>
                     <Box style={{ padding: 0, marginTop: 15 }}>
                         <Paper elevation={3}>
-                            <VideoListHorizontal currentVideoId={videoId} />
+                            <VideoListHorizontal currentVideoId={videoId || ''} changeRenderCentralComponent={changeRenderCentralComponent} />
                         </Paper>
                     </Box>
                 </Container>

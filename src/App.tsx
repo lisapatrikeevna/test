@@ -6,29 +6,21 @@ import AppPage from './pages/AppPage';
 import LoginModal from './components/LoginModal';
 import Header from './pages/landingComponents/Header';
 import MainPage from './pages/landingComponents/MainPage';
-import VideoPage from './pages/Videos/VideoPage.tsx';
 import { useAppDispatch, useAppSelector } from './store/hooks.ts';
 import { AuthService } from './services/auth.service.ts';
 import { userSliceMapper } from './store/user/utilits/userUtilits.ts';
 import { login, selectUsername } from './store/user/userSlice.ts';
-import VideosMainPage from './pages/Videos/VideosMainPage.tsx';
 import {
   appPagePath,
   channelEditPrototypePath,
-  channelPagePrototypePath,
-  mediaIdPath,
-  mediaPath,
   certificatePath,
-  VideoEditPathPrototype,
 } from './configs/RouteConfig.tsx';
-import ChannelPage from './pages/Videos/ChannelPage.tsx';
 import CertificateGenerator from './pages/cert/CertificateGenerator.tsx';
 import UserChannelPage from './pages/Videos/UserChannelPage.tsx';
 import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
 import { ThemeContext } from './contexts/ThemeContext';
-import VideoEditPage from './pages/Videos/VideoEditPage.tsx';
 import AnimatedRipple from './components/neumorphism/animatedRipple/AnimatedRipple.tsx';
 import PrivacyPolicy from "./pages/landingComponents/PrivacyPolicy.tsx";
 import Datenschutz from "./pages/landingComponents/Datenschutz.tsx";
@@ -105,21 +97,12 @@ const App: FC = () => {
                         }}
                     >
                       <Routes>
-                        <Route path={mediaPath} element={<VideosMainPage />} />
-                        <Route path={mediaIdPath} element={<VideoPage />} />
+
 
                         <Route path={appPagePath} element={<AppPage />} />
                         <Route
-                            path={channelPagePrototypePath}
-                            element={<ChannelPage />}
-                        />
-                        <Route
                             path={channelEditPrototypePath}
                             element={<UserChannelPage />}
-                        />
-                        <Route
-                            path={VideoEditPathPrototype}
-                            element={<VideoEditPage />}
                         />
 
                         <Route
