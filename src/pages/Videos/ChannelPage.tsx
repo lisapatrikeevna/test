@@ -8,8 +8,15 @@ import banner from "../../assets/banner.jpg";
 import avatar from "../../assets/img.webp";
 import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal";
 import NeuButton from '../../components/neumorphism/button/NeuButton';
+import {RenderValuesCentralComponent} from "../AppPage.tsx";
 
-const ChannelPage: FC = () => {
+interface ChannelPageProps {
+    userId: string | undefined;
+    changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
+    // other props
+}
+
+const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [bannerLoaded, setBannerLoaded] = useState(false);
     const [avatarLoaded, setAvatarLoaded] = useState(false);
@@ -117,7 +124,7 @@ const ChannelPage: FC = () => {
                 </Box>
             </Grid>
             <Grid item xs={12} sx={{ mt: 2 }}>
-                <VideoListHorizontal currentVideoId={videoId} />
+                <VideoListHorizontal currentVideoId={videoId} changeRenderCentralComponent={changeRenderCentralComponent} />
             </Grid>
         </Grid>
     );

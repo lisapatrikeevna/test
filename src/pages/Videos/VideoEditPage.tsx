@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Box,
     Table,
@@ -36,7 +36,12 @@ export interface VideoData {
     };
 }
 
-const VideoEditPage: FC = () => {
+interface VideoEditPageProps {
+    userId: string | undefined;
+    // other props
+}
+
+const VideoEditPage: React.FC<VideoEditPageProps> = () => {
     const [isAddVideoModalOpen, setIsAddVideoModalOpen] = useState(false);
     const [isUpdateVideoModalOpen, setIsUpdateVideoModalOpen] = useState(false);
     const userId = useSelector((state: RootState) => state.user.user?.userId);

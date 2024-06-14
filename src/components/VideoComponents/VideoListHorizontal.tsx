@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import {  Outlet } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
-import { mediaPath } from "../../configs/RouteConfig.tsx";
 import { Grid, Card, CardContent, Typography, Box, Button } from "@mui/material";
 import { Contacts } from "@mui/icons-material";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Skeletons from './Skeletons.tsx';
 import { getAllUsers } from "../../services/userServices/getAllUsers.service.ts";
+import { RenderValuesCentralComponent } from "../../pages/AppPage.tsx";
 
 export interface IVideo {
     id: string;
@@ -24,10 +24,11 @@ export interface IVideo {
 
 interface VideoListHorizontalProps {
     currentVideoId: string;
+    changeRenderCentralComponent: (value: RenderValuesCentralComponent, videoId?: string) => void;
 }
 
-const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoId }) => {
-    const [videos, setVideos] = useState<IVideo[]>([]);
+const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoId, changeRenderCentralComponent }) => {
+   const [videos, setVideos] = useState<IVideo[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [visibleCount, setVisibleCount] = useState(0);
@@ -118,6 +119,7 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
 
     const filteredVideos = videos.filter(video => video.id !== currentVideoId);
 
+
     return (
         <Box sx={{ padding: "10px" }}>
             <Box sx={{ maxWidth: "100%", margin: "0 auto" }}>
@@ -128,9 +130,12 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
                         filteredVideos.slice(0, visibleCount).map((video) => (
                             <Grid item key={video.id} xs={12 / columns}>
                                 <Card sx={{ height: "100%" }}>
-                                    <Link to={`${mediaPath}/${video.id}`}>
-                                        <PreviewImage videoId={video.id} maxWidth={350} maxHeight={180} />
-                                    </Link>
+                                    <PreviewImage
+                                        videoId={video.id}
+                                        maxWidth={350}
+                                        maxHeight={180}
+                                        onClick={() => changeRenderCentralComponent('videopage', video.id)}
+                                    />
                                     <CardContent sx={{ paddingBottom: '16px !important' }}>
                                         <Typography
                                             variant="h5"
