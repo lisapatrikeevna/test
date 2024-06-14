@@ -219,7 +219,7 @@ const Pricing = () => {
                                                     {tier.title === 'Custom' ? '' : 'Contact us'}
                                                 </Typography>
                                             </Box>
-                                            <List sx={{ width: '190px', padding: 0, listStyleType: 'disc', paddingLeft: '15px' }}>
+                                            <List sx={{ width: '174px', padding: 0, listStyleType: 'disc', paddingLeft: '15px' }}>
                                                 {tier.description.map((line) => (
                                                     <ListItem key={line} sx={{ display: 'list-item', padding: 0 }}>
                                                         <ListItemText primary={line} sx={{ textAlign: 'left' }} />
