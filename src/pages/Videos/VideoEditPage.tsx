@@ -48,11 +48,13 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
     const [editingVideo, setEditingVideo] = useState<VideoData | null>(null);
     const [rows, setRows] = useState<VideoData[]>([]);
 
+    // After click we can edit info about Video (Name, Description)
     const handlePreviewImageClick = (video: VideoData) => {
         setEditingVideo(video);
         setIsUpdateVideoModalOpen(true);
     };
 
+    // After click we can add new Video
     const handleVideoUploaded = (newVideo: VideoData) => {
         setRows((prevRows) => {
             // Check if the video already exists in the rows
@@ -83,6 +85,7 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
         }
     }, [isAddVideoModalOpen, editingVideo]);
 
+    //Getting all videos of the current user
     useEffect(() => {
         if (!userId) {
             // Handle the case where userId is undefined
@@ -111,65 +114,65 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
     }, [userId]);
 
     return (
-        <Box>
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                <h1>Заглушка для кнопки</h1>
+        <Box sx={{display: "flex", flexDirection: 'column'}}>
+            {/*//TODO header*/}
+            <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2, width: '100%'}}> {/*Start of header*/}
                 <Button variant="contained" onClick={() => setIsAddVideoModalOpen(true)}>
                     Add Video
                 </Button>
-            </Box>
+            </Box> {/*End of header*/}
             <AddVideoModal isOpen={isAddVideoModalOpen} onClose={() => setIsAddVideoModalOpen(false)} onVideoUploaded={handleVideoUploaded} />
             <UpdateVideoModal isOpen={isUpdateVideoModalOpen} onClose={() => setIsUpdateVideoModalOpen(false)} video={editingVideo} />
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper}> {/*Start of table*/}
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell></TableCell>
-                            <TableCell>Video</TableCell>
-                            <TableCell>Name, Description</TableCell>
-                            <TableCell>In Progress</TableCell>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Views</TableCell>
-                            <TableCell>% "Like"</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
+                    <TableHead> {/*Start of table head*/}
+                        <TableRow> {/*Start of table row*/}
+                            <TableCell></TableCell> {/*Checkbox*/}
+                            <TableCell>Video</TableCell> {/*Preview*/}
+                            <TableCell>Name, Description</TableCell> {/*Name, Description*/}
+                            <TableCell>In Progress</TableCell> {/*In Progress*/}
+                            <TableCell>Date</TableCell> {/*Date*/}
+                            <TableCell>Views</TableCell> {/*Views*/}
+                            <TableCell>% "Like"</TableCell> {/*% "Like"*/}
+                        </TableRow> {/*End of table row*/}
+                    </TableHead> {/*End of table head*/}
+                    <TableBody> {/*Start of table body*/}
                         {rows.map((row, index) => (
-                            <TableRow key={index}>
-                                <TableCell>
+                            <TableRow key={index}> {/*Start of table row*/}
+                                <TableCell> {/*Checkbox*/}
                                     <Checkbox />
-                                </TableCell>
-                                <TableCell>
+                                </TableCell> {/*End of checkbox*/}
+                                <TableCell> {/*Preview*/}
                                     {row.previewUrl ? (
                                         <PreviewImage videoId={row.id} maxWidth={153} maxHeight={86} onClick={() => handlePreviewImageClick(row)} />
                                     ) : (
                                         <CircularProgress />
                                     )}
-                                </TableCell>
-                                <TableCell>
+                                </TableCell> {/*End of preview*/}
+                                <TableCell> {/*Name, Description*/}
                                     <h5>{row.videoName}</h5>
                                     <h6>{row.description}</h6>
-                                </TableCell>
+                                </TableCell> {/*End of name, description*/}
                                 <TableCell>
                                     {/* {row.videoInfo.isAccessibleToAll ? 'Доступно всем' : 'Не доступно всем'} */}
                                 </TableCell>
-                                <TableCell>
+                                <TableCell> {/*Date*/}
                                     Текст
-                                </TableCell>
-                                <TableCell>
+                                </TableCell> {/*End of date*/}
+                                <TableCell> {/*Views*/}
                                     {row.videoInfo.contentViewsByUsers.length}
-                                </TableCell>
-                                <TableCell>
+                                </TableCell> {/*End of views*/}
+                                <TableCell> {/*Start of likes, show % of Like/Dislike */}
                                     {row.videoInfo.contentLikesByUsers.length + row.videoInfo.contentDislikesByUsers.length > 0 ?
                                         Math.round((row.videoInfo.contentLikesByUsers.length / (row.videoInfo.contentLikesByUsers.length + row.videoInfo.contentDislikesByUsers.length)) * 100)
                                         : 0
                                     }%
-                                </TableCell>
-                            </TableRow>
+                                </TableCell> {/*End of % "Like"*/}
+                            </TableRow> /*End of table row*/
                         ))}
-                    </TableBody>
+                    </TableBody> {/*End of table body*/}
                 </Table>
-            </TableContainer>
+            </TableContainer> {/*End of table*/}
         </Box>
     );
 };

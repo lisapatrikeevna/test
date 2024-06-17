@@ -51,7 +51,7 @@ interface VideoPageProps {
   videoId: string | null;
   changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
 }
-
+// This component is responsible for displaying the page of one Video (where we can play it)
 const VideoPage: React.FC<VideoPageProps> = ({
   videoId,
   changeRenderCentralComponent,
@@ -70,7 +70,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const link = window.location.href;
   const [userId, setUserId] = useState<string | null>(null);
-  const [userName, setUserName] = useState('No user found');
+  const [authorName, setAuthorName] = useState('No user found');
   const [avatar, setAvatar] = useState<string | null>(null);
 
   const handleOpenModal = () => {
@@ -81,11 +81,15 @@ const VideoPage: React.FC<VideoPageProps> = ({
     setIsModalOpen(false);
   };
 
+  // Copy link of the video to clipboard
+  // TODO logic of this, since we changed logic of viewing App
   const handleCopyLink = () => {
     navigator.clipboard.writeText(link);
     alert('Link copied to clipboard!');
   };
 
+  // Here we take avatar of user
+  // TODO this
   useEffect(() => {
     const loadAvatar = async () => {
       if (userId) {
@@ -105,22 +109,24 @@ const VideoPage: React.FC<VideoPageProps> = ({
     loadAvatar();
   }, [userId]);
 
-  //TODO change user.login for user.userName
-
+  
+  // Taking info about video (file and data)
+  //TODO get video as stream
+  //TODO change user.login for user.authorName
   useEffect(() => {
     const loadVideo = async () => {
       if (videoId) {
         dispatch(setLoading(true));
         try {
-          const videoData = await getVideo(videoId);
-          const metadata = await getVideoMetadata(videoId);
-          setVideoName(metadata.videoName);
-          setDescription(metadata.description);
-          setViews(metadata.videoInfo.contentViewsByUsers.length);
-          setLikes(metadata.videoInfo.contentLikesByUsers.length);
-          setUserId(metadata.ownerId);
-          console.log('userId = ', userId);
-          console.log('ownerId = ', metadata.ownerId);
+          const videoData = await getVideo(videoId); // file
+          const metadata = await getVideoMetadata(videoId); //info about video
+          setVideoName(metadata.videoName); // Setting VideoName
+          setDescription(metadata.description); // Setting Description
+          setViews(metadata.videoInfo.contentViewsByUsers.length); //Setting number of Views
+          setLikes(metadata.videoInfo.contentLikesByUsers.length); //Setting Likes
+          setUserId(metadata.ownerId); // Setting userId
+          // Getting video file and showing user as Video
+          
           let blobUrl = '';
           if (videoData) {
             blobUrl = URL.createObjectURL(videoData);
@@ -141,13 +147,14 @@ const VideoPage: React.FC<VideoPageProps> = ({
     loadVideo();
   }, [videoId, dispatch, setLikes, setUserId]);
 
+  // With userId finding authorName through all users
   useEffect(() => {
     const loadUser = async () => {
       try {
         const users = await getAllUsers();
         const user = users.find((user) => user.id === userId);
         if (user) {
-          setUserName(user.login);
+          setAuthorName(user.login);
         } else {
           console.error('User not found');
         }
@@ -160,7 +167,8 @@ const VideoPage: React.FC<VideoPageProps> = ({
       loadUser();
     }
   }, [userId]);
-
+//Showing skeleton if user didnt get full info about video
+  
   if (loading) {
     return (
       <Container>
@@ -186,7 +194,8 @@ const VideoPage: React.FC<VideoPageProps> = ({
           maxWidth: '1200px',
         }}
       >
-        <Container style={{ padding: 0 }}>
+
+        <Container style={{ padding: 0 }}> {/*Start of everything about Video*/}
           {videoUrl ? (
             <ReactPlayer
               style={{ margin: 0 }}
@@ -203,22 +212,22 @@ const VideoPage: React.FC<VideoPageProps> = ({
               onDuration={setVideoDuration}
             />
           ) : (
-            <Typography>Loading...</Typography>
+
+              //TODO change it, to show player but with error info, that we can't get videoFile
+            <Typography>Loading...</Typography> // If we cant get video, showing this
           )}
           {buffering && <Typography>Buffering...</Typography>}
-          <Box>
+          <Box> {/*Start of box with all info about video*/}
             <Typography variant="h4">{videoName}</Typography>
-            {/*Container for all info about video*/}
-            <Container style={{ display: 'flex', flexDirection: 'row' }}>
-              <Container style={{ display: 'flex', flexDirection: 'row' }}>
-                {/*Place for Avatar (first in a row)*/}
+            <Container style={{ display: 'flex', flexDirection: 'row' }}> {/*Start of container for all info about video except videoName*/}
+              <Container style={{ display: 'flex', flexDirection: 'row' }}> {/*Start of avatar + Author + views + data of video upload*/}
                 <Box
                   style={{
                     display: 'flex',
                     justifyContent: 'start',
                     alignItems: 'center',
                   }}
-                >
+                > {/*Place for Avatar*/}
                   {/*TODO AVATAR and press on it, navigate to thisUserChannel*/}
                   {avatar ? (
                     <Avatar
@@ -235,7 +244,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
                     <Contacts sx={{ fontSize: 34 }} />
                   )}
                 </Box>
-                <Container style={{ display: 'flex', flexDirection: 'column' }}>
+                <Container style={{ display: 'flex', flexDirection: 'column' }}> {/*Start of video views and data upload + authorName*/}
                   <Container
                     style={{
                       display: 'flex',
@@ -243,23 +252,23 @@ const VideoPage: React.FC<VideoPageProps> = ({
                       gap: '10px',
                     }}
                   >
-                    <Typography>{views} views</Typography>
-                    <Typography>2 weeks ago</Typography>
+                    <Typography>{views} views</Typography> {/*Show views*/}
+                    {/*//TODO change it to real data*/}
+                    <Typography>2 weeks ago</Typography> {/*Show how long is video exist on site*/}
                   </Container>
-                  {/*TODO измени отображение login на UserName*/}
                   <Container style={{ display: 'flex', flexDirection: 'row' }}>
-                    <Typography>{userName}</Typography>
+                    <Typography>{authorName}</Typography> {/*Show authorName*/}
                   </Container>
-                </Container>
+                </Container> {/*End of video views and data upload + authorName*/}
                 <Container
                   style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}
-                >
+                > {/*Start of likes,dislikes, subs, report, share*/}
                   <Button
                     variant="outlined"
                     startIcon={<ThumbUp />}
                     onClick={handleLike}
                     color={hasLiked ? 'primary' : 'inherit'}
-                  >
+                  > {/*Click to like video here we use HandleLike to count how much Likes has Video*/}
                     {likes}
                   </Button>
                   <Button
@@ -267,22 +276,23 @@ const VideoPage: React.FC<VideoPageProps> = ({
                     startIcon={<ThumbDown />}
                     onClick={handleDislike}
                     color={hasDisliked ? 'primary' : 'inherit'}
-                  />
-                  <Button variant="text" size="small" startIcon={<JoinFull />}>
+                  /> {/*Click to dislike video*/}
+                  <Button variant="text" size="small" startIcon={<JoinFull />}> {/*Click to subscribe on this channel*/}
                     Subscribe
                   </Button>
-                  <Button variant="text" startIcon={<Flag />}>
+                  <Button variant="text" startIcon={<Flag />}> {/*Click to report video*/}
                     Report
                   </Button>
                   <Button
                     variant="text"
                     startIcon={<IosShare />}
                     onClick={handleOpenModal}
-                  >
+                  > {/*Click to open Modal with apps for share*/}
                     Share
                   </Button>
+
                   <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-                    <Box sx={{ textAlign: 'center', p: 2 }}>
+                    <Box sx={{ textAlign: 'center', p: 2 }}> {/*Start of Modal content*/}
                       <Box
                         sx={{
                           display: 'flex',
@@ -290,7 +300,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
                           gap: 3,
                           mb: 2,
                         }}
-                      >
+                      > {/*Start of space with icons*/}
                         <Facebook
                           onClick={() => HandleShareOnFacebook(link)}
                           style={{ cursor: 'pointer', fontSize: '52px' }}
@@ -303,15 +313,14 @@ const VideoPage: React.FC<VideoPageProps> = ({
                           onClick={() => HandleShareOnLinkedIn(link)}
                           style={{ cursor: 'pointer', fontSize: '52px' }}
                         />
-                        {/* Add more icons as needed */}
-                      </Box>
+                      </Box> {/*End of space with icons*/}
                       <Box
                         sx={{
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                         }}
-                      >
+                      > {/*Start of space with link and copy button*/}
                         <TextField
                           value={link}
                           InputProps={{
@@ -323,26 +332,26 @@ const VideoPage: React.FC<VideoPageProps> = ({
                         <IconButton onClick={handleCopyLink}>
                           <ContentCopy />
                         </IconButton>
-                      </Box>
-                    </Box>
+                      </Box> {/*End of space with link and copy button*/}
+                    </Box> {/*End of Modal content*/}
                   </Modal>
-                </Container>
-              </Container>
-            </Container>
-            <Box>
+                </Container>  {/*End of likes,dislikes, subs, report, share*/}
+              </Container> {/*End of avatar + Author + views + data of video upload*/}
+            </Container> {/*End of container for all info about video except videoName*/}
+            <Box> {/*Start of Description space*/}
               <Typography variant="h5">Description</Typography>
               <Typography>{description}</Typography>
-            </Box>
-          </Box>
-          <Box style={{ padding: 0, marginTop: 15 }}>
+            </Box> {/*End of Description space*/}
+          </Box> {/*End of all info about video*/}
+          <Box style={{ padding: 0, marginTop: 15 }}> {/*Start of space for list of videos*/}
             <Paper elevation={3}>
               <VideoListHorizontal
                 currentVideoId={videoId || ''}
                 changeRenderCentralComponent={changeRenderCentralComponent}
-              />
+              /> {/*Show list of videos*/}
             </Paper>
-          </Box>
-        </Container>
+          </Box> {/*End of space for list of videos*/}
+        </Container> {/*End of everything about Video*/}
       </Grid>
     </Grid>
   );

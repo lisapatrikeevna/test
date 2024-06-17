@@ -16,12 +16,13 @@ interface ChannelPageProps {
     // other props
 }
 
+// This component is responsible for displaying the channel page
 const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [bannerLoaded, setBannerLoaded] = useState(false);
     const [avatarLoaded, setAvatarLoaded] = useState(false);
-
     const videoId = '';
+
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
