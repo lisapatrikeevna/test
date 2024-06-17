@@ -1,28 +1,11 @@
 import { useState } from 'react';
 import {
-    AppBar, Box, Grid, Toolbar, Typography, GlobalStyles, Container, Switch, FormControlLabel,
-    CssBaseline, List, ListItem, ListItemText
+    Box, Grid, Toolbar, Typography, Switch, FormControlLabel,
+    List, ListItem, ListItemText, Card, CardContent, CardActions,
+    Button, CardHeader, Divider
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/StarBorder';
-import { styled } from '@mui/system';
-import NeuCard from '../../components/neumorphism/card/NeuCard';
-import NeuCardHeader from '../../components/neumorphism/card/NeuCardHeader';
-import NeuCardContent from '../../components/neumorphism/card/NeuCardContent';
-import NeuCardAction from '../../components/neumorphism/card/NeuCardAction';
-import NeuButton from '../../components/neumorphism/button/NeuButton'; // Импорт NeuButton
-
-const CustomContainer = styled(Container)({
-    width: '100%',
-    margin: '0 auto',
-});
-
-const ScrollableContainer = styled(Box)({
-    width: '100%',
-    overflowY: 'auto',
-    maxHeight: 'calc(100vh - 275px)', 
-    paddingTop: '10px',
-    paddingBottom: '10px'
-});
 
 const tiers = [
     {
@@ -83,6 +66,8 @@ const tiers = [
     },
     {
         title: 'Enterprise',
+        price: 0,
+        oldPrice: 0,
         description: [
             'Contact us to arrange all the functionality you need.'
         ],
@@ -99,7 +84,9 @@ const tiers = [
     },
 ];
 
+
 const Pricing = () => {
+    const currentTheme = useTheme();
     const [isYearly, setIsYearly] = useState(false);
 
     const toggleYearly = () => {
@@ -123,123 +110,86 @@ const Pricing = () => {
     };
 
     return (
-        <Box>
-            <GlobalStyles styles={{
-                '.MuiContainer-root.Pricing-container': {
-                    maxWidth: '1920px !important',
-                    maxHeight: '1080px !important',
-                }
-            }} />
-            <CssBaseline />
-            <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
-                <Toolbar sx={{ flexWrap: 'wrap' }}>
-                    <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                        NeoXonline pricing
-                    </Typography>
-                    <FormControlLabel
-                        control={<Switch checked={isYearly} onChange={toggleYearly} />}
-                        label={isYearly ? 'Yearly' : 'Monthly'}
-                        sx={{ my: 1, mx: 1.5 }}
-                    />
-                </Toolbar>
-            </AppBar>
-
-            <CustomContainer className="Pricing-container" sx={{ pb: 2 }} maxWidth="xl">
-                <Typography variant="h5" align="center" color="text.secondary" component="p" mt={'20px'}>
-                    Limits on gigabytes and chats are set until the end of beta testing. We also welcome your suggestions for changes or additions
+        <>
+            <Toolbar sx={{ flexWrap: 'wrap' }}>
+                <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+                    NeoXonline pricing
                 </Typography>
-            </CustomContainer>
+                <FormControlLabel
+                    control={<Switch checked={isYearly} onChange={toggleYearly} />}
+                    label={isYearly ? 'Yearly' : 'Monthly'}
+                    sx={{ my: 1, mx: 1.5 }}
+                />
+            </Toolbar>
 
-            <ScrollableContainer>
-                <CustomContainer className="Pricing-container" maxWidth="xl">
-                    <Grid container spacing={4} alignItems="flex-end" justifyContent={'center'}>
-                        {tiers.slice(0, 4).map((tier) => (
-                            <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2}>
-                                <NeuCard sx={{ height: tier.title === 'Prime' ? '585px' : '570px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                    <NeuCardHeader
-                                        title={tier.title}
-                                        avatar={tier.title === 'Prime' ? <StarIcon sx={{ ml: '5px' }}/> : null}
-                                        subtitle={tier.subheader}
-                                        sx={{ textAlign: 'center', alignItems: 'center', justifyContent: tier.title === 'Prime' ? '' : 'center' }}
-                                    />
-                                    <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 1, p: 1 }}>
-                                        {tier.oldPrice && (
-                                            <Typography component="span" variant="subtitle1" color="text.secondary" sx={{ position: 'relative', textDecoration: 'none', fontSize: '1.25rem' }}>
-                                                {`€${calculateOldPrice(tier.oldPrice)}`}
-                                                <Box
-                                                    component="span"
-                                                    sx={{
-                                                        position: 'absolute',
-                                                        left: 0,
-                                                        bottom: '10%',
-                                                        width: '100%',
-                                                        height: '1px',
-                                                        bgcolor: 'text.secondary',
-                                                        transform: 'rotate(-30deg)',
-                                                        transformOrigin: 'left bottom',
-                                                    }}
-                                                />
-                                            </Typography>
-                                        )}
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', mb: 1 }}>
-                                            <Typography component="h2" variant="h3" color="text.primary">
-                                                {tier.price ? `€${calculatePrice(tier.price)}` : 'Free'}
-                                            </Typography>
-                                            <Typography variant="h6" color="text.secondary">
-                                                {tier.price ? `${isYearly ? 'yr' : 'mo'}` : ''}
-                                            </Typography>
-                                        </Box>
-                                        <List sx={{ width: '190px', padding: 0, listStyleType: 'disc', paddingLeft: '15px' }}>
-                                            {tier.description.map((line) => (
-                                                <ListItem key={line} sx={{ display: 'list-item', padding: 0 }}>
-                                                    <ListItemText primary={line} sx={{ textAlign: 'left' }} />
-                                                </ListItem>
-                                            ))}
-                                        </List>
-                                    </NeuCardContent>
-                                    <NeuCardAction sx={{ p: 1 }}>
-                                        <NeuButton fullWidth rounded variant={tier.buttonVariant as 'text' | 'outlined' | 'contained'}>
-                                            {tier.buttonText}
-                                        </NeuButton>
-                                    </NeuCardAction>
-                                </NeuCard>
-                            </Grid>
-                        ))}
-                        <Grid item container direction="column" spacing={4} xs={12} sm={6} md={4} lg={3} xl={2}>
-                            {tiers.slice(4).map((tier) => (
-                                <Grid item key={tier.title}>
-                                    <NeuCard sx={{ height: '270px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                        <NeuCardHeader
-                                            title={tier.title}
-                                            sx={{ textAlign: 'center', alignItems: 'center', justifyContent: 'center' }}
-                                        />
-                                        <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 1, p: 1 }}>
-                                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', mb: 1 }}>
-                                                <Typography component="h2" variant="h6" color="text.primary">
-                                                    {tier.title === 'Custom' ? '' : 'Contact us'}
-                                                </Typography>
-                                            </Box>
-                                            <List sx={{ width: '174px', padding: 0, listStyleType: 'disc', paddingLeft: '15px' }}>
-                                                {tier.description.map((line) => (
-                                                    <ListItem key={line} sx={{ display: 'list-item', padding: 0 }}>
-                                                        <ListItemText primary={line} sx={{ textAlign: 'left' }} />
-                                                    </ListItem>
-                                                ))}
-                                            </List>
-                                        </NeuCardContent>
-                                        <NeuCardAction sx={{ p: 1 }}>
-                                            <NeuButton fullWidth rounded variant={tier.buttonVariant as 'text' | 'outlined' | 'contained'}>
-                                                {tier.buttonText}
-                                            </NeuButton>
-                                        </NeuCardAction>
-                                    </NeuCard>
-                                </Grid>
-                            ))}
-                        </Grid>
+            <Typography variant="h5" align="center" color="text.secondary" component="p" mt={'20px'}>
+                Limits on gigabytes and chats are set until the end of beta testing. We also welcome your suggestions for changes or additions
+            </Typography>
+
+            <Grid container spacing={4} alignItems="flex-end" justifyContent='center' marginY='2vh'>
+                {tiers.slice(0, 5).map((tier) => (
+                    <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2}>
+                        <Card variant={"outlined"} sx={{ backgroundColor: currentTheme.palette.background.paper, minHeight: '50vh' }} >
+                            <CardHeader
+                                title={
+                                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                        <Typography variant="h6">{tier.title}</Typography>
+                                        {tier.title === 'Prime' && <StarIcon sx={{ ml: '5px' }} />}
+                                    </Box>}
+                                subheader={tier.subheader}
+                                sx={{ textAlign: 'center', alignItems: 'flex-end', justifyContent: 'center',
+                                    backgroundColor: currentTheme.palette.primary.dark}}
+                            />
+
+                            <CardContent>
+                                <Typography variant="h6" component="div" sx={{ color: currentTheme.palette.error.main }}>
+                                    {(tier.title === 'Free' || tier.title === 'Enterprise') ? <br /> : `€${calculateOldPrice(tier.oldPrice as number)}`}
+                                    {(tier.title === 'Free' || tier.title === 'Enterprise') ?
+                                        '':
+                                        <Box
+                                            component="span"
+                                            sx={{
+                                                position: 'absolute',
+                                                width: '60px',
+                                                height: '2px',
+                                                backgroundColor: currentTheme.palette.error.main,
+                                                transform: isYearly ?
+                                                    'rotate(-15deg) translate(-60px, -0px)':
+                                                    'rotate(-20deg) translate(-60px, -5px)',
+                                            }}
+                                        />}
+                                </Typography>
+
+                                <Box sx={{display: 'flex', flexDirection:'row', alignItems:'flex-end'}}>
+                                    {tier.title === 'Enterprise' ? <br /> : <><Typography component="h2" variant="h3" color="text.primary">
+                                        {tier.price ? `€${calculatePrice(tier.price)}` : '€0'}
+                                    </Typography>
+                                        <Typography variant="h6" color="text.secondary">
+                                            {tier.price ? `${isYearly ? 'yr' : 'mo'}` : ''}
+                                        </Typography></>}
+
+                                </Box>
+
+                                <Box height={"auto"}>
+                                    <List dense sx={{ fontSize: 14 }}>
+                                        {tier.description.map((line) => (
+                                            <ListItem key={line} alignItems='flex-start' sx={{ display: 'list-item', padding: 0 }}>
+                                                <ListItemText primary={line} sx={{ textAlign: 'left' }} />
+                                                <Divider/>
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                </Box>
+                            </CardContent>
+
+                            <CardActions>
+                                <Button variant='outlined' size='small' color='inherit'>Learn More</Button>
+                            </CardActions>
+                        </Card>
                     </Grid>
-                </CustomContainer>
-            </ScrollableContainer>
-        </Box>
+                ))}
+            </Grid>
+        </>
     );
 };
 

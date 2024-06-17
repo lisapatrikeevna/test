@@ -88,8 +88,8 @@ const Header: React.FC = () => {
       boxShadow: muiTheme.shadows[1],
       backgroundColor: muiTheme.palette.background.default,
       transition: '0.5s',
-      borderBottomRightRadius: '25px',
-      borderBottomLeftRadius: '25px',
+      // borderBottomRightRadius: '25px',
+      // borderBottomLeftRadius: '25px',
       overflow: 'auto'
     }}>
       <IconButton sx={{ display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none', '@media (max-width: 1280px)': { display: 'flex' } } }} onClick={handleDrawerToggle}>

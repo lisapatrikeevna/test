@@ -67,7 +67,7 @@ const AnimatedRipple: React.FC<{ children: React.ReactNode }> = ({ children }) =
       const rippleElement = (
           <RippleElement
               key={Date.now()}
-              style={{ top: ev.clientY, left: ev.clientX }}
+              style={{ top: ev.pageY, left: ev.pageX }} // Используйте pageY и pageX вместо clientY и clientX
               onAnimationEnd={() => setRipples((prev) => prev.filter((ripple) => ripple.key !== rippleElement.key))}
           />
       );

@@ -22,8 +22,8 @@ const FooterContainer = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     boxShadow: theme.shadows[1],
     transition: '0.5s',
-    borderTopLeftRadius: theme.shape.borderRadius,
-    borderTopRightRadius: theme.shape.borderRadius,
+    // borderTopLeftRadius: theme.shape.borderRadius,
+    // borderTopRightRadius: theme.shape.borderRadius,
     color: theme.palette.text.primary,
     padding: theme.spacing(0.8, 4),
     [theme.breakpoints.down('md')]: {
