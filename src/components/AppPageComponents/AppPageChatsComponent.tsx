@@ -9,8 +9,15 @@ import NeuAvatar from '../neumorphism/avatar/NeuAvatar';
 import AppPageChats from './AppPageChats';
 import Fon5 from '../../assets/Fon5.jpg';
 
+type UserType = {
+  id: number;
+  img: string;
+  name: string;
+};
+
 const AppPageChatsComponent = () => {
   const [users] = useState(data);
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
   const theme = useTheme();
 
   return (
@@ -63,17 +70,16 @@ const AppPageChatsComponent = () => {
                     alignItems: 'center',
                     cursor: 'pointer',
                   }}
+                  onClick={() => setCurrentUser(elem)}
                 >
                   <Stack
-                    key={elem.id}
                     sx={{
                       width: '50px',
                     }}
                   >
-                    <NeuAvatar key={elem.id} src={elem.img} size="small" />
+                    <NeuAvatar src={elem.img} size="small" />
                   </Stack>
                   <Stack
-                    key={elem.id}
                     sx={{
                       color:
                         theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
@@ -99,7 +105,7 @@ const AppPageChatsComponent = () => {
           minSize={5}
           collapsible={true}
         >
-          <AppPageChats />
+          <AppPageChats currentUser={currentUser} />
         </Panel>
       </PanelGroup>
     </Box>

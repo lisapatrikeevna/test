@@ -17,9 +17,6 @@ import AppPageAudioComponent from '../components/AppPageComponents/AppPageAudioC
 import AppPageRadioComponent from '../components/AppPageComponents/AppPageRadioComponent';
 import AppPageMainSideBar from '../components/AppPageComponents/AppPageMainSideBar';
 
-// import { data } from '../components/ProfileComponents/utils';
-// // import NeuAvatar from '../components/neumorphism/avatar/NeuAvatar';
-// // import NeuDivider from '../components/neumorphism/divider/NeuDivider';
 import Fon3 from '../assets/Fon3.jpg';
 import Fon5 from '../assets/Fon5.jpg';
 import { useTheme } from '@mui/material/styles';
@@ -29,10 +26,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import VR from './VR.tsx';
 import AppPageChatsComponent from '../components/AppPageComponents/AppPageChatsComponent.tsx';
-import VideoPage from "./Videos/VideoPage.tsx";
+import VideoPage from './Videos/VideoPage.tsx';
 import VideoEditPage from './Videos/VideoEditPage.tsx';
-import {useSelector} from "react-redux";
-import {RootState} from "../store/store.ts";
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store.ts';
 import ChannelPage from './Videos/ChannelPage.tsx';
 
 export type RenderValues =
@@ -43,7 +40,13 @@ export type RenderValues =
   | 'audio'
   | 'radio';
 
-export type RenderValuesCentralComponent = 'home' | 'mevipa' | 'VR' | 'videopage' | 'videoeditpage' | 'videochannel';
+export type RenderValuesCentralComponent =
+  | 'home'
+  | 'mevipa'
+  | 'VR'
+  | 'videopage'
+  | 'videoeditpage'
+  | 'videochannel';
 
 const AppPage = () => {
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
@@ -92,7 +95,10 @@ const AppPage = () => {
 
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
-  const changeRenderCentralComponent = (value: RenderValuesCentralComponent, videoId?: string) => {
+  const changeRenderCentralComponent = (
+    value: RenderValuesCentralComponent,
+    videoId?: string
+  ) => {
     setRenderValuesCentralComponent(value);
     if (videoId) {
       setSelectedVideoId(videoId);
@@ -158,11 +164,25 @@ const AppPage = () => {
             defaultSize={50}
           >
             {renderValuesCentralComponent === 'mevipa' && (
-                <VideosMainPage changeRenderCentralComponent={changeRenderCentralComponent} />
+              <VideosMainPage
+                changeRenderCentralComponent={changeRenderCentralComponent}
+              />
             )}
-            {renderValuesCentralComponent === 'videoeditpage' && <VideoEditPage userId={userId} />}
-            {renderValuesCentralComponent === 'videochannel' && <ChannelPage userId={userId} changeRenderCentralComponent={changeRenderCentralComponent} />}
-            {renderValuesCentralComponent === 'videopage' && <VideoPage videoId={selectedVideoId} changeRenderCentralComponent={changeRenderCentralComponent} />}
+            {renderValuesCentralComponent === 'videoeditpage' && (
+              <VideoEditPage userId={userId} />
+            )}
+            {renderValuesCentralComponent === 'videochannel' && (
+              <ChannelPage
+                userId={userId}
+                changeRenderCentralComponent={changeRenderCentralComponent}
+              />
+            )}
+            {renderValuesCentralComponent === 'videopage' && (
+              <VideoPage
+                videoId={selectedVideoId}
+                changeRenderCentralComponent={changeRenderCentralComponent}
+              />
+            )}
             {renderValuesCentralComponent === 'VR' && <VR />}
             {renderValuesCentralComponent === 'home' && (
               <AppPageCentralComponent />
@@ -217,7 +237,7 @@ const AppPage = () => {
               style={{ backgroundImage: `url(${Fon5})` }}
               padding="5px"
             >
-              {renderValues === 'chats' && <AppPageChats />}
+              {renderValues === 'chats' && <AppPageChats currentUser={null} />}
               {renderValues === 'comments' && <AppPageComments />}
               {renderValues === 'videos' && <VideoInSideBareAppPage />}
               {renderValues === 'calendar' && <AppPageCalendar />}
