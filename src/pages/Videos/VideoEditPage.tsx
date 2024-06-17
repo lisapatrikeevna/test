@@ -3,14 +3,12 @@ import {
     Box,
     Table,
     TableBody,
-    TableCell,
     TableContainer,
     TableHead,
     TableRow,
     Paper,
     Button,
-    Checkbox,
-    CircularProgress
+    CircularProgress, TableCell, Checkbox
 } from '@mui/material';
 import AddVideoModal from "../../components/VideoComponents/AddVideoModal.tsx";
 import { getVideosOfUser } from '../../services/videoServices/videoShow.service';
@@ -48,11 +46,14 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
     const [editingVideo, setEditingVideo] = useState<VideoData | null>(null);
     const [rows, setRows] = useState<VideoData[]>([]);
 
+
+    // After click we can edit info about Video (Name, Description)
     const handlePreviewImageClick = (video: VideoData) => {
         setEditingVideo(video);
         setIsUpdateVideoModalOpen(true);
     };
 
+    // After click we can add new Video
     const handleVideoUploaded = (newVideo: VideoData) => {
         setRows((prevRows) => {
             // Check if the video already exists in the rows
@@ -83,6 +84,7 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
         }
     }, [isAddVideoModalOpen, editingVideo]);
 
+    //Getting all videos of the current user
     useEffect(() => {
         if (!userId) {
             // Handle the case where userId is undefined
@@ -98,12 +100,9 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
 
                     // If VideoMetadata and VideoData are not the same
                     // Transform the data to match the VideoData type
+                    // Copy all properties from the video object
                     const transformedData = data.map(video => ({
-                        // Copy all properties from the video object
                         ...video,
-                        // Add or modify properties to match the VideoData type
-                        // For example:
-                        // newProperty: video.oldProperty
                     }));
                     setRows(transformedData);
                 }
@@ -111,55 +110,59 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
     }, [userId]);
 
     return (
-        <Box>
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                <h1>Заглушка для кнопки</h1>
+        <Box sx={{display: "flex", flexDirection: 'column'}}>
+            {/*//TODO header*/}
+
+            <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2, width: '100%'}}> {/*Start of header*/}
                 <Button variant="contained" onClick={() => setIsAddVideoModalOpen(true)}>
                     Add Video
                 </Button>
             </Box>
             <AddVideoModal isOpen={isAddVideoModalOpen} onClose={() => setIsAddVideoModalOpen(false)} onVideoUploaded={handleVideoUploaded} />
             <UpdateVideoModal isOpen={isUpdateVideoModalOpen} onClose={() => setIsUpdateVideoModalOpen(false)} video={editingVideo} />
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper}> {/*Start of table*/}
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
+                        {/*Titles of Tables*/}
                         <TableRow>
+                            {/*Selector*/}
                             <TableCell></TableCell>
                             <TableCell>Video</TableCell>
                             <TableCell>Name, Description</TableCell>
                             <TableCell>In Progress</TableCell>
                             <TableCell>Date</TableCell>
                             <TableCell>Views</TableCell>
+
                             <TableCell>% "Like"</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map((row, index) => (
-                            <TableRow key={index}>
-                                <TableCell>
-                                    <Checkbox />
+                            <TableRow key={index}> {/*Start of table row*/}
+                                <TableCell> {/*Checkbox*/}
+                                    <Checkbox/>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell> {/*Preview*/}
                                     {row.previewUrl ? (
                                         <PreviewImage videoId={row.id} maxWidth={153} maxHeight={86} onClick={() => handlePreviewImageClick(row)} />
                                     ) : (
                                         <CircularProgress />
                                     )}
                                 </TableCell>
-                                <TableCell>
+                                <TableCell> {/*Name, Description*/}
                                     <h5>{row.videoName}</h5>
                                     <h6>{row.description}</h6>
                                 </TableCell>
                                 <TableCell>
                                     {/* {row.videoInfo.isAccessibleToAll ? 'Доступно всем' : 'Не доступно всем'} */}
                                 </TableCell>
-                                <TableCell>
+                                <TableCell> {/*Date*/}
                                     Текст
                                 </TableCell>
-                                <TableCell>
+                                <TableCell> {/*Views*/}
                                     {row.videoInfo.contentViewsByUsers.length}
                                 </TableCell>
-                                <TableCell>
+                                <TableCell> {/*Start of likes, show % of Like/Dislike */}
                                     {row.videoInfo.contentLikesByUsers.length + row.videoInfo.contentDislikesByUsers.length > 0 ?
                                         Math.round((row.videoInfo.contentLikesByUsers.length / (row.videoInfo.contentLikesByUsers.length + row.videoInfo.contentDislikesByUsers.length)) * 100)
                                         : 0
