@@ -37,7 +37,6 @@ import { useState } from 'react';
 import MyModalProfile from '../../pages/MyModalProfile';
 import { useAppSelector } from '../../store/hooks';
 import { selectUsername } from '../../store/user/userSlice';
-// import UserModalProfile from '../../pages/UserModalProfile';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import { RenderValuesCentralComponent } from '../../pages/AppPage';
 import { useTheme } from '@mui/material/styles';
@@ -73,7 +72,6 @@ const AppPageMainSideBar = ({
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
-  // TODO Повесить UserModalProfile на аватар пользователя
   return (
     <Box
       sx={{
@@ -150,10 +148,7 @@ const AppPageMainSideBar = ({
             open={openProfileModal}
             onClose={() => setOpenProfileModal(false)}
           />
-          {/* <UserModalProfile
-                open={openProfileModal}
-                onClose={() => setOpenProfileModal(false)}
-              /> */}
+
           <ListItem
             disablePadding
             onClick={() => changeRenderCentralComponent('home')}

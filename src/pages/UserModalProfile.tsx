@@ -9,10 +9,15 @@ import { useState } from 'react';
 type UserModalProfileProps = {
   open: boolean;
   onClose: () => void;
+  currentName: string;
 };
 
-const UserModalProfile = ({ open, onClose }: UserModalProfileProps) => {
-  const [name] = useState('Vasya');
+const UserModalProfile = ({
+  open,
+  onClose,
+  currentName,
+}: UserModalProfileProps) => {
+  // const [name] = useState('Vasya');
   const [lastname] = useState('Olegov');
 
   const handleClose = () => {
@@ -45,7 +50,7 @@ const UserModalProfile = ({ open, onClose }: UserModalProfileProps) => {
       >
         <Stack>
           <HeaderModal onClose={handleClose} />
-          <AvatarModal name={name} lastname={lastname} none />
+          <AvatarModal name={currentName} lastname={lastname} none />
         </Stack>
         <Divider sx={{ margin: '15px 0', background: 'black' }} />
         <AboutModal />
