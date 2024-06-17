@@ -11,13 +11,13 @@ interface UpdateVideoModalProps {
     onClose: () => void;
     video: VideoData | null;
 }
-
+// This component is responsible for updating the video
 const UpdateVideoModal: FC<UpdateVideoModalProps> = ({ isOpen, onClose, video }) => {
     const [videoName, setVideoName] = useState(video?.videoName || '');
     const [description, setDescription] = useState(video?.description || '');
     const accessToken = useAppSelector(state => state.user.token.accessToken);
 
-    if (!isOpen || !video) return null;
+    if (!isOpen || !video) return null; // If the modal is not open or the video is not provided, return null
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();

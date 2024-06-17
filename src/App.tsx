@@ -12,11 +12,9 @@ import { userSliceMapper } from './store/user/utilits/userUtilits.ts';
 import { login, selectUsername } from './store/user/userSlice.ts';
 import {
   appPagePath,
-  channelEditPrototypePath,
   certificatePath,
 } from './configs/RouteConfig.tsx';
 import CertificateGenerator from './pages/cert/CertificateGenerator.tsx';
-import UserChannelPage from './pages/Videos/UserChannelPage.tsx';
 import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
@@ -97,14 +95,7 @@ const App: FC = () => {
                         }}
                     >
                       <Routes>
-
-
                         <Route path={appPagePath} element={<AppPage />} />
-                        <Route
-                            path={channelEditPrototypePath}
-                            element={<UserChannelPage />}
-                        />
-
                         <Route
                             path={certificatePath}
                             element={
