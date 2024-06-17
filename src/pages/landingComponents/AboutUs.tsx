@@ -1,33 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Box, CardMedia, Grid, Pagination, Typography, useMediaQuery, useTheme } from '@mui/material';
+import React, { useState } from "react";
+import { CardMedia, Grid, Pagination, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Fon1 from '../../assets/Fon.jpg';
 import Fon2 from '../../assets/Fon2.jpg';
 import Fon3 from '../../assets/Fon3.jpg';
 import Fon4 from '../../assets/Fon4.jpg';
 import Fon5 from '../../assets/Fon5.jpg';
 import Fon6 from '../../assets/Fon.jpg';
-import NeuCard from "../../components/neumorphism/card/NeuCard";
-import useOnScreen from "../../components/hooks/useOnScreen";
 import { title, text } from '../../configs/AboutUsConfig';
-import NeuCardContent from "../../components/neumorphism/card/NeuCardContent.tsx";
 
 const AboutUsPage = () => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const [page, setPage] = useState(1);
-    const [visible, setVisible] = useState(false);
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const isVisible = useOnScreen(containerRef);
 
     const images = [Fon1, Fon2, Fon3, Fon4, Fon5, Fon6];
-
-    useEffect(() => {
-        if (isVisible) {
-            setVisible(true);
-        } else {
-            setVisible(false);
-        }
-    }, [isVisible]);
 
     const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
@@ -36,16 +22,7 @@ const AboutUsPage = () => {
     const splitText: string[][] = text.map(str => str.split('|').map(subStr => subStr.trim()));
 
     return (
-        <Box ref={containerRef}>
-            <NeuCard
-                in={visible}
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '65vh',
-                }}
-            >
+        <>
                 <Grid container
                       columnSpacing={10}
                       rowSpacing={1}
@@ -67,7 +44,7 @@ const AboutUsPage = () => {
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <NeuCardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'start' }}>
+
                             <Typography variant={isSmallScreen ? 'h4' : 'h3'} sx={{ marginBottom: '10px' }}>
                                 {title[page - 1]}
                             </Typography>
@@ -76,10 +53,9 @@ const AboutUsPage = () => {
                                     {str}
                                 </Typography>
                             ))}
-                        </NeuCardContent>
+
                     </Grid>
                 </Grid>
-            </NeuCard>
             <Pagination
                 count={title.length}
                 color="primary"
@@ -87,7 +63,7 @@ const AboutUsPage = () => {
                 onChange={handleChange}
                 style={{ marginTop: "16px", display: 'flex', justifyContent: 'center', alignItems: 'center'}}
             />
-        </Box>
+        </>
     );
 };
 

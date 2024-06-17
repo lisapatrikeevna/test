@@ -1,59 +1,10 @@
 import { createTheme } from '@mui/material/styles';
-import { Shadows } from './types/types.tsx'
-
-export interface Theme {
-    // Add more colors if needed
-    shape: {
-        borderRadius: number;
-    };
-
-    shadows: string[];
-
-
-
-    spacing: (factor: number) => number;
-
-    typography: {
-        fontFamily: string;
-    };
-
-    palette: {
-        mode: 'light' | 'dark';
-        background: {
-            default: string;
-        }
-        text: {
-            primary: string;
-        };
-
-        primary: {
-            main: string;
-        };
-
-        secondary: {
-            main: string;
-        }
-    };
-}
-
-// Function for generation of fixed length shadow array
-const generateShadows = (shadow: string): Shadows => {
-    return [
-        "none", // first shadow
-        ...Array(24).fill(shadow)
-    ] as Shadows;
-};
-
-// Announcing shadows for light and dark themes
-const lightShadows = generateShadows('7px 7px 15px #bebebe, -7px -7px 15px #ffffff');
-const darkShadows = generateShadows('7px 7px 15px #1a1a1a, -7px -7px 15px #333333');
+import {grey} from "@mui/material/colors";
 
 export const lightTheme = createTheme({
     shape: {
         borderRadius: 10,
     },
-
-
 
     spacing: (factor: number) => factor * 8,
 
@@ -63,25 +14,33 @@ export const lightTheme = createTheme({
 
     palette: {
         mode: 'light',
+
         background: {
-            default: '#e0e0e0',
-            paper: '#e0e0e0',
+            default: grey[300],
+            paper: grey[200],
         },
+
+        tonalOffset: {
+            light: 0.5,
+            dark: 0.2,
+        },
+
         text: {
-            primary: '#222222',
+            primary: '#212121',
         },
 
         primary: {
-            main: '#F22874',
+            main: '#e0e0e0',
         },
 
         secondary: {
             main: '#2f65d7',
-        }
+        },
 
-        // Add more colors if needed
+        error: {
+            main: '#f44336',
+        }
     },
-    shadows: lightShadows
 });
 
 export const darkTheme = createTheme({
@@ -97,23 +56,27 @@ export const darkTheme = createTheme({
 
     palette: {
         mode: 'dark',
+
         background: {
-            default: '#222222',
-            paper: '#222222',
+            default: grey[900],
+            paper: grey[800],
         },
+
+        tonalOffset: {
+            light: 0.5,
+            dark: 0.2,
+        },
+
         text: {
             primary: '#e0e0e0',
         },
 
         primary: {
-            main: '#cb27d1',
+            main: '#212121',
         },
 
         secondary: {
             main: '#2f65d7',
         }
-
-        // Add more colors if needed
     },
-    shadows: darkShadows
 });

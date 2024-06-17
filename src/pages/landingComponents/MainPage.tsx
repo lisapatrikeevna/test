@@ -1,11 +1,10 @@
 import {useEffect } from 'react';
-import {Box, Container, CssBaseline} from '@mui/material';
+import {Box, Container} from '@mui/material';
 import Home from './Home';
 import Partners from './Partners.tsx';
 import Pricing from './Pricing.tsx';
 import Contacts from './Contacts';
 import Cookies from './cookies/Cookies.tsx';
-// import ActiveBoxContext from "../../contexts/ActiveBoxContext.tsx";
 import News from "./News.tsx";
 import AboutUs from "./AboutUs.tsx";
 import Project from './Project';
@@ -62,7 +61,7 @@ const MainPage = () => {
                 overflow: 'auto',
             }}
         >
-            <CssBaseline />
+
             <Box
                 id="Home"
                 sx={{
