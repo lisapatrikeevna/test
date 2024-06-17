@@ -15,7 +15,7 @@ import {
   certificatePath,
 } from './configs/RouteConfig.tsx';
 import CertificateGenerator from './pages/cert/CertificateGenerator.tsx';
-import { Box } from '@mui/material';
+import {Box, CssBaseline} from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme.tsx';
 import { ThemeContext } from './contexts/ThemeContext';
@@ -77,9 +77,11 @@ const App: FC = () => {
 
   return (
       <ThemeContext.Provider value={{ theme: theme, setTheme }}>
+
         <ThemeProvider theme={muiTheme}>
           <Router>
             <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+              <CssBaseline />
               {isLoggedIn ? (
                   <Box
                       sx={{
