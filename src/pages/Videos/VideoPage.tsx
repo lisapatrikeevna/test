@@ -313,7 +313,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
                           onClick={() => HandleShareOnLinkedIn(link)}
                           style={{ cursor: 'pointer', fontSize: '52px' }}
                         />
-                      </Box> {/*End of space with icons*/}
+                      </Box>
                       <Box
                         sx={{
                           display: 'flex',
@@ -332,26 +332,27 @@ const VideoPage: React.FC<VideoPageProps> = ({
                         <IconButton onClick={handleCopyLink}>
                           <ContentCopy />
                         </IconButton>
-                      </Box> {/*End of space with link and copy button*/}
-                    </Box> {/*End of Modal content*/}
+                      </Box>
+                    </Box>
                   </Modal>
-                </Container>  {/*End of likes,dislikes, subs, report, share*/}
-              </Container> {/*End of avatar + Author + views + data of video upload*/}
-            </Container> {/*End of container for all info about video except videoName*/}
-            <Box> {/*Start of Description space*/}
+                </Container>
+              </Container>
+            </Container>
+            <Box> {/*Description of Video*/}
               <Typography variant="h5">Description</Typography>
               <Typography>{description}</Typography>
-            </Box> {/*End of Description space*/}
-          </Box> {/*End of all info about video*/}
-          <Box style={{ padding: 0, marginTop: 15 }}> {/*Start of space for list of videos*/}
+            </Box>
+          </Box>
+          <Box style={{ padding: 0, marginTop: 15 }}>
+            {/*Show list of videos*/}
             <Paper elevation={3}>
               <VideoListHorizontal
                 currentVideoId={videoId || ''}
                 changeRenderCentralComponent={changeRenderCentralComponent}
-              /> {/*Show list of videos*/}
+              />
             </Paper>
-          </Box> {/*End of space for list of videos*/}
-        </Container> {/*End of everything about Video*/}
+          </Box>
+        </Container>
       </Grid>
     </Grid>
   );

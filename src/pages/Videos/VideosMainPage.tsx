@@ -24,11 +24,11 @@ const VideosMainPage: FC<{ changeRenderCentralComponent: (value: RenderValuesCen
                 > {/*After clicking on the button, the component will change to the channel page*/}
                     Channel Page
                 </Button>
-            </Grid> {/*End of space for buttons*/}
+            </Grid>
 
             <Grid item xs={12} sx={{ marginTop: "60px" }} > {/*Start of space for the list of videos*/}
                 <VideoListHorizontal currentVideoId={videoId} changeRenderCentralComponent={changeRenderCentralComponent} /> {/*The component is responsible for displaying a list of videos*/}
-            </Grid> {/*End of space for the list of videos*/}
+            </Grid>
         </Grid>
     );
 };

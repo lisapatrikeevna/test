@@ -34,6 +34,8 @@ const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => 
     return (
         <Grid container spacing={2} justifyContent="center" sx={{ maxWidth: '1200px', margin: '0 auto', position: "relative" }}>
             <Grid item xs={12}>
+
+                {/*Banner*/}
                 <Box component="section" sx={{ position: "relative" }}>
                     {!bannerLoaded && <Skeleton variant="rectangular" width="100%" height={210} sx={{ borderRadius: "15px" }} />}
                     <Box
@@ -59,68 +61,89 @@ const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => 
                         onLoad={() => setBannerLoaded(true)}
                     />
                 </Box>
-                <Box component="section" sx={{ px: 2, pt: 2, display: 'flex', alignItems: 'flex-start' }}>
-                    {!avatarLoaded && <Skeleton variant="circular" width={120} height={120} sx={{ borderRadius: "50%", mr: 2, mt: 0 }} />}
-                    <img
-                        src={avatar}
-                        alt="Avatar"
-                        style={{
-                            width: "120px",
-                            height: "120px",
-                            borderRadius: "50%",
-                            objectFit: "cover",
-                            display: avatarLoaded ? 'block' : 'none'
-                        }}
-                        onLoad={() => setAvatarLoaded(true)}
-                    />
-                    <Box sx={{ flexGrow: 1, mt: 0, marginLeft: "10px" }}>
-                        <Typography variant="h4" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', mb: 1 }}>SHASTUN  <CheckCircleIcon sx={{ color: grey[500], fontSize: '1.2rem', ml: '5px' }} /></Typography>
+
+                {/*Channel Info*/}
+                <Box sx={{flexDirection: 'column'}}>
+                    <Box component="section" sx={{ px: 2, pt: 2, display: 'flex', alignItems: 'flex-start' }}>
+                        {!avatarLoaded && <Skeleton variant="circular" width={120} height={120} sx={{ borderRadius: "50%", mr: 2, mt: 0 }} />}
+                        <img
+                            src={avatar}
+                            alt="Avatar"
+                            style={{
+                                width: "120px",
+                                height: "120px",
+                                borderRadius: "50%",
+                                objectFit: "cover",
+                                display: avatarLoaded ? 'block' : 'none'
+                            }}
+                            onLoad={() => setAvatarLoaded(true)}
+                        />
+
+                        <Box sx={{ flexGrow: 1, mt: 0, marginLeft: "10px" }}>  {/*Name,Subscribers,VideoCount,Description,Link,Video*/}
+                            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>  {/*Name,Subscribers,VideoCount,Description,Link*/}
+                                <Box>
+                                    <Typography variant="h4" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', mb: 1 }}>SHASTUN  <CheckCircleIcon sx={{ color: grey[500], fontSize: '1.2rem', ml: '5px' }} /></Typography>
+                                    <Box sx={{
+                                        display: 'flex',
+                                        flexDirection: { xs: 'column', md: 'row' },
+                                        alignItems: { xs: 'flex-start', md: 'center' },
+                                        mb: 1
+                                    }}>
+                                        <Typography variant="body1" sx={{ mb: { xs: 1, md: 0 }, mr: { md: 2 } }}>@Codevolution</Typography>
+                                        <Typography variant="body1" sx={{ mb: { xs: 1, md: 0 }, mr: { md: 2 } }}>634,000 Abonnenten</Typography>
+                                        <Typography variant="body1" sx={{ mb: { xs: 1, md: 0 } }}>1582 Videos</Typography>
+                                    </Box>
+
+                                    <Typography variant="body1" sx={{ mb: { xs: 2, md: 0 }, mr: { md: 2 }, marginLeft: { xs: '-130px', md: '0' } }}>Tutorials on the latest tech in web development!</Typography>
+                                    <Typography variant="body1" sx={{ color: 'blue', mb: 2, marginLeft: { xs: '-130px', md: '0' } }}>
+                                        <Link href="https://www.example.com" underline="hover">https://www.example.com</Link>
+                                    </Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}> {/*Video*/}
+                                    <iframe
+                                        src="https://www.youtube.com/embed/SMAlg2DKCbU?si=esX7eF6Hqj8mNRlu"
+                                        title="YouTube video player"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerPolicy="strict-origin-when-cross-origin"
+                                        allowFullScreen
+                                        style={{width: '100%', height: '100%', borderRadius: '10px'}}
+                                    ></iframe>
+                                </Box>
+                            </Box>
+                        </Box>
+                    </Box>
+                    <Box>
+                        <NeuButton variant="contained" startIcon={<NotificationsActiveIcon/>} rounded
+                                   onClick={handleClick}
+                                   sx={{ml: {xs: 0, sm: '-10px'}, marginLeft: {xs: '-130px', sm: '-10px'}}}>
+                            Subscribe <ArrowDropDownIcon fontSize="large" sx={{color: 'black'}}/>
+                        </NeuButton>
 
                         <Box sx={{
                             display: 'flex',
-                            flexDirection: { xs: 'column', md: 'row' },
-                            alignItems: { xs: 'flex-start', md: 'center' },
-                            mb: 1
+                            flexDirection: { xs: 'column', sm: 'row' },
+                            justifyContent: { xs: 'flex-start', sm: 'flex-end' },
+                            alignItems: 'center',
+                            mt: { xs: 2, sm: 0 },
                         }}>
-                            <Typography variant="body1" sx={{ mb: { xs: 1, md: 0 }, mr: { md: 2 } }}>@Codevolution</Typography>
-                            <Typography variant="body1" sx={{ mb: { xs: 1, md: 0 }, mr: { md: 2 } }}>634,000 Abonnenten</Typography>
-                            <Typography variant="body1" sx={{ mb: { xs: 1, md: 0 } }}>1582 Videos</Typography>
-                        </Box>
-
-                        <Typography variant="body1" sx={{ mb: { xs: 2, md: 0 }, mr: { md: 2 }, marginLeft: { xs: '-130px', md: '0' } }}>Tutorials on the latest tech in web development!</Typography>
-                        <Typography variant="body1" sx={{ color: 'blue', mb: 2, marginLeft: { xs: '-130px', md: '0' } }}>
-                            <Link href="https://www.example.com" underline="hover">https://www.example.com</Link>
-                        </Typography>
-                        <Box>
-                            <NeuButton variant="contained" startIcon={<NotificationsActiveIcon />} rounded onClick={handleClick} sx={{ ml: { xs: 0, sm: '-10px' }, marginLeft: { xs: '-130px', sm: '-10px' } }}>
-                                Subscribe <ArrowDropDownIcon fontSize="large" sx={{ color: 'black' }} />
-                            </NeuButton>
-
-                            <Box sx={{
-                                display: 'flex',
-                                flexDirection: { xs: 'column', sm: 'row' },
-                                justifyContent: { xs: 'flex-start', sm: 'flex-end' },
-                                alignItems: 'center',
-                                mt: { xs: 2, sm: 0 },
+                            <NeuButton variant="contained" sx={{
+                                mb: { xs: 1, sm: 0 }, marginLeft: { xs: '-270px', sm: '-10px' },
+                                marginTop: { xs: '-5px', sm: '0px' },
+                                marginRight: '2vw',
+                                width: "180px", padding: "5px", borderRadius: "15px",
                             }}>
-                                <NeuButton variant="contained" sx={{
-                                    mb: { xs: 1, sm: 0 }, marginLeft: { xs: '-270px', sm: '-10px' },
-                                    marginTop: { xs: '-5px', sm: '0px' },
-                                    width: "180px", padding: "5px", borderRadius: "15px",
-                                }}>
-                                    Add Video
-                                </NeuButton> </Box>
-                            <Menu
-                                anchorEl={anchorEl}
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                                PaperProps={{ sx: { backgroundColor: 'white', color: 'black' } }}>
-                                <MenuItem onClick={handleClose}>All</MenuItem>
-                                <MenuItem onClick={handleClose}>Personalized</MenuItem>
-                                <MenuItem onClick={handleClose}>No</MenuItem>
-                                <MenuItem onClick={handleClose}>Cancel Subscription</MenuItem>
-                            </Menu>
-                        </Box>
+                                Add Video
+                            </NeuButton> </Box>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                            PaperProps={{ sx: { backgroundColor: 'white', color: 'black' } }}>
+                            <MenuItem onClick={handleClose}>All</MenuItem>
+                            <MenuItem onClick={handleClose}>Personalized</MenuItem>
+                            <MenuItem onClick={handleClose}>No</MenuItem>
+                            <MenuItem onClick={handleClose}>Cancel Subscription</MenuItem>
+                        </Menu>
                     </Box>
                 </Box>
             </Grid>

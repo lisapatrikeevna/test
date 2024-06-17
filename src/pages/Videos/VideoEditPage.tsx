@@ -3,14 +3,12 @@ import {
     Box,
     Table,
     TableBody,
-    TableCell,
     TableContainer,
     TableHead,
     TableRow,
     Paper,
     Button,
-    Checkbox,
-    CircularProgress
+    CircularProgress, TableCell, Checkbox
 } from '@mui/material';
 import AddVideoModal from "../../components/VideoComponents/AddVideoModal.tsx";
 import { getVideosOfUser } from '../../services/videoServices/videoShow.service';
@@ -47,6 +45,7 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
     const userId = useSelector((state: RootState) => state.user.user?.userId);
     const [editingVideo, setEditingVideo] = useState<VideoData | null>(null);
     const [rows, setRows] = useState<VideoData[]>([]);
+
 
     // After click we can edit info about Video (Name, Description)
     const handlePreviewImageClick = (video: VideoData) => {
@@ -101,12 +100,9 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
 
                     // If VideoMetadata and VideoData are not the same
                     // Transform the data to match the VideoData type
+                    // Copy all properties from the video object
                     const transformedData = data.map(video => ({
-                        // Copy all properties from the video object
                         ...video,
-                        // Add or modify properties to match the VideoData type
-                        // For example:
-                        // newProperty: video.oldProperty
                     }));
                     setRows(transformedData);
                 }
@@ -116,63 +112,67 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
     return (
         <Box sx={{display: "flex", flexDirection: 'column'}}>
             {/*//TODO header*/}
+
             <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2, width: '100%'}}> {/*Start of header*/}
                 <Button variant="contained" onClick={() => setIsAddVideoModalOpen(true)}>
                     Add Video
                 </Button>
-            </Box> {/*End of header*/}
+            </Box>
             <AddVideoModal isOpen={isAddVideoModalOpen} onClose={() => setIsAddVideoModalOpen(false)} onVideoUploaded={handleVideoUploaded} />
             <UpdateVideoModal isOpen={isUpdateVideoModalOpen} onClose={() => setIsUpdateVideoModalOpen(false)} video={editingVideo} />
             <TableContainer component={Paper}> {/*Start of table*/}
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead> {/*Start of table head*/}
-                        <TableRow> {/*Start of table row*/}
-                            <TableCell></TableCell> {/*Checkbox*/}
-                            <TableCell>Video</TableCell> {/*Preview*/}
-                            <TableCell>Name, Description</TableCell> {/*Name, Description*/}
-                            <TableCell>In Progress</TableCell> {/*In Progress*/}
-                            <TableCell>Date</TableCell> {/*Date*/}
-                            <TableCell>Views</TableCell> {/*Views*/}
-                            <TableCell>% "Like"</TableCell> {/*% "Like"*/}
-                        </TableRow> {/*End of table row*/}
-                    </TableHead> {/*End of table head*/}
-                    <TableBody> {/*Start of table body*/}
+                    <TableHead>
+                        {/*Titles of Tables*/}
+                        <TableRow>
+                            {/*Selector*/}
+                            <TableCell></TableCell>
+                            <TableCell>Video</TableCell>
+                            <TableCell>Name, Description</TableCell>
+                            <TableCell>In Progress</TableCell>
+                            <TableCell>Date</TableCell>
+                            <TableCell>Views</TableCell>
+
+                            <TableCell>% "Like"</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
                         {rows.map((row, index) => (
                             <TableRow key={index}> {/*Start of table row*/}
                                 <TableCell> {/*Checkbox*/}
-                                    <Checkbox />
-                                </TableCell> {/*End of checkbox*/}
+                                    <Checkbox/>
+                                </TableCell>
                                 <TableCell> {/*Preview*/}
                                     {row.previewUrl ? (
                                         <PreviewImage videoId={row.id} maxWidth={153} maxHeight={86} onClick={() => handlePreviewImageClick(row)} />
                                     ) : (
                                         <CircularProgress />
                                     )}
-                                </TableCell> {/*End of preview*/}
+                                </TableCell>
                                 <TableCell> {/*Name, Description*/}
                                     <h5>{row.videoName}</h5>
                                     <h6>{row.description}</h6>
-                                </TableCell> {/*End of name, description*/}
+                                </TableCell>
                                 <TableCell>
                                     {/* {row.videoInfo.isAccessibleToAll ? 'Доступно всем' : 'Не доступно всем'} */}
                                 </TableCell>
                                 <TableCell> {/*Date*/}
                                     Текст
-                                </TableCell> {/*End of date*/}
+                                </TableCell>
                                 <TableCell> {/*Views*/}
                                     {row.videoInfo.contentViewsByUsers.length}
-                                </TableCell> {/*End of views*/}
+                                </TableCell>
                                 <TableCell> {/*Start of likes, show % of Like/Dislike */}
                                     {row.videoInfo.contentLikesByUsers.length + row.videoInfo.contentDislikesByUsers.length > 0 ?
                                         Math.round((row.videoInfo.contentLikesByUsers.length / (row.videoInfo.contentLikesByUsers.length + row.videoInfo.contentDislikesByUsers.length)) * 100)
                                         : 0
                                     }%
-                                </TableCell> {/*End of % "Like"*/}
-                            </TableRow> /*End of table row*/
+                                </TableCell>
+                            </TableRow>
                         ))}
-                    </TableBody> {/*End of table body*/}
+                    </TableBody>
                 </Table>
-            </TableContainer> {/*End of table*/}
+            </TableContainer>
         </Box>
     );
 };
