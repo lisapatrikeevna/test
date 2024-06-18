@@ -61,9 +61,11 @@ const AppPageMainSideBar = ({
     setOpenProfileModal(true); // Open profile modal
   };
 
+
   const ThemedListItemText = styled(ListItemText)(({ theme }) => ({
     color: theme.palette.mode === 'dark' ? '#fff' : '#000',
   }));
+
   const toggleAccountsDropdown = () => {
     setIsAccountsDropdownOpen(!isAccountsDropdownOpen);
   };
