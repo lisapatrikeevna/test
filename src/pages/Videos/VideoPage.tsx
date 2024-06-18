@@ -81,15 +81,14 @@ const VideoPage: React.FC<VideoPageProps> = ({
     setIsModalOpen(false);
   };
 
-  // Copy link of the video to clipboard
+
   // TODO logic of this, since we changed logic of viewing App
   const handleCopyLink = () => {
     navigator.clipboard.writeText(link);
     alert('Link copied to clipboard!');
   };
 
-  // Here we take avatar of user
-  // TODO this
+  // TODO this, not working atm
   useEffect(() => {
     const loadAvatar = async () => {
       if (userId) {
@@ -110,7 +109,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
   }, [userId]);
 
   
-  // Taking info about video (file and data)
+
   //TODO get video as stream
   //TODO change user.login for user.authorName
   useEffect(() => {
@@ -118,15 +117,15 @@ const VideoPage: React.FC<VideoPageProps> = ({
       if (videoId) {
         dispatch(setLoading(true));
         try {
-          const videoData = await getVideo(videoId); // file
-          const metadata = await getVideoMetadata(videoId); //info about video
-          setVideoName(metadata.videoName); // Setting VideoName
-          setDescription(metadata.description); // Setting Description
-          setViews(metadata.videoInfo.contentViewsByUsers.length); //Setting number of Views
-          setLikes(metadata.videoInfo.contentLikesByUsers.length); //Setting Likes
-          setUserId(metadata.ownerId); // Setting userId
-          // Getting video file and showing user as Video
-          
+          const videoData = await getVideo(videoId);
+          const metadata = await getVideoMetadata(videoId);
+          setVideoName(metadata.videoName);
+          setDescription(metadata.description);
+          setViews(metadata.videoInfo.contentViewsByUsers.length);
+          setLikes(metadata.videoInfo.contentLikesByUsers.length);
+          setUserId(metadata.ownerId);
+
+          // Getting file and showing user as Video
           let blobUrl = '';
           if (videoData) {
             blobUrl = URL.createObjectURL(videoData);
@@ -167,8 +166,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
       loadUser();
     }
   }, [userId]);
-//Showing skeleton if user didnt get full info about video
-  
+
   if (loading) {
     return (
       <Container>
@@ -252,14 +250,14 @@ const VideoPage: React.FC<VideoPageProps> = ({
                       gap: '10px',
                     }}
                   >
-                    <Typography>{views} views</Typography> {/*Show views*/}
+                    <Typography>{views} views</Typography>
                     {/*//TODO change it to real data*/}
                     <Typography>2 weeks ago</Typography> {/*Show how long is video exist on site*/}
                   </Container>
                   <Container style={{ display: 'flex', flexDirection: 'row' }}>
-                    <Typography>{authorName}</Typography> {/*Show authorName*/}
+                    <Typography>{authorName}</Typography>
                   </Container>
-                </Container> {/*End of video views and data upload + authorName*/}
+                </Container>
                 <Container
                   style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}
                 > {/*Start of likes,dislikes, subs, report, share*/}
@@ -268,7 +266,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
                     startIcon={<ThumbUp />}
                     onClick={handleLike}
                     color={hasLiked ? 'primary' : 'inherit'}
-                  > {/*Click to like video here we use HandleLike to count how much Likes has Video*/}
+                  >
                     {likes}
                   </Button>
                   <Button
@@ -276,23 +274,23 @@ const VideoPage: React.FC<VideoPageProps> = ({
                     startIcon={<ThumbDown />}
                     onClick={handleDislike}
                     color={hasDisliked ? 'primary' : 'inherit'}
-                  /> {/*Click to dislike video*/}
-                  <Button variant="text" size="small" startIcon={<JoinFull />}> {/*Click to subscribe on this channel*/}
+                  />
+                  <Button variant="text" size="small" startIcon={<JoinFull />}>
                     Subscribe
                   </Button>
-                  <Button variant="text" startIcon={<Flag />}> {/*Click to report video*/}
+                  <Button variant="text" startIcon={<Flag />}>
                     Report
                   </Button>
                   <Button
                     variant="text"
                     startIcon={<IosShare />}
                     onClick={handleOpenModal}
-                  > {/*Click to open Modal with apps for share*/}
+                  >
                     Share
                   </Button>
 
                   <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-                    <Box sx={{ textAlign: 'center', p: 2 }}> {/*Start of Modal content*/}
+                    <Box sx={{ textAlign: 'center', p: 2 }}>
                       <Box
                         sx={{
                           display: 'flex',
@@ -320,7 +318,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
                           alignItems: 'center',
                           justifyContent: 'center',
                         }}
-                      > {/*Start of space with link and copy button*/}
+                      >
                         <TextField
                           value={link}
                           InputProps={{
@@ -338,13 +336,12 @@ const VideoPage: React.FC<VideoPageProps> = ({
                 </Container>
               </Container>
             </Container>
-            <Box> {/*Description of Video*/}
+            <Box>
               <Typography variant="h5">Description</Typography>
               <Typography>{description}</Typography>
             </Box>
           </Box>
           <Box style={{ padding: 0, marginTop: 15 }}>
-            {/*Show list of videos*/}
             <Paper elevation={3}>
               <VideoListHorizontal
                 currentVideoId={videoId || ''}
