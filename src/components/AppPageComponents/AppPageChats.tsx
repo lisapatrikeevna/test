@@ -20,6 +20,11 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import UserModalProfile from '../../pages/UserModalProfile';
 import { useState } from 'react';
+import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import Person2Icon from '@mui/icons-material/Person2';
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+import SearchIcon from '@mui/icons-material/Search';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type UserType = {
   id: number;
@@ -40,11 +45,12 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     return <Stack>Select a user to start chatting</Stack>;
   }
 
+  // Modal position & open modal
   const handleModal = (event: React.MouseEvent<SVGSVGElement>) => {
     const target = event.currentTarget as unknown as HTMLElement;
     const iconPosition = target.getBoundingClientRect();
-    const leftOffset = 250;
-    const bottomOffset = 20;
+    const leftOffset = 120;
+    const bottomOffset = 11;
     setModalPosition({
       top: iconPosition.bottom + window.scrollY + bottomOffset,
       left: iconPosition.left + window.scrollX - leftOffset,
@@ -128,26 +134,77 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
               onClose={() => setIsOpenChatsModal(false)}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
+              // ToDo If you don't want the background, uncomment the line below.
               // BackdropProps={{ style: { backgroundColor: 'transparent' } }}
             >
               <Box
+                display="flex"
+                flexDirection="column"
+                gap={1}
                 sx={{
-                  padding: '15px',
-                  borderRadius: '15px',
-                  width: '300px',
-                  background: '#e0e0e0',
                   position: 'absolute',
+                  padding: '15px',
+                  borderRadius: '3px',
+                  background: '#e0e0e0',
                   top: modalPosition.top,
                   left: modalPosition.left,
                 }}
               >
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Text in a modal
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  Duis mollis, est non commodo luctus, nisi erat porttitor
-                  ligula.
-                </Typography>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={2}
+                  sx={{
+                    cursor: 'pointer',
+                  }}
+                >
+                  <VolumeOffIcon />
+                  <Typography>Mute</Typography>
+                </Stack>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={2}
+                  sx={{
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Person2Icon />
+                  <Typography>Profile</Typography>
+                </Stack>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={2}
+                  sx={{
+                    cursor: 'pointer',
+                  }}
+                >
+                  <VideoCallIcon />
+                  <Typography>Videocall</Typography>
+                </Stack>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={2}
+                  sx={{
+                    cursor: 'pointer',
+                  }}
+                >
+                  <SearchIcon />
+                  <Typography>Search</Typography>
+                </Stack>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={2}
+                  sx={{
+                    cursor: 'pointer',
+                  }}
+                >
+                  <DeleteIcon />
+                  <Typography>Delete chat</Typography>
+                </Stack>
               </Box>
             </Modal>
           </Stack>
