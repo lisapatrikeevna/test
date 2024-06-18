@@ -43,7 +43,7 @@ const MainPage = () => {
 
     return (
         <Container
-            maxWidth="xl"
+            maxWidth={false}
             sx={{
                 paddingTop: {
                     xs: '13vh',
