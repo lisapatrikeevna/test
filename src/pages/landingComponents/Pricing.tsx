@@ -139,7 +139,7 @@ const Pricing = () => {
             </Typography>
 
             <Grid container spacing={4} alignItems="stretch" justifyContent='center' marginY='2vh'>
-                <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                <Grid item xs={12} sm={6} md={4} lg={4} xl={2}>
                     <Grid container spacing={4} flexDirection={'column'}>
                         {tiers.slice(0, 2).map((tier) => (
                             <Grid item key={tier.title}>
@@ -205,7 +205,7 @@ const Pricing = () => {
                 </Grid>
 
                 {tiers.slice(2, 5).map((tier) => (
-                    <Grid item key={tier.title} xs={12} sm={6} md={4} lg={3} xl={2}>
+                    <Grid item key={tier.title} xs={12} sm={6} md={4} lg={4} xl={2}>
                         <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', backgroundColor: currentTheme.palette.background.paper }}>
                             <CardHeader
                                 title={
@@ -265,7 +265,7 @@ const Pricing = () => {
                     </Grid>
                 ))}
 
-                <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                <Grid item xs={12} sm={12} md={4} lg={4} xl={2}>
                     <Grid container spacing={4} flexDirection={'column'}>
                         {tiers.slice(5, 7).map((tier) => (
                             <Grid item key={tier.title}>
