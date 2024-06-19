@@ -183,16 +183,17 @@ const Chats: FC = () => {
 
   // Setup Web Sockets for the Back end
   const wsSetup = function () {
+    setContacts(contacts);
     ws.current = new WebSocket(WS_URL);
 
     ws.current.addEventListener("open", (event) => {
       // isConnected = true;
-      console.log("Connected to the WebSocket server");
+      console.log("Connected to the WebSocket server", event);
     });
 
     ws.current.addEventListener("close", (event) => {
       // isConnected = false;
-      console.log("Disconnected from the WebSocket server");
+      console.log("Disconnected from the WebSocket server", event);
     });
 
     ws.current.addEventListener("message", (event) => {
