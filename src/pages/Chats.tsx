@@ -111,6 +111,7 @@ const Chats: FC = () => {
     // req.setRequestHeader("user_id", userId);
     req.setRequestHeader("Authorization", `Bearer ${token.accessToken}`);
     req.send(null);
+    // 
 
     req.onload = function () {
       const headers = req.getAllResponseHeaders().toLowerCase();
