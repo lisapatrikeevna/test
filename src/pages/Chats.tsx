@@ -99,32 +99,6 @@ const Chats: FC = () => {
   const myId = useRef("nobody");
   const ws = useRef<WebSocket | null>(null);
 
-  function chatHello(helloURL: string | URL, ifOk: () => void) {
-    const token = store.getState().user.token;
-
-    ws.current?.close();
-    ws.current = null;
-
-    const req = new XMLHttpRequest();
-
-    req.open("GET", helloURL, true); // false for synchronous request
-    // req.setRequestHeader("user_id", userId);
-    req.setRequestHeader("Authorization", `Bearer ${token.accessToken}`);
-    req.send(null);
-
-    req.onload = function () {
-      const headers = req.getAllResponseHeaders().toLowerCase();
-
-      console.log(headers);
-      console.log("status: ", req.status);
-
-      if (req.status === 200) {
-        const gotAccessToken = JSON.parse(req.responseText);
-        console.log("OK got Access Token:", gotAccessToken);
-        ifOk();
-      }
-    };
-  }
   // ###############################################################################################
   // Login to the Chat Backend
   const isLocalDebug = false;
@@ -132,13 +106,13 @@ const Chats: FC = () => {
 
   const host = "ip85-215-241-41.pbiaas.com:8030"; // Dev XL server
   const chatLoginURL = `http://${host}/NeoX-chat-open`;
-  const loginURL = `http://${host}/auth/login-user`;
+  // const loginURL = `http://${host}/auth/login-user`;
   const accessToken = store.getState().user.token;
   const authToken = `Bearer ${accessToken}`;
   const WS_URL = `ws://${host}/NeoX-chat/api/${accessToken}`;
 
-  let isConnected = false;
-  let isLogin = false;
+  // let isConnected = false;
+  // let isLogin = false;
   let eventsProcessed = 0;
   let userId = "";
 
@@ -212,12 +186,12 @@ const Chats: FC = () => {
     ws.current = new WebSocket(WS_URL);
 
     ws.current.addEventListener("open", (event) => {
-      isConnected = true;
+      // isConnected = true;
       console.log("Connected to the WebSocket server");
     });
 
     ws.current.addEventListener("close", (event) => {
-      isConnected = false;
+      // isConnected = false;
       console.log("Disconnected from the WebSocket server");
     });
 
@@ -241,7 +215,7 @@ const Chats: FC = () => {
           break;
 
         case EVENT_TYPE.hello:
-          isLogin = true;
+          // isLogin = true;
           userId = response.data;
           console.log("My User ID:", userId);
           chatMain();
@@ -308,18 +282,15 @@ const Chats: FC = () => {
     requestFind("");
   };
 
-  // ###############################################################################################
-
   useEffect(() => {
     console.log("useEffect - start");
 
     chatLogin(wsSetup);
 
-    /* eslint-disable react-hooks/exhaustive-deps */
     return () => {
       ws.current?.close();
     };
-  }, []);
+  }, [chatLogin, wsSetup]);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -332,109 +303,6 @@ const Chats: FC = () => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleresponse = function (msg: { type: any }) {
-    switch (msg.type) {
-      case "myid":
-        rsMyid(msg);
-        break;
-
-      case "mychats":
-        rsMyChats(msg);
-        break;
-
-      case "message":
-        rsMessage(msg);
-        break;
-
-      case "search":
-        rsSearch(msg);
-        break;
-
-      default:
-    }
-    // setMessages(prev => [...prev, { text: message.text, sentByMe: false, timestamp: new Date() }]);
-  };
-
-  const rqMyChats = function () {
-    const msg = {
-      type: "my_chats",
-    };
-
-    if (ws.current) ws.current.send(JSON.stringify(msg));
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rsMyChats = function (msg: { type?: any; users?: any }) {
-    const updatedContacts = [
-      {
-        id: "e6ac0106-44a8-40e7-8225-9eb75d567c5b",
-        name: "Алиса",
-        lastSeen: "last seen recently",
-        avatar: "",
-        online: true,
-        lastMessage: "Окей",
-      },
-    ];
-
-    updatedContacts.length = 0;
-    console.log("My ID: " + myId.current);
-
-    for (const u of msg.users) {
-      // const when = new Date(u.lastSeen);
-
-      updatedContacts.push({
-        id: u.id,
-        name: u.name,
-        lastSeen: new Date(u.lastSeen).toISOString(),
-        avatar: "",
-        online: u.online,
-        lastMessage: u.lastMessage,
-      });
-
-      console.log("name: " + u.name + ", id: " + u.id);
-    }
-
-    setContacts(updatedContacts);
-  };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rsMyid = function (msg: { type?: any; userId?: any }) {
-    myId.current = msg.userId;
-    console.log("My ID: " + myId.current);
-  };
-
-  /*
-const rsWho = function(msg: { userId: string; users: any; })
-{
-  myId.current = msg.userId;
-  console.log("My ID: " + myId.current);
-
-  const updatedContacts = [
-    { id: "e6ac0106-44a8-40e7-8225-9eb75d567c5b",
-    name: "Алиса",
-    lastSeen: "last seen recently",
-    avatar: "",
-    online: true }
-  ];
-
-  updatedContacts.length = 0;
-
-  for(let u of msg.users) {
-    updatedContacts.push({
-      id: u.id,
-      name: u.name,
-      lastSeen: new Date(u.lastSeen).toISOString(),
-      avatar: "",
-      online: u.online
-    });
-
-    console.log("id " + u.name + " is online");
-  }
-
-  setContacts(updatedContacts);
-}
-*/
-
   const rqSearch = function () {
     const msg = {
       type: "search",
@@ -442,29 +310,6 @@ const rsWho = function(msg: { userId: string; users: any; })
     };
 
     if (ws.current) ws.current.send(JSON.stringify(msg));
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rsSearch = function (msg: { type?: any; status?: any; users?: any }) {
-    const size = msg.status;
-    const users = msg.users;
-
-    console.log("Found " + size + " users");
-
-    for (let i = 0; i < size; ++i) {
-      const u = users[i];
-
-      console.log(
-        "id: " +
-          u.id +
-          " name: " +
-          u.name +
-          " lastSeen: " +
-          u.lastSeen +
-          " online: " +
-          u.online
-      );
-    }
   };
 
   const rqMessage = function (text: string, replyToId?: number) {
@@ -476,57 +321,6 @@ const rsWho = function(msg: { userId: string; users: any; })
       },
     });
   };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rsMessage = function (got: { type?: any; message?: any }) {
-    const gotMsg = got.message;
-
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: prev.length + 1,
-        text: gotMsg.text,
-        sentByMe: myId.current == gotMsg.userId,
-        timestamp: new Date(gotMsg.mtime),
-        reactions: [],
-      },
-    ]);
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // const rqChat = function (id: any) {
-  //   const msg = {
-  //     type: "set_chat",
-  //     chatId: id,
-  //   };
-
-  //   if (ws.current) ws.current.send(JSON.stringify(msg));
-  // };
-
-  // const setChat = function (id: React.SetStateAction<string | null>) {
-  //   setActiveChat(id);
-
-  //   const updMessages = [
-  //     {
-  //       id: 1,
-  //       text: "Привет, как дела?",
-  //       sentByMe: true,
-  //       timestamp: new Date(),
-  //       reactions: [],
-  //     },
-  //   ];
-
-  //   updMessages.length = 0;
-  //   setMessages(updMessages);
-  //   rqChat(id);
-  //   console.log("set chat id " + id);
-  // };
-
-  // const formatTime = (date: Date) => {
-  //   const hours = date.getHours();
-  //   const minutes = date.getMinutes();
-  //   return `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
-  // };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0];
