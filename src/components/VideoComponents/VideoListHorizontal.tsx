@@ -5,7 +5,7 @@ import PreviewImage from "./PreviewImage.tsx";
 import { Grid, Card, CardContent, Typography, Box, Button } from "@mui/material";
 import { Contacts } from "@mui/icons-material";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Skeletons from './Skeletons.tsx';
+import VideoListHorizontalSkeleton from './VideoListHorizontalSkeleton.tsx';
 import { getAllUsers } from "../../services/userServices/getAllUsers.service.ts";
 import { RenderValuesCentralComponent } from "../../pages/AppPage.tsx";
 
@@ -27,7 +27,6 @@ interface VideoListHorizontalProps {
     changeRenderCentralComponent: (value: RenderValuesCentralComponent, videoId?: string) => void;
 }
 
-// Component that show list of Videos
 const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoId, changeRenderCentralComponent }) => {
    const [videos, setVideos] = useState<IVideo[]>([]);
     const [loading, setLoading] = useState(true);
@@ -35,7 +34,6 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
     const [visibleCount, setVisibleCount] = useState(0);
     const [users, setUsers] = useState<{ [key: string]: string }>({}); // To store user data
 
-    // Fetch video by id
     const fetchVideo = async (id: string) => {
         try {
             const response = await instance.get(`video/${id}`, {
@@ -52,7 +50,6 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
         }
     };
 
-    // Fetch all videos
     const fetchVideos = async (videoIds: string[] = []) => {
         if (videoIds.length === 0) {
             try {
@@ -75,7 +72,6 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
         }
     };
 
-    // Fetch all users
     const fetchUsers = async () => {
         try {
             const usersData = await getAllUsers();
@@ -89,22 +85,20 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
         }
     };
 
-    // Load all videos, and give info about Author
     useEffect(() => {
         const loadVideosAndUsers = async () => {
             setLoading(true);
             await Promise.all([fetchVideos(), fetchUsers()]);
             setLoading(false);
         };
-
         const timer = setTimeout(loadVideosAndUsers, 500);
-
         return () => clearTimeout(timer);
     }, []);
 
-    //TODO check to simplify
+
 
     // Sizes for adaptation
+    //TODO check to simplify
     const isXSmall = useMediaQuery('(max-width:400px)');
     const isSmall = useMediaQuery('(max-width:600px)');
     const isMedium = useMediaQuery('(max-width:960px)');
@@ -115,13 +109,11 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
     const columns = isXSmall ? 1 : isSmall ? 2 : isMedium ? 3 : isLarge ? 4 : isXLarge ? 5 : 6;
     const initialVisibleCount = columns * 2;
 
-    // Showing only initialVisibleCount amount of rows of videos
     useEffect(() => {
         setVisibleCount(initialVisibleCount);
     }, [columns]);
 
-    // Load more videos when button is clicked
-    const handleButton = async () => {
+    const handleLoadMore = async () => {
         setLoadingMore(true);
         await new Promise(resolve => setTimeout(resolve, 500)); // Simulating loading delay
         setVisibleCount((prevCount) => prevCount + columns * 2);
@@ -138,18 +130,18 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
                 <Grid container spacing={2} sx={{ justifyContent: "center" }}> {/*Grid container for video list*/}
 
                     {loading ? (
-                        <Skeletons columns={columns} />  // Skeleton if videolist is still loading
+                        <VideoListHorizontalSkeleton columns={columns} />
                     ) : (
                         filteredVideos.slice(0, visibleCount).map((video) => (
-                            <Grid item key={video.id} xs={12 / columns}> {/*Grid item for each video*/}
-                                <Card sx={{ height: "100%" }}> {/*View for each video*/}
+                            <Grid item key={video.id} xs={12 / columns}>
+                                <Card sx={{ height: "100%" }}> {/*View of each video*/}
                                     <PreviewImage
                                         videoId={video.id}
                                         maxWidth={350}
                                         maxHeight={180}
                                         onClick={() => changeRenderCentralComponent('videopage', video.id)}
                                     />
-                                    <CardContent sx={{ paddingBottom: '16px !important' }}> {/*Content of each video*/}
+                                    <CardContent sx={{ paddingBottom: '16px !important' }}>
                                         <Typography
                                             variant="h5"
                                             sx={{
@@ -168,33 +160,33 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
                                             <Typography variant="caption" sx={{ fontSize: '14px' }}>
                                                 {users[video.ownerId] || 'Unknown User'}
                                             </Typography>
-                                        </Box> {/*End of Avatar and AuthorName*/}
+                                        </Box>
                                         <Box style={{ display: "flex", flexDirection: "row", gap: "10px" }}> {/*Box for Views and Date*/}
                                             <Typography variant="caption" sx={{ fontSize: '14px' }}>
                                                 {video.videoInfo.contentViewsByUsers ? video.videoInfo.contentViewsByUsers.length : 0} views
                                             </Typography>
                                             <Typography variant="caption" sx={{ fontSize: '14px' }}>2 weeks ago</Typography> {/*Date*/}
-                                        </Box> {/*End of Views and Date*/}
-                                    </CardContent> {/*End of Content of each video*/}
-                                </Card> {/*End of View for each video*/}
-                            </Grid> /*End of Grid item for each video*/
+                                        </Box>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
                         ))
                     )}
                     {loadingMore && (
-                        <Skeletons columns={columns} />
+                        <VideoListHorizontalSkeleton columns={columns} />
                     )}
-                </Grid> {/*End of Grid container for video list*/}
+                </Grid>
             </Box>
-            <Box display="flex" justifyContent="center" mt={2}> {/*Button for loading more videos*/}
+            <Box display="flex" justifyContent="center" mt={2}>
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleButton}
+                    onClick={handleLoadMore}
                     size="large">
                     Load More
                 </Button>
             </Box>
-            <Outlet /> {/*Outlet for nested routes*/}
+            <Outlet />
         </Box>
     );
 };

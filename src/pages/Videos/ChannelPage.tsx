@@ -1,5 +1,5 @@
 import { FC, useState, MouseEvent } from 'react';
-import { Grid, Box, Typography, Link, Menu, MenuItem, Skeleton } from '@mui/material';
+import {Grid, Box, Typography, Link, Menu, MenuItem, Skeleton, Button} from '@mui/material';
 import { grey } from '@mui/material/colors';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -7,16 +7,13 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import banner from "../../assets/banner.jpg";
 import avatar from "../../assets/img.webp";
 import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal";
-import NeuButton from '../../components/neumorphism/button/NeuButton';
 import {RenderValuesCentralComponent} from "../AppPage.tsx";
 
 interface ChannelPageProps {
     userId: string | undefined;
     changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
-    // other props
 }
 
-// This component is responsible for displaying the channel page
 const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [bannerLoaded, setBannerLoaded] = useState(false);
@@ -78,7 +75,6 @@ const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => 
                             }}
                             onLoad={() => setAvatarLoaded(true)}
                         />
-
                         <Box sx={{ flexGrow: 1, mt: 0, marginLeft: "10px" }}>  {/*Name,Subscribers,VideoCount,Description,Link,Video*/}
                             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>  {/*Name,Subscribers,VideoCount,Description,Link*/}
                                 <Box>
@@ -113,12 +109,13 @@ const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => 
                         </Box>
                     </Box>
                     <Box>
-                        <NeuButton variant="contained" startIcon={<NotificationsActiveIcon/>} rounded
-                                   onClick={handleClick}
-                                   sx={{ml: {xs: 0, sm: '-10px'}, marginLeft: {xs: '-130px', sm: '-10px'}}}>
+                        <Button
+                            variant="contained"
+                            startIcon={<NotificationsActiveIcon/>}
+                            onClick={(event: React.MouseEvent<HTMLButtonElement>) => handleClick(event)}
+                            sx={{ml: {xs: 0, sm: '-10px'}, marginLeft: {xs: '-130px', sm: '-10px'}}}>
                             Subscribe <ArrowDropDownIcon fontSize="large" sx={{color: 'black'}}/>
-                        </NeuButton>
-
+                        </Button>
                         <Box sx={{
                             display: 'flex',
                             flexDirection: { xs: 'column', sm: 'row' },
@@ -126,19 +123,20 @@ const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => 
                             alignItems: 'center',
                             mt: { xs: 2, sm: 0 },
                         }}>
-                            <NeuButton variant="contained" sx={{
+                            <Button variant="contained" sx={{
                                 mb: { xs: 1, sm: 0 }, marginLeft: { xs: '-270px', sm: '-10px' },
                                 marginTop: { xs: '-5px', sm: '0px' },
                                 marginRight: '2vw',
-                                width: "180px", padding: "5px", borderRadius: "15px",
+                                width: "180px", padding: "5px",
                             }}>
                                 Add Video
-                            </NeuButton> </Box>
+                            </Button>
+                        </Box>
                         <Menu
                             anchorEl={anchorEl}
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
-                            PaperProps={{ sx: { backgroundColor: 'white', color: 'black' } }}>
+                            >
                             <MenuItem onClick={handleClose}>All</MenuItem>
                             <MenuItem onClick={handleClose}>Personalized</MenuItem>
                             <MenuItem onClick={handleClose}>No</MenuItem>

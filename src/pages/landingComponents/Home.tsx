@@ -40,10 +40,7 @@ const Home: FC = () => {
                         marginRight: '2rem',
                     }}
                 >
-                    {/*    <Typography variant='h2' sx={{textStyle}}>*/}
-                    {/*    Beta Version, updates planned for 2024*/}
-                    {/*</Typography>*/}
-                </Box>
+                    </Box>
                 <Box
                     sx={{
                         display: 'flex', justifyContent: 'flex-end', alignItems: 'center',

@@ -15,9 +15,10 @@ const AddVideoModal: FC<AddVideoModalProps> = ({ isOpen, onClose, onVideoUploade
     const accessToken = useAppSelector(state => state.user.token.accessToken);
     const [isUploading, setIsUploading] = useState(false);
 
+
     if (!isOpen) return null;
 
-    const handleVideoChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleVideoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedVideo = event.target.files?.[0];
         if (!selectedVideo) {
             toast.error('Please select a video.');
@@ -51,7 +52,7 @@ const AddVideoModal: FC<AddVideoModalProps> = ({ isOpen, onClose, onVideoUploade
         // Update the video name and description if they have been changed
         const formData = new FormData();
         formData.append('videoName', videoName);
-        formData.append('description', ''); // Set description as empty string
+        formData.append('description', '');
         formData.append('file', selectedVideo);
 
         if (accessToken) {
@@ -59,10 +60,8 @@ const AddVideoModal: FC<AddVideoModalProps> = ({ isOpen, onClose, onVideoUploade
                 const uploadedVideoUrl = await uploadVideo(formData);
                 if (typeof uploadedVideoUrl === 'string') {
                     // Update the new video with the uploaded URL
-                    newVideo.previewUrl = uploadedVideoUrl; // Use the uploaded URL as the preview
-                    newVideo.streamUrl = uploadedVideoUrl;
-
-                    onVideoUploaded(newVideo); // Update the row with the new video data
+                    newVideo.previewUrl = uploadedVideoUrl;
+                    onVideoUploaded(newVideo);
                     toast.success('Video uploaded successfully.');
                 }
             } catch (error) {
@@ -92,7 +91,7 @@ const AddVideoModal: FC<AddVideoModalProps> = ({ isOpen, onClose, onVideoUploade
                     <input
                         type="file"
                         hidden
-                        onChange={handleVideoChange}
+                        onChange={handleVideoUpload}
                     />
                 </Button>
                 {isUploading && <CircularProgress />}

@@ -61,9 +61,11 @@ const AppPageMainSideBar = ({
     setOpenProfileModal(true); // Open profile modal
   };
 
+
   const ThemedListItemText = styled(ListItemText)(({ theme }) => ({
     color: theme.palette.mode === 'dark' ? '#fff' : '#000',
   }));
+
   const toggleAccountsDropdown = () => {
     setIsAccountsDropdownOpen(!isAccountsDropdownOpen);
   };
@@ -356,7 +358,7 @@ const AppPageMainSideBar = ({
           >
             <Box sx={{ marginBottom: '5px' }}>
               <a
-                href="https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb"
+                href="https://checkout.revolut.com/payment-link/27a3d78a-db95-4d93-b2be-06b72488adb8"
                 rel="noopener noreferrer"
               >
                 Support the project

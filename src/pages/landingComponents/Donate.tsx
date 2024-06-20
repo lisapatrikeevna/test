@@ -23,7 +23,7 @@ const copyToClipboard = (text: string) => {
     }
 };
 const checkAnswer = () => {
-    const url = 'https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb'; // Укажите здесь нужную вам ссылку
+    const url = 'https://checkout.revolut.com/payment-link/27a3d78a-db95-4d93-b2be-06b72488adb8'; // Укажите здесь нужную вам ссылку
     window.open(url, '_blank', 'noopener,noreferrer');
 };
 

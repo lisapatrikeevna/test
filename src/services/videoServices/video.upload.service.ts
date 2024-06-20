@@ -37,3 +37,24 @@ export async function updateVideo(videoDetails: {
         console.error(`Error updating video details: ${error}`);
     }
 }
+
+export async function updateVideoAccessibility(videoId: string, isAccessibleToAll: boolean): Promise<void> {
+    try {
+        const response = await instance.put(`/video/update-accessibility/${videoId}`, {
+            isAccessibleToAll,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status !== 200) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = response.data;
+        console.log('Video accessibility update response:', data);
+    } catch (error) {
+        console.error(`Error updating video accessibility: ${error}`);
+    }
+}

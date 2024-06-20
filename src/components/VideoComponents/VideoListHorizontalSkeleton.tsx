@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Card, CardContent, Box, Skeleton } from "@mui/material";
 
-const Skeletons: React.FC<{ columns: number }> = ({ columns }) => (
+const VideoListHorizontalSkeleton: React.FC<{ columns: number }> = ({ columns }) => (
     <>
         {Array.from({ length: columns * 2 }).map((_, index) => (
             <Grid item key={index} xs={12 / columns}>
@@ -25,4 +25,4 @@ const Skeletons: React.FC<{ columns: number }> = ({ columns }) => (
     </>
 );
 
-export default Skeletons;
+export default VideoListHorizontalSkeleton;

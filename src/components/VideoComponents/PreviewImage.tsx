@@ -9,7 +9,7 @@ interface PreviewImageProps {
     maxHeight?: number;
     onClick?: () => void; // Add this line
 }
-// We need to give maxWidth and maxHeight in components where use PreviewImage)
+// We need to give maxWidth and maxHeight in components where we use PreviewImage)
 const PreviewImage: FC<PreviewImageProps> = ({ videoId, style, maxWidth, maxHeight, onClick }) => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);

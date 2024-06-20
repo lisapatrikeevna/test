@@ -3,7 +3,7 @@ import { useState, FC } from 'react';
 import { toast } from 'react-toastify';
 import { useAppSelector} from '../../store/hooks.ts';
 import { updateVideo } from '../../services/videoServices/video.upload.service.ts';
-import { Modal, TextField, Button, Box, Typography } from '@mui/material';
+import {Modal, TextField, Button, Box, Typography, Select, MenuItem} from '@mui/material';
 import {VideoData} from "../../pages/Videos/VideoEditPage.tsx";
 
 interface UpdateVideoModalProps {
@@ -11,22 +11,23 @@ interface UpdateVideoModalProps {
     onClose: () => void;
     video: VideoData | null;
 }
-// This component is responsible for updating the video
+
 const UpdateVideoModal: FC<UpdateVideoModalProps> = ({ isOpen, onClose, video }) => {
     const [videoName, setVideoName] = useState(video?.videoName || '');
     const [description, setDescription] = useState(video?.description || '');
     const accessToken = useAppSelector(state => state.user.token.accessToken);
+    const [isAccessibleToAll, setIsAccessibleToAll] = useState(video?.videoInfo.isAccessibleToAll || false);
 
-    if (!isOpen || !video) return null; // If the modal is not open or the video is not provided, return null
+    if (!isOpen || !video) return null;
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
             const videoDetails = {
-                videoId: video?.id, // Assuming `video` is the video you want to update
+                videoId: video?.id,
                 videoName,
                 description,
-                isAccessibleToAll: video?.videoInfo.isAccessibleToAll // Accessing 'isAccessibleToAll' from 'videoInfo'
+                isAccessibleToAll
             };
 
             if (accessToken) {
@@ -65,6 +66,16 @@ const UpdateVideoModal: FC<UpdateVideoModalProps> = ({ isOpen, onClose, video })
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
+                    <Box sx={{marginLeft: '12px'}}>
+                    <Typography>Access settings</Typography>
+                    <Select
+                        value={isAccessibleToAll ? 'all' : 'subs'}
+                        onChange={(event) => setIsAccessibleToAll(event.target.value === 'all')}
+                    >
+                        <MenuItem value={'all'}>All</MenuItem>
+                        <MenuItem value={'subs'}>Subs</MenuItem>
+                    </Select>
+                    </Box>
                     <Button
                         type="submit"
                         fullWidth
