@@ -130,7 +130,7 @@ class ChatService {
           this.isLogin = true;
           this.userId = response.data;
           console.log("My User ID:", this.userId);
-          chatMain();
+          this.chatMain();
           break;
 
         case EVENT_TYPE.echoReply:
@@ -148,5 +148,50 @@ class ChatService {
         default:
       }
     });
+  }
+
+  public chatMain(): void {
+    console.log("Started");
+    // requestEcho("Hello!");
+
+    // requestSubscriptionCreate("02202fc7-ae4a-42c2-9a52-dd1d3c7c5070");
+    // requestSubscriptionCreate("0eb28c53-52b3-4e13-9f74-6097d132228e");
+
+    // requestContactCreate("0000664d-b8c1-72fa-0000-c35dd09fbf9a");
+    // requestContactCreate("0000664d-d794-72fa-0000-c35dd09fbf9d");
+
+    // requestContactDelete("15dede67-d680-49d1-84f6-ec3679c0172e");
+
+    // requestGroupCreate("1. The Test group A");
+    // requestGroupCreate("2. The Test group B");
+
+    // requestGroupDelete("16eeadd3-f3e4-4a31-b480-2ebb2ff58350");
+    // requestGroupDelete("9889f4e8-96f5-4a22-875c-3fe09e81e048");
+    // requestGroupDelete("a3f631dc-ac42-49b5-b3fe-b59428a652f6");
+
+    // requestFind("");
+    // requestMessage("16eeadd3-f3e4-4a31-b480-2ebb2ff58350", "Hello!");
+
+    // requestFind("@");
+    // requestFind("voo");
+    this.requestFind("");
+  }
+
+  // find a user/group
+  public requestFind(text: string): void {
+    const request = {
+      find: text,
+      mode: FIND_MODE.default,
+      page: 0,
+      pageSize: CONST.pageSize,
+    };
+
+    const requestEvent = {
+      event: EVENT_TYPE.find,
+      data: JSON.stringify(request),
+    };
+
+    if(this.ws !== null)
+        this.ws.send(JSON.stringify(requestEvent));
   }
 }
