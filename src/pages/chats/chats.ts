@@ -1,5 +1,10 @@
 import { store } from "../../store/store";
 
+type ChatEvent = {
+  event: string;
+  data: string;
+};
+
 const CONST = {
   uid: "0000664d-bfe6-72fa-0000-c35dd09fbf9c", // The test uid for local debugging
   host: "ip85-215-241-41.pbiaas.com:8030", // Dev XL server
@@ -57,7 +62,7 @@ class ChatService {
   private isLogin: boolean = false;
   private eventsProcessed: number = 0;
 
-  public async chatLogin(success: () => void) {
+  public async chatLogin() {
     console.log("chatLogin -- start");
     const response = this.isLocalDebug
       ? await fetch(CONST.chatLoginURL(), {
@@ -85,12 +90,16 @@ class ChatService {
       // console.log("The content is:", content);
       // ws = new WebSocket(WS_URL);
       // wsSetup();
-      success();
+      this.wsSetup();
     } else {
       console.log(
         `Login error, status: ${response.status}, statusText: ${response.statusText}, URL: ${response.url}`
       );
     }
+  }
+
+  private wsSend(ev: ChatEvent): void {
+    if (this.ws !== null) this.ws.send(JSON.stringify(ev));
   }
 
   // Setup Web Sockets for the Back end
@@ -99,58 +108,60 @@ class ChatService {
 
     this.ws.addEventListener("open", (event) => {
       this.isConnected = true;
-      console.log("Connected to the WebSocket server");
+      console.log("Connected to the WebSocket server", event.target);
     });
 
     this.ws.addEventListener("close", (event) => {
       this.isConnected = false;
-      console.log("Disconnected from the WebSocket server");
+      console.log("Disconnected from the WebSocket server", event.reason);
     });
 
-    this.ws.addEventListener("message", (event) => {
-      ++this.eventsProcessed;
-      const response = JSON.parse(event.data);
-
-      console.log("#", this.eventsProcessed, "got", response);
-
-      switch (response.event) {
-        case EVENT_TYPE.error:
-          const reason = response.data;
-
-          console.log("Error:", reason);
-          break;
-
-        case EVENT_TYPE.found:
-          const data = JSON.parse(response.data);
-
-          console.log("found", data);
-          break;
-
-        case EVENT_TYPE.hello:
-          this.isLogin = true;
-          this.userId = response.data;
-          console.log("My User ID:", this.userId);
-          this.chatMain();
-          break;
-
-        case EVENT_TYPE.echoReply:
-          const reply = response.data;
-
-          console.log("Echo reply:", reply);
-          break;
-
-        case EVENT_TYPE.contactlist:
-          break;
-
-        case EVENT_TYPE.message:
-          break;
-
-        default:
-      }
-    });
+    this.ws.addEventListener("message", this.wsEvents);
   }
 
-  public chatMain(): void {
+  private wsEvents(event: MessageEvent<any>): void {
+    ++this.eventsProcessed;
+    const response : ChatEvent = JSON.parse(event.data);
+
+    console.log("#", this.eventsProcessed, "got", response);
+
+    switch (response.event) {
+      case EVENT_TYPE.error:
+        const reason = response.data;
+
+        console.log("Error:", reason);
+        break;
+
+      case EVENT_TYPE.found:
+        const data = JSON.parse(response.data);
+
+        console.log("found", data);
+        break;
+
+      case EVENT_TYPE.hello:
+        this.isLogin = true;
+        this.userId = response.data;
+        console.log("My User ID:", this.userId);
+        this.chatMain();
+        break;
+
+      case EVENT_TYPE.echoReply:
+        const reply = response.data;
+
+        console.log("Echo reply:", reply);
+        break;
+
+      case EVENT_TYPE.contactlist:
+        break;
+
+      case EVENT_TYPE.message:
+        break;
+
+      default:
+    }
+  }
+
+  private chatMain(): void {
     console.log("Started");
     // requestEcho("Hello!");
 
@@ -186,11 +197,11 @@ class ChatService {
       pageSize: CONST.pageSize,
     };
 
-    const requestEvent = {
+    const requestEvent: ChatEvent = {
       event: EVENT_TYPE.find,
       data: JSON.stringify(request),
     };
 
-    if (this.ws !== null) this.ws.send(JSON.stringify(requestEvent));
+    this.wsSend(requestEvent);
   }
 }
