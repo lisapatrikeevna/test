@@ -1,8 +1,8 @@
 import { store } from "../../store/store";
 
 type ChatEvent = {
-  event: string;
-  data: string;
+  event: string;        // EVENT_TYPE see below
+  data: string;         // JSON payload
 };
 
 const CONST = {
@@ -36,14 +36,15 @@ const EVENT_TYPE = {
   echo: "echo", // test (echo) event
   echoReply: "echo-reply", // test (echo reply) event
 
-  group: "group", // group management
   contact: "contact", // contact management
+  group: "group", // group management
   subscription: "subscription", // subscription management
 
   message: "message", // publish a message to a group
-  selectchat: "selectchat", // select a chat to be active
-  getcontacts: "getcontacts", // get my contacts
-  contactlist: "contactlist", // contact list event
+  selectChat: "selectchat", // select a chat to be active
+
+  getContacts: "getcontacts", // get my contacts
+  contactList: "contactlist", // contact list event
 };
 
 const FIND_MODE = {
@@ -121,7 +122,7 @@ class ChatService {
 
   private wsEvents(event: MessageEvent<any>): void {
     ++this.eventsProcessed;
-    const response : ChatEvent = JSON.parse(event.data);
+    const response: ChatEvent = JSON.parse(event.data);
 
     console.log("#", this.eventsProcessed, "got", response);
 
@@ -151,7 +152,7 @@ class ChatService {
         console.log("Echo reply:", reply);
         break;
 
-      case EVENT_TYPE.contactlist:
+      case EVENT_TYPE.contactList:
         break;
 
       case EVENT_TYPE.message:
