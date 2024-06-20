@@ -8,7 +8,7 @@ import {
     TableRow,
     Paper,
     Button,
-    CircularProgress, TableCell, Checkbox
+    CircularProgress, TableCell, Checkbox, Select, MenuItem
 } from '@mui/material';
 import AddVideoModal from "../../components/VideoComponents/AddVideoModal.tsx";
 import { getVideosOfUser } from '../../services/videoServices/videoShow.service';
@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store.ts";
 import PreviewImage from '../../components/VideoComponents/PreviewImage';
 import UpdateVideoModal from "../../components/VideoComponents/UpdateVideoModal.tsx";
+import {updateVideoAccessibility} from "../../services/videoServices/video.upload.service.ts";
 
 export interface VideoData {
     id: string;
@@ -64,6 +65,16 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
             // Add the new video row
             return [...prevRows, newVideo];
         });
+    };
+
+    const handleAccessibilityChange = (videoId: string, value: string) => {
+        const videoIndex = rows.findIndex(video => video.id === videoId);
+        if (videoIndex !== -1) {
+            const updatedRows = [...rows];
+            updatedRows[videoIndex].videoInfo.isAccessibleToAll = (value === 'all');
+            setRows(updatedRows);
+            updateVideoAccessibility(videoId, value === 'all');
+        }
     };
 
     // Code for autoOpen AddVideoModal when click AddVideo on different page
@@ -121,7 +132,7 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
                             <TableCell>{/*Selector*/}</TableCell>
                             <TableCell>Video</TableCell>
                             <TableCell>Name, Description</TableCell>
-                            <TableCell>In Progress</TableCell>
+                            <TableCell>Access settings</TableCell>
                             <TableCell>Date</TableCell>
                             <TableCell>Views</TableCell>
                             <TableCell>% "Like"</TableCell>
@@ -145,7 +156,13 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
                                     <h6>{row.description}</h6>
                                 </TableCell>
                                 <TableCell>
-                                    {/* {row.videoInfo.isAccessibleToAll ? 'Доступно всем' : 'Не доступно всем'} */}
+                                    <Select
+                                        value={row.videoInfo.isAccessibleToAll ? 'all' : 'subs'}
+                                        onChange={(event) => handleAccessibilityChange(row.id, event.target.value)}
+                                    >
+                                        <MenuItem value={'all'}>All</MenuItem>
+                                        <MenuItem value={'subs'}>Subs</MenuItem>
+                                    </Select>
                                 </TableCell>
                                 <TableCell>
                                     {/*TODO Date*/}
