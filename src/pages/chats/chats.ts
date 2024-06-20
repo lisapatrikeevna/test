@@ -191,7 +191,6 @@ class ChatService {
       data: JSON.stringify(request),
     };
 
-    if(this.ws !== null)
-        this.ws.send(JSON.stringify(requestEvent));
+    if (this.ws !== null) this.ws.send(JSON.stringify(requestEvent));
   }
 }
