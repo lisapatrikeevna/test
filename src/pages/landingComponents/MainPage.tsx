@@ -4,7 +4,6 @@ import Home from './Home';
 import Partners from './Partners.tsx';
 import Pricing from './Pricing.tsx';
 import Contacts from './Contacts';
-import Cookies from './cookies/Cookies.tsx';
 import News from "./News.tsx";
 import AboutUs from "./AboutUs.tsx";
 import Project from './Project';
@@ -129,7 +128,6 @@ const MainPage = () => {
                 id="Donate">
                 <Donate />
             </Box>
-            <Cookies />
         </Container>
     );
 };
