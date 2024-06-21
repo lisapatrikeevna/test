@@ -1,30 +1,34 @@
 import {
   Divider,
   Stack,
-  TextField,
-  InputAdornment,
   IconButton,
   Typography,
   Box,
   Modal,
+  Menu,
+  MenuItem,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
-import 'react-chat-elements/dist/main.css';
-import { MessageBox } from 'react-chat-elements';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import PhoneIcon from '@mui/icons-material/Phone';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import UserModalProfile from '../../pages/UserModalProfile';
-import { useState } from 'react';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import Person2Icon from '@mui/icons-material/Person2';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useEffect, useRef, useState, useCallback, MouseEvent, useMemo } from "react";
+import { store } from "../../store/store";
+import linkifyHtml from "linkify-html";
+import { MessageList, Input } from "react-chat-elements";
+import ReactionSelector from '../../selectors/ReactionSelector';
+import { IMessage } from '../../types/types';
+import "react-chat-elements/dist/main.css";
 
 type UserType = {
   id: number;
@@ -40,12 +44,274 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
   const [openUserProfileModal, setOpenUserProfileModal] = useState(false);
   const [isOpenChatsModal, setIsOpenChatsModal] = useState(false);
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
+  const [messageText, setMessageText] = useState("");
+  const [messages, setMessages] = useState<IMessage[]>([
+    {
+      id: 1,
+      text: "Привет, как дела?",
+      sentByMe: true,
+      timestamp: new Date(),
+      reactions: [],
+    },
+    {
+      id: 2,
+      text: "Все хорошо, спасибо!",
+      sentByMe: false,
+      timestamp: new Date(),
+      reactions: [],
+    },
+    {
+      id: 3,
+      text: "Окей",
+      sentByMe: true,
+      timestamp: new Date(),
+      reactions: [],
+    },
+  ]);
 
-  if (!currentUser) {
-    return <Stack>Select a user to start chatting</Stack>;
-  }
+  const messageListRef = useRef(null);
+  const [showReactionSelector, setShowReactionSelector] = useState(false);
+  const [selectedMessageId, setSelectedMessageId] = useState<number | null>(null);
+  const [replyingToMessage, setReplyingToMessage] = useState<IMessage | null>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  // Modal position & open modal
+  const myId = useRef("nobody");
+  const ws = useRef<WebSocket | null>(null);
+  const userId = useRef<string | null>(null);
+  const isLocalDebug = false;
+  const uid = "0000664d-bfe6-72fa-0000-c35dd09fbf9c";
+  const host = "ip85-215-241-41.pbiaas.com:8030";
+  const chatLoginURL = `http://${host}/NeoX-chat-open`;
+  const accessToken = store.getState().user.token;
+  const authToken = `Bearer ${accessToken}`;
+  const WS_URL = `ws://${host}/NeoX-chat/api/${accessToken}`;
+
+  const PAGE_SIZE = 32;
+
+  const EVENT_TYPE = useMemo(() => ({
+    hello: "hello",
+    error: "error",
+    find: "find",
+    found: "found",
+    echo: "echo",
+    echoReply: "echo-reply",
+    group: "group",
+    contact: "contact",
+    subscription: "subscription",
+    message: "message",
+    selectchat: "selectchat",
+    getcontacts: "getcontacts",
+    contactlist: "contactlist",
+  }), []);
+
+  const FIND_MODE = {
+    plainText: 0,
+    wholeWord: 1,
+    regexp: 2,
+    default: 0,
+  };
+
+  const requestFind = useCallback((text: string) => {
+    const request = {
+      find: text,
+      mode: FIND_MODE.default,
+      page: 0,
+      pageSize: PAGE_SIZE,
+    };
+
+    const requestEvent = {
+      event: EVENT_TYPE.find,
+      data: JSON.stringify(request),
+    };
+
+    ws.current?.send(JSON.stringify(requestEvent));
+  }, [EVENT_TYPE.find, FIND_MODE.default, PAGE_SIZE]);
+
+  const chatLogin = useCallback(async (success: () => void) => {
+    console.log("chatLogin -- start");
+    const response = isLocalDebug
+      ? await fetch(chatLoginURL, {
+          headers: {
+            "Content-Type": "application/json",
+            user_id: uid,
+            Authorization: authToken,
+          },
+        })
+      : await fetch(chatLoginURL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authToken,
+          },
+        });
+
+    console.log("Response:", response);
+
+    if (response.ok) {
+      success();
+    } else {
+      console.log(
+        `Login error, status: ${response.status}, statusText: ${response.statusText}, URL: ${response.url}`
+      );
+    }
+  }, [authToken, chatLoginURL, isLocalDebug]);
+
+  const chatMain = useCallback(() => {
+    console.log("Started");
+    requestFind("");
+  }, [requestFind]);
+
+  const wsSetup = useCallback(() => {
+    ws.current = new WebSocket(WS_URL);
+
+    ws.current.addEventListener("open", (event) => {
+      console.log("Connected to the WebSocket server", event);
+    });
+
+    ws.current.addEventListener("close", (event) => {
+      console.log("Disconnected from the WebSocket server", event);
+    });
+
+    ws.current.addEventListener("message", (event) => {
+      const response = JSON.parse(event.data);
+
+      console.log("got", response);
+
+      switch (response.event) {
+        case EVENT_TYPE.error: {
+          const reason = response.data;
+          console.log("Error:", reason);
+          break;
+        }
+        case EVENT_TYPE.found: {
+          const data = JSON.parse(response.data);
+          console.log("found", data);
+          break;
+        }
+        case EVENT_TYPE.hello: {
+          userId.current = response.data;
+          console.log("My User ID:", userId.current);
+          chatMain();
+          break;
+        }
+        case EVENT_TYPE.echoReply: {
+          const reply = response.data;
+          console.log("Echo reply:", reply);
+          break;
+        }
+        case EVENT_TYPE.contactlist: {
+          break;
+        }
+        case EVENT_TYPE.message: {
+          const message = JSON.parse(response.data);
+          setMessages((prevMessages) => [...prevMessages, message]);
+          break;
+        }
+        default:
+      }
+    });
+  }, [WS_URL, EVENT_TYPE, chatMain]);
+
+  useEffect(() => {
+    console.log("useEffect - start");
+
+    chatLogin(wsSetup);
+
+    return () => {
+      ws.current?.close();
+    };
+  }, [chatLogin, wsSetup]);
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (messageText && ws.current?.readyState === WebSocket.OPEN) {
+      const message = {
+        id: messages.length + 1,
+        text: messageText,
+        sentByMe: true,
+        timestamp: new Date(),
+        reactions: [],
+      };
+      ws.current.send(JSON.stringify({
+        event: EVENT_TYPE.message,
+        data: JSON.stringify(message),
+      }));
+      setMessages((prevMessages) => [...prevMessages, message]);
+      setMessageText("");
+      setReplyingToMessage(null);
+    }
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target?.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        const fileContent = e.target!.result as string;
+        const message = {
+          id: messages.length + 1,
+          text: `File: ${file.name}`,
+          sentByMe: true,
+          timestamp: new Date(),
+          fileContent,
+          reactions: [],
+        };
+        ws.current?.send(JSON.stringify({
+          event: EVENT_TYPE.message,
+          data: JSON.stringify(message),
+        }));
+        setMessages((prevMessages) => [...prevMessages, message]);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleAddReaction = (messageId: number, reactionType: string) => {
+    setMessages((messages) =>
+      messages.map((msg) =>
+        msg.id === messageId
+          ? {
+              ...msg,
+              reactions: [
+                ...msg.reactions,
+                { type: reactionType, userId: myId.current },
+              ],
+            }
+          : msg
+      )
+    );
+  };
+
+  const getReactionsSummary = (reactions: { type: string; userId: string }[]) => {
+    const reactionCounts = reactions.reduce((acc: Record<string, number>, reaction) => {
+      if (!acc[reaction.type]) {
+        acc[reaction.type] = 0;
+      }
+      acc[reaction.type]++;
+      return acc;
+    }, {});
+
+    return Object.entries(reactionCounts).map(([type, count]) => `${type}: ${count}`).join(", ");
+  };
+
+  const handleOpenMenu = (event: MouseEvent<HTMLButtonElement>, messageId: number) => {
+    setSelectedMessageId(messageId);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDeleteMessage = (messageId: number) => {
+    setMessages((prevMessages) => prevMessages.filter((msg) => msg.id !== messageId));
+    handleCloseMenu();
+  };
+
+  const handleReplyToMessage = (message: IMessage) => {
+    setReplyingToMessage(message);
+  };
+
   const handleModal = (event: React.MouseEvent<SVGSVGElement>) => {
     const target = event.currentTarget as unknown as HTMLElement;
     const iconPosition = target.getBoundingClientRect();
@@ -61,6 +327,10 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
   const handleUserProfileClick = () => {
     setOpenUserProfileModal(true); // Open userProfile modal
   };
+
+  if (!currentUser) {
+    return <Stack>Select a user to start chatting</Stack>;
+  }
 
   return (
     <Stack
@@ -134,8 +404,6 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
               onClose={() => setIsOpenChatsModal(false)}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
-              // ToDo If you don't want the background, uncomment the line below.
-              // BackdropProps={{ style: { backgroundColor: 'transparent' } }}
             >
               <Box
                 display="flex"
@@ -209,55 +477,117 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
             </Modal>
           </Stack>
           <Stack sx={{ marginTop: '40px' }}>
-            <MessageBox
-              id={currentUser.id}
-              position="left"
-              type="text"
-              title={currentUser.name}
-              text={`This is a chat with ${currentUser.name}`}
-              date={new Date()}
-              focus={false}
-              titleColor="#000"
-              forwarded={false}
-              replyButton={true}
-              removeButton={false}
-              retracted={false}
-              status="sent"
-              notch={false}
+            <MessageList
+              referance={messageListRef}
+              className="message-list"
+              lockable={true}
+              toBottomHeight="100%"
+              dataSource={messages.map((msg) => ({
+                position: msg.sentByMe ? "right" : "left",
+                type: "text",
+                text: linkifyHtml(msg.text, { target: "_blank" }),
+                date: msg.timestamp,
+                id: msg.id.toString(),
+                title: currentUser?.name || "Unknown",
+                titleColor: "#000",
+                forwarded: true,
+                removeButton: true,
+                notch: true,
+                retracted: false,
+                focus: false,
+                onClick: () => setShowReactionSelector(true),
+                replyButton: true,
+                reply:
+                  msg.id === replyingToMessage?.id
+                    ? {
+                        title: "Reply to:",
+                        message: replyingToMessage.text,
+                      }
+                    : undefined,
+                status: "read",
+                onReplyClick: () => handleReplyToMessage(msg),
+                renderAddCmp: () =>
+                  showReactionSelector && selectedMessageId === msg.id ? (
+                    <ReactionSelector
+                      onReact={(type) => handleAddReaction(msg.id, type)}
+                    />
+                  ) : null,
+                renderReactions: () =>
+                  msg.reactions.length > 0 ? (
+                    <Typography variant="caption">
+                      {getReactionsSummary(msg.reactions)}
+                    </Typography>
+                  ) : null,
+                renderButtons: () => (
+                  <IconButton
+                    aria-controls="message-menu"
+                    aria-haspopup="true"
+                    onClick={(event) => handleOpenMenu(event, msg.id)}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                ),
+              }))}
             />
           </Stack>
         </Stack>
 
         <Stack direction="row" alignItems="center">
-          <TextField
-            size="small"
-            fullWidth
-            autoComplete="off"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconButton edge="start">
-                    <AttachFileIcon sx={{ transform: 'rotate(45deg)' }} />
+          <Input
+            placeholder="Write a message..."
+            multiline={true}
+            value={messageText}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setMessageText(e.target.value)
+            }
+            maxHeight={100}
+            leftButtons={
+              <>
+                <input
+                  type="file"
+                  onChange={handleFileUpload}
+                  id="file-upload"
+                  style={{
+                    display: "none",
+                  }}
+                />
+                <label htmlFor="file-upload">
+                  <IconButton color="primary" component="span">
+                    <AttachFileIcon style={{ color: '#1976d2' }} />
                   </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end">
-                    <SentimentSatisfiedAltIcon />
-                  </IconButton>
-                  <IconButton edge="end">
-                    <KeyboardVoiceOutlinedIcon />
-                  </IconButton>
-                  <IconButton edge="end">
-                    <SendIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
+                </label>
+                
+              </>
+            }
+            rightButtons={
+              <>
+              <IconButton color="primary">
+                  <SentimentSatisfiedAltIcon />
+                </IconButton>
+                <IconButton color="primary">
+                  <KeyboardVoiceOutlinedIcon />
+                </IconButton>
+              <IconButton color="primary" onClick={handleSendMessage} title="Send">
+                <SendIcon />
+              </IconButton>
+              </>
+            }
           />
         </Stack>
       </Stack>
+
+      <Menu
+        id="message-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+      >
+        <MenuItem onClick={() => handleDeleteMessage(selectedMessageId!)}>
+          Delete
+        </MenuItem>
+        {/* Add more actions here */}
+      </Menu>
     </Stack>
   );
 };
