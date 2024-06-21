@@ -4,11 +4,11 @@ import { Grid, Button } from "@mui/material";
 import {RenderValuesCentralComponent} from "../AppPage.tsx";
 
 // This component is responsible for displaying the main page of the video section
-const VideosMainPage: FC<{ changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void }> = ({ changeRenderCentralComponent }) => {
+const VideosMainPage: FC<{ panelWidth: number, changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void }> = ({ panelWidth, changeRenderCentralComponent }) => {
     const videoId = '';
     return (
 
-        <Grid container spacing={2} sx={{ position: "relative", }}>
+        <Grid container spacing={2} sx={{ position: "relative" }}>
             <Grid item xs={12} sx={{ position: "absolute", right: "15px", top: "20px" }}> {/*Start of space for buttons*/}
 
                 <Button
@@ -27,7 +27,11 @@ const VideosMainPage: FC<{ changeRenderCentralComponent: (value: RenderValuesCen
             </Grid>
 
             <Grid item xs={12} sx={{ marginTop: "60px" }} > {/*Start of space for the list of videos*/}
-                <VideoListHorizontal currentVideoId={videoId} changeRenderCentralComponent={changeRenderCentralComponent} /> {/*The component is responsible for displaying a list of videos*/}
+                <VideoListHorizontal
+                    currentVideoId={videoId}
+                    panelWidth={panelWidth}
+                    changeRenderCentralComponent={changeRenderCentralComponent}
+                />
             </Grid>
         </Grid>
     );

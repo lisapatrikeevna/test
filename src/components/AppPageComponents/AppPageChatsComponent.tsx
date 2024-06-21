@@ -1,115 +1,137 @@
+//TODO перенести в AppPage
 import { Box } from '@mui/system';
-import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
+import {ImperativePanelHandle, Panel, PanelGroup, PanelResizeHandle} from 'react-resizable-panels';
 import { useTheme } from '@mui/material/styles';
 import { Avatar, Stack, TextField } from '@mui/material';
 import { data } from '../ProfileComponents/utils';
 import NeuDivider from '../neumorphism/divider/NeuDivider';
-import { useState } from 'react';
+import {useRef, useState} from 'react';
 import NeuAvatar from '../neumorphism/avatar/NeuAvatar';
-import AppPageChats from './AppPageChats';
-import Fon5 from '../../assets/Fon5.jpg';
 
+type AppPageChatsComponentProps = {
+    setCurrentUser: (user: UserType | null) => void;
+};
 type UserType = {
-  id: number;
-  img: string;
-  name: string;
+    id: number;
+    img: string;
+    name: string;
 };
 
-const AppPageChatsComponent = () => {
-  const [users] = useState(data);
-  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
-  const theme = useTheme();
+const AppPageChatsComponent = ({ setCurrentUser }: AppPageChatsComponentProps) => {
+    const theme = useTheme();
+    const [users] = useState(data);
+    const avatarAndNamesPanelRef = useRef<ImperativePanelHandle>(null);
 
-  return (
-    <Box sx={{ height: '100%', display: 'flex' }}>
-      <PanelGroup direction="horizontal">
-        <Panel minSize={30} defaultSize={15} collapsible collapsedSize={7}>
-          {/* main wrapper for avatars and names */}
-          <Stack direction="column" padding={1} sx={{ minWidth: '80px' }}>
-            {/* wrapper for my avatar */}
-            <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-              <Avatar
-                src={data[0].img}
-                alt="avatar"
-                sx={{
-                  width: 50,
-                  height: 50,
-                  cursor: 'pointer',
-                  position: 'relative',
-                }}
-              />
-              <TextField size="small" label="Search" variant="outlined" />
-            </Box>
-            <NeuDivider
-              baseColor={theme.palette.mode === 'dark' ? '#bebebe' : '#333333'}
-              lightShadow={
-                theme.palette.mode === 'dark' ? '#ffffff' : '#1a1a1a'
-              }
-              sx={{
-                width: '100%',
-                height: '2px',
-                marginTop: '20px',
-              }}
-            />
-            {/* wrapper for usersAvatars and names*/}
-            <Box
-              marginTop={2}
-              sx={{
+    const avatarAndNamesMinSize = 260;
+    const avatarAndNamesMinSizePercentage = (avatarAndNamesMinSize / window.innerWidth) * 100;
+
+    return (
+        <PanelGroup direction="horizontal" style={{ flex: 1 }}>
+        <Box
+            marginTop={2}
+            sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '20px',
                 marginLeft: '5px',
-              }}
-            >
-              {users.map((elem) => (
-                <Box
-                  key={elem.id}
-                  sx={{
-                    display: 'flex',
-                    gap: '10px',
-                    alignItems: 'center',
+                marginRight: '5px',
+
+            }}
+        >
+            <Avatar
+                src={data[0].img}
+                alt="avatar"
+                sx={{
+                    width: 50,
+                    height: 50,
                     cursor: 'pointer',
-                  }}
-                  onClick={() => setCurrentUser(elem)}
+                    position: 'relative',
+                }}
+            />
+            {users.map((elem) => (
+                <Box
+                    key={elem.id}
+                    sx={{
+                        display: 'flex',
+                        gap: '10px',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        justifyContent: 'center',
+
+                    }}
+                    onClick={() => {
+                        setCurrentUser(elem);
+                    }}
                 >
-                  <Stack
-                    sx={{
-                      width: '50px',
-                    }}
-                  >
-                    <NeuAvatar src={elem.img} size="small" />
-                  </Stack>
-                  <Stack
-                    sx={{
-                      color:
-                        theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
-                    }}
-                  >
-                    {elem.name}
-                  </Stack>
+                    <Stack sx={{ width: '50px', display: 'flex', alignItems: 'center', }}>
+                        <NeuAvatar src={elem.img} size="small" />
+                    </Stack>
                 </Box>
-              ))}
+            ))}
+        </Box>
+    <Panel
+        ref={avatarAndNamesPanelRef}
+        minSize={avatarAndNamesMinSizePercentage}
+        defaultSize={-1}
+        style={{ flex: 1 }}
+        collapsible={true}
+    >
+        <Stack direction="column" padding={1} sx={{ minWidth: '80px' }}>
+            <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+
+                <TextField size="small" label="Search" variant="outlined" />
             </Box>
-          </Stack>
-        </Panel>
-        <PanelResizeHandle
-          style={{
+
+            <NeuDivider
+                baseColor={theme.palette.mode === 'dark' ? '#bebebe' : '#333333'}
+                lightShadow={theme.palette.mode === 'dark' ? '#ffffff' : '#1a1a1a'}
+                sx={{
+                    width: '100%',
+                    height: '2px',
+                    marginTop: '20px',
+                }}
+            />
+            <Box
+                marginTop={2}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '20px',
+                    marginLeft: '5px',
+
+                }}
+            >
+                {/* Список пользователей */}
+                {users.map((elem) => (
+                    <Box
+                        key={elem.id}
+                        sx={{
+                            display: 'flex',
+                            gap: '10px',
+                            alignItems: 'flex-start',
+                            cursor: 'pointer',
+                            width: '40px',
+                            height: '40px',
+                        }}
+                        onClick={() => {
+                            setCurrentUser(elem);
+                        }}
+                    >
+                        <Stack sx={{ color: theme.palette.mode === 'dark' ? '#bebebe' : '#333333' }}>
+                            {elem.name}
+                        </Stack>
+                    </Box>
+                ))}
+            </Box>
+        </Stack>
+    </Panel>
+    <PanelResizeHandle
+        style={{
             width: '3px',
             background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
-          }}
-        />
-        <Panel
-          style={{ backgroundImage: `url(${Fon5})` }}
-          defaultSize={5}
-          maxSize={100}
-          minSize={5}
-          collapsible={true}
-        >
-          <AppPageChats currentUser={currentUser} />
-        </Panel>
-      </PanelGroup>
-    </Box>
-  );
+        }}
+    />
+        </PanelGroup>
+);
 };
-
 export default AppPageChatsComponent;
