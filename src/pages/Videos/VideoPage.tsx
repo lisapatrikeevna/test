@@ -49,11 +49,12 @@ import { RenderValuesCentralComponent } from '../AppPage.tsx';
 
 interface VideoPageProps {
   videoId: string | null;
+  panelWidth: number;
   changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
 }
 // This component is responsible for displaying the page of one Video (where we can play it)
 const VideoPage: React.FC<VideoPageProps> = ({
-  videoId,
+  videoId, panelWidth,
   changeRenderCentralComponent,
 }) => {
   const dispatch = useDispatch();
@@ -81,7 +82,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
     setIsModalOpen(false);
   };
 
-
+  const currentWidth = window.innerWidth * (panelWidth / 100) - (65 * panelWidth/100);
   // TODO logic of this, since we changed logic of viewing App
   const handleCopyLink = () => {
     navigator.clipboard.writeText(link);
@@ -224,6 +225,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
                     display: 'flex',
                     justifyContent: 'start',
                     alignItems: 'center',
+                    width: `${currentWidth}px`
                   }}
                 > {/*Place for Avatar*/}
                   {/*TODO AVATAR and press on it, navigate to thisUserChannel*/}
@@ -345,6 +347,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
             <Paper elevation={3}>
               <VideoListHorizontal
                 currentVideoId={videoId || ''}
+                panelWidth={panelWidth}
                 changeRenderCentralComponent={changeRenderCentralComponent}
               />
             </Paper>
