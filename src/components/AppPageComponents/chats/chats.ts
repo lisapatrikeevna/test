@@ -1,11 +1,11 @@
-import { store } from "../../store/store";
+import { store } from "../../../store/store";
 
-type ChatEvent = {
+export type ChatEvent = {
   event: string; // EVENT_TYPE see below
   data: string; // JSON payload
 };
 
-const CONST = {
+export const CONST = {
   uid: "0000664d-bfe6-72fa-0000-c35dd09fbf9c", // The test uid for local debugging
   host: "ip85-215-241-41.pbiaas.com:8030", // Dev XL server
   chatLoginURL: function () {
@@ -26,7 +26,7 @@ const CONST = {
   pageSize: 32,
 };
 
-const EVENT_TYPE = {
+export const EVENT_TYPE = {
   hello: "hello", // reply login ok
   error: "error", // Something went wrong. The "data" field contains a reason
 
@@ -64,6 +64,14 @@ export class ChatService {
   private eventsProcessed: number = 0;
 
   constructor() {}
+
+  public isOpen() : boolean {
+    return this.isLogin;
+  }
+  
+  public getUserId() : string {
+    return this.userId;
+  }
 
   public async chatLogin() {
     console.log("chatLogin -- start");

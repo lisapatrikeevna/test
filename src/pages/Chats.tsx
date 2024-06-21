@@ -22,9 +22,6 @@ import {
 } from "react-chat-elements";
 import "react-chat-elements/dist/main.css";
 
-// chats module
-import { ChatService } from "./chats/chats";
-
 const Chats: FC = () => {
   const theme = useTheme();
   const [activeChat, setActiveChat] = useState<string | null>(null);
@@ -99,19 +96,28 @@ const Chats: FC = () => {
 
   const activeContact = contacts.find((contact) => contact.id === activeChat);
 
-  let chatService: ChatService | null = null;
-
   useEffect(() => {
     console.log("useEffect -- started");
-    
-    chatService = new ChatService();
-    chatService.chatLogin();
 
     return () => {
-      chatService?.shutdown();
       console.log("useEffect -- shutdown");
     };
   }, []);
+
+  // let chatService: ChatService | null = null;
+
+
+  // useEffect(() => {
+  //   console.log("useEffect -- started");
+    
+  //   chatService = new ChatService();
+  //   chatService.chatLogin();
+
+  //   return () => {
+  //     chatService?.shutdown();
+  //     console.log("useEffect -- shutdown");
+  //   };
+  // }, []);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0];

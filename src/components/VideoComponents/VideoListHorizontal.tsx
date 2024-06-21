@@ -24,15 +24,17 @@ export interface IVideo {
 
 interface VideoListHorizontalProps {
     currentVideoId: string;
+    panelWidth: number;
     changeRenderCentralComponent: (value: RenderValuesCentralComponent, videoId?: string) => void;
 }
 
-const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoId, changeRenderCentralComponent }) => {
+const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoId, panelWidth, changeRenderCentralComponent }) => {
    const [videos, setVideos] = useState<IVideo[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [visibleCount, setVisibleCount] = useState(0);
     const [users, setUsers] = useState<{ [key: string]: string }>({}); // To store user data
+    const currentWidth = window.innerWidth * (panelWidth / 100) - (65 * panelWidth/100);
 
     const fetchVideo = async (id: string) => {
         try {
@@ -96,14 +98,13 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
     }, []);
 
 
-
     // Sizes for adaptation
     //TODO check to simplify
-    const isXSmall = useMediaQuery('(max-width:400px)');
-    const isSmall = useMediaQuery('(max-width:600px)');
-    const isMedium = useMediaQuery('(max-width:960px)');
-    const isLarge = useMediaQuery('(max-width:1280px)');
-    const isXLarge = useMediaQuery('(max-width:1600px)');
+    const isXSmall = useMediaQuery(`(${currentWidth}:400px)`);
+    const isSmall = useMediaQuery(`(${currentWidth}:600px)`);
+    const isMedium = useMediaQuery(`(${currentWidth}:960px)`);
+    const isLarge = useMediaQuery(`(${currentWidth}:1280px)`);
+    const isXLarge = useMediaQuery(`(${currentWidth}:1600px)`);
 
     // Number of columns of videos, depends on size
     const columns = isXSmall ? 1 : isSmall ? 2 : isMedium ? 3 : isLarge ? 4 : isXLarge ? 5 : 6;
@@ -125,9 +126,9 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
 
 
     return (
-        <Box sx={{ padding: "10px" }}>
+        <Box sx={{ padding: "10px"}}>
             <Box sx={{ maxWidth: "100%", margin: "0 auto" }}>
-                <Grid container spacing={2} sx={{ justifyContent: "center" }}> {/*Grid container for video list*/}
+                <Grid container spacing={2} sx={{ justifyContent: "center"}}> {/*Grid container for video list*/}
 
                     {loading ? (
                         <VideoListHorizontalSkeleton columns={columns} />
