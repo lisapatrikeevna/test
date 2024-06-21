@@ -354,7 +354,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              bgcolor: 'aqua',
+              // bgcolor: 'aqua',
               position: 'absolute',
               width: '100%',
               zIndex: '100',
