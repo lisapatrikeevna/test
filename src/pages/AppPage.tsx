@@ -1,9 +1,9 @@
-import { Box, Button, Collapse, Divider } from '@mui/material';
+import {Avatar, Box, Button, Collapse, Divider, Stack, TextField} from '@mui/material';
 import {
-  Panel,
-  PanelGroup,
-  PanelResizeHandle,
-  ImperativePanelHandle,
+    Panel,
+    PanelGroup,
+    PanelResizeHandle,
+    ImperativePanelHandle,
 } from 'react-resizable-panels';
 import AppPageHeader from '../components/AppPageComponents/AppPageHeader';
 import AppPageChats from '../components/AppPageComponents/AppPageChats';
@@ -25,265 +25,389 @@ import AppPageButtonsComponent from '../components/AppPageComponents/AppPageButt
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import VR from './VR.tsx';
-import AppPageChatsComponent from '../components/AppPageComponents/AppPageChatsComponent.tsx';
 import VideoPage from './Videos/VideoPage.tsx';
 import VideoEditPage from './Videos/VideoEditPage.tsx';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store.ts';
 import ChannelPage from './Videos/ChannelPage.tsx';
+import {data} from "../components/ProfileComponents/utils.ts";
+import NeuDivider from "../components/neumorphism/divider/NeuDivider.tsx";
+import NeuAvatar from "../components/neumorphism/avatar/NeuAvatar.tsx";
+type UserType = {
+    id: number;
+    img: string;
+    name: string;
+};
 
 export type RenderValues =
-  | 'comments'
-  | 'chats'
-  | 'calendar'
-  | 'videos'
-  | 'audio'
-  | 'radio';
+    | 'comments'
+    | 'chats'
+    | 'calendar'
+    | 'videos'
+    | 'audio'
+    | 'radio';
 
 export type RenderValuesCentralComponent =
-  | 'home'
-  | 'mevipa'
-  | 'VR'
-  | 'videopage'
-  | 'videoeditpage'
-  | 'videochannel';
+    | 'home'
+    | 'mevipa'
+    | 'VR'
+    | 'videopage'
+    | 'videoeditpage'
+    | 'videochannel';
 
 const AppPage = () => {
-  const [isOpenSideBar, setIsOpenSideBar] = useState(false);
-  const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
-  const [renderValuesCentralComponent, setRenderValuesCentralComponent] =
-    useState<RenderValuesCentralComponent>('home');
-  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
-  const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
-  const [, setIsChatPanelOpen] = useState(false);
-  const theme = useTheme();
-  const chatsPanelRef = useRef<ImperativePanelHandle>(null);
-  const rightPanel = useRef<ImperativePanelHandle>(null);
-  const [showOptionsButton, setShowOptionsButton] = useState(false);
-  const userId = useSelector((state: RootState) => state.user.user?.userId);
+    const [isOpenSideBar, setIsOpenSideBar] = useState(false);
+    const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
+    const [renderValuesCentralComponent, setRenderValuesCentralComponent] =
+        useState<RenderValuesCentralComponent>('home');
+    const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+    const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
+    const [, setIsChatPanelOpen] = useState(false);
+    const theme = useTheme();
+    const chatsPanelRef = useRef<ImperativePanelHandle>(null);
+    const avatarAndNamesPanelRef = useRef<ImperativePanelHandle>(null);
+    const rightPanel = useRef<ImperativePanelHandle>(null);
+    const [showOptionsButton, setShowOptionsButton] = useState(false);
+    const userId = useSelector((state: RootState) => state.user.user?.userId);
+    const [users] = useState(data);
+    const [currentUser, setCurrentUser] = useState<UserType | null>(null);
 
-  const toggleChatsPanel = () => {
-    setIsChatPanelOpen((prev) => {
-      const newIsOpen = !prev;
-      if (newIsOpen) {
-        chatsPanelRef.current?.expand();
-      } else {
-        chatsPanelRef.current?.collapse();
-      }
-      return newIsOpen;
-    });
-  };
+    const avatarAndNamesMinSize = 260;
+    const avatarAndNamesMinSizePercentage = (avatarAndNamesMinSize / window.innerWidth) * 100;
 
-  const openRightPanel = () => {
-    rightPanel.current?.expand();
-  };
+    const chatMinSize = 370;
+    const chatMinSizePercentage = (chatMinSize / window.innerWidth) * 100;
 
-  useEffect(() => {
-    if (isOpenSideBar || isOpenMainSideBar) {
-      setIsOverlayVisible(true);
-    } else {
-      const timeout = setTimeout(() => {
-        setIsOverlayVisible(false);
-      }, 500);
-      return () => clearTimeout(timeout);
+    const [centralPanelWidth, setCentralPanelWidth] = useState(window.innerWidth);
+
+    const toggleChatsPanel = () => {
+        setIsChatPanelOpen((prev) => {
+            const newIsOpen = !prev;
+            if (newIsOpen) {
+                chatsPanelRef.current?.expand();
+            } else {
+                chatsPanelRef.current?.collapse();
+            }
+            return newIsOpen;
+        });
+    };
+
+    const openRightPanel = () => {
+        rightPanel.current?.expand();
+    };
+
+    useEffect(() => {
+        if (isOpenSideBar || isOpenMainSideBar) {
+            setIsOverlayVisible(true);
+        } else {
+            const timeout = setTimeout(() => {
+                setIsOverlayVisible(false);
+            }, 500);
+            return () => clearTimeout(timeout);
+        }
+    }, [isOpenSideBar, isOpenMainSideBar]);
+
+    function changeRender(value: RenderValues) {
+        setRenderValues(value);
     }
-  }, [isOpenSideBar, isOpenMainSideBar]);
 
-  function changeRender(value: RenderValues) {
-    setRenderValues(value);
-  }
+    const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
-  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+    const changeRenderCentralComponent = (
+        value: RenderValuesCentralComponent,
+        videoId?: string
+    ) => {
+        setRenderValuesCentralComponent(value);
+        if (videoId) {
+            setSelectedVideoId(videoId);
+        }
+    };
 
-  const changeRenderCentralComponent = (
-    value: RenderValuesCentralComponent,
-    videoId?: string
-  ) => {
-    setRenderValuesCentralComponent(value);
-    if (videoId) {
-      setSelectedVideoId(videoId);
-    }
-  };
-
-  return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      style={{
-        backgroundColor: theme.palette.background.default,
-      }}
-    >
-      <Box sx={{ position: 'fixed', width: '100%', zIndex: 1000 }}>
-        <AppPageHeader
-          setIsOpenSideBar={setIsOpenSideBar}
-          setIsOpenMainSideBar={setIsOpenMainSideBar}
-          toggleChatsPanel={toggleChatsPanel}
-          setIsChatPanelOpen={setIsChatPanelOpen}
-        />
-        <Divider />
-      </Box>
-      <Box
-        display="flex"
-        position="relative"
-        sx={{ height: 'calc(100vh - 60px)', marginTop: '60px' }}
-        overflow="auto"
-      >
-        <Box position="fixed" top="60px" bottom={0} left={0} zIndex={1000}>
-          <AppPageMainSideBar
-            isOpenMainSideBar={isOpenMainSideBar}
-            changeRenderCentralComponent={changeRenderCentralComponent}
-          />
-        </Box>
-
-        <PanelGroup direction="horizontal" style={{ flex: 1 }}>
-          <Panel
-            ref={chatsPanelRef}
-            minSize={25}
-            style={{ flex: 1 }}
-            collapsible={true}
-            onExpand={() => setIsChatPanelOpen(true)}
-            onCollapse={() => setIsChatPanelOpen(false)}
-          >
-            <AppPageChatsComponent />
-          </Panel>
-
-          <PanelResizeHandle
-            style={{
-              width: '3px',
-              background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
-            }}
-          />
-
-          <Panel
-            style={{
-              backgroundImage: `url(${Fon3})`,
-              padding: '10px',
-              position: 'relative',
-              overflowY: 'auto',
-            }}
-            defaultSize={50}
-          >
-            {renderValuesCentralComponent === 'mevipa' && (
-              <VideosMainPage
-                changeRenderCentralComponent={changeRenderCentralComponent}
-              />
-            )}
-            {renderValuesCentralComponent === 'videoeditpage' && (
-              <VideoEditPage userId={userId} />
-            )}
-            {renderValuesCentralComponent === 'videochannel' && (
-              <ChannelPage
-                userId={userId}
-                changeRenderCentralComponent={changeRenderCentralComponent}
-              />
-            )}
-            {renderValuesCentralComponent === 'videopage' && (
-              <VideoPage
-                videoId={selectedVideoId}
-                changeRenderCentralComponent={changeRenderCentralComponent}
-              />
-            )}
-            {renderValuesCentralComponent === 'VR' && <VR />}
-            {renderValuesCentralComponent === 'home' && (
-              <AppPageCentralComponent />
-            )}
-            <Box
-              sx={{
-                position: 'absolute',
-                bottom: '80px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '20px',
-              }}
-            >
-              <Button
-                variant="outlined"
-                endIcon={
-                  showOptionsButton ? (
-                    <KeyboardArrowDownIcon />
-                  ) : (
-                    <KeyboardArrowUpIcon />
-                  )
-                }
-                sx={{ width: '300px' }}
-                onClick={() => setShowOptionsButton((prev) => !prev)}
-              >
-                Options
-              </Button>
-              <Collapse in={showOptionsButton}>
-                <AppPageButtonsComponent />
-              </Collapse>
-            </Box>
-          </Panel>
-
-          <PanelResizeHandle
-            style={{
-              width: '3px',
-              background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
-            }}
-          />
-          <Panel
-            ref={rightPanel}
-            defaultSize={25}
-            maxSize={50}
-            minSize={20}
-            collapsible
-          >
-            <Box
-              height="100vh"
-              style={{ backgroundImage: `url(${Fon5})` }}
-              padding="5px"
-            >
-              {renderValues === 'chats' && <AppPageChats currentUser={null} />}
-              {renderValues === 'comments' && <AppPageComments />}
-              {renderValues === 'videos' && <VideoInSideBareAppPage />}
-              {renderValues === 'calendar' && <AppPageCalendar />}
-              {renderValues === 'audio' && <AppPageAudioComponent />}
-              {renderValues === 'radio' && <AppPageRadioComponent />}
-            </Box>
-          </Panel>
-        </PanelGroup>
-        {isOverlayVisible && (
-          <Box
-            position="fixed"
-            top="60px"
-            left={0}
-            right={0}
-            bottom={0}
-            bgcolor="rgba(0, 0, 0, 0.2)"
-            zIndex={999}
-            onClick={() => {
-              setIsOpenSideBar(false);
-              setIsOpenMainSideBar(false);
-            }}
-            style={{
-              transition: 'opacity 0.3s ease',
-              opacity: isOpenSideBar || isOpenMainSideBar ? 1 : 0,
-              pointerEvents:
-                isOpenSideBar || isOpenMainSideBar ? 'auto' : 'none',
-            }}
-          />
-        )}
+    return (
         <Box
-          position="fixed"
-          top="60px"
-          bottom={0}
-          right={0}
-          zIndex={isOpenSideBar ? 1000 : -1}
+            display="flex"
+            flexDirection="column"
+            style={{
+                backgroundColor: theme.palette.background.default,
+            }}
         >
-          <AppPageSideBar
-            openRightPanel={openRightPanel}
-            isOpenSideBar={isOpenSideBar}
-            changeRender={changeRender}
-            setIsOpenSideBar={setIsOpenSideBar}
-          />
+            <Box sx={{ position: 'fixed', width: '100%', zIndex: 1000 }}>
+                <AppPageHeader
+                    setIsOpenSideBar={setIsOpenSideBar}
+                    setIsOpenMainSideBar={setIsOpenMainSideBar}
+                    toggleChatsPanel={toggleChatsPanel}
+                    setIsChatPanelOpen={setIsChatPanelOpen}
+                />
+                <Divider />
+            </Box>
+            <Box
+                display="flex"
+                position="relative"
+                sx={{ height: 'calc(100vh - 60px)', marginTop: '60px' }}
+                overflow="auto"
+            >
+                <Box position="fixed" top="60px" bottom={0} left={0} zIndex={1000}>
+                    <AppPageMainSideBar
+                        isOpenMainSideBar={isOpenMainSideBar}
+                        changeRenderCentralComponent={changeRenderCentralComponent}
+                    />
+                </Box>
+                <PanelGroup direction="horizontal" style={{ flex: 1 }}>
+                    <Box
+                        marginTop={2}
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '20px',
+                            marginLeft: '5px',
+                            marginRight: '5px',
+
+                        }}
+                    >
+                        <Avatar
+                            src={data[0].img}
+                            alt="avatar"
+                            sx={{
+                                width: 50,
+                                height: 50,
+                                cursor: 'pointer',
+                                position: 'relative',
+                            }}
+                        />
+                        {users.map((elem) => (
+                            <Box
+                                key={elem.id}
+                                sx={{
+                                    display: 'flex',
+                                    gap: '10px',
+                                    alignItems: 'center',
+                                    cursor: 'pointer',
+                                    justifyContent: 'center',
+
+                                }}
+                                onClick={() => {
+                                    setCurrentUser(elem);
+                                }}
+                            >
+                                <Stack sx={{ width: '50px', display: 'flex', alignItems: 'center', }}>
+                                    <NeuAvatar src={elem.img} size="small" />
+                                </Stack>
+                            </Box>
+                        ))}
+                    </Box>
+                    <Panel
+                        ref={avatarAndNamesPanelRef}
+                        minSize={avatarAndNamesMinSizePercentage}
+                        defaultSize={-1}
+                        style={{ flex: 1 }}
+                        collapsible={true}
+                    >
+                        <Stack direction="column" padding={1} sx={{ minWidth: '80px' }}>
+                            <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+
+                                <TextField size="small" label="Search" variant="outlined" />
+                            </Box>
+
+                            <NeuDivider
+                                baseColor={theme.palette.mode === 'dark' ? '#bebebe' : '#333333'}
+                                lightShadow={theme.palette.mode === 'dark' ? '#ffffff' : '#1a1a1a'}
+                                sx={{
+                                    width: '100%',
+                                    height: '2px',
+                                    marginTop: '20px',
+                                }}
+                            />
+                            <Box
+                                marginTop={2}
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '20px',
+                                    marginLeft: '5px',
+
+                                }}
+                            >
+                                {/* Список пользователей */}
+                                {users.map((elem) => (
+                                    <Box
+                                        key={elem.id}
+                                        sx={{
+                                            display: 'flex',
+                                            gap: '10px',
+                                            alignItems: 'flex-start',
+                                            cursor: 'pointer',
+                                            width: '40px',
+                                            height: '40px',
+                                        }}
+                                        onClick={() => {
+                                            setCurrentUser(elem);
+                                        }}
+                                    >
+                                        <Stack sx={{ color: theme.palette.mode === 'dark' ? '#bebebe' : '#333333' }}>
+                                            {elem.name}
+                                        </Stack>
+                                    </Box>
+                                ))}
+                            </Box>
+                        </Stack>
+                    </Panel>
+                    <PanelResizeHandle
+                        style={{
+                            width: '3px',
+                            background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                        }}
+                    />
+                    <Panel
+                        ref={chatsPanelRef}
+                        minSize={chatMinSizePercentage}
+                        defaultSize={chatMinSizePercentage}
+                        style={{ flex: 1 }}
+                        collapsible={true}
+                        onExpand={() => setIsChatPanelOpen(true)}
+                        onCollapse={() => setIsChatPanelOpen(false)}
+                    >
+                        <AppPageChats currentUser={currentUser} />
+                    </Panel>
+
+                    <PanelResizeHandle
+                        style={{
+                            width: '3px',
+                            background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                        }}
+                    />
+
+                    <Panel
+                        onResize={(width) => setCentralPanelWidth(width)}
+                        style={{
+                            backgroundImage: `url(${Fon3})`,
+                            padding: '10px',
+                            position: 'relative',
+                            overflowY: 'auto',
+                        }}
+                        defaultSize={40}
+                    >
+                        {renderValuesCentralComponent === 'mevipa' && (
+                            <VideosMainPage
+                                panelWidth={centralPanelWidth}
+                                changeRenderCentralComponent={changeRenderCentralComponent}
+                            />
+                        )}
+                        {renderValuesCentralComponent === 'videoeditpage' && (
+                            <VideoEditPage userId={userId} />
+                        )}
+                        {renderValuesCentralComponent === 'videochannel' && (
+                            <ChannelPage
+                                userId={userId}
+                                changeRenderCentralComponent={changeRenderCentralComponent}
+                            />
+                        )}
+                        {renderValuesCentralComponent === 'videopage' && (
+                            <VideoPage
+                                videoId={selectedVideoId}
+                                changeRenderCentralComponent={changeRenderCentralComponent}
+                            />
+                        )}
+                        {renderValuesCentralComponent === 'VR' && <VR />}
+                        {renderValuesCentralComponent === 'home' && (
+                            <AppPageCentralComponent />
+                        )}
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                bottom: '80px',
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: '20px',
+                            }}
+                        >
+                            <Button
+                                variant="outlined"
+                                endIcon={
+                                    showOptionsButton ? (
+                                        <KeyboardArrowDownIcon />
+                                    ) : (
+                                        <KeyboardArrowUpIcon />
+                                    )
+                                }
+                                sx={{ width: '300px' }}
+                                onClick={() => setShowOptionsButton((prev) => !prev)}
+                            >
+                                Options
+                            </Button>
+                            <Collapse in={showOptionsButton}>
+                                <AppPageButtonsComponent />
+                            </Collapse>
+                        </Box>
+                    </Panel>
+
+                    <PanelResizeHandle
+                        style={{
+                            width: '3px',
+                            background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
+                        }}
+                    />
+                    <Panel
+                        ref={rightPanel}
+                        defaultSize={15}
+                        maxSize={50}
+                        minSize={15}
+                        collapsible
+                    >
+                        <Box
+                            height="100vh"
+                            style={{ backgroundImage: `url(${Fon5})` }}
+                            padding="5px"
+                        >
+                            {renderValues === 'chats' && <AppPageChats currentUser={null} />}
+                            {renderValues === 'comments' && <AppPageComments />}
+                            {renderValues === 'videos' && <VideoInSideBareAppPage />}
+                            {renderValues === 'calendar' && <AppPageCalendar />}
+                            {renderValues === 'audio' && <AppPageAudioComponent />}
+                            {renderValues === 'radio' && <AppPageRadioComponent />}
+                        </Box>
+                    </Panel>
+                </PanelGroup>
+                {isOverlayVisible && (
+                    <Box
+                        position="fixed"
+                        top="60px"
+                        left={0}
+                        right={0}
+                        bottom={0}
+                        bgcolor="rgba(0, 0, 0, 0.2)"
+                        zIndex={999}
+                        onClick={() => {
+                            setIsOpenSideBar(false);
+                            setIsOpenMainSideBar(false);
+                        }}
+                        style={{
+                            transition: 'opacity 0.3s ease',
+                            opacity: isOpenSideBar || isOpenMainSideBar ? 1 : 0,
+                            pointerEvents:
+                                isOpenSideBar || isOpenMainSideBar ? 'auto' : 'none',
+                        }}
+                    />
+                )}
+                <Box
+                    position="fixed"
+                    top="60px"
+                    bottom={0}
+                    right={0}
+                    zIndex={isOpenSideBar ? 1000 : -1}
+                >
+                    <AppPageSideBar
+                        openRightPanel={openRightPanel}
+                        isOpenSideBar={isOpenSideBar}
+                        changeRender={changeRender}
+                        setIsOpenSideBar={setIsOpenSideBar}
+                    />
+                </Box>
+            </Box>
         </Box>
-      </Box>
-    </Box>
-  );
+    );
 };
 
 export default AppPage;
