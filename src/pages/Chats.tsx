@@ -22,6 +22,9 @@ import {
 } from "react-chat-elements";
 import "react-chat-elements/dist/main.css";
 
+// chats module
+import { ChatService } from "./chats/chats";
+
 const Chats: FC = () => {
   const theme = useTheme();
   const [activeChat, setActiveChat] = useState<string | null>(null);
@@ -96,232 +99,19 @@ const Chats: FC = () => {
 
   const activeContact = contacts.find((contact) => contact.id === activeChat);
 
-  const myId = useRef("nobody");
-  const ws = useRef<WebSocket | null>(null);
-
-  // ###############################################################################################
-  // Login to the Chat Backend
-  const isLocalDebug = false;
-  const uid = "0000664d-bfe6-72fa-0000-c35dd09fbf9c"; // The test uid for local debugging
-
-  const host = "ip85-215-241-41.pbiaas.com:8030"; // Dev XL server
-  const chatLoginURL = `http://${host}/NeoX-chat-open`;
-  // const loginURL = `http://${host}/auth/login-user`;
-  const accessToken = store.getState().user.token;
-  const authToken = `Bearer ${accessToken}`;
-  const WS_URL = `ws://${host}/NeoX-chat/api/${accessToken}`;
-
-  // let isConnected = false;
-  // let isLogin = false;
-  let eventsProcessed = 0;
-  let userId = "";
-
-  const PAGE_SIZE = 32;
-
-  const EVENT_TYPE = {
-    hello: "hello", // reply login ok
-    error: "error", // Something went wrong. The "data" field contains a reason
-
-    find: "find", // find a contact/group
-    found: "found", // response for find
-
-    echo: "echo", // test (echo) event
-    echoReply: "echo-reply", // test (echo reply) event
-
-    group: "group", // group management
-    contact: "contact", // contact management
-    subscription: "subscription", // subscription management
-
-    message: "message", // publish a message to a group
-    selectchat: "selectchat", // select a chat to be active
-    getcontacts: "getcontacts", // get my contacts
-    contactlist: "contactlist", // contact list event
-  };
-
-  const FIND_MODE = {
-    plainText: 0,
-    wholeWord: 1,
-    regexp: 2,
-    default: 0,
-  };
-
-  const chatLogin = async (success: () => void) => {
-    console.log("chatLogin -- start");
-    const response = isLocalDebug
-      ? await fetch(chatLoginURL, {
-          headers: {
-            "Content-Type": "application/json",
-            user_id: uid,
-            Authorization: authToken,
-          },
-        })
-      : await fetch(chatLoginURL, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: authToken,
-          },
-        });
-
-    console.log("Response:", response);
-
-    // const result = await response.json();
-    // console.log("Result:", result);
-
-    if (response.ok) {
-      // const content = result;
-
-      // console.log("The content is:", content);
-      // ws = new WebSocket(WS_URL);
-      // wsSetup();
-      success();
-    } else {
-      console.log(
-        `Login error, status: ${response.status}, statusText: ${response.statusText}, URL: ${response.url}`
-      );
-    }
-  };
-
-  // Setup Web Sockets for the Back end
-  const wsSetup = function () {
-    setContacts(contacts);
-    ws.current = new WebSocket(WS_URL);
-
-    ws.current.addEventListener("open", (event) => {
-      // isConnected = true;
-      console.log("Connected to the WebSocket server", event);
-    });
-
-    ws.current.addEventListener("close", (event) => {
-      // isConnected = false;
-      console.log("Disconnected from the WebSocket server", event);
-    });
-
-    ws.current.addEventListener("message", (event) => {
-      ++eventsProcessed;
-      const response = JSON.parse(event.data);
-
-      console.log("#", eventsProcessed, "got", response);
-
-      switch (response.event) {
-        case EVENT_TYPE.error:
-          const reason = response.data;
-
-          console.log("Error:", reason);
-          break;
-
-        case EVENT_TYPE.found:
-          const data = JSON.parse(response.data);
-
-          console.log("found", data);
-          break;
-
-        case EVENT_TYPE.hello:
-          // isLogin = true;
-          userId = response.data;
-          console.log("My User ID:", userId);
-          chatMain();
-          break;
-
-        case EVENT_TYPE.echoReply:
-          const reply = response.data;
-
-          console.log("Echo reply:", reply);
-          break;
-
-        case EVENT_TYPE.contactlist:
-          break;
-
-        case EVENT_TYPE.message:
-          break;
-
-        default:
-      }
-    });
-  };
-
-  // find a user/group
-  const requestFind = (text: string) => {
-    const request = {
-      find: text,
-      mode: FIND_MODE.default,
-      page: 0,
-      pageSize: PAGE_SIZE,
-    };
-
-    const requestEvent = {
-      event: EVENT_TYPE.find,
-      data: JSON.stringify(request),
-    };
-
-    ws.current?.send(JSON.stringify(requestEvent));
-  };
-
-  const chatMain = () => {
-    console.log("Started");
-    // requestEcho("Hello!");
-
-    // requestSubscriptionCreate("02202fc7-ae4a-42c2-9a52-dd1d3c7c5070");
-    // requestSubscriptionCreate("0eb28c53-52b3-4e13-9f74-6097d132228e");
-
-    // requestContactCreate("0000664d-b8c1-72fa-0000-c35dd09fbf9a");
-    // requestContactCreate("0000664d-d794-72fa-0000-c35dd09fbf9d");
-
-    // requestContactDelete("15dede67-d680-49d1-84f6-ec3679c0172e");
-
-    // requestGroupCreate("1. The Test group A");
-    // requestGroupCreate("2. The Test group B");
-
-    // requestGroupDelete("16eeadd3-f3e4-4a31-b480-2ebb2ff58350");
-    // requestGroupDelete("9889f4e8-96f5-4a22-875c-3fe09e81e048");
-    // requestGroupDelete("a3f631dc-ac42-49b5-b3fe-b59428a652f6");
-
-    // requestFind("");
-    // requestMessage("16eeadd3-f3e4-4a31-b480-2ebb2ff58350", "Hello!");
-
-    // requestFind("@");
-    // requestFind("voo");
-    requestFind("");
-  };
+  let chatService: ChatService | null = null;
 
   useEffect(() => {
-    console.log("useEffect - start");
-
-    chatLogin(wsSetup);
+    console.log("useEffect -- started");
+    
+    chatService = new ChatService();
+    chatService.chatLogin();
 
     return () => {
-      ws.current?.close();
+      chatService?.shutdown();
+      console.log("useEffect -- shutdown");
     };
-  }, [chatLogin, wsSetup]);
-
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (messageText && ws.current?.readyState === WebSocket.OPEN) {
-      const asJson = rqMessage(messageText, replyingToMessage?.id);
-      ws.current.send(asJson);
-      setMessageText("");
-      setReplyingToMessage(null); // Clear the reply message after sending
-    }
-  };
-
-  const rqSearch = function () {
-    const msg = {
-      type: "search",
-      status: searchQuery,
-    };
-
-    if (ws.current) ws.current.send(JSON.stringify(msg));
-  };
-
-  const rqMessage = function (text: string, replyToId?: number) {
-    return JSON.stringify({
-      type: "message",
-      message: {
-        text,
-        replyToId,
-      },
-    });
-  };
+  }, []);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0];
@@ -393,7 +183,7 @@ const Chats: FC = () => {
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
-            rqSearch();
+            // rqSearch();
           }}
           sx={{ mb: 2 }}
         />
@@ -490,7 +280,7 @@ const Chats: FC = () => {
 
             <Box
               component="form"
-              onSubmit={handleSendMessage}
+              onSubmit={() => {}}
               sx={{
                 display: "flex",
                 borderTop: "1px solid",
