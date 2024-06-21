@@ -68,6 +68,10 @@ export class ChatService {
   public isOpen() : boolean {
     return this.isLogin;
   }
+  
+  public getUserId() : string {
+    return this.userId;
+  }
 
   public async chatLogin() {
     console.log("chatLogin -- start");

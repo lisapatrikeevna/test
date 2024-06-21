@@ -153,17 +153,19 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
 
   const handleAddReaction = (messageId: number, reactionType: string) => {
     setMessages((messages) =>
-      messages.map((msg) =>
-        msg.id === messageId
+      messages.map((msg) => {
+        const uid : string = chatService?.getUserId()!;
+
+        return msg.id === messageId
           ? {
               ...msg,
               reactions: [
                 ...msg.reactions,
-                { type: reactionType, userId: myId.current },
+                { type: reactionType, userId: uid },
               ],
             }
-          : msg
-      )
+          : msg;
+      })
     );
   };
 
