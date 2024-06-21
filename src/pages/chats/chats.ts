@@ -1,8 +1,8 @@
 import { store } from "../../store/store";
 
 type ChatEvent = {
-  event: string;        // EVENT_TYPE see below
-  data: string;         // JSON payload
+  event: string; // EVENT_TYPE see below
+  data: string; // JSON payload
 };
 
 const CONST = {
@@ -54,7 +54,7 @@ const FIND_MODE = {
   default: 0,
 };
 
-class ChatService {
+export class ChatService {
   private isLocalDebug: boolean = false;
 
   private ws: WebSocket | null = null;
@@ -62,6 +62,8 @@ class ChatService {
   private isConnected: boolean = false;
   private isLogin: boolean = false;
   private eventsProcessed: number = 0;
+
+  constructor() {}
 
   public async chatLogin() {
     console.log("chatLogin -- start");
@@ -99,7 +101,11 @@ class ChatService {
     }
   }
 
-  private wsSend(ev: ChatEvent): void {
+  public shutdown() {
+    if (this.ws) this.ws.close();
+  }
+  
+  public wsSend(ev: ChatEvent): void {
     if (this.ws !== null) this.ws.send(JSON.stringify(ev));
   }
 
