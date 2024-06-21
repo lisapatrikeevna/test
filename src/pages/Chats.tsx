@@ -143,7 +143,7 @@ const Chats: FC = () => {
               ...msg,
               reactions: [
                 ...msg.reactions,
-                { type: reactionType, userId: myId.current },
+                { type: reactionType, userId: "" },
               ],
             }
           : msg
