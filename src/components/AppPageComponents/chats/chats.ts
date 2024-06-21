@@ -54,6 +54,17 @@ const FIND_MODE = {
   default: 0,
 };
 
+type Stats = {
+  eventsProcessed: number;
+};
+
+const stats: Stats = {
+  eventsProcessed: 0,
+};
+
+
+let chats : ChatService | null = null;
+
 export class ChatService {
   private isLocalDebug: boolean = false;
 
@@ -61,15 +72,16 @@ export class ChatService {
   private userId: string = "";
   private isConnected: boolean = false;
   private isLogin: boolean = false;
-  private eventsProcessed: number = 0;
 
-  constructor() {}
+  constructor() {
+    chats = this;
+  }
 
-  public isOpen() : boolean {
+  public isOpen(): boolean {
     return this.isLogin;
   }
-  
-  public getUserId() : string {
+
+  public getUserId(): string {
     return this.userId;
   }
 
@@ -112,7 +124,7 @@ export class ChatService {
   public shutdown() {
     if (this.ws) this.ws.close();
   }
-  
+
   public wsSend(ev: ChatEvent): void {
     if (this.ws !== null) this.ws.send(JSON.stringify(ev));
   }
@@ -135,10 +147,10 @@ export class ChatService {
   }
 
   private wsEvents(event: MessageEvent<any>): void {
-    ++this.eventsProcessed;
+    ++stats.eventsProcessed;
     const response: ChatEvent = JSON.parse(event.data);
 
-    console.log("#", this.eventsProcessed, "got", response);
+    console.log("event#", stats.eventsProcessed, "got", response);
 
     switch (response.event) {
       case EVENT_TYPE.error:
@@ -157,7 +169,7 @@ export class ChatService {
         this.isLogin = true;
         this.userId = response.data;
         console.log("My User ID:", this.userId);
-        this.chatMain();
+        chats?.testRequest();
         break;
 
       case EVENT_TYPE.echoReply:
@@ -176,7 +188,7 @@ export class ChatService {
     }
   }
 
-  private chatMain(): void {
+  public testRequest(): void {
     console.log("Started");
     // requestEcho("Hello!");
 
