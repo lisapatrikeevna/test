@@ -7,28 +7,37 @@ import {
   Modal,
   Menu,
   MenuItem,
-} from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import PhoneIcon from '@mui/icons-material/Phone';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import UserModalProfile from '../../pages/UserModalProfile';
-import VolumeOffIcon from '@mui/icons-material/VolumeOff';
-import Person2Icon from '@mui/icons-material/Person2';
-import VideoCallIcon from '@mui/icons-material/VideoCall';
-import SearchIcon from '@mui/icons-material/Search';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useEffect, useRef, useState, useCallback, MouseEvent, useMemo } from "react";
+} from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import KeyboardVoiceOutlinedIcon from "@mui/icons-material/KeyboardVoiceOutlined";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import PhoneIcon from "@mui/icons-material/Phone";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import UserModalProfile from "../../pages/UserModalProfile";
+import VolumeOffIcon from "@mui/icons-material/VolumeOff";
+import Person2Icon from "@mui/icons-material/Person2";
+import VideoCallIcon from "@mui/icons-material/VideoCall";
+import SearchIcon from "@mui/icons-material/Search";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  MouseEvent,
+  useMemo,
+} from "react";
 import { store } from "../../store/store";
 import linkifyHtml from "linkify-html";
 import { MessageList, Input } from "react-chat-elements";
-import ReactionSelector from '../../selectors/ReactionSelector';
-import { IMessage } from '../../types/types';
+import ReactionSelector from "../../selectors/ReactionSelector";
+import { IMessage } from "../../types/types";
 import "react-chat-elements/dist/main.css";
+
+import { ChatService, ChatEvent, EVENT_TYPE } from "./chats/chats";
 
 type UserType = {
   id: number;
@@ -71,160 +80,31 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
 
   const messageListRef = useRef(null);
   const [showReactionSelector, setShowReactionSelector] = useState(false);
-  const [selectedMessageId, setSelectedMessageId] = useState<number | null>(null);
-  const [replyingToMessage, setReplyingToMessage] = useState<IMessage | null>(null);
+  const [selectedMessageId, setSelectedMessageId] = useState<number | null>(
+    null
+  );
+  const [replyingToMessage, setReplyingToMessage] = useState<IMessage | null>(
+    null
+  );
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const myId = useRef("nobody");
-  const ws = useRef<WebSocket | null>(null);
-  const userId = useRef<string | null>(null);
-  const isLocalDebug = false;
-  const uid = "0000664d-bfe6-72fa-0000-c35dd09fbf9c";
-  const host = "ip85-215-241-41.pbiaas.com:8030";
-  const chatLoginURL = `http://${host}/NeoX-chat-open`;
-  const accessToken = store.getState().user.token;
-  const authToken = `Bearer ${accessToken}`;
-  const WS_URL = `ws://${host}/NeoX-chat/api/${accessToken}`;
-
-  const PAGE_SIZE = 32;
-
-  const EVENT_TYPE = useMemo(() => ({
-    hello: "hello",
-    error: "error",
-    find: "find",
-    found: "found",
-    echo: "echo",
-    echoReply: "echo-reply",
-    group: "group",
-    contact: "contact",
-    subscription: "subscription",
-    message: "message",
-    selectchat: "selectchat",
-    getcontacts: "getcontacts",
-    contactlist: "contactlist",
-  }), []);
-
-  const FIND_MODE = {
-    plainText: 0,
-    wholeWord: 1,
-    regexp: 2,
-    default: 0,
-  };
-
-  const requestFind = useCallback((text: string) => {
-    const request = {
-      find: text,
-      mode: FIND_MODE.default,
-      page: 0,
-      pageSize: PAGE_SIZE,
-    };
-
-    const requestEvent = {
-      event: EVENT_TYPE.find,
-      data: JSON.stringify(request),
-    };
-
-    ws.current?.send(JSON.stringify(requestEvent));
-  }, [EVENT_TYPE.find, FIND_MODE.default, PAGE_SIZE]);
-
-  const chatLogin = useCallback(async (success: () => void) => {
-    console.log("chatLogin -- start");
-    const response = isLocalDebug
-      ? await fetch(chatLoginURL, {
-          headers: {
-            "Content-Type": "application/json",
-            user_id: uid,
-            Authorization: authToken,
-          },
-        })
-      : await fetch(chatLoginURL, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: authToken,
-          },
-        });
-
-    console.log("Response:", response);
-
-    if (response.ok) {
-      success();
-    } else {
-      console.log(
-        `Login error, status: ${response.status}, statusText: ${response.statusText}, URL: ${response.url}`
-      );
-    }
-  }, [authToken, chatLoginURL, isLocalDebug]);
-
-  const chatMain = useCallback(() => {
-    console.log("Started");
-    requestFind("");
-  }, [requestFind]);
-
-  const wsSetup = useCallback(() => {
-    ws.current = new WebSocket(WS_URL);
-
-    ws.current.addEventListener("open", (event) => {
-      console.log("Connected to the WebSocket server", event);
-    });
-
-    ws.current.addEventListener("close", (event) => {
-      console.log("Disconnected from the WebSocket server", event);
-    });
-
-    ws.current.addEventListener("message", (event) => {
-      const response = JSON.parse(event.data);
-
-      console.log("got", response);
-
-      switch (response.event) {
-        case EVENT_TYPE.error: {
-          const reason = response.data;
-          console.log("Error:", reason);
-          break;
-        }
-        case EVENT_TYPE.found: {
-          const data = JSON.parse(response.data);
-          console.log("found", data);
-          break;
-        }
-        case EVENT_TYPE.hello: {
-          userId.current = response.data;
-          console.log("My User ID:", userId.current);
-          chatMain();
-          break;
-        }
-        case EVENT_TYPE.echoReply: {
-          const reply = response.data;
-          console.log("Echo reply:", reply);
-          break;
-        }
-        case EVENT_TYPE.contactlist: {
-          break;
-        }
-        case EVENT_TYPE.message: {
-          const message = JSON.parse(response.data);
-          setMessages((prevMessages) => [...prevMessages, message]);
-          break;
-        }
-        default:
-      }
-    });
-  }, [WS_URL, EVENT_TYPE, chatMain]);
+  // The Chat Service -- begin
+  const [chatService, setChatService] = useState<ChatService | null>(null);
 
   useEffect(() => {
-    console.log("useEffect - start");
-
-    chatLogin(wsSetup);
+    setChatService(new ChatService());
+    chatService?.chatLogin();
 
     return () => {
-      ws.current?.close();
+      chatService?.shutdown();
     };
-  }, [chatLogin, wsSetup]);
+  }, []);
+  // The Chat Service -- end
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (messageText && ws.current?.readyState === WebSocket.OPEN) {
+    if (messageText && chatService?.isOpen()) {
       const message = {
         id: messages.length + 1,
         text: messageText,
@@ -232,10 +112,12 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
         timestamp: new Date(),
         reactions: [],
       };
-      ws.current.send(JSON.stringify({
+
+      chatService?.wsSend({
         event: EVENT_TYPE.message,
         data: JSON.stringify(message),
-      }));
+      });
+
       setMessages((prevMessages) => [...prevMessages, message]);
       setMessageText("");
       setReplyingToMessage(null);
@@ -256,12 +138,15 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
           fileContent,
           reactions: [],
         };
-        ws.current?.send(JSON.stringify({
+
+        chatService?.wsSend({
           event: EVENT_TYPE.message,
           data: JSON.stringify(message),
-        }));
+        });
+
         setMessages((prevMessages) => [...prevMessages, message]);
       };
+
       reader.readAsDataURL(file);
     }
   };
@@ -282,19 +167,29 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     );
   };
 
-  const getReactionsSummary = (reactions: { type: string; userId: string }[]) => {
-    const reactionCounts = reactions.reduce((acc: Record<string, number>, reaction) => {
-      if (!acc[reaction.type]) {
-        acc[reaction.type] = 0;
-      }
-      acc[reaction.type]++;
-      return acc;
-    }, {});
+  const getReactionsSummary = (
+    reactions: { type: string; userId: string }[]
+  ) => {
+    const reactionCounts = reactions.reduce(
+      (acc: Record<string, number>, reaction) => {
+        if (!acc[reaction.type]) {
+          acc[reaction.type] = 0;
+        }
+        acc[reaction.type]++;
+        return acc;
+      },
+      {}
+    );
 
-    return Object.entries(reactionCounts).map(([type, count]) => `${type}: ${count}`).join(", ");
+    return Object.entries(reactionCounts)
+      .map(([type, count]) => `${type}: ${count}`)
+      .join(", ");
   };
 
-  const handleOpenMenu = (event: MouseEvent<HTMLButtonElement>, messageId: number) => {
+  const handleOpenMenu = (
+    event: MouseEvent<HTMLButtonElement>,
+    messageId: number
+  ) => {
     setSelectedMessageId(messageId);
     setAnchorEl(event.currentTarget);
   };
@@ -304,7 +199,9 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
   };
 
   const handleDeleteMessage = (messageId: number) => {
-    setMessages((prevMessages) => prevMessages.filter((msg) => msg.id !== messageId));
+    setMessages((prevMessages) =>
+      prevMessages.filter((msg) => msg.id !== messageId)
+    );
     handleCloseMenu();
   };
 
@@ -336,29 +233,29 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     <Stack
       direction="row"
       sx={{
-        width: '100%',
-        borderRadius: '5px',
-        height: '100%',
+        width: "100%",
+        borderRadius: "5px",
+        height: "100%",
       }}
     >
-      <Divider sx={{ color: 'black' }} />
+      <Divider sx={{ color: "black" }} />
       <Stack
         width="100%"
         padding={1}
-        sx={{ flexGrow: 1, position: 'relative' }}
+        sx={{ flexGrow: 1, position: "relative" }}
       >
         <Stack sx={{ flexGrow: 1 }}>
           <Stack
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              bgcolor: 'aqua',
-              position: 'absolute',
-              width: '100%',
-              zIndex: '100',
-              padding: '10px',
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              bgcolor: "aqua",
+              position: "absolute",
+              width: "100%",
+              zIndex: "100",
+              padding: "10px",
               top: 0,
               left: 0,
               right: 0,
@@ -366,16 +263,16 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
           >
             <Stack
               sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: '10px',
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "10px",
               }}
             >
               <ArrowBackIcon cursor="pointer" />
               <Typography
-                sx={{ cursor: 'pointer' }}
+                sx={{ cursor: "pointer" }}
                 onClick={handleUserProfileClick}
               >
                 {currentUser.name}
@@ -383,11 +280,11 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
             </Stack>
             <Stack
               sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: '10px',
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "10px",
               }}
             >
               <SearchOutlinedIcon cursor="pointer" />
@@ -410,10 +307,10 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
                 flexDirection="column"
                 gap={1}
                 sx={{
-                  position: 'absolute',
-                  padding: '15px',
-                  borderRadius: '3px',
-                  background: '#e0e0e0',
+                  position: "absolute",
+                  padding: "15px",
+                  borderRadius: "3px",
+                  background: "#e0e0e0",
                   top: modalPosition.top,
                   left: modalPosition.left,
                 }}
@@ -423,7 +320,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
                   alignItems="center"
                   spacing={2}
                   sx={{
-                    cursor: 'pointer',
+                    cursor: "pointer",
                   }}
                 >
                   <VolumeOffIcon />
@@ -434,7 +331,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
                   alignItems="center"
                   spacing={2}
                   sx={{
-                    cursor: 'pointer',
+                    cursor: "pointer",
                   }}
                 >
                   <Person2Icon />
@@ -445,7 +342,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
                   alignItems="center"
                   spacing={2}
                   sx={{
-                    cursor: 'pointer',
+                    cursor: "pointer",
                   }}
                 >
                   <VideoCallIcon />
@@ -456,7 +353,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
                   alignItems="center"
                   spacing={2}
                   sx={{
-                    cursor: 'pointer',
+                    cursor: "pointer",
                   }}
                 >
                   <SearchIcon />
@@ -467,7 +364,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
                   alignItems="center"
                   spacing={2}
                   sx={{
-                    cursor: 'pointer',
+                    cursor: "pointer",
                   }}
                 >
                   <DeleteIcon />
@@ -476,7 +373,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
               </Box>
             </Modal>
           </Stack>
-          <Stack sx={{ marginTop: '40px' }}>
+          <Stack sx={{ marginTop: "40px" }}>
             <MessageList
               referance={messageListRef}
               className="message-list"
@@ -553,23 +450,26 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
                 />
                 <label htmlFor="file-upload">
                   <IconButton color="primary" component="span">
-                    <AttachFileIcon style={{ color: '#1976d2' }} />
+                    <AttachFileIcon style={{ color: "#1976d2" }} />
                   </IconButton>
                 </label>
-                
               </>
             }
             rightButtons={
               <>
-              <IconButton color="primary">
+                <IconButton color="primary">
                   <SentimentSatisfiedAltIcon />
                 </IconButton>
                 <IconButton color="primary">
                   <KeyboardVoiceOutlinedIcon />
                 </IconButton>
-              <IconButton color="primary" onClick={handleSendMessage} title="Send">
-                <SendIcon />
-              </IconButton>
+                <IconButton
+                  color="primary"
+                  onClick={handleSendMessage}
+                  title="Send"
+                >
+                  <SendIcon />
+                </IconButton>
               </>
             }
           />

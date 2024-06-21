@@ -22,9 +22,6 @@ import {
 } from "react-chat-elements";
 import "react-chat-elements/dist/main.css";
 
-// chats module
-import { ChatService } from "./chats/chats";
-
 const Chats: FC = () => {
   const theme = useTheme();
   const [activeChat, setActiveChat] = useState<string | null>(null);
