@@ -98,7 +98,7 @@ const tiers = [
 
 
 const Pricing = () => {
-    const currentTheme = useTheme();
+    const theme = useTheme();
     const [isYearly, setIsYearly] = useState(false);
 
     const toggleYearly = () => {
@@ -122,7 +122,15 @@ const Pricing = () => {
     };
 
     return (
-        <>
+        <Box
+            id="Pricing"
+            sx={{
+                display: 'flex',
+                overflowY: 'auto',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column'
+            }}>
             <Toolbar sx={{ flexWrap: 'wrap' }}>
                 <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                     NeoXonline pricing
@@ -143,20 +151,19 @@ const Pricing = () => {
                     <Grid container spacing={4} flexDirection={'column'}>
                         {tiers.slice(0, 2).map((tier) => (
                             <Grid item key={tier.title}>
-                                <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', backgroundColor: currentTheme.palette.background.paper }}>
+                                <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', backgroundColor: theme.palette.background.paper }}>
                                     <CardHeader
                                         title={
                                             <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
                                                 <Typography variant="h6">{tier.title}</Typography>
                                                 {tier.title === 'Prime' && <StarIcon sx={{ ml: '5px' }} />}
                                             </Box>}
-                                        // subheader={tier.subheader}
+
                                         sx={{ textAlign: 'center', alignItems: 'flex-end', justifyContent: 'center',
-                                            backgroundColor: currentTheme.palette.primary.dark}}
-                                    />
+                                            backgroundColor: theme.palette.primary.dark}}/>
 
                                     <CardContent sx={{ flex: '1 0 auto' }}>
-                                        <Typography variant="h6" component="div" sx={{ color: currentTheme.palette.error.main }}>
+                                        <Typography variant="h6" component="div" sx={{ color: theme.palette.error.main }}>
                                             {(tier.title === 'Free' || tier.title === 'Enterprise'|| tier.title === 'Donate Us') ? <br /> : `€${calculateOldPrice(tier.oldPrice as number)}`}
                                             {(tier.title === 'Free' || tier.title === 'Enterprise'|| tier.title === 'Donate Us') ?
                                                 '':
@@ -166,7 +173,7 @@ const Pricing = () => {
                                                         position: 'absolute',
                                                         width: '60px',
                                                         height: '2px',
-                                                        backgroundColor: currentTheme.palette.error.main,
+                                                        backgroundColor: theme.palette.error.main,
                                                         transform: isYearly ?
                                                             'rotate(-15deg) translate(-60px, -0px)':
                                                             'rotate(-20deg) translate(-60px, -5px)',
@@ -206,7 +213,7 @@ const Pricing = () => {
 
                 {tiers.slice(2, 5).map((tier) => (
                     <Grid item key={tier.title} xs={12} sm={6} md={4} lg={4} xl={2}>
-                        <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', backgroundColor: currentTheme.palette.background.paper }}>
+                        <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', backgroundColor: theme.palette.background.paper }}>
                             <CardHeader
                                 title={
                                     <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
@@ -215,11 +222,11 @@ const Pricing = () => {
                                     </Box>}
                                 // subheader={tier.subheader}
                                 sx={{ textAlign: 'center', alignItems: 'flex-end', justifyContent: 'center',
-                                    backgroundColor: currentTheme.palette.primary.dark}}
+                                    backgroundColor: theme.palette.primary.dark}}
                             />
 
                             <CardContent sx={{ flex: '1 0 auto' }}>
-                                <Typography variant="h6" component="div" sx={{ color: currentTheme.palette.error.main }}>
+                                <Typography variant="h6" component="div" sx={{ color: theme.palette.error.main }}>
                                     {(tier.title === 'Free' || tier.title === 'Enterprise') ? <br /> : `€${calculateOldPrice(tier.oldPrice as number)}`}
                                     {(tier.title === 'Free' || tier.title === 'Enterprise') ?
                                         '':
@@ -229,7 +236,7 @@ const Pricing = () => {
                                                 position: 'absolute',
                                                 width: '60px',
                                                 height: '2px',
-                                                backgroundColor: currentTheme.palette.error.main,
+                                                backgroundColor: theme.palette.error.main,
                                                 transform: isYearly ?
                                                     'rotate(-15deg) translate(-60px, -0px)':
                                                     'rotate(-20deg) translate(-60px, -5px)',
@@ -269,7 +276,7 @@ const Pricing = () => {
                     <Grid container spacing={4} flexDirection={'column'}>
                         {tiers.slice(5, 7).map((tier) => (
                             <Grid item key={tier.title}>
-                                <Card variant="outlined" sx={{ minHeight: '10vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', backgroundColor: currentTheme.palette.background.paper }}>
+                                <Card variant="outlined" sx={{ minHeight: '10vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', backgroundColor: theme.palette.background.paper }}>
                                     <CardHeader
                                         title={
                                             <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
@@ -278,7 +285,7 @@ const Pricing = () => {
                                             </Box>}
                                         // subheader={tier.subheader}
                                         sx={{ textAlign: 'center', alignItems: 'flex-end', justifyContent: 'center',
-                                            backgroundColor: currentTheme.palette.primary.dark}}
+                                            backgroundColor: theme.palette.primary.dark}}
                                     />
 
                                     <CardContent sx={{ flex: '1 0 auto' }}>
@@ -303,7 +310,7 @@ const Pricing = () => {
                     </Grid>
                 </Grid>
             </Grid>
-        </>
+        </Box>
     );
 };
 
