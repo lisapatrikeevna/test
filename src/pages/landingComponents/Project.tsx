@@ -7,6 +7,7 @@ import Fon4 from '../../assets/Fon4.jpg';
 import Fon5 from '../../assets/Fon5.jpg';
 import Fon6 from '../../assets/Fon.jpg';
 import { text, title } from '../../configs/ProjectConfig';
+import {Box} from "@mui/system";
 
 const Project = () => {
     const theme = useTheme();
@@ -21,7 +22,15 @@ const Project = () => {
     };
 
     return (
-        <>
+        <Box
+            id="Project"
+            sx={{
+                height: '80vh',
+                justifyContent: 'center',
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'column'
+            }}>
             <Grid
                 container
                 columnSpacing={10}
@@ -63,7 +72,7 @@ const Project = () => {
                 onChange={handleChange}
                 style={{ marginTop: "16px", display: 'flex', justifyContent: 'center', alignItems: 'center'}}
             />
-        </>
+        </Box>
     );
 };
 
