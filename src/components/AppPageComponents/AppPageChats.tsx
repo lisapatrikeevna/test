@@ -26,18 +26,14 @@ import {
   useEffect,
   useRef,
   useState,
-  useCallback,
-  MouseEvent,
-  useMemo,
 } from "react";
-import { store } from "../../store/store";
 import linkifyHtml from "linkify-html";
 import { MessageList, Input } from "react-chat-elements";
 import ReactionSelector from "../../selectors/ReactionSelector";
 import { IMessage } from "../../types/types";
 import "react-chat-elements/dist/main.css";
 
-import { ChatService, ChatEvent, EVENT_TYPE } from "./chats/chats";
+import { ChatService, EVENT_TYPE } from "./chats/chats";
 
 type UserType = {
   id: number;
@@ -92,14 +88,14 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
   const [chatService, setChatService] = useState<ChatService | null>(null);
 
   useEffect(() => {
-    setChatService(new ChatService());
-    chatService?.chatLogin();
+    const newChatService = new ChatService();
+    setChatService(newChatService);
+    newChatService.chatLogin();
 
     return () => {
-      chatService?.shutdown();
+      newChatService.shutdown();
     };
   }, []);
-  // The Chat Service -- end
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,7 +109,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
         reactions: [],
       };
 
-      chatService?.wsSend({
+      chatService.wsSend({
         event: EVENT_TYPE.message,
         data: JSON.stringify(message),
       });
@@ -154,14 +150,14 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
   const handleAddReaction = (messageId: number, reactionType: string) => {
     setMessages((messages) =>
       messages.map((msg) => {
-        const uid : string = chatService?.getUserId()!;
+        const uid : string | undefined = chatService?.getUserId();
 
         return msg.id === messageId
           ? {
               ...msg,
               reactions: [
                 ...msg.reactions,
-                { type: reactionType, userId: uid },
+                { type: reactionType, userId: uid! },
               ],
             }
           : msg;
@@ -189,7 +185,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
   };
 
   const handleOpenMenu = (
-    event: MouseEvent<HTMLButtonElement>,
+    event: React.MouseEvent<HTMLButtonElement>,
     messageId: number
   ) => {
     setSelectedMessageId(messageId);
@@ -253,7 +249,6 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              // bgcolor: 'aqua',
               position: 'absolute',
               width: '100%',
               zIndex: '100',
@@ -348,7 +343,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
                   }}
                 >
                   <VideoCallIcon />
-                  <Typography>Videocall</Typography>
+                  <Typography>Video call</Typography>
                 </Stack>
                 <Stack
                   direction="row"
