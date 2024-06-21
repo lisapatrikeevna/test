@@ -5,7 +5,7 @@ import {deepmerge} from "@mui/utils";
 // Базовая тема
 const baseTheme = createTheme({
     shape: {
-        borderRadius: '10px',
+        borderRadius: 10,
     },
     spacing: (factor: number) => factor * 8,
     typography: {
