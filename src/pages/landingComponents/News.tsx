@@ -1,81 +1,128 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Box, Container, Grid, Typography } from "@mui/material";
-import NeuCard from "../../components/neumorphism/card/NeuCard";
-import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
-import NeuCardHeader from "../../components/neumorphism/card/NeuCardHeader";
-import NeuButton from "../../components/neumorphism/button/NeuButton";
-import useOnScreen from "../../components/hooks/useOnScreen.ts";
+import React, { useEffect, useRef } from "react";
+import {
+    Box,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    Container,
+    Typography,
+    useTheme
+} from "@mui/material";
 import { news } from '../../configs/newsConfig';
 
-interface NewsProps {
-    onReadMoreClick: (id: string) => void;
-}
-
-const News: React.FC<NewsProps> = ({ onReadMoreClick }) => {
-    const [visibleCards, setVisibleCards] = useState<number[]>([]);
+const News = () => {
+    const scrollRef = useRef<HTMLDivElement | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const isVisible = useOnScreen(containerRef);
+
+    const theme = useTheme();
+
+    const onReadMoreClick = (id: string) => () => {
+        console.log('Read more clicked', id);
+    }
 
     useEffect(() => {
-        let timer: number | undefined;
+        if (scrollRef.current && containerRef.current) {
+            const container = scrollRef.current;
+            const handleScroll = () => {
+                const children = container.children;
+                const screenCenter = window.innerWidth / 2;
 
-        if (isVisible && visibleCards.length < news.length) {
-            timer = window.setTimeout(() => {
-                setVisibleCards((prev) => [...prev, prev.length]);
-            }, 150);
-        } else if (!isVisible && visibleCards.length !== 0) {
-            setVisibleCards([]);
+                Array.from(children).forEach((child: Element) => {
+                    const rect = child.getBoundingClientRect();
+                    const childCenter = rect.left + rect.width / 2;
+                    const distanceFromCenter = Math.abs(screenCenter - childCenter);
+                    const maxDistance = screenCenter;
+                    const scale = Math.max(0.6, 0.95 - distanceFromCenter / maxDistance);
+                    const opacity = Math.max(0 , 1 - (distanceFromCenter-300) / (maxDistance/1.7));
+                    (child as HTMLElement).style.transform = `scale(${scale})`;
+                    (child as HTMLElement).style.opacity = `${opacity}`;
+                });
+            };
+
+            const animationInterval = setInterval(() => {
+                if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+                    container.scrollLeft = 0;
+                } else {
+                    container.scrollLeft += 1;
+                }
+                handleScroll();
+            }, 20);
+
+            handleScroll(); // Initialize on mount
+
+            return () => clearInterval(animationInterval);
         }
-
-        return () => clearTimeout(timer);
-    }, [isVisible, visibleCards.length]);
+    }, []);
 
     return (
-        <Container ref={containerRef}>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-                {/* <Typography variant="h4" sx={{ paddingBottom: "1.2vw" }}>
-                  News
-                </Typography> */}
-            </Box>
-            <Grid container spacing={2}>
-                {news.map((item, index) => (
-                    <Grid item key={index} xs={6} md={4}>
-                        <NeuCard
-                            in={visibleCards.includes(index)}
-                            elevation={3}
-                            rounded
+        <Container
+            maxWidth={false}
+            sx={{
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+            }}
+            ref={containerRef}>
+            <Box
+                ref={scrollRef}
+                sx={{
+                    display: 'flex',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    willChange: 'transform',
+                }}
+            >
+                {[...news, ...news, ...news].map((item, index) => (
+
+                    <Box
+                        key={index}
+                        sx={{
+                            display: 'inline-block',
+                            transition: 'transform 0.3s, opacity 0.3s',
+                            width: '600px',
+                            height: '600px'
+                        }}
+                    >
+                        <Card
                             sx={{
-                                padding: "0",
-                                margin: "0.8vw",
                                 display: "flex",
                                 flexDirection: "column",
-                                alignItems: 'start'
+                                alignItems: 'start',
+                                height: 'auto',
+                                width: '400px',
+                                marginX: theme.spacing(-5),
                             }}
                         >
-                            <NeuCardHeader title={<Typography variant="h4">{item.title}</Typography>} sx={{ pb: 0}} />
-                            <NeuCardContent>
+                            <CardHeader
+                                title={
+                                    <Typography variant="h4">
+                                        {item.title}
+                                    </Typography>}
+                                sx={{ backgroundColor: theme.palette.primary.dark, width: '100%' }}
+                            />
+                            <CardContent sx={{ flex: 1 }}>
                                 <Box>
                                     <Typography
                                         variant="body1"
                                         color="text.secondary"
-                                        sx={{ flexGrow: 1, marginBottom: '10px'}}
+                                        sx={{ marginBottom: '10px', whiteSpace: 'pre-line' }}
                                     >
                                         {item.content}
                                     </Typography>
-                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                        <NeuButton
-                                            onClick={() => onReadMoreClick(item.id)}
-                                            rounded
-                                        >
-                                            Read more
-                                        </NeuButton>
-                                    </Box>
+
                                 </Box>
-                            </NeuCardContent>
-                        </NeuCard>
-                    </Grid>
+                            </CardContent>
+                            <CardActions sx={{ mt: 'auto' }} onClick={() => onReadMoreClick(item.id)}>
+                                <Button variant='outlined' size='small' color='inherit'>Read more</Button>
+                            </CardActions>
+                        </Card>
+                    </Box>
                 ))}
-            </Grid>
+            </Box>
         </Container>
     );
 };

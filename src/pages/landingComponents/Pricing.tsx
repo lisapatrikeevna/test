@@ -7,22 +7,34 @@ import {
 import { useTheme } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/StarBorder';
 
-const tiers = [
+interface Tier {
+    title: string;
+    subheader: string;
+    price: number;
+    oldPrice?: number;
+    description: string[];
+    buttonText: string;
+    buttonVariant: 'text' | 'outlined' | 'contained';
+    buttonAction: () => void;
+}
+
+const tiers: Tier[] = [
     {
         title: 'Free',
+        subheader: '',
         price: 0,
         description: [
             'Access to chats.',
             'Access to videos.',
             'Access to conferences.',
-            // 'Access to calendar.',
-            // 'Access to notes.'
         ],
         buttonText: 'Sign up for free',
         buttonVariant: 'outlined',
+        buttonAction: () => { console.log('Free tier selected'); } // todo add link registration
     },
     {
         title: 'Donate Us',
+        subheader: '',
         price: 0,
         oldPrice: 0,
         description: [
@@ -30,9 +42,11 @@ const tiers = [
         ],
         buttonText: 'Donate',
         buttonVariant: 'outlined',
+        buttonAction: () => window.open('https://checkout.revolut.com/payment-link/27a3d78a-db95-4d93-b2be-06b72488adb8', '_blank')
     },
     {
         title: 'Basic',
+        subheader: '',
         price: 11.99,
         oldPrice: 17.99,
         description: [
@@ -43,7 +57,8 @@ const tiers = [
             'Ability to start a group conference.'
         ],
         buttonText: 'Get started',
-        buttonVariant: '',
+        buttonVariant: 'contained',
+        buttonAction: () => { console.log('Basic tier selected'); } // todo add link registration
     },
     {
         title: 'Prime',
@@ -58,10 +73,12 @@ const tiers = [
             'Ability to start a group conference.',
         ],
         buttonText: 'Get started',
-        buttonVariant: '',
+        buttonVariant: 'contained',
+        buttonAction: () => { console.log('Prime tier selected'); } // todo add link registration
     },
     {
         title: 'Business',
+        subheader: '',
         price: 31.99,
         oldPrice: 41.99,
         description: [
@@ -72,10 +89,12 @@ const tiers = [
             'Ability to start a group conference.',
         ],
         buttonText: 'Get started',
-        buttonVariant: '',
+        buttonVariant: 'contained',
+        buttonAction: () => { console.log('Business tier selected'); } // todo add link registration
     },
     {
         title: 'Enterprise',
+        subheader: '',
         price: 0,
         oldPrice: 0,
         description: [
@@ -83,9 +102,11 @@ const tiers = [
         ],
         buttonText: 'Contact us',
         buttonVariant: 'outlined',
+        buttonAction: () => { console.log('Enterprise tier selected'); } // todo add link registration
     },
     {
         title: 'Custom',
+        subheader: '',
         price: 0,
         oldPrice: 0,
         description: [
@@ -93,9 +114,9 @@ const tiers = [
         ],
         buttonText: 'Constructor',
         buttonVariant: 'outlined',
+        buttonAction: () => { console.log('Custom tier selected'); } // todo add link registration
     },
 ];
-
 
 const Pricing = () => {
     const theme = useTheme();
@@ -132,8 +153,8 @@ const Pricing = () => {
                 flexDirection: 'column'
             }}>
             <Toolbar sx={{ flexWrap: 'wrap' }}>
-                <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                    NeoXonline pricing
+                <Typography variant="h4" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+                    Select a payment period:
                 </Typography>
                 <FormControlLabel
                     control={<Switch checked={isYearly} onChange={toggleYearly} />}
@@ -202,7 +223,7 @@ const Pricing = () => {
                                         </Box>
                                     </CardContent>
 
-                                    <CardActions sx={{ mt: 'auto' }}>
+                                    <CardActions sx={{ mt: 'auto' }} onClick={tier.buttonAction}>
                                         <Button variant='outlined' size='small' color='inherit'>{tier.buttonText}</Button>
                                     </CardActions>
                                 </Card>
@@ -226,11 +247,12 @@ const Pricing = () => {
                             />
 
                             <CardContent sx={{ flex: '1 0 auto' }}>
-                                <Typography variant="h6" component="div" sx={{ color: theme.palette.error.main }}>
+                                <Typography variant="h6" component="div" sx={{ color: theme.palette.error.main, textDecoration: 'line-through' }}>
                                     {(tier.title === 'Free' || tier.title === 'Enterprise') ? <br /> : `€${calculateOldPrice(tier.oldPrice as number)}`}
                                     {(tier.title === 'Free' || tier.title === 'Enterprise') ?
-                                        '':
-                                        <Box
+                                        '': ''
+                                        // todo fix visual alternative diagonal line line-through
+                                        /*<Box
                                             component="span"
                                             sx={{
                                                 position: 'absolute',
@@ -241,7 +263,7 @@ const Pricing = () => {
                                                     'rotate(-15deg) translate(-60px, -0px)':
                                                     'rotate(-20deg) translate(-60px, -5px)',
                                             }}
-                                        />}
+                                        />*/}
                                 </Typography>
 
                                 <Box sx={{display: 'flex', flexDirection:'row', alignItems:'flex-end'}}>
@@ -265,7 +287,7 @@ const Pricing = () => {
                                 </Box>
                             </CardContent>
 
-                            <CardActions sx={{ mt: 'auto' }}>
+                            <CardActions sx={{ mt: 'auto' }} onClick={tier.buttonAction}>
                                 <Button variant='outlined' size='small' color='inherit'>{tier.buttonText}</Button>
                             </CardActions>
                         </Card>
@@ -301,7 +323,7 @@ const Pricing = () => {
                                         </Box>
                                     </CardContent>
 
-                                    <CardActions sx={{ mt: 'auto' }}>
+                                    <CardActions sx={{ mt: 'auto' }} onClick={tier.buttonAction}>
                                         <Button variant='outlined' size='small' color='inherit'>{tier.buttonText}</Button>
                                     </CardActions>
                                 </Card>
