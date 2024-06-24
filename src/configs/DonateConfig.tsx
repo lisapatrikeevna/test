@@ -38,12 +38,8 @@ export const cardsData = [
         email: "incomgrp@outlook.com"
     },
     {
-        title: "Binance",
+        title: "Binance / Paypal",
         titleImage: BinanceLogo, // Add image URL here
         email: "incomgrp@outlook.com"
     },
-    {
-        title: "Fixed 4.99€ donation",
-        link: "https://checkout.revolut.com/payment-link/a8d90880-6d89-46d8-96f0-a1d71e6e4fcb"
-    }
 ];

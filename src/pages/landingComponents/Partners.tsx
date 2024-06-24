@@ -66,7 +66,7 @@ const Partners: React.FC = memo(() => {
                     container.scrollLeft += 1;
                 }
                 handleScroll();
-            }, 20);
+            }, 30);
 
             handleScroll(); // Initialize on mount
 
