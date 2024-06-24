@@ -6,7 +6,6 @@ import NeuCardContent from "../../components/neumorphism/card/NeuCardContent";
 import NeuCardHeader from "../../components/neumorphism/card/NeuCardHeader";
 import useOnScreen from "../../components/hooks/useOnScreen";
 import { cardsData } from '../../configs/DonateConfig';
-import NeuButton from "../../components/neumorphism/button/NeuButton.tsx";
 
 const copyToClipboard = (text: string) => {
     // Finding ": " in text
@@ -22,11 +21,6 @@ const copyToClipboard = (text: string) => {
         navigator.clipboard.writeText(text);
     }
 };
-const checkAnswer = () => {
-    const url = 'https://checkout.revolut.com/payment-link/27a3d78a-db95-4d93-b2be-06b72488adb8'; // Укажите здесь нужную вам ссылку
-    window.open(url, '_blank', 'noopener,noreferrer');
-};
-
 
 const Donate: React.FC = () => {
     const [visibleCards, setVisibleCards] = useState<number[]>([]);
@@ -49,11 +43,6 @@ const Donate: React.FC = () => {
 
     return (
         <Container sx={{  display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
-            {/*<Box sx={{ display: "flex", justifyContent: "center", mb: 2, flexDirection: 'column' }}>*/}
-            {/*    <Typography variant="h4" sx={{ paddingBottom: "20px" }}>*/}
-            {/*        Donates*/}
-            {/*    </Typography>*/}
-            {/*</Box>*/}
             <Box sx={{ paddingLeft: '1vw' }}>
                 <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1.2vw" }}>
                     Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.
@@ -155,24 +144,11 @@ const Donate: React.FC = () => {
                                         </IconButton>
                                     </Box>
                                 )}
-                                {card.link && (
-                                    <Box sx={{}}>
-                                        <NeuButton rounded sx={{ color: 'var(--text)', backgroundColor: 'var(--body)', fontSize: '125%' }}
-                                                    onClick={checkAnswer}>
-                                            Support Us
-                                        </NeuButton>
-                                    </Box>
-                                )}
                             </NeuCardContent>
                         </NeuCard>
                     </Grid>
                 ))}
             </Grid>
-            {/*<Box sx={{ paddingLeft: '0.5vw' }}>*/}
-            {/*    <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1vw" }}>*/}
-            {/*        Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.*/}
-            {/*    </Typography>*/}
-            {/*</Box>*/}
         </Container>
     );
 };

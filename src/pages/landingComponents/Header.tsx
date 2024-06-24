@@ -90,7 +90,7 @@ const Header: React.FC = () => {
       transition: '0.5s',
       // borderBottomRightRadius: '25px',
       // borderBottomLeftRadius: '25px',
-      overflow: 'auto'
+      overflowY: 'hidden'
     }}>
       <IconButton sx={{ display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none', '@media (max-width: 1280px)': { display: 'flex' } } }} onClick={handleDrawerToggle}>
         <MenuIcon sx={{ width: '32px', height: '32px' }}/>

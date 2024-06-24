@@ -11,10 +11,11 @@ import {RenderValuesCentralComponent} from "../AppPage.tsx";
 
 interface ChannelPageProps {
     userId: string | undefined;
+    panelWidth: number;
     changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
 }
 
-const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => {
+const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent, panelWidth }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [bannerLoaded, setBannerLoaded] = useState(false);
     const [avatarLoaded, setAvatarLoaded] = useState(false);
@@ -27,6 +28,8 @@ const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => 
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const currentWidth = window.innerWidth * (panelWidth / 100) - (65 * panelWidth/100);
 
     return (
         <Grid container spacing={2} justifyContent="center" sx={{ maxWidth: '1200px', margin: '0 auto', position: "relative" }}>
@@ -60,7 +63,7 @@ const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => 
                 </Box>
 
                 {/*Channel Info*/}
-                <Box sx={{flexDirection: 'column'}}>
+                <Box sx={{flexDirection: 'column', width: `${currentWidth}px`}}>
                     <Box component="section" sx={{ px: 2, pt: 2, display: 'flex', alignItems: 'flex-start' }}>
                         {!avatarLoaded && <Skeleton variant="circular" width={120} height={120} sx={{ borderRadius: "50%", mr: 2, mt: 0 }} />}
                         <img
@@ -146,7 +149,11 @@ const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent }) => 
                 </Box>
             </Grid>
             <Grid item xs={12} sx={{ mt: 2 }}>
-                <VideoListHorizontal currentVideoId={videoId} changeRenderCentralComponent={changeRenderCentralComponent} />
+
+                <VideoListHorizontal
+                    currentVideoId={videoId}
+                    panelWidth={panelWidth}
+                    changeRenderCentralComponent={changeRenderCentralComponent} />
             </Grid>
         </Grid>
     );

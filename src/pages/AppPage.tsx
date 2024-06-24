@@ -298,12 +298,14 @@ const AppPage = () => {
                         {renderValuesCentralComponent === 'videochannel' && (
                             <ChannelPage
                                 userId={userId}
+                                panelWidth={centralPanelWidth}
                                 changeRenderCentralComponent={changeRenderCentralComponent}
                             />
                         )}
                         {renderValuesCentralComponent === 'videopage' && (
                             <VideoPage
                                 videoId={selectedVideoId}
+                                panelWidth={centralPanelWidth}
                                 changeRenderCentralComponent={changeRenderCentralComponent}
                             />
                         )}
