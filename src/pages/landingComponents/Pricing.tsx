@@ -287,7 +287,7 @@ const Pricing = () => {
                                 </Box>
                             </CardContent>
 
-                            <CardActions sx={{ mt: 'auto' }}>
+                            <CardActions sx={{ mt: 'auto' }} onClick={tier.buttonAction}>
                                 <Button variant='outlined' size='small' color='inherit'>{tier.buttonText}</Button>
                             </CardActions>
                         </Card>
@@ -323,7 +323,7 @@ const Pricing = () => {
                                         </Box>
                                     </CardContent>
 
-                                    <CardActions sx={{ mt: 'auto' }}>
+                                    <CardActions sx={{ mt: 'auto' }} onClick={tier.buttonAction}>
                                         <Button variant='outlined' size='small' color='inherit'>{tier.buttonText}</Button>
                                     </CardActions>
                                 </Card>
