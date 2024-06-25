@@ -100,7 +100,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (messageText && chatService?.isOpen()) {
+    if (messageText) {
       const message = {
         id: messages.length + 1,
         text: messageText,
@@ -109,10 +109,12 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
         reactions: [],
       };
 
-      chatService.wsSend({
-        event: EVENT_TYPE.message,
-        data: JSON.stringify(message),
-      });
+      if (chatService?.isOpen()) {
+        chatService.wsSend({
+          event: EVENT_TYPE.message,
+          data: JSON.stringify(message),
+        });
+      }
 
       setMessages((prevMessages) => [...prevMessages, message]);
       setMessageText("");
@@ -135,10 +137,12 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
           reactions: [],
         };
 
-        chatService?.wsSend({
-          event: EVENT_TYPE.message,
-          data: JSON.stringify(message),
-        });
+        if (chatService?.isOpen()) {
+          chatService.wsSend({
+            event: EVENT_TYPE.message,
+            data: JSON.stringify(message),
+          });
+        }
 
         setMessages((prevMessages) => [...prevMessages, message]);
       };
@@ -150,7 +154,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
   const handleAddReaction = (messageId: number, reactionType: string) => {
     setMessages((messages) =>
       messages.map((msg) => {
-        const uid : string | undefined = chatService?.getUserId();
+        const uid: string | undefined = chatService?.getUserId();
 
         return msg.id === messageId
           ? {
