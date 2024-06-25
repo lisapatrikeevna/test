@@ -95,7 +95,9 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
   useEffect(() => {
     const newChatService = new ChatService();
     setChatService(newChatService);
-    newChatService.chatLogin();
+    newChatService.chatLogin(() => {
+      console.log("Login OK");
+    });
 
     return () => {
       newChatService.shutdown();
