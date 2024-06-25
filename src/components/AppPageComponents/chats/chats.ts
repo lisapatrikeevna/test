@@ -278,4 +278,14 @@ export class ChatService {
     this.callBacks.put(cb, EVENT_TYPE.found);
     this.wsSend(requestEvent);
   }
+
+  public requestEcho(text: string, cb: CallBack) : void {
+    const request = {
+      event: EVENT_TYPE.echo,
+      data: text,
+    };
+
+    this.onEchoReply(cb);
+    this.wsSend(request);
+  };
 }
