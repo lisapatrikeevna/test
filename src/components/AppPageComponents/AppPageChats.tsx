@@ -35,17 +35,21 @@ import "react-chat-elements/dist/main.css";
 
 import { ChatService, EVENT_TYPE } from "./chats/chats";
 
+// Define the type for user data
 type UserType = {
   id: number;
   img: string;
   name: string;
 };
 
+// Define the type for the component's props
 type AppPageChatsProps = {
   currentUser: UserType | null;
 };
 
+// Define the main component
 const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
+  // Define various state variables
   const [openUserProfileModal, setOpenUserProfileModal] = useState(false);
   const [isOpenChatsModal, setIsOpenChatsModal] = useState(false);
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
@@ -74,6 +78,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     },
   ]);
 
+  // Ref for the message list
   const messageListRef = useRef(null);
   const [showReactionSelector, setShowReactionSelector] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState<number | null>(
@@ -84,7 +89,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
   );
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  // The Chat Service -- begin
+  // Set up the chat service and manage its lifecycle
   const [chatService, setChatService] = useState<ChatService | null>(null);
 
   useEffect(() => {
@@ -97,6 +102,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     };
   }, []);
 
+  // Handle sending a message
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -122,6 +128,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     }
   };
 
+  // Handle file upload
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0];
     if (file) {
@@ -151,6 +158,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     }
   };
 
+  // Handle adding a reaction to a message
   const handleAddReaction = (messageId: number, reactionType: string) => {
     setMessages((messages) =>
       messages.map((msg) => {
@@ -169,6 +177,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     );
   };
 
+  // Get a summary of reactions for a message
   const getReactionsSummary = (
     reactions: { type: string; userId: string }[]
   ) => {
@@ -188,6 +197,7 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
       .join(", ");
   };
 
+  // Handle opening the menu for a message
   const handleOpenMenu = (
     event: React.MouseEvent<HTMLButtonElement>,
     messageId: number
@@ -196,10 +206,12 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // Handle closing the menu
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
 
+  // Handle deleting a message
   const handleDeleteMessage = (messageId: number) => {
     setMessages((prevMessages) =>
       prevMessages.filter((msg) => msg.id !== messageId)
@@ -207,10 +219,12 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     handleCloseMenu();
   };
 
+  // Handle replying to a message
   const handleReplyToMessage = (message: IMessage) => {
     setReplyingToMessage(message);
   };
 
+  // Handle opening the modal
   const handleModal = (event: React.MouseEvent<SVGSVGElement>) => {
     const target = event.currentTarget as unknown as HTMLElement;
     const iconPosition = target.getBoundingClientRect();
@@ -223,10 +237,12 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     setIsOpenChatsModal(true);
   };
 
+  // Handle opening the user profile modal
   const handleUserProfileClick = () => {
     setOpenUserProfileModal(true); // Open userProfile modal
   };
 
+  // If no user is selected, prompt to select a user
   if (!currentUser) {
     return <Stack>Select a user to start chatting</Stack>;
   }
@@ -429,7 +445,6 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
             />
           </Stack>
         </Stack>
-
         <Stack direction="row" alignItems="center">
           <Input
             placeholder="Write a message..."
@@ -476,7 +491,6 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
           />
         </Stack>
       </Stack>
-
       <Menu
         id="message-menu"
         anchorEl={anchorEl}
