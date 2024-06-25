@@ -445,7 +445,6 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
             />
           </Stack>
         </Stack>
-
         <Stack direction="row" alignItems="center">
           <Input
             placeholder="Write a message..."
@@ -492,7 +491,6 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
           />
         </Stack>
       </Stack>
-
       <Menu
         id="message-menu"
         anchorEl={anchorEl}
