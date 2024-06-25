@@ -14,6 +14,7 @@ export const useViewProgress = (videoDuration: number, videoId: string) => {
     const [hasCountedView, setHasCountedView] = useState(false);
     const userId = useSelector((state: RootState) => state.user.user?.userId);
 
+    //#region countView function if videoProgress happened, add View
     const countView = async () => {
         if (!userId) {
             console.error('No user ID found');
@@ -39,7 +40,9 @@ export const useViewProgress = (videoDuration: number, videoId: string) => {
             console.error('Error updating views:', error);
         }
     };
+    //#endregion countView function if videoProgress happened, add View
 
+    //#region using 20% of video watched or 5 minutes watched to count view
     const handleVideoProgress = useCallback((state: { playedSeconds: number }) => {
         console.log('Video progress:', state.playedSeconds);
         if (!hasCountedView) {
@@ -56,6 +59,7 @@ export const useViewProgress = (videoDuration: number, videoId: string) => {
             }
         }
     }, [videoDuration, hasCountedView, countView]);
+    //#endregion using 20% of video watched or 5 minutes watched to count view
 
     return {
         handleVideoProgress,

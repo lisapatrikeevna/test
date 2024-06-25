@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-
+//ToDo actual HomePage with news or video from your channels
 const AppPageCentralComponent = () => {
   return (
     <Box

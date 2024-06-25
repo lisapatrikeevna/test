@@ -5,7 +5,7 @@ interface IAvatar {
     size: 'small' | 'large';
 }
 
-export async function getUserAvatar(id: string, size: 'small' | 'large' = 'small'): Promise<IAvatar> {
+export async function getUserAvatarService(id: string, size: 'small' | 'large' = 'small'): Promise<IAvatar> {
     const response = await instance.get<IAvatar>(`/users/user/${id}/avatar?size=${size}`);
     return response.data;
 }

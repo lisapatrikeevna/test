@@ -1,4 +1,4 @@
-import {Avatar, Box, Button, Collapse, Divider, Stack, TextField} from '@mui/material';
+import {Avatar, Box, Button, Collapse, Divider, Stack} from '@mui/material';
 import {
     Panel,
     PanelGroup,
@@ -31,8 +31,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store.ts';
 import ChannelPage from './Videos/ChannelPage.tsx';
 import {data} from "../components/ProfileComponents/utils.ts";
-import NeuDivider from "../components/neumorphism/divider/NeuDivider.tsx";
 import NeuAvatar from "../components/neumorphism/avatar/NeuAvatar.tsx";
+import SearchField from "../components/AppPageComponents/SearchField.tsx";
 type UserType = {
     id: number;
     img: string;
@@ -57,6 +57,7 @@ export type RenderValuesCentralComponent =
 
 const AppPage = () => {
     const [isOpenSideBar, setIsOpenSideBar] = useState(false);
+    //renderValues options from rightSideBar
     const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
     const [renderValuesCentralComponent, setRenderValuesCentralComponent] =
         useState<RenderValuesCentralComponent>('home');
@@ -64,22 +65,32 @@ const AppPage = () => {
     const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
     const [, setIsChatPanelOpen] = useState(false);
     const theme = useTheme();
+
+    //#region panelControl
     const chatsPanelRef = useRef<ImperativePanelHandle>(null);
     const avatarAndNamesPanelRef = useRef<ImperativePanelHandle>(null);
     const rightPanel = useRef<ImperativePanelHandle>(null);
+    //#endregion panelControl
+
     const [showOptionsButton, setShowOptionsButton] = useState(false);
+
+    //#region userControl
     const userId = useSelector((state: RootState) => state.user.user?.userId);
     const [users] = useState(data);
     const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+    //#endregion userControl
 
+    //#region Finding size of panels, for correct collapsing and viewing them, based on minimum Pixels
     const avatarAndNamesMinSize = 260;
     const avatarAndNamesMinSizePercentage = (avatarAndNamesMinSize / window.innerWidth) * 100;
-
     const chatMinSize = 370;
     const chatMinSizePercentage = (chatMinSize / window.innerWidth) * 100;
+    //#endregion Finding size of panels, for correct collapsing and viewing them, based on minimum Pixels
 
+    //transfer panelWidth to other centralComponents
     const [centralPanelWidth, setCentralPanelWidth] = useState(window.innerWidth);
 
+    //#region toggleChatsPanel
     const toggleChatsPanel = () => {
         setIsChatPanelOpen((prev) => {
             const newIsOpen = !prev;
@@ -91,11 +102,13 @@ const AppPage = () => {
             return newIsOpen;
         });
     };
+    //#endregion toggleChatsPanel
 
     const openRightPanel = () => {
         rightPanel.current?.expand();
     };
 
+    //#region useEffect isOpenSideBar
     useEffect(() => {
         if (isOpenSideBar || isOpenMainSideBar) {
             setIsOverlayVisible(true);
@@ -106,6 +119,7 @@ const AppPage = () => {
             return () => clearTimeout(timeout);
         }
     }, [isOpenSideBar, isOpenMainSideBar]);
+    //#endregion useEffect isOpenSideBar
 
     function changeRender(value: RenderValues) {
         setRenderValues(value);
@@ -113,6 +127,7 @@ const AppPage = () => {
 
     const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
+    //#region changeRenderCentralComponent
     const changeRenderCentralComponent = (
         value: RenderValuesCentralComponent,
         videoId?: string
@@ -122,6 +137,7 @@ const AppPage = () => {
             setSelectedVideoId(videoId);
         }
     };
+    //#endregion changeRenderCentralComponent
 
     return (
         <Box
@@ -153,17 +169,18 @@ const AppPage = () => {
                     />
                 </Box>
                 <PanelGroup direction="horizontal" style={{ flex: 1 }}>
+                    {/*#region AppPageChatsComponent*/}
                     <Box
                         marginTop={2}
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: '20px',
-                            marginLeft: '5px',
-                            marginRight: '5px',
-
+                            gap: theme.spacing(3),
+                            marginLeft: theme.spacing(1),
+                            marginRight: theme.spacing(1),
                         }}
                     >
+                        {/*TODO Second Box with Avatars and search/name. When collapsed, show first box, when !collapsed shot 2nd box*/}
                         <Avatar
                             src={data[0].img}
                             alt="avatar"
@@ -203,14 +220,8 @@ const AppPage = () => {
                         collapsible={true}
                     >
                         <Stack direction="column" padding={1} sx={{ minWidth: '80px' }}>
-                            <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-
-                                <TextField size="small" label="Search" variant="outlined" />
-                            </Box>
-
-                            <NeuDivider
-                                baseColor={theme.palette.mode === 'dark' ? '#bebebe' : '#333333'}
-                                lightShadow={theme.palette.mode === 'dark' ? '#ffffff' : '#1a1a1a'}
+                            <SearchField onSearch={() => { /* your code here */ }}/>
+                            <Divider
                                 sx={{
                                     width: '100%',
                                     height: '2px',
@@ -227,7 +238,7 @@ const AppPage = () => {
 
                                 }}
                             >
-                                {/* Список пользователей */}
+                                {/* List of Users */}
                                 {users.map((elem) => (
                                     <Box
                                         key={elem.id}
@@ -257,6 +268,8 @@ const AppPage = () => {
                             background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
                         }}
                     />
+                    {/*#endregion AppPageChatsComponent*/}
+                    {/*#region AppPageChats*/}
                     <Panel
                         ref={chatsPanelRef}
                         minSize={chatMinSizePercentage}
@@ -268,23 +281,23 @@ const AppPage = () => {
                     >
                         <AppPageChats currentUser={currentUser} />
                     </Panel>
-
                     <PanelResizeHandle
                         style={{
                             width: '3px',
                             background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
                         }}
                     />
-
+                    {/*#endregion AppPageChats*/}
+                    {/*#region CentralComponents*/}
                     <Panel
                         onResize={(width) => setCentralPanelWidth(width)}
                         style={{
                             backgroundImage: `url(${Fon3})`,
-                            padding: '10px',
+                            padding: theme.spacing(1),
                             position: 'relative',
                             overflowY: 'auto',
                         }}
-                        defaultSize={40}
+                        defaultSize={50}
                     >
                         {renderValuesCentralComponent === 'mevipa' && (
                             <VideosMainPage
@@ -313,6 +326,7 @@ const AppPage = () => {
                         {renderValuesCentralComponent === 'home' && (
                             <AppPageCentralComponent />
                         )}
+                        {/*region OptionsPanel*/}
                         <Box
                             sx={{
                                 position: 'absolute',
@@ -343,6 +357,7 @@ const AppPage = () => {
                                 <AppPageButtonsComponent />
                             </Collapse>
                         </Box>
+                        {/*endregion OptionsPanel*/}
                     </Panel>
 
                     <PanelResizeHandle
@@ -351,9 +366,11 @@ const AppPage = () => {
                             background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
                         }}
                     />
+                    {/*endregion CentralComponents*/}
+                    {/*region RightSideBar*/}
                     <Panel
                         ref={rightPanel}
-                        defaultSize={15}
+                        defaultSize={25}
                         maxSize={50}
                         minSize={15}
                         collapsible
@@ -371,6 +388,7 @@ const AppPage = () => {
                             {renderValues === 'radio' && <AppPageRadioComponent />}
                         </Box>
                     </Panel>
+                    {/*endregion RightSideBar*/}
                 </PanelGroup>
                 {isOverlayVisible && (
                     <Box

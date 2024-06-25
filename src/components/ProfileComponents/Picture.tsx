@@ -1,6 +1,8 @@
 import { Stack } from '@mui/material';
 import { FC } from 'react';
 
+//TODO actual history of avatars
+
 interface PictureProps {
   img: string;
 }

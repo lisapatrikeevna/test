@@ -20,6 +20,7 @@ const UpdateVideoModal: FC<UpdateVideoModalProps> = ({ isOpen, onClose, video })
 
     if (!isOpen || !video) return null;
 
+    //#region updateVideo info on server
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
@@ -40,6 +41,7 @@ const UpdateVideoModal: FC<UpdateVideoModalProps> = ({ isOpen, onClose, video })
             console.error('Error updating video:', error);
         }
     };
+    //#endregion updateVideo info on server
 
     return (
         <Modal open={isOpen} onClose={onClose} sx={{

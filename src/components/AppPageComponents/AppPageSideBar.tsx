@@ -1,8 +1,9 @@
 // AppPageSideBar.tsx
-import { Box } from '@mui/material';
+import {Box, Button} from '@mui/material';
 import { RenderValues } from '../../pages/AppPage';
-import NeuButton from '../neumorphism/button/NeuButton';
 import { useTheme } from '@mui/material/styles';
+
+//TODO refactoring with MUI Drawer
 
 type Props = {
   isOpenSideBar: boolean;
@@ -42,33 +43,33 @@ const AppPageSideBar = ({
         backgroundColor: theme.palette.background.default,
       }}
     >
-      <NeuButton
+      <Button
         variant="contained"
         onClick={() => handleButtonClick('comments')}
       >
         Comments
-      </NeuButton>
-      <NeuButton variant="contained" onClick={() => handleButtonClick('chats')}>
+      </Button>
+      <Button variant="contained" onClick={() => handleButtonClick('chats')}>
         Chats
-      </NeuButton>
-      <NeuButton
+      </Button>
+      <Button
         variant="contained"
         onClick={() => handleButtonClick('videos')}
       >
         Search Video
-      </NeuButton>
-      <NeuButton
+      </Button>
+      <Button
         variant="contained"
         onClick={() => handleButtonClick('calendar')}
       >
         Calendar
-      </NeuButton>
-      <NeuButton variant="contained" onClick={() => handleButtonClick('audio')}>
+      </Button>
+      <Button variant="contained" onClick={() => handleButtonClick('audio')}>
         Music
-      </NeuButton>
-      <NeuButton variant="contained" onClick={() => handleButtonClick('radio')}>
+      </Button>
+      <Button variant="contained" onClick={() => handleButtonClick('radio')}>
         Radio
-      </NeuButton>
+      </Button>
     </Box>
   );
 };
