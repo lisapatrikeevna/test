@@ -24,6 +24,7 @@ export const CONST = {
     return `ws://${this.host}/NeoX-chat/api/${this.accessToken()}`;
   },
   pageSize: 32,
+  maxCallBacks: 64,
 };
 
 export const EVENT_TYPE = {
@@ -62,8 +63,46 @@ const stats: Stats = {
   eventsProcessed: 0,
 };
 
+interface HashTable<T> {
+  [key: string]: T;
+}
 
-let chats : ChatService | null = null;
+type CallBack = () => void;
+const NOP: CallBack = () => {};
+
+class CallBackManager {
+  private id: number;
+  private cbList: HashTable<CallBack>;
+
+  constructor() {
+    this.id = 0;
+    this.cbList = {};
+  }
+
+  public put(cb: CallBack, anId: string | null = null): string {
+    let key: string | null = anId;
+
+    if (key === null) {
+      ++this.id;
+      key = this.id.toString();
+    }
+
+    this.cbList[key] = cb;
+
+    return key;
+  }
+
+  public exec(id: string | null): void {
+    if (id === null) throw "The callback ID cannot be null";
+
+    const cb: CallBack = this.cbList[id];
+
+    delete this.cbList[id];
+    cb();
+  }
+}
+
+let chats: ChatService | null = null;
 
 export class ChatService {
   private isLocalDebug: boolean = false;
@@ -72,9 +111,11 @@ export class ChatService {
   private userId: string = "";
   private isConnected: boolean = false;
   private isLogin: boolean = false;
+  private callBacks: CallBackManager;
 
   constructor() {
     chats = this;
+    this.callBacks = new CallBackManager();
   }
 
   public isOpen(): boolean {
@@ -85,7 +126,7 @@ export class ChatService {
     return this.userId;
   }
 
-  public async chatLogin() {
+  public async chatLogin(cb: CallBack) {
     console.log("chatLogin -- start");
     const response = this.isLocalDebug
       ? await fetch(CONST.chatLoginURL(), {
@@ -113,6 +154,7 @@ export class ChatService {
       // console.log("The content is:", content);
       // ws = new WebSocket(WS_URL);
       // wsSetup();
+      this.callBacks.put(cb, CONST.accessToken());
       this.wsSetup();
     } else {
       console.log(
@@ -169,6 +211,7 @@ export class ChatService {
         this.isLogin = true;
         this.userId = response.data;
         console.log("My User ID:", this.userId);
+        this.callBacks.exec(CONST.accessToken());
         chats?.testRequest();
         break;
 
