@@ -22,11 +22,7 @@ import Person2Icon from "@mui/icons-material/Person2";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import linkifyHtml from "linkify-html";
 import { MessageList, Input } from "react-chat-elements";
 import ReactionSelector from "../../selectors/ReactionSelector";
@@ -94,9 +90,23 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
 
   useEffect(() => {
     const newChatService = new ChatService();
+
     setChatService(newChatService);
+
+    newChatService.onError((reason) => {
+      console.log("error:", reason);
+    });
+
+    newChatService.onEchoReply((response) => {
+      console.log("echo reply:", response);
+    });
+
     newChatService.chatLogin(() => {
       console.log("Login OK");
+
+      newChatService.requestFind("@", (items) => {
+        console.log("found:", items);
+      });
     });
 
     return () => {
@@ -267,14 +277,14 @@ const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
         <Stack sx={{ flexGrow: 1 }}>
           <Stack
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              position: 'absolute',
-              width: '100%',
-              zIndex: '100',
-              padding: '10px',
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              position: "absolute",
+              width: "100%",
+              zIndex: "100",
+              padding: "10px",
               top: 0,
               left: 0,
               right: 0,

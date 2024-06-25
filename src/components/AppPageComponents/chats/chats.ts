@@ -67,7 +67,7 @@ interface HashTable<T> {
   [key: string]: T;
 }
 
-type CallBack = () => void;
+type CallBack = (obj: object | null) => void;
 const NOP: CallBack = () => {};
 
 class CallBackManager {
@@ -92,13 +92,22 @@ class CallBackManager {
     return key;
   }
 
-  public exec(id: string | null): void {
+  public exec(id: string | null, data: string | null = null): void {
     if (id === null) throw "The callback ID cannot be null";
 
     const cb: CallBack = this.cbList[id];
 
-    delete this.cbList[id];
-    cb();
+    if (cb === undefined) {
+      console.log("Undefined callback for", id);
+
+      return;
+    }
+
+    // delete this.cbList[id];
+
+    const obj = data === null ? null : JSON.parse(data);
+
+    cb(obj);
   }
 }
 
@@ -124,6 +133,22 @@ export class ChatService {
 
   public getUserId(): string {
     return this.userId;
+  }
+
+  public onError(cb: CallBack): void {
+    this.callBacks.put(cb, EVENT_TYPE.error);
+  }
+
+  public onEchoReply(cb: CallBack): void {
+    this.callBacks.put(cb, EVENT_TYPE.echoReply);
+  }
+
+  public onContactList(cb: CallBack): void {
+    this.callBacks.put(cb, EVENT_TYPE.contactList);
+  }
+
+  public onMessage(cb: CallBack): void {
+    this.callBacks.put(cb, EVENT_TYPE.message);
   }
 
   public async chatLogin(cb: CallBack) {
@@ -154,7 +179,7 @@ export class ChatService {
       // console.log("The content is:", content);
       // ws = new WebSocket(WS_URL);
       // wsSetup();
-      this.callBacks.put(cb, CONST.accessToken());
+      this.callBacks.put(cb, EVENT_TYPE.hello);
       this.wsSetup();
     } else {
       console.log(
@@ -195,40 +220,16 @@ export class ChatService {
     console.log("event#", stats.eventsProcessed, "got", response);
 
     switch (response.event) {
-      case EVENT_TYPE.error:
-        const reason = response.data;
-
-        console.log("Error:", reason);
-        break;
-
-      case EVENT_TYPE.found:
-        const data = JSON.parse(response.data);
-
-        console.log("found", data);
-        break;
-
       case EVENT_TYPE.hello:
         this.isLogin = true;
         this.userId = response.data;
         console.log("My User ID:", this.userId);
-        this.callBacks.exec(CONST.accessToken());
-        chats?.testRequest();
-        break;
-
-      case EVENT_TYPE.echoReply:
-        const reply = response.data;
-
-        console.log("Echo reply:", reply);
-        break;
-
-      case EVENT_TYPE.contactList:
-        break;
-
-      case EVENT_TYPE.message:
         break;
 
       default:
     }
+
+    this.callBacks.exec(response.event, response.data);
   }
 
   public testRequest(): void {
@@ -255,11 +256,13 @@ export class ChatService {
 
     // requestFind("@");
     // requestFind("voo");
-    this.requestFind("");
+    this.requestFind("@", (items) => {
+      console.log("found:", items);
+    });
   }
 
   // find a user/group
-  public requestFind(text: string): void {
+  public requestFind(text: string, cb: CallBack): void {
     const request = {
       find: text,
       mode: FIND_MODE.default,
@@ -272,6 +275,7 @@ export class ChatService {
       data: JSON.stringify(request),
     };
 
+    this.callBacks.put(cb, EVENT_TYPE.found);
     this.wsSend(requestEvent);
   }
 }
