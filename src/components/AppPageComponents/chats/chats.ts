@@ -105,13 +105,20 @@ class CallBackManager {
 
     // delete this.cbList[id];
 
-    const obj = data === null ? null : JSON.parse(data);
+    let obj: object | null = null;
+
+    try {
+      if (data !== null) obj = JSON.parse(data);
+    } catch (e) {
+      console.log("JSON error:", e);
+    }
 
     cb(obj);
   }
 }
 
-let chats: ChatService | null = null;
+let chats: ChatService;
+let callBacks: CallBackManager;
 
 export class ChatService {
   private isLocalDebug: boolean = false;
@@ -120,11 +127,10 @@ export class ChatService {
   private userId: string = "";
   private isConnected: boolean = false;
   private isLogin: boolean = false;
-  private callBacks: CallBackManager;
 
   constructor() {
     chats = this;
-    this.callBacks = new CallBackManager();
+    callBacks = new CallBackManager();
   }
 
   public isOpen(): boolean {
@@ -136,19 +142,19 @@ export class ChatService {
   }
 
   public onError(cb: CallBack): void {
-    this.callBacks.put(cb, EVENT_TYPE.error);
+    callBacks.put(cb, EVENT_TYPE.error);
   }
 
   public onEchoReply(cb: CallBack): void {
-    this.callBacks.put(cb, EVENT_TYPE.echoReply);
+    callBacks.put(cb, EVENT_TYPE.echoReply);
   }
 
   public onContactList(cb: CallBack): void {
-    this.callBacks.put(cb, EVENT_TYPE.contactList);
+    callBacks.put(cb, EVENT_TYPE.contactList);
   }
 
   public onMessage(cb: CallBack): void {
-    this.callBacks.put(cb, EVENT_TYPE.message);
+    callBacks.put(cb, EVENT_TYPE.message);
   }
 
   public async chatLogin(cb: CallBack) {
@@ -179,7 +185,7 @@ export class ChatService {
       // console.log("The content is:", content);
       // ws = new WebSocket(WS_URL);
       // wsSetup();
-      this.callBacks.put(cb, EVENT_TYPE.hello);
+      callBacks.put(cb, EVENT_TYPE.hello);
       this.wsSetup();
     } else {
       console.log(
@@ -229,7 +235,7 @@ export class ChatService {
       default:
     }
 
-    this.callBacks.exec(response.event, response.data);
+    callBacks.exec(response.event, response.data);
   }
 
   public testRequest(): void {
@@ -275,11 +281,11 @@ export class ChatService {
       data: JSON.stringify(request),
     };
 
-    this.callBacks.put(cb, EVENT_TYPE.found);
+    callBacks.put(cb, EVENT_TYPE.found);
     this.wsSend(requestEvent);
   }
 
-  public requestEcho(text: string, cb: CallBack) : void {
+  public requestEcho(text: string, cb: CallBack): void {
     const request = {
       event: EVENT_TYPE.echo,
       data: text,
@@ -287,5 +293,5 @@ export class ChatService {
 
     this.onEchoReply(cb);
     this.wsSend(request);
-  };
+  }
 }
