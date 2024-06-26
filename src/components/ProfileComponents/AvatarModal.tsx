@@ -57,6 +57,7 @@ const AvatarModal = ({ none, name, lastname, userId }: Props) => {
                 isOpenPhotoModal={isOpenPhotoModal}
                 handleClickOutside={handleClickOutside}
                 handleClickInside={handleClickInside}
+                userId={userId || ''}
             />
             <UpdateAvatarModal
                 open={isUpdateAvatarModalOpen}
@@ -89,12 +90,12 @@ const AvatarModal = ({ none, name, lastname, userId }: Props) => {
                     <Box sx={{ position: 'relative' }}>
                         <Avatar
                             src={userAvatar || ''}
-                            alt="avatar"
                             sx={{
                                 width: 70,
                                 height: 70,
                                 cursor: 'pointer',
                                 position: 'relative',
+                                backgroundColor: userAvatar ? (userAvatar.startsWith('#') ? userAvatar : undefined) : undefined
                             }}
                             onClick={() => setIsOpenPhotoModal(true)}
                         />

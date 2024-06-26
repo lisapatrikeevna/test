@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import {  Outlet } from "react-router-dom";
 import { instance } from "../../api/axios.api.ts";
 import PreviewImage from "./PreviewImage.tsx";
-import { Grid, Card, CardContent, Typography, Box, Button } from "@mui/material";
-import { Contacts } from "@mui/icons-material";
+import {Grid, Card, CardContent, Typography, Box, Button, Avatar} from "@mui/material";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import VideoListHorizontalSkeleton from './VideoListHorizontalSkeleton.tsx';
 import { getAllUsers } from "../../services/userServices/getAllUsers.service.ts";
 import { RenderValuesCentralComponent } from "../../pages/AppPage.tsx";
+import { getUserAvatar } from "../getUserAvatar.tsx";
 
 export interface IVideo {
     id: string;
@@ -29,12 +29,14 @@ interface VideoListHorizontalProps {
 }
 
 const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoId, panelWidth, changeRenderCentralComponent }) => {
-   const [videos, setVideos] = useState<IVideo[]>([]);
+    const [videos, setVideos] = useState<IVideo[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [visibleCount, setVisibleCount] = useState(0);
     const [users, setUsers] = useState<{ [key: string]: string }>({}); // To store user data
     const currentWidth = window.innerWidth * (panelWidth / 100) - (65 * panelWidth/100);
+    const [userAvatar, setUserAvatar] = useState<string | null>(null);
+    const userId = videos[0]?.ownerId;
 
     //#region get info about one Video
     const fetchVideo = async (id: string) => {
@@ -93,7 +95,7 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
     };
     //#endregion get all Users
 
-    //Give the user some time to load the videos and users
+    //#region Give the user some time to load the videos and users
     useEffect(() => {
         const loadVideosAndUsers = async () => {
             setLoading(true);
@@ -103,7 +105,7 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
         const timer = setTimeout(loadVideosAndUsers, 500);
         return () => clearTimeout(timer);
     }, []);
-
+    //#endregion Give the user some time to load the videos and users
 
     //#region Sizes for adaptation
     //TODO check to simplify
@@ -113,6 +115,21 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
     const isLarge = useMediaQuery(`(${currentWidth}:1280px)`);
     const isXLarge = useMediaQuery(`(${currentWidth}:1600px)`);
     //#endregion Sizes for adaptation
+
+    //#region getting avatar of every user
+    useEffect(() => {
+        const fetchAvatar = async () => {
+            if (userId) {
+                const userAvatar = await getUserAvatar(userId);
+                if (typeof userAvatar === 'string') {
+                    setUserAvatar(userAvatar);
+                }
+            }
+        };
+
+        fetchAvatar();
+    }, [userId]);
+    //#endregion getting avatars of every user
 
     //Number of columns of videos, depends on size
     const columns = isXSmall ? 1 : isSmall ? 2 : isMedium ? 3 : isLarge ? 4 : isXLarge ? 5 : 6;
@@ -166,9 +183,16 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
                                         </Typography>
                                         {/*TODO Avatar*/}
                                         <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}> {/*Box for Avatar and AuthorName*/}
-                                            <Contacts /> {/*Avatar*/}
+                                            <Avatar
+                                                src={userAvatar || ''}
+                                                sx={{
+                                                    cursor: 'pointer',
+                                                    position: 'relative',
+                                                    backgroundColor: userAvatar ? (userAvatar.startsWith('#') ? userAvatar : undefined) : undefined
+                                                }}
+                                            />
                                             <Typography variant="caption" sx={{ fontSize: '14px' }}>
-                                                {users[video.ownerId] || 'Unknown User'}
+                                                {users[video.ownerId] || 'Deleted User'}
                                             </Typography>
                                         </Box>
                                         <Box style={{ display: "flex", flexDirection: "row", gap: "10px" }}> {/*Box for Views and Date*/}

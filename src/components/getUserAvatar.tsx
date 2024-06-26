@@ -1,6 +1,6 @@
 import { getUserAvatarService } from '../services/userServices/getUserAvatar.service.ts'; // Adjust the path as per your project structure
 
-interface IAvatar {
+export interface IAvatar {
     id: string;
 }
 

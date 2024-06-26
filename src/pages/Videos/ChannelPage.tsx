@@ -1,13 +1,15 @@
-import { FC, useState, MouseEvent } from 'react';
-import {Grid, Box, Typography, Link, Menu, MenuItem, Skeleton, Button} from '@mui/material';
+import React, {FC, useState, MouseEvent, useEffect} from 'react';
+import {Grid, Box, Typography, Link, Menu, MenuItem, Skeleton, Button, Avatar} from '@mui/material';
 import { grey } from '@mui/material/colors';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import banner from "../../assets/banner.jpg";
-import avatar from "../../assets/img.webp";
 import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal";
 import {RenderValuesCentralComponent} from "../AppPage.tsx";
+import {getUserAvatar} from "../../components/getUserAvatar.tsx";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store.ts";
 
 interface ChannelPageProps {
     userId: string | undefined;
@@ -18,8 +20,9 @@ interface ChannelPageProps {
 const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent, panelWidth }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [bannerLoaded, setBannerLoaded] = useState(false);
-    const [avatarLoaded, setAvatarLoaded] = useState(false);
     const videoId = '';
+    const [userAvatar, setUserAvatar] = useState<string | null>(null);
+    const userId = useSelector((state: RootState) => state.user.user?.userId);
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -30,6 +33,21 @@ const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent, panel
     };
 
     const currentWidth = window.innerWidth * (panelWidth / 100) - (65 * panelWidth/100);
+
+    //#region useEffect for fetching user avatar
+    useEffect(() => {
+        const fetchAvatar = async () => {
+            if (userId) {
+                const userAvatar = await getUserAvatar(userId);
+                if (typeof userAvatar === 'string') {
+                    setUserAvatar(userAvatar);
+                }
+            }
+        };
+
+        fetchAvatar();
+    }, [userId]);
+    //#endregion useEffect for fetching user avatar
 
     return (
         <Grid container spacing={2} justifyContent="center" sx={{ maxWidth: '1200px', margin: '0 auto', position: "relative" }}>
@@ -65,18 +83,15 @@ const ChannelPage: FC<ChannelPageProps> = ({ changeRenderCentralComponent, panel
                 {/*Channel Info*/}
                 <Box sx={{flexDirection: 'column', width: `${currentWidth}px`}}>
                     <Box component="section" sx={{ px: 2, pt: 2, display: 'flex', alignItems: 'flex-start' }}>
-                        {!avatarLoaded && <Skeleton variant="circular" width={120} height={120} sx={{ borderRadius: "50%", mr: 2, mt: 0 }} />}
-                        <img
-                            src={avatar}
-                            alt="Avatar"
-                            style={{
-                                width: "120px",
-                                height: "120px",
-                                borderRadius: "50%",
-                                objectFit: "cover",
-                                display: avatarLoaded ? 'block' : 'none'
+                        <Avatar
+                            src={userAvatar || ''}
+                            sx={{
+                                width: 120,
+                                height: 120,
+                                cursor: 'pointer',
+                                position: 'relative',
+                                backgroundColor: userAvatar ? (userAvatar.startsWith('#') ? userAvatar : undefined) : undefined
                             }}
-                            onLoad={() => setAvatarLoaded(true)}
                         />
                         <Box sx={{ flexGrow: 1, mt: 0, marginLeft: "10px" }}>  {/*Name,Subscribers,VideoCount,Description,Link,Video*/}
                             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>  {/*Name,Subscribers,VideoCount,Description,Link*/}

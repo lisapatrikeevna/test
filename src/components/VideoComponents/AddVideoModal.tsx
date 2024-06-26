@@ -1,102 +1,128 @@
-import { useState, FC } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useAppSelector} from '../../store/hooks.ts';
-import { Modal, Button, Box, Typography, CircularProgress } from '@mui/material';
+import { TextField, Button, Box, Typography } from '@mui/material';
 import { uploadVideo } from '../../services/videoServices/video.upload.service.ts';
-import { VideoData } from '../../pages/Videos/VideoEditPage.tsx';
+import Modal from "../Modal.tsx";
+import { useTheme } from '@mui/material/styles';
 
 interface AddVideoModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onVideoUploaded: (video: VideoData) => void;
 }
 
-//TODO убрать логику вызова edit так как система бэка пока не позволяет этим пользоваться
+const AddVideoModal: React.FC<AddVideoModalProps> = ({ isOpen, onClose }) => {
+    const [videoName, setVideoName] = useState('');
+    const [description, setDescription] = useState('');
+    const [video, setVideo] = useState<File | null>(null);
+    const [selectedVideoName, setSelectedVideoName] = useState<string | null>(null);
+    const theme = useTheme();
 
-const AddVideoModal: FC<AddVideoModalProps> = ({ isOpen, onClose, onVideoUploaded }) => {
-    const accessToken = useAppSelector(state => state.user.token.accessToken);
-    const [isUploading, setIsUploading] = useState(false);
-
+    useEffect(() => {
+        if (video) {
+            const reader = new FileReader();
+            reader.readAsDataURL(video);
+            reader.onloadend = () => {};
+        }
+    }, [video]);
 
     if (!isOpen) return null;
 
-    const handleVideoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedVideo = event.target.files?.[0];
-        if (!selectedVideo) {
-            toast.error('Please select a video.');
-            return;
-        }
-
-        setIsUploading(true);
-
-        // Generate the video name based on the current date and time
-        const videoName = selectedVideo.name;
-
-        // Add a new row with the loader
-        const newVideo: VideoData = {
-            id: generateId(),
-            videoName,
-            description: '',
-            contentType: selectedVideo.type,
-            previewUrl: '', // Empty for now
-            streamUrl: '',
-            ownerId: '',
-            videoInfo: {
-                usersAccessList: [],
-                isAccessibleToAll: false,
-                contentViewsByUsers: [],
-                contentLikesByUsers: [],
-                contentDislikesByUsers: [],
-            },
-        };
-        onVideoUploaded(newVideo);
-
-        // Update the video name and description if they have been changed
-        const formData = new FormData();
-        formData.append('videoName', videoName);
-        formData.append('description', '');
-        formData.append('file', selectedVideo);
-
-        if (accessToken) {
-            try {
-                const uploadedVideoUrl = await uploadVideo(formData);
-                if (typeof uploadedVideoUrl === 'string') {
-                    // Update the new video with the uploaded URL
-                    newVideo.previewUrl = uploadedVideoUrl;
-                    onVideoUploaded(newVideo);
-                    toast.success('Video uploaded successfully.');
-                }
-            } catch (error) {
-                toast.error('Error uploading video.');
-            } finally {
-                setIsUploading(false);
+    //#region send file with info to server
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        try {
+            if (!video) {
+                toast.error('Please select a video.');
+                return;
             }
+
+            const formData = new FormData();
+            formData.append('videoName', videoName);
+            formData.append('description', description);
+            formData.append('file', video);
+
+            await uploadVideo(formData);
+
+            toast.success('Video uploaded successfully.');
+            setSelectedVideoName(null); // reset selected video name after successful upload
+            onClose();
+        } catch (error) {
+            console.error('Error uploading video:', error);
         }
     };
+      //#endregion send file with info to server
+
+    //#region update info about video
+    const handleVideoChange = (selectedVideo: File) => {
+        setVideo(selectedVideo);
+        setVideoName(selectedVideo.name); // use name of file in videoName field
+        setSelectedVideoName(selectedVideo.name); // update selected video name
+    };
+    //endregion update info about video
+
 
     return (
-        <Modal open={isOpen} onClose={onClose} sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
-            <Box sx={{ width: 400, padding: 2, bgcolor: 'background.paper' }}>
-                <Typography variant="h6" color="text.primary" sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Modal isOpen={isOpen} onClose={onClose} width="500px">
+            <Box sx={{ height: '400px', width: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Box sx={{ padding: theme.spacing(3), width: '100%' }}>
+                <Typography variant="h4" >
                     Add Video
                 </Typography>
-                <Button
-                    variant="contained"
-                    component="label"
-                    disabled={isUploading}
-                >
-                    Upload Video
-                    <input
-                        type="file"
-                        hidden
-                        onChange={handleVideoUpload}
+                <form onSubmit={handleSubmit} autoComplete='off'>
+                    <TextField
+                        margin="normal"
+                        fullWidth
+                        label="Video Name"
+                        value={videoName}
+                        onChange={(e) => setVideoName(e.target.value)}
+                        InputLabelProps={{
+                            style: {
+                                color: theme.palette.text.primary,
+                            },
+                        }}
                     />
-                </Button>
-                {isUploading && <CircularProgress />}
+                    <TextField
+                        margin="normal"
+                        fullWidth
+                        label="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        InputLabelProps={{
+                            style: {
+                                color: theme.palette.text.primary,
+                            },
+                        }}
+                    />
+                    <Button
+                        variant="contained"
+                        style={{
+                            color: theme.palette.text.primary,
+                        }}
+                    >
+                        Upload Video
+                        <input
+                            type="file"
+                            hidden
+                            accept="video/*"
+                            onChange={(event) => {
+                                event.target.files && handleVideoChange(event.target.files[0]);
+                            }}
+                        />
+                    </Button>
+                    {selectedVideoName && <Typography variant="subtitle1">{selectedVideoName}</Typography>}
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        style={{
+                            color: theme.palette.text.primary,
+                        }}
+                    >
+                        Submit
+                    </Button>
+                </form>
+                </Box>
             </Box>
         </Modal>
     );
@@ -104,7 +130,3 @@ const AddVideoModal: FC<AddVideoModalProps> = ({ isOpen, onClose, onVideoUploade
 
 export default AddVideoModal;
 
-function generateId() {
-    // Replace this with your actual ID generation logic
-    return Math.random().toString(36).substr(2, 9);
-}

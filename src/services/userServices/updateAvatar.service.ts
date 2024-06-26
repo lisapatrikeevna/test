@@ -7,7 +7,7 @@ interface AvatarUpdateData {
 
 export async function updateAvatarService(userData: AvatarUpdateData): Promise<void> {
     try {
-        const response = await instance.put('/api/v1/users', userData, {
+        const response = await instance.put('/users', userData, {
             headers: {
                 'Content-Type': 'application/json',
             },
