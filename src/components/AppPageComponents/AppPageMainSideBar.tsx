@@ -9,7 +9,6 @@ import {
   Switch,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import avatar from '../../assets/img.webp';
 import {
   AccountCircleOutlined,
   AddCircleOutline,
@@ -33,7 +32,7 @@ import {
   newGroupPath,
   settingsPath,
 } from '../../configs/RouteConfig';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import MyModalProfile from '../../pages/MyModalProfile';
 import { useAppSelector } from '../../store/hooks';
 import { selectUsername } from '../../store/user/userSlice';
@@ -41,6 +40,9 @@ import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import { RenderValuesCentralComponent } from '../../pages/AppPage';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/system';
+import {getUserAvatar} from "../getUserAvatar.tsx";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store.ts";
 
 type Props = {
   isOpenMainSideBar: boolean;
@@ -57,6 +59,9 @@ const AppPageMainSideBar = ({
   const [isAccountsDropdownOpen, setIsAccountsDropdownOpen] = useState(false);
   const { theme, setTheme } = useCustomTheme();
   const themeMui = useTheme();
+  const [userAvatar, setUserAvatar] = useState<string | null>(null);
+  const userId = useSelector((state: RootState) => state.user.user?.userId);
+
 
   const handleAvatarClick = () => {
     setOpenProfileModal(true); // Open profile modal
@@ -73,6 +78,21 @@ const AppPageMainSideBar = ({
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
+
+//#region useEffect for fetching user avatar
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      if (userId) {
+        const userAvatar = await getUserAvatar(userId);
+        if (typeof userAvatar === 'string') {
+          setUserAvatar(userAvatar);
+        }
+      }
+    };
+
+    fetchAvatar();
+  }, [userId]);
+//#endregion useEffect for fetching user avatar
 
   return (
     <Box
@@ -100,13 +120,13 @@ const AppPageMainSideBar = ({
             }}
           >
             <Avatar
-              src={avatar}
-              alt="avatar"
+                src={userAvatar || ''}
               sx={{
                 width: 50,
                 height: 50,
                 cursor: 'pointer',
                 position: 'relative',
+                backgroundColor: userAvatar ? (userAvatar.startsWith('#') ? userAvatar : undefined) : undefined
               }}
               onClick={handleAvatarClick}
             />

@@ -33,6 +33,7 @@ import ChannelPage from './Videos/ChannelPage.tsx';
 import {data} from "../components/ProfileComponents/utils.ts";
 import NeuAvatar from "../components/neumorphism/avatar/NeuAvatar.tsx";
 import SearchField from "../components/AppPageComponents/SearchField.tsx";
+import {getUserAvatar} from "../components/getUserAvatar.tsx";
 type UserType = {
     id: number;
     img: string;
@@ -78,6 +79,7 @@ const AppPage = () => {
     const userId = useSelector((state: RootState) => state.user.user?.userId);
     const [users] = useState(data);
     const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+    const [userAvatar, setUserAvatar] = useState<string | null>(null);
     //#endregion userControl
 
     //#region Finding size of panels, for correct collapsing and viewing them, based on minimum Pixels
@@ -139,6 +141,21 @@ const AppPage = () => {
     };
     //#endregion changeRenderCentralComponent
 
+    //#region useEffect for fetching user avatar
+    useEffect(() => {
+        const fetchAvatar = async () => {
+            if (userId) {
+                const userAvatar = await getUserAvatar(userId);
+                if (typeof userAvatar === 'string') {
+                    setUserAvatar(userAvatar);
+                }
+            }
+        };
+
+        fetchAvatar();
+    }, [userId]);
+    //#endregion useEffect for fetching user avatar
+
     return (
         <Box
             display="flex"
@@ -182,13 +199,13 @@ const AppPage = () => {
                     >
                         {/*TODO Second Box with Avatars and search/name. When collapsed, show first box, when !collapsed shot 2nd box*/}
                         <Avatar
-                            src={data[0].img}
-                            alt="avatar"
+                            src={userAvatar || ''}
                             sx={{
                                 width: 50,
                                 height: 50,
                                 cursor: 'pointer',
                                 position: 'relative',
+                                backgroundColor: userAvatar ? (userAvatar.startsWith('#') ? userAvatar : undefined) : undefined
                             }}
                         />
                         {users.map((elem) => (
