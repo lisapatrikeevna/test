@@ -13,7 +13,6 @@ const AppPageCalendar = () => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          // alignItems: 'center',
           padding: 2,
           width: isSmallScreen ? '100%' : 'auto',
           '& .MuiPickerStaticWrapper-root': {

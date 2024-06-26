@@ -79,7 +79,6 @@ const AppPageHeader = ({
         zIndex: 1100,
         position: 'relative',
         padding: '0px 20px',
-        background: '#e0e0e0',
       }}
       style={{ backgroundColor: themeMui.palette.background.default }}
     >

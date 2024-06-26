@@ -11,6 +11,8 @@ interface AddVideoModalProps {
     onVideoUploaded: (video: VideoData) => void;
 }
 
+//TODO убрать логику вызова edit так как система бэка пока не позволяет этим пользоваться
+
 const AddVideoModal: FC<AddVideoModalProps> = ({ isOpen, onClose, onVideoUploaded }) => {
     const accessToken = useAppSelector(state => state.user.token.accessToken);
     const [isUploading, setIsUploading] = useState(false);

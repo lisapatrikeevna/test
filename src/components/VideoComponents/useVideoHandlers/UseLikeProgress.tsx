@@ -12,13 +12,15 @@ interface RootState {
 
 
 export const useLikeHandler = (videoId: string) => {
+
     const [likes, setLikes] = useState(0);
     const [hasLiked, setHasLiked] = useState(false);
     const [hasDisliked, setHasDisliked] = useState(false);
-    const userId = useSelector((state: RootState) => state.user.user?.userId);
     const [likeDataLoaded, setLikeDataLoaded] = useState(false);
 
+    const userId = useSelector((state: RootState) => state.user.user?.userId);
 
+    //#region useEffect fetchUserLikeStatus
     useEffect(() => {
         const fetchUserLikeStatus = async () => {
             try {
@@ -39,7 +41,9 @@ export const useLikeHandler = (videoId: string) => {
 
         fetchUserLikeStatus();
     }, [videoId, userId]);
+    //#endregion useEffect fetchUserLikeStatus
 
+    //#region useEffect usage of Like and upload this info
     const handleLike = async () => {
         if (!likeDataLoaded) {
             console.error('Like data is not loaded yet');
@@ -55,6 +59,8 @@ export const useLikeHandler = (videoId: string) => {
             const currentLikes = Array.isArray(response.data.videoInfo.contentLikesByUsers) ? response.data.videoInfo.contentLikesByUsers : [];
             const currentDislikes = Array.isArray(response.data.videoInfo.contentDislikesByUsers) ? response.data.videoInfo.contentDislikesByUsers : [];
             console.log("CurrentLikes",  currentLikes)
+
+            //using length of array as amount of likes, because we get array with id's
             let updatedLikes = [...currentLikes];
             let updatedDislikes = [...currentDislikes];
 
@@ -86,7 +92,9 @@ export const useLikeHandler = (videoId: string) => {
             console.error('Error updating likes:', error);
         }
     };
+    //#endregion useEffect usage of Like and upload this info
 
+    //#region useEffect usage of Dislike and upload this info
     const handleDislike = async () => {
         if (!likeDataLoaded) {
             console.error('Like data is not loaded yet');
@@ -103,6 +111,7 @@ export const useLikeHandler = (videoId: string) => {
             const currentLikes = Array.isArray(response.data.videoInfo.contentLikesByUsers) ? response.data.videoInfo.contentLikesByUsers : [];
             const currentDislikes = Array.isArray(response.data.videoInfo.contentDislikesByUsers) ? response.data.videoInfo.contentDislikesByUsers : [];
 
+            //using length of array as amount of Dislikes, because we get array with id's
             let updatedLikes = [...currentLikes];
             let updatedDislikes = [...currentDislikes];
 
@@ -140,7 +149,7 @@ export const useLikeHandler = (videoId: string) => {
             console.error('Error updating dislikes:', error);
         }
     };
-
+    //#endregion useEffect usage of Dislike and upload this info
     return {
         likes,
         setLikes,

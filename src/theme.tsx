@@ -2,7 +2,7 @@ import { createTheme, ThemeOptions } from '@mui/material/styles';
 import {grey} from "@mui/material/colors";
 import {deepmerge} from "@mui/utils";
 
-// Базовая тема
+// Base Theme
 const baseTheme = createTheme({
     shape: {
         borderRadius: 10,

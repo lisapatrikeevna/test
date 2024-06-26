@@ -36,6 +36,7 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
     const [users, setUsers] = useState<{ [key: string]: string }>({}); // To store user data
     const currentWidth = window.innerWidth * (panelWidth / 100) - (65 * panelWidth/100);
 
+    //#region get info about one Video
     const fetchVideo = async (id: string) => {
         try {
             const response = await instance.get(`video/${id}`, {
@@ -51,7 +52,9 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
             return null;
         }
     };
+    //#endregion get info about one Video
 
+    //#region get info about all Videos
     const fetchVideos = async (videoIds: string[] = []) => {
         if (videoIds.length === 0) {
             try {
@@ -73,7 +76,9 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
             setVideos(videos);
         }
     };
+    //#endregion get info about all Videos
 
+    //#region get all Users
     const fetchUsers = async () => {
         try {
             const usersData = await getAllUsers();
@@ -86,7 +91,9 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
             console.error(`Error fetching users:`, error);
         }
     };
+    //#endregion get all Users
 
+    //Give the user some time to load the videos and users
     useEffect(() => {
         const loadVideosAndUsers = async () => {
             setLoading(true);
@@ -98,15 +105,16 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
     }, []);
 
 
-    // Sizes for adaptation
+    //#region Sizes for adaptation
     //TODO check to simplify
     const isXSmall = useMediaQuery(`(${currentWidth}:400px)`);
     const isSmall = useMediaQuery(`(${currentWidth}:600px)`);
     const isMedium = useMediaQuery(`(${currentWidth}:960px)`);
     const isLarge = useMediaQuery(`(${currentWidth}:1280px)`);
     const isXLarge = useMediaQuery(`(${currentWidth}:1600px)`);
+    //#endregion Sizes for adaptation
 
-    // Number of columns of videos, depends on size
+    //Number of columns of videos, depends on size
     const columns = isXSmall ? 1 : isSmall ? 2 : isMedium ? 3 : isLarge ? 4 : isXLarge ? 5 : 6;
     const initialVisibleCount = columns * 2;
 
@@ -114,16 +122,17 @@ const VideoListHorizontal: React.FC<VideoListHorizontalProps> = ({ currentVideoI
         setVisibleCount(initialVisibleCount);
     }, [columns]);
 
+    //#region button loadMore that show us more Videos
     const handleLoadMore = async () => {
         setLoadingMore(true);
         await new Promise(resolve => setTimeout(resolve, 500)); // Simulating loading delay
         setVisibleCount((prevCount) => prevCount + columns * 2);
         setLoadingMore(false);
     };
+    //#endregion button loadMore that show us more Videos
 
     // Filter out the current video from the list
     const filteredVideos = videos.filter(video => video.id !== currentVideoId);
-
 
     return (
         <Box sx={{ padding: "10px"}}>

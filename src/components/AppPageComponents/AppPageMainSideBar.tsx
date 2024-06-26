@@ -47,6 +47,7 @@ type Props = {
   changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
 };
 
+//TODO refactoring with MUI Drawer
 const AppPageMainSideBar = ({
   isOpenMainSideBar,
   changeRenderCentralComponent,
@@ -60,7 +61,6 @@ const AppPageMainSideBar = ({
   const handleAvatarClick = () => {
     setOpenProfileModal(true); // Open profile modal
   };
-
 
   const ThemedListItemText = styled(ListItemText)(({ theme }) => ({
     color: theme.palette.mode === 'dark' ? '#fff' : '#000',

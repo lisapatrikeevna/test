@@ -43,7 +43,7 @@ import Modal from '../../components/Modal.tsx';
 import HandleShareOnFacebook from '../../components/VideoComponents/VideoShare/HandleShareOnFacebook.tsx';
 import HandleShareOnX from '../../components/VideoComponents/VideoShare/HandleShareOnX.tsx';
 import HandleShareOnLinkedIn from '../../components/VideoComponents/VideoShare/HandleShareOnLinkedIn.tsx';
-import { getUserAvatar } from '../../services/userServices/getUserAvatar.service';
+import { getUserAvatarService } from '../../services/userServices/getUserAvatar.service';
 import { getAllUsers } from '../../services/userServices/getAllUsers.service.ts';
 import { RenderValuesCentralComponent } from '../AppPage.tsx';
 
@@ -94,7 +94,7 @@ const VideoPage: React.FC<VideoPageProps> = ({
     const loadAvatar = async () => {
       if (userId) {
         try {
-          const userAvatar = await getUserAvatar(userId);
+          const userAvatar = await getUserAvatarService(userId);
           if (userAvatar) {
             setAvatar(userAvatar.id);
           } else {

@@ -4,7 +4,8 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import CallIcon from '@mui/icons-material/Call';
 import CallEndIcon from '@mui/icons-material/CallEnd';
 import { Box, Stack, Typography } from '@mui/material';
-
+//ToDo Functionality for the buttons
+// It's Options Panel, that doesnt work atm
 const AppPageButtonsComponent = () => {
   return (
     <Box sx={{ display: 'flex', gap: '10px' }}>
