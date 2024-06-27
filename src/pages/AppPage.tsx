@@ -32,8 +32,9 @@ import { RootState } from '../store/store.ts';
 import ChannelPage from './Videos/ChannelPage.tsx';
 import { data } from "../components/ProfileComponents/utils.ts";
 import NeuAvatar from "../components/neumorphism/avatar/NeuAvatar.tsx";
-import SearchField from "../components/AppPageComponents/SearchField.tsx";
 import {getUserAvatar} from "../components/getUserAvatar.tsx";
+import {SearchCommunities} from "../components/AppPageComponents/searchCommunities/SearchCommunities.tsx";
+
 type UserType = {
     id: number;
     img: string;
@@ -77,7 +78,7 @@ const AppPage = () => {
 
     //#region userControl
     const userId = useSelector((state: RootState) => state.user.user?.userId);
-    const [users] = useState(data);
+    const [users, setUsers] = useState<UserType[]>(data);
     const [currentUser, setCurrentUser] = useState<UserType | null>(null);
     const [userAvatar, setUserAvatar] = useState<string | null>(null);
     //#endregion userControl
@@ -154,7 +155,23 @@ const AppPage = () => {
 
         fetchAvatar();
     }, [userId]);
+
     //#endregion useEffect for fetching user avatar
+
+
+    // const chatService = useRef(new ChatService()).current;
+
+    // useEffect(() => {
+    //     chatService.onContactList((response) => {
+    //         const parsedContacts = response?.data?.map(contact => ({
+    //             id: contact.id,
+    //             img: contact.img,
+    //             name: contact.name
+    //         }));
+    //         setUsers(parsedContacts);
+    //     });
+    // }, [chatService]);
+
 
     return (
         <Box
@@ -235,8 +252,8 @@ const AppPage = () => {
                         style={{ flex: 1 }}
                         collapsible={true}
                     >
-                        <Stack direction="column" padding={1} sx={{ minWidth: '80px' }}>
-                            <SearchField onSearch={() => { /* your code here */ }} />
+                        <Stack direction="column" padding={1} sx={{ minWidth: '80px', position: 'relative' }}>
+                            <SearchCommunities />
                             <Divider
                                 sx={{
                                     width: '100%',

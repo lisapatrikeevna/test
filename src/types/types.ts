@@ -49,3 +49,18 @@ export type Shadows = [
   string, string, string, string, string, string, string, string, string, string,
   string, string, string, string, string
 ];
+export enum CommunityType {
+  User= 0,
+  Group =1
+}
+
+export interface ICommunityInfo {
+  type: CommunityType
+  id:string
+  name: string
+}
+
+export interface ISearchCommunitiesResponse {
+  size: number
+  items: ICommunityInfo[]
+}

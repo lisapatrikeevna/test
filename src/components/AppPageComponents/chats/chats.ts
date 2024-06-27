@@ -93,6 +93,7 @@ class CallBackManager {
   }
 
   public exec(id: string | null, data: string | null = null): void {
+    console.log('exec - event id', id)
     if (id === null) throw "The callback ID cannot be null";
 
     const cb: CallBack = this.cbList[id];
@@ -108,9 +109,11 @@ class CallBackManager {
     let obj: object | null = null;
 
     try {
+      console.log('exec - data', data)
       if (data !== null) obj = JSON.parse(data);
     } catch (e) {
       console.log("JSON error:", e);
+      obj =  typeof data === 'string' ? {response: data} : null
     }
 
     cb(obj);
