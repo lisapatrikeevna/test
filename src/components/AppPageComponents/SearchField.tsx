@@ -3,47 +3,53 @@ import { TextField, InputAdornment, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 
+// Props type definition for SearchField component
 interface SearchFieldProps {
-    onSearch: (value: string) => void;
+  onSearch: (value: string) => void;
 }
 
+// Search field component with clear and search buttons
 const SearchField: FC<SearchFieldProps> = ({ onSearch }) => {
-    const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
-    const handleSearch = () => {
-        if (onSearch) {
-            onSearch(searchValue);
-        }
-    };
+  // Handle the search action
+  const handleSearch = () => {
+    if (onSearch) {
+      onSearch(searchValue);
+    }
+  };
 
-    const handleClear = () => {
-        setSearchValue('');
-        if (onSearch) {
-            onSearch('');
-        }
-    };
+  // Handle clearing the search input
+  const handleClear = () => {
+    setSearchValue('');
+    if (onSearch) {
+      onSearch('');
+    }
+  };
 
-    return (
-        <TextField
-            variant="outlined"
-            size="small"
-            placeholder="Search"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">
-                        <IconButton onClick={handleClear} size="small">
-                            <ClearIcon />
-                        </IconButton>
-                        <IconButton onClick={handleSearch} size="small">
-                            <SearchIcon />
-                        </IconButton>
-                    </InputAdornment>
-                ),
-            }}
-        />
-    );
+  return (
+    <TextField
+      variant="outlined"
+      size="small"
+      placeholder="Search"
+      value={searchValue}
+      onChange={(e) => setSearchValue(e.target.value)}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            {/* Clear button */}
+            <IconButton onClick={handleClear} size="small">
+              <ClearIcon />
+            </IconButton>
+            {/* Search button */}
+            <IconButton onClick={handleSearch} size="small">
+              <SearchIcon />
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+    />
+  );
 };
 
 export default SearchField;

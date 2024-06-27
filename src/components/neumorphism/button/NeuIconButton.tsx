@@ -9,8 +9,9 @@ interface NeuIconButtonProps extends NeuButtonProps {
 // Custom NeuIconButton component
 const NeuIconButton: React.FC<NeuIconButtonProps> = ({ children, ...otherProps }) => {
   return (
+    // Render children inside the button
     <NeuButton sx={{ minWidth: '40px', padding: '6px' }} {...otherProps} block={false} depressed={false}>
-      {children} // Render children inside the button
+      {children} 
     </NeuButton>
   );
 };

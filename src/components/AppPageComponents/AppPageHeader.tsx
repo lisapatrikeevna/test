@@ -19,6 +19,7 @@ import NeuSwitch from '../neumorphism/switch/NeuSwitch';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import { useTheme } from '@mui/material/styles';
 
+// Props type definition for AppPageHeader component
 type Props = {
   setIsOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   setIsOpenMainSideBar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,18 +27,19 @@ type Props = {
   setIsChatPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+// Header component for the application page
 const AppPageHeader = ({
   setIsOpenSideBar,
   setIsOpenMainSideBar,
   toggleChatsPanel,
 }: Props) => {
-  const [isOpenModalNotifications, setIsOpenModalNotifications] =
-    useState(false);
+  const [isOpenModalNotifications, setIsOpenModalNotifications] = useState(false);
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
   const [searchQuery, setSearchQuery] = useState('');
   const { theme, setTheme } = useCustomTheme();
   const themeMui = useTheme();
 
+  // Handle opening of the notifications modal
   const handleModal = (event: React.MouseEvent<SVGSVGElement>) => {
     const target = event.currentTarget as unknown as HTMLElement;
     const iconPosition = target.getBoundingClientRect();
@@ -50,6 +52,7 @@ const AppPageHeader = ({
     setIsOpenModalNotifications(true);
   };
 
+  // Handle search action
   const handleSearch = () => {
     if (searchQuery.trim() !== '') {
       const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(
@@ -60,12 +63,14 @@ const AppPageHeader = ({
     setSearchQuery('');
   };
 
+  // Handle search on Enter key press
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       handleSearch();
     }
   };
 
+  // Toggle the theme between light and dark
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
@@ -82,6 +87,7 @@ const AppPageHeader = ({
       }}
       style={{ backgroundColor: themeMui.palette.background.default }}
     >
+      {/* Left icons */}
       <Stack direction="row" spacing={2} alignItems="center">
         <MenuIcon
           cursor="pointer"
@@ -90,7 +96,6 @@ const AppPageHeader = ({
             color: themeMui.palette.mode === 'dark' ? '#bebebe' : '#333333',
           }}
         />
-
         <EmailIcon
           cursor="pointer"
           onClick={toggleChatsPanel}
@@ -99,6 +104,8 @@ const AppPageHeader = ({
           }}
         />
       </Stack>
+
+      {/* Search bar */}
       <Stack direction="row" spacing={2} alignItems="center">
         <TextField
           id="outlined-basic"
@@ -128,6 +135,8 @@ const AppPageHeader = ({
           }}
         />
       </Stack>
+
+      {/* Right icons */}
       <Stack direction="row" spacing={2} alignItems="center">
         <Box
           sx={{
@@ -204,4 +213,5 @@ const AppPageHeader = ({
     </Stack>
   );
 };
+
 export default AppPageHeader;
