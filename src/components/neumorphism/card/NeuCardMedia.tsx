@@ -1,18 +1,19 @@
 import React from 'react';
-import { Box, BoxProps } from '@mui/material';
+import { Box, BoxProps, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { Theme } from '@mui/material/styles';
 import { Shadows } from '../../../types/types';
-import { Typography } from '@mui/material';
 
+// Define custom properties for the NeuCardMedia component, extending BoxProps from MUI
 interface NeuCardMediaProps extends BoxProps {
-  dark?: boolean;
-  rounded?: boolean;
-  src?: string;
-  title?: string;
-  height?: number;
+  dark?: boolean; // If true, applies dark mode styles
+  rounded?: boolean; // If true, makes the media area rounded
+  src?: string; // Source URL for the media
+  title?: string; // Title text to display
+  height?: number; // Height of the media area
 }
 
+// Function to get custom media styles based on the theme and props
 const getMediaStyles = (theme: Theme, props: NeuCardMediaProps) => {
   const typedTheme = theme as Theme & { shadows: Shadows };
   return {
@@ -27,6 +28,7 @@ const getMediaStyles = (theme: Theme, props: NeuCardMediaProps) => {
   };
 };
 
+// Styled Box component with custom styles applied
 const StyledCardMedia = styled(Box, {
   shouldForwardProp: (prop) =>
     prop !== 'dark' &&
@@ -44,9 +46,10 @@ const StyledCardMedia = styled(Box, {
   boxSizing: 'border-box',
   backgroundColor: theme.palette.background.paper,
   color: 'var(--text-color)',
-  borderRadius: props.rounded ? '24px' : '0px',
+  borderRadius: props.rounded ? '24px' : '0px', // Set border radius based on rounded prop
 }));
 
+// Custom NeuCardMedia component
 const NeuCardMedia: React.FC<NeuCardMediaProps> = (props) => {
   const { title, ...rest } = props;
 
@@ -54,7 +57,7 @@ const NeuCardMedia: React.FC<NeuCardMediaProps> = (props) => {
     <StyledCardMedia {...rest}>
       {title && (
         <Box sx={{ position: 'absolute', bottom: '0px', color: 'inherit' }}>
-          <Typography variant="h6">{title}</Typography>
+          <Typography variant="h6">{title}</Typography> // Display title if provided
         </Box>
       )}
     </StyledCardMedia>

@@ -32,7 +32,7 @@ import {
   newGroupPath,
   settingsPath,
 } from '../../configs/RouteConfig';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import MyModalProfile from '../../pages/MyModalProfile';
 import { useAppSelector } from '../../store/hooks';
 import { selectUsername } from '../../store/user/userSlice';
@@ -40,16 +40,17 @@ import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
 import { RenderValuesCentralComponent } from '../../pages/AppPage';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/system';
-import {getUserAvatar} from "../getUserAvatar.tsx";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/store.ts";
+import { getUserAvatar } from "../getUserAvatar.tsx";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store.ts";
 
+// Props type definition for AppPageMainSideBar component
 type Props = {
   isOpenMainSideBar: boolean;
   changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
 };
 
-//TODO refactoring with MUI Drawer
+// Main side bar component for the application page
 const AppPageMainSideBar = ({
   isOpenMainSideBar,
   changeRenderCentralComponent,
@@ -62,7 +63,7 @@ const AppPageMainSideBar = ({
   const [userAvatar, setUserAvatar] = useState<string | null>(null);
   const userId = useSelector((state: RootState) => state.user.user?.userId);
 
-
+  // Handle avatar click to open profile modal
   const handleAvatarClick = () => {
     setOpenProfileModal(true); // Open profile modal
   };
@@ -71,15 +72,17 @@ const AppPageMainSideBar = ({
     color: theme.palette.mode === 'dark' ? '#fff' : '#000',
   }));
 
+  // Toggle the accounts dropdown menu
   const toggleAccountsDropdown = () => {
     setIsAccountsDropdownOpen(!isAccountsDropdownOpen);
   };
 
+  // Toggle the theme between light and dark
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
-//#region useEffect for fetching user avatar
+  // Fetch the user's avatar
   useEffect(() => {
     const fetchAvatar = async () => {
       if (userId) {
@@ -92,7 +95,6 @@ const AppPageMainSideBar = ({
 
     fetchAvatar();
   }, [userId]);
-//#endregion useEffect for fetching user avatar
 
   return (
     <Box
@@ -119,8 +121,9 @@ const AppPageMainSideBar = ({
               display: 'flex',
             }}
           >
+            {/* User avatar */}
             <Avatar
-                src={userAvatar || ''}
+              src={userAvatar || ''}
               sx={{
                 width: 50,
                 height: 50,
@@ -149,6 +152,7 @@ const AppPageMainSideBar = ({
               )}
             </ListItemButton>
           </Box>
+          {/* Accounts dropdown menu */}
           <Collapse in={isAccountsDropdownOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItemButton sx={{ pl: 4 }}>
@@ -170,7 +174,7 @@ const AppPageMainSideBar = ({
             open={openProfileModal}
             onClose={() => setOpenProfileModal(false)}
           />
-
+          {/* Sidebar navigation items */}
           <ListItem
             disablePadding
             onClick={() => changeRenderCentralComponent('home')}
@@ -364,7 +368,7 @@ const AppPageMainSideBar = ({
               <ThemedListItemText primary="Logout" />
             </ListItemButton>
           </ListItem>
-
+          {/* Project support and version information */}
           <Box
             sx={{
               position: 'absolute',

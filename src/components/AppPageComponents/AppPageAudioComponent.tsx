@@ -1,12 +1,11 @@
-// AppPageAudioComponent.tsx
 import { Box, Typography } from '@mui/material';
 
-//ToDo Add your audio player here
-
+// Component to render an audio player
 const AppPageAudioComponent = () => {
   return (
     <Box>
       <Typography variant="h6">Audio Player</Typography>
+      {/* Embedding a SoundCloud audio player */}
       <iframe
         width="100%"
         height="166"

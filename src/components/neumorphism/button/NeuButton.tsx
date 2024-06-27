@@ -4,18 +4,20 @@ import { styled } from '@mui/system';
 import { Theme } from '@mui/material/styles';
 import { Shadows } from '../../../types/types';
 
+// Define custom properties for the NeuButton component, extending ButtonProps from MUI
 export interface NeuButtonProps extends ButtonProps {
-  dark?: boolean;
-  text?: boolean;
-  block?: boolean;
-  active?: boolean;
-  noPress?: boolean;
-  rounded?: boolean;
-  bordered?: boolean;
-  outlined?: boolean;
-  depressed?: boolean;
+  dark?: boolean; // If true, applies dark mode styles
+  text?: boolean; // If true, removes background and box shadow
+  block?: boolean; // If true, makes the button take the full width of its container
+  active?: boolean; // If true, applies active styles
+  noPress?: boolean; // If true, removes press styles
+  rounded?: boolean; // If true, makes the button rounded
+  bordered?: boolean; // If true, adds a border to the button
+  outlined?: boolean; // If true, outlines the button with a border and removes background and box shadow
+  depressed?: boolean; // If true, applies depressed styles
 }
 
+// Function to get custom button styles based on the theme
 const getButtonStyles = (theme: Theme) => {
   const typedTheme = theme as Theme & { shadows: Shadows };
   const commonStyles = {
@@ -51,6 +53,7 @@ const getButtonStyles = (theme: Theme) => {
   }
 };
 
+// Styled Button component with custom styles applied
 const StyledButton = styled(Button, {
   shouldForwardProp: (prop) =>
     prop !== 'dark' &&
@@ -77,27 +80,28 @@ const StyledButton = styled(Button, {
   boxShadow: 'var(--box-shadow)',
   color: 'var(--text-color)',
   transition: 'box-shadow 200ms ease-in-out',
-  borderRadius: props.rounded ? '56px' : '4px',
+  borderRadius: props.rounded ? '56px' : '4px', // Set border radius based on rounded prop
   '&:hover': {
-    boxShadow: 'var(--box-shadow-hover)',
+    boxShadow: 'var(--box-shadow-hover)', // Set hover styles
   },
   '&:active': {
-    boxShadow: 'var(--box-shadow-inset)',
+    boxShadow: 'var(--box-shadow-inset)', // Set active styles
   },
-  ...(props.bordered && { border: '1px solid var(--light-border-color)' }),
+  ...(props.bordered && { border: '1px solid var(--light-border-color)' }), // Add border if bordered is true
   ...(props.outlined && {
     boxShadow: 'none !important',
     transition: 'none !important',
     '--bg-color': 'transparent !important',
     border: `1px solid var(--border-color)`,
   }),
-  ...(props.depressed && { boxShadow: 'var(--box-shadow-hover)' }),
-  ...(props.block && { display: 'flex' }),
-  ...(props.text && { boxShadow: 'none !important', transition: 'none !important', '--bg-color': 'transparent !important' }),
-  ...(props.active && { boxShadow: 'var(--box-shadow-inset-low) !important' }),
-  ...(props.noPress && { boxShadow: 'none !important' }),
+  ...(props.depressed && { boxShadow: 'var(--box-shadow-hover)' }), // Set depressed styles
+  ...(props.block && { display: 'flex' }), // Set block styles
+  ...(props.text && { boxShadow: 'none !important', transition: 'none !important', '--bg-color': 'transparent !important' }), // Set text styles
+  ...(props.active && { boxShadow: 'var(--box-shadow-inset-low) !important' }), // Set active styles
+  ...(props.noPress && { boxShadow: 'none !important' }), // Set noPress styles
 }));
 
+// Custom NeuButton component
 const NeuButton: React.FC<NeuButtonProps> = (props) => {
   return <StyledButton {...props} />;
 };
