@@ -28,7 +28,9 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+    // Get the token from the application state
     const token: IToken = store.getState().user.token;
+     // Add the token to the request headers
     config.headers["Authorization"] = `Bearer ${token.accessToken}`;
     return config;
   }

@@ -4,12 +4,14 @@ import { SwitchProps as MuiSwitchProps } from '@mui/material';
 import { WbSunny, DarkMode } from '@mui/icons-material';
 import { Shadows } from '../../../types/types';
 
+// Define custom properties for the NeuSwitch component, extending MuiSwitchProps
 interface NeuSwitchProps extends Omit<MuiSwitchProps, 'size'> {
-  bgColor?: string;
-  borderColor?: string;
-  size?: 'small' | 'medium' | 'large';
+  bgColor?: string; // Custom background color
+  borderColor?: string; // Custom border color
+  size?: 'small' | 'medium' | 'large'; // Size of the switch
 }
 
+// Styles for different sizes of the switch
 const sizeStyles = {
   small: {
     width: '43px',
@@ -19,21 +21,22 @@ const sizeStyles = {
     translate: '19px',
   },
   medium: {
-    width: '50px', 
-    height: '26px', 
-    ballSize: '22px', 
-    iconSize: '16px', 
+    width: '50px',
+    height: '26px',
+    ballSize: '22px',
+    iconSize: '16px',
     translate: '23px',
   },
   large: {
     width: '63px',
-    height: '34px', 
-    ballSize: '28px', 
-    iconSize: '21px', 
-    translate: '29px', 
+    height: '34px',
+    ballSize: '28px',
+    iconSize: '21px',
+    translate: '29px',
   },
 };
 
+// Styled span element with custom styles applied for the switch container
 const StyledSwitchContainer = styled('span')<NeuSwitchProps>(({ theme, bgColor, size = 'medium' }) => {
   const typedTheme = theme as typeof theme & { shadows: Shadows };
   const styles = sizeStyles[size];
@@ -119,7 +122,9 @@ const StyledSwitchContainer = styled('span')<NeuSwitchProps>(({ theme, bgColor, 
   };
 });
 
+// Custom NeuSwitch component
 const NeuSwitch: React.FC<NeuSwitchProps> = ({ checked, onChange, size = 'medium', ...props }) => {
+  // Handle click event to toggle the switch state
   const handleClick = () => {
     if (onChange) {
       const event = { target: { checked: !checked } } as React.ChangeEvent<HTMLInputElement>;

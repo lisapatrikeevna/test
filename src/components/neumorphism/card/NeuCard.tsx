@@ -5,17 +5,19 @@ import { Theme } from '@mui/material/styles';
 import { Shadows } from '../../../types/types';
 import { useSpring, animated } from 'react-spring';
 
+// Define custom properties for the NeuCard component, extending CardProps from MUI
 interface NeuCardProps extends CardProps {
-  dark?: boolean;
-  flat?: boolean;
-  inset?: boolean;
-  rounded?: boolean;
-  outlined?: boolean;
-  bordered?: boolean;
-  elevation?: number;
-  in?: boolean;
+  dark?: boolean; // If true, applies dark mode styles
+  flat?: boolean; // If true, removes the box shadow
+  inset?: boolean; // If true, adds an inset shadow
+  rounded?: boolean; // If true, makes the card rounded
+  outlined?: boolean; // If true, outlines the card with a border
+  bordered?: boolean; // If true, adds a border to the card
+  elevation?: number; // Custom elevation level for the card
+  in?: boolean; // Controls the animation state
 }
 
+// Function to get custom card styles based on the theme and props
 const getCardStyles = (theme: Theme, props: NeuCardProps) => {
   const typedTheme = theme as Theme & { shadows: Shadows };
   const commonStyles = {
@@ -35,6 +37,7 @@ const getCardStyles = (theme: Theme, props: NeuCardProps) => {
   };
 };
 
+// Styled Card component with custom styles applied
 const StyledCard = styled(Card, {
   shouldForwardProp: (prop) =>
     prop !== 'dark' &&
@@ -58,23 +61,25 @@ const StyledCard = styled(Card, {
   boxShadow: 'var(--box-shadow)',
   color: 'var(--text-color)',
   transition: 'box-shadow 200ms ease-in-out',
-  borderRadius: props.rounded ? '24px' : '8px',
-  ...(props.bordered && { border: '1px solid var(--border-color)' }),
+  borderRadius: props.rounded ? '24px' : '8px', // Set border radius based on rounded prop
+  ...(props.bordered && { border: '1px solid var(--border-color)' }), // Add border if bordered is true
   ...(props.outlined && {
     boxShadow: 'none !important',
     transition: 'none !important',
     border: `1px solid var(--border-color)`,
   }),
-  ...(props.flat && { boxShadow: 'none !important' }),
-  ...(props.inset && { boxShadow: 'var(--box-shadow-inset)' }),
+  ...(props.flat && { boxShadow: 'none !important' }), // Remove box shadow if flat is true
+  ...(props.inset && { boxShadow: 'var(--box-shadow-inset)' }), // Add inset shadow if inset is true
   backgroundImage: 'none !important',
 }));
 
+// Wrapper component for content with animation
 const ContentWrapper = styled('div')<{ inProp: boolean }>(({ inProp }) => ({
   opacity: inProp ? 1 : 0,
   transition: 'opacity 300ms ease-in-out',
 }));
 
+// Custom NeuCard component
 const NeuCard: React.FC<NeuCardProps> = (props) => {
   const { in: inProp = true, children, ...rest } = props;
 
