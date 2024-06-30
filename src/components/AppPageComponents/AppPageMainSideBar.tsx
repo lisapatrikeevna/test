@@ -37,12 +37,12 @@ import MyModalProfile from '../../pages/MyModalProfile';
 import { useAppSelector } from '../../store/hooks';
 import { selectUsername } from '../../store/user/userSlice';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
-import { RenderValuesCentralComponent } from '../../pages/AppPage';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/system';
 import { getUserAvatar } from "../getUserAvatar.tsx";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store.ts";
+import {RenderValuesCentralComponent} from "./chats/types.ts";
 
 // Props type definition for AppPageMainSideBar component
 type Props = {

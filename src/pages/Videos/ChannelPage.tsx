@@ -6,10 +6,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import banner from "../../assets/banner.jpg";
 import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal";
-import {RenderValuesCentralComponent} from "../AppPage.tsx";
 import {getUserAvatar} from "../../components/getUserAvatar.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store.ts";
+import {RenderValuesCentralComponent} from "../../components/AppPageComponents/chats/types.ts";
 
 interface ChannelPageProps {
     userId: string | undefined;

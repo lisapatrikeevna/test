@@ -2,17 +2,12 @@ import { Box } from '@mui/system';
 import { ImperativePanelHandle, Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import { useTheme } from '@mui/material/styles';
 import { Avatar, Stack, TextField } from '@mui/material';
-import { data } from '../ProfileComponents/utils';
-import NeuDivider from '../neumorphism/divider/NeuDivider';
+import { data } from '../../ProfileComponents/utils.ts';
+import NeuDivider from '../../neumorphism/divider/NeuDivider.tsx';
 import { useRef, useState } from 'react';
-import NeuAvatar from '../neumorphism/avatar/NeuAvatar';
+import NeuAvatar from '../../neumorphism/avatar/NeuAvatar.tsx';
+import {UserType} from "./types.ts";
 
-// Define the type for user data
-type UserType = {
-    id: number;
-    img: string;
-    name: string;
-};
 
 // Define the type for component props
 type AppPageChatsComponentProps = {

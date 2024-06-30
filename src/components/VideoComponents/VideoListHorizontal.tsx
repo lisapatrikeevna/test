@@ -6,8 +6,8 @@ import {Grid, Card, CardContent, Typography, Box, Button, Avatar} from "@mui/mat
 import useMediaQuery from '@mui/material/useMediaQuery';
 import VideoListHorizontalSkeleton from './VideoListHorizontalSkeleton.tsx';
 import { getAllUsers } from "../../services/userServices/getAllUsers.service.ts";
-import { RenderValuesCentralComponent } from "../../pages/AppPage.tsx";
 import { getUserAvatar } from "../getUserAvatar.tsx";
+import {RenderValuesCentralComponent} from "../AppPageComponents/chats/types.ts";
 
 export interface IVideo {
     id: string;

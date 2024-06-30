@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material';
-import { RenderValues } from '../../pages/AppPage';
+
 import { useTheme } from '@mui/material/styles';
+import {RenderValues} from "./chats/types.ts";
 
 // Props type definition for AppPageSideBar component
 type Props = {

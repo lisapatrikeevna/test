@@ -45,7 +45,7 @@ import HandleShareOnX from '../../components/VideoComponents/VideoShare/HandleSh
 import HandleShareOnLinkedIn from '../../components/VideoComponents/VideoShare/HandleShareOnLinkedIn.tsx';
 import { getUserAvatarService } from '../../services/userServices/getUserAvatar.service';
 import { getAllUsers } from '../../services/userServices/getAllUsers.service.ts';
-import { RenderValuesCentralComponent } from '../AppPage.tsx';
+import {RenderValuesCentralComponent} from "../../components/AppPageComponents/chats/types.ts";
 
 interface VideoPageProps {
   videoId: string | null;

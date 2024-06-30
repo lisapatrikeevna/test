@@ -50,8 +50,8 @@ export type Shadows = [
   string, string, string, string, string
 ];
 export enum CommunityType {
-  User= 0,
-  Group =1
+  User = 0,
+  Group = 1
 }
 
 export interface ICommunityInfo {

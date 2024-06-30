@@ -1,4 +1,4 @@
-import { store } from "../../../store/store";
+import { store } from "../../../../store/store.ts";
 
 export type ChatEvent = {
   event: string; // EVENT_TYPE see below
@@ -285,6 +285,39 @@ export class ChatService {
     };
 
     callBacks.put(cb, EVENT_TYPE.found);
+    this.wsSend(requestEvent);
+  }
+
+//  method to create a user subscription
+  public requestUserSubscriptionCreate(userId: string, cb: CallBack): void {
+    const request = {
+      action: "create",
+      userId: userId,
+    };
+
+    const requestEvent: ChatEvent = {
+      event: EVENT_TYPE.subscription,
+      data: JSON.stringify(request),
+    };
+
+    callBacks.put(cb, EVENT_TYPE.subscription);
+    this.wsSend(requestEvent);
+  }
+
+
+//  method to create a group subscription
+  public requestGroupSubscriptionCreate(groupId: string, cb: CallBack): void {
+    const request = {
+      action: "create",
+      groupId: groupId,
+    };
+
+    const requestEvent: ChatEvent = {
+      event: EVENT_TYPE.subscription,
+      data: JSON.stringify(request),
+    };
+
+    callBacks.put(cb, EVENT_TYPE.subscription);
     this.wsSend(requestEvent);
   }
 

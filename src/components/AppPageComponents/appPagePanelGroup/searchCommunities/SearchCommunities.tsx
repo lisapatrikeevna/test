@@ -1,7 +1,7 @@
-import SearchField from "../SearchField.tsx";
-import {ChatService} from "../chats/chats.ts";
+import SearchField from "../../SearchField.tsx";
+import {ChatService} from "../../chats/chatsServer/chats.ts";
 import {useState} from "react";
-import {ISearchCommunitiesResponse, ICommunityInfo} from "../../../types/types.ts";
+import {ISearchCommunitiesResponse, ICommunityInfo} from "../../../../types/types.ts";
 import {ListFoundCommunities} from "./listFoundCommunities/ListFoundCommunities.tsx";
 
 export const SearchCommunities = ()=>{

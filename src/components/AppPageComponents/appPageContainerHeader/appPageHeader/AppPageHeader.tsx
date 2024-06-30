@@ -15,8 +15,8 @@ import { useState } from 'react';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import KeyboardAltOutlinedIcon from '@mui/icons-material/KeyboardAltOutlined';
 import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
-import NeuSwitch from '../neumorphism/switch/NeuSwitch';
-import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
+import NeuSwitch from '../../../neumorphism/switch/NeuSwitch.tsx';
+import { useTheme as useCustomTheme } from '../../../../contexts/ThemeContext.tsx';
 import { useTheme } from '@mui/material/styles';
 
 // Props type definition for AppPageHeader component

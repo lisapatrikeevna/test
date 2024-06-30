@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal.tsx";
 import { Grid, Button } from "@mui/material";
-import {RenderValuesCentralComponent} from "../AppPage.tsx";
+import {RenderValuesCentralComponent} from "../../components/AppPageComponents/chats/types.ts";
 
 // This component is responsible for displaying the main page of the video section
 const VideosMainPage: FC<{ panelWidth: number, changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void }> = ({ panelWidth, changeRenderCentralComponent }) => {
