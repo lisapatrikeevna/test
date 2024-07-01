@@ -11,9 +11,9 @@ interface ModalPreRegisterProps {
 
 const ModalPreRegister: React.FC<ModalPreRegisterProps> = ({ isOpen, onClose }) => {
     const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
+    const [name, setName] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [usernameError, setUsernameError] = useState('');
+    const [nameError, setNameError] = useState('');
     const theme = useTheme();
     const [isTermsAccepted, setIsTermsAccepted] = useState(false);
     const [isAgeConfirmed, setIsAgeConfirmed] = useState(false);
@@ -27,12 +27,12 @@ const ModalPreRegister: React.FC<ModalPreRegisterProps> = ({ isOpen, onClose }) 
         }
     };
 
-    const validateUsername = (value: string) => {
-        const usernameRegex = /^[a-zA-Z]{3,16}$/;
-        if (!usernameRegex.test(value)) {
-            setUsernameError('Username must be 3-16 characters long, no spaces, only letters');
+    const validateName = (value: string) => {
+        const nameRegex = /^[a-zA-Z]{3,16}$/;
+        if (!nameRegex.test(value)) {
+            setNameError('Name must be 3-16 characters long, no spaces, only letters');
         } else {
-            setUsernameError('');
+            setNameError('');
         }
     };
 
@@ -42,29 +42,32 @@ const ModalPreRegister: React.FC<ModalPreRegisterProps> = ({ isOpen, onClose }) 
         validateEmail(value);
     };
 
-    const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        setUsername(value);
-        validateUsername(value);
+        setName(value);
+        validateName(value);
     };
 
     const handleSubmit = () => {
+        validateEmail(email);
+        validateName(name);
 
+        if (isFormValid()) {
             onClose();
-
+        }
     };
 
     const isFormValid = () => {
-        return email && username && isTermsAccepted && isAgeConfirmed;
+        return email && name && !emailError && !nameError;
     };
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} width="600px">
-            <Box sx={{ height: '600px', width: "100%", display: 'flex', flexDirection:'column', marginTop: theme.spacing(2) }}>
-                <Box sx={{height: '20%',display: 'flex', justifyContent: 'center', alignItems:'center'}}>
+            <Box sx={{ height: '600px', width: "100%", display: 'flex', flexDirection: 'column', marginTop: theme.spacing(2) }}>
+                <Box sx={{ height: '20%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Typography variant='h3' align="center">PRE-REGISTER FOR BETATEST ACCESS</Typography>
                 </Box>
-                <Box sx={{height: '40%',display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                <Box sx={{ height: '40%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <Box>
                         <TextField
                             required
@@ -81,17 +84,17 @@ const ModalPreRegister: React.FC<ModalPreRegisterProps> = ({ isOpen, onClose }) 
                     <Box>
                         <TextField
                             required
-                            value={username}
-                            onChange={handleUsernameChange}
-                            label="Username"
+                            value={name}
+                            onChange={handleNameChange}
+                            label="Name"
                             margin="normal"
                             sx={{ width: '100%' }}
-                            error={!!usernameError}
-                            helperText={usernameError}
+                            error={!!nameError}
+                            helperText={nameError}
                         />
                     </Box>
                 </Box>
-                <Box sx={{height: '20%', display: 'flex', flexDirection: 'column', marginTop: theme.spacing(2)}}>
+                <Box sx={{ height: '20%', display: 'flex', flexDirection: 'column', marginTop: theme.spacing(2) }}>
                     <FormControlLabel
                         sx={{ m: 1 }}
                         control={
@@ -120,9 +123,9 @@ const ModalPreRegister: React.FC<ModalPreRegisterProps> = ({ isOpen, onClose }) 
                             (e.g. betatest invite, NeoXonline news)</Box>}
                     />
                 </Box>
-                <Box sx={{height: '20%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+                <Box sx={{ height: '20%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                     <Button
-                        sx={{ m: 1, width: '120px', height: '40px', borderRadius: '50%'}}
+                        sx={{ m: 1, width: '120px', height: '40px', borderRadius: '50%' }}
                         onClick={handleSubmit}
                         disabled={!isFormValid()}
                     >
