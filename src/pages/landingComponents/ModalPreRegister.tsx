@@ -3,6 +3,7 @@ import Modal from "../../components/Modal.tsx";
 import { Box, Button, FormControlLabel, TextField, Typography } from "@mui/material";
 import { Checkbox } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { preRegisterService } from "../../services/userServices/preRegister.service";
 
 interface ModalPreRegisterProps {
     isOpen: boolean;
@@ -15,7 +16,7 @@ const ModalPreRegister: React.FC<ModalPreRegisterProps> = ({ isOpen, onClose }) 
     const [emailError, setEmailError] = useState('');
     const [nameError, setNameError] = useState('');
     const theme = useTheme();
-    const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+    const [isSendEmailAccepted, setIsSendEmailAccepted] = useState(false);
     const [isAgeConfirmed, setIsAgeConfirmed] = useState(false);
 
     const validateEmail = (value: string) => {
@@ -48,12 +49,23 @@ const ModalPreRegister: React.FC<ModalPreRegisterProps> = ({ isOpen, onClose }) 
         validateName(value);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         validateEmail(email);
         validateName(name);
 
         if (isFormValid()) {
-            onClose();
+            const userData = {
+                email: email,
+                name: name,
+                sendEmail: isSendEmailAccepted,
+            };
+
+            try {
+                await preRegisterService(userData);
+                onClose();
+            } catch (error) {
+                console.error(`Error pre-registering user: ${error}`);
+            }
         }
     };
 
@@ -112,8 +124,8 @@ const ModalPreRegister: React.FC<ModalPreRegisterProps> = ({ isOpen, onClose }) 
                         sx={{ m: 1 }}
                         control={
                             <Checkbox
-                                checked={isTermsAccepted}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsTermsAccepted(e.target.checked)}
+                                checked={isSendEmailAccepted}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsSendEmailAccepted(e.target.checked)}
                                 color="primary"
                                 id="terms"
                                 name="terms"
