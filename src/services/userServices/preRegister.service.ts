@@ -1,5 +1,5 @@
 import { instance } from "../../api/axios.api";
-
+//ToDo check endpoint
 interface preRegisterData {
     email: string;
     name: string;
