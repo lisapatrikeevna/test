@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./user/userSlice";
 import videoReducer from "./video/videoSlice";
+import validationReducer from "./sendValidationRequest"; // Импортируем редуктор правильно
 
-// Configure the Redux store with user and video reducers
+// Configure the Redux store with user, video and validation reducers
 export const store = configureStore({
   reducer: {
     user: userReducer, // Reducer to manage user-related state
-    video: videoReducer, // Reducer to manage video-related state
+    video: videoReducer,
+    validation: validationReducer,
   },
 });
 

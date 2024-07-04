@@ -12,6 +12,11 @@ import { Box, Typography, IconButton, InputAdornment, Link, FormControl } from "
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import NeuTextField from './neumorphism/input/NeuTextField';
 import NeuButton from './neumorphism/button/NeuButton';
+import { useForm } from "react-hook-form";
+import { emailValidation, nameValidation } from "../utils/validation.ts";
+import ValidationError from "../utils/ValidationError/ValidationError.tsx";
+import { postRequest } from "../store/sendValidationRequest.ts";
+
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -31,7 +36,7 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [isUserTermsModalOpen, setIsUserTermsModalOpen] = useState(false);
     const [isUserTermsAccepted, setIsUserTermsAccepted] = useState(false);
 
-    const handleSubmit = async (event: React.FormEvent) => {
+    const handleSubmitt = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
             if (isRegistering) {
@@ -59,6 +64,8 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                     navigate("/");
                 }
             }
+
+      
             
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
@@ -71,16 +78,31 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     };
 
     const bttnHeight = '50px';
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+        mode: "all",
+      });
+
+      const getDataFromInputs = (data:any) => {
+        dispatch(postRequest(data))
+        console.log(data);
+        reset();
+      }
+
+
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} width="500px">
             <Box sx={{ height: '600px', width: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Box sx={{ padding: '25px', width: '100%' }}>
                     <Typography variant="h2" align="center">{isRegistering ? 'Register' : 'Login'}</Typography>
-                    <FormControl component="form" onSubmit={handleSubmit} autoComplete='off' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
+
+                    <form onSubmit={handleSubmit(getDataFromInputs)}/>
+                    <FormControl component="form" onSubmit={handleSubmitt} autoComplete='off' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         {isRegistering && (
                             <NeuTextField
-                                required
+                            {...register("email", emailValidation)}
+                                // required
                                 value={email}
                                 type="email"
                                 onChange={(e) => setEmail(e.target.value)}
@@ -91,7 +113,11 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                 sx={{ width: '100%' }}
                             />
                         )}
+                        <form/>
+                   <ValidationError keyName={errors.email} message={errors?.email?.message} />
+                   
                         <NeuTextField
+                            {...register("name", nameValidation)}
                             required
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
@@ -101,6 +127,7 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             outlined
                             sx={{ width: '100%' }}
                         />
+                 <ValidationError keyName={errors.name} message={errors?.name?.message} />
                         <NeuTextField
                             required
                             value={password}
@@ -143,16 +170,19 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                                     onClick={togglePasswordVisibility}
                                                     edge="end"
                                                 >
+                                                    
                                                     {showPassword ? <VisibilityOff /> : <Visibility />}
                                                 </IconButton>
                                             </InputAdornment>
                                         ),
                                     }}
                                 />
+                                 
                                 <Typography variant="body2" sx={{ margin: "10px 0", textAlign: 'center' }}>
                                     By signing up, you agree to our <Link href="#" onClick={() => setIsUserTermsModalOpen(true)}>User Terms</Link>.
                                 </Typography>
                             </>
+                            
                         )}
                         <NeuButton
                             rounded
@@ -168,8 +198,10 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             {isRegistering ? 'Sign in' : 'Sign up'}
                         </NeuButton>
                     </FormControl>
+
                 </Box>
             </Box>
+
             <Modal isOpen={isUserTermsModalOpen} onClose={() => {
                 setIsUserTermsModalOpen(false);
                 setIsUserTermsAccepted(true);
@@ -180,7 +212,7 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 }} />
             </Modal>
         </Modal>
-    );
-};
+    )
+}
 
 export default LoginModal;

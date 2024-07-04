@@ -14,7 +14,6 @@ type MessageInputProps = {
 
 export const MessageInput = ({handleFileUpload, handleSendMessage,}:MessageInputProps) => {
     const [messageText, setMessageText] = useState<string>('');
-
     return (
         <Stack direction="row" alignItems="center">
             <Input
