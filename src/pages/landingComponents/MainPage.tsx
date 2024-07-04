@@ -8,7 +8,6 @@ import AboutUs from "./AboutUs.tsx";
 
 const MainPage = () => {
     const theme = useTheme();
-
     return (
         <Container
             maxWidth={false}

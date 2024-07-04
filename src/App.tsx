@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ActiveSectionContext from './contexts/ActiveSectionContext';
 import { FC, useEffect, useState } from 'react';
 import AuthContext from './contexts/AuthContext';
-import AppPage from './pages/AppPage';
+import AppPage from './pages/appPage/AppPage.tsx';
 import LoginModal from './components/LoginModal';
 import Header from './pages/landingComponents/Header';
 import MainPage from './pages/landingComponents/MainPage';

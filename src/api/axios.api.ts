@@ -5,14 +5,14 @@ import { AuthService } from "../services/auth.service";
 import { login } from "../store/user/userSlice";
 import { userSliceMapper } from "../store/user/utilits/userUtilits";
 
-// export const API_URL = "http://85.215.241.41:8030"; //Dev
-// export const API_URL = "https://85.215.241.41:8030"; // CheckDev with Https
-export const API_URL = "http://85.215.187.128:8030"; //Prod
+// export const API_URL = "https://vibrant-lumiere.85-215-241-41.plesk.page:8030"; //Dev
+export const API_URL = "https://neoxonline.com"; // CheckDev with Https
+// export const API_URL = "http://85.215.187.128:8030"; //Prod
 // export const API_URL = "https://212.132.99.188:8030"; // CheckNewAuth with Https
 
 export const instanceAuth = axios.create({
   withCredentials: true,
-  baseURL: API_URL + "/auth",
+  baseURL: API_URL + "/api/v1",
   headers: {
     'Content-Type': 'application/json',
   }
@@ -28,7 +28,9 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+    // Get the token from the application state
     const token: IToken = store.getState().user.token;
+     // Add the token to the request headers
     config.headers["Authorization"] = `Bearer ${token.accessToken}`;
     return config;
   }

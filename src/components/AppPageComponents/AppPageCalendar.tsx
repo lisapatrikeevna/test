@@ -3,6 +3,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 
+// Component to render a calendar using Material-UI pickers
 const AppPageCalendar = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -13,7 +14,6 @@ const AppPageCalendar = () => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          // alignItems: 'center',
           padding: 2,
           width: isSmallScreen ? '100%' : 'auto',
           '& .MuiPickerStaticWrapper-root': {

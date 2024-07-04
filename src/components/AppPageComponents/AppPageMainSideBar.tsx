@@ -9,7 +9,6 @@ import {
   Switch,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import avatar from '../../assets/img.webp';
 import {
   AccountCircleOutlined,
   AddCircleOutline,
@@ -33,20 +32,25 @@ import {
   newGroupPath,
   settingsPath,
 } from '../../configs/RouteConfig';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MyModalProfile from '../../pages/MyModalProfile';
 import { useAppSelector } from '../../store/hooks';
 import { selectUsername } from '../../store/user/userSlice';
 import { useTheme as useCustomTheme } from '../../contexts/ThemeContext';
-import { RenderValuesCentralComponent } from '../../pages/AppPage';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/system';
+import { getUserAvatar } from "../getUserAvatar.tsx";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store.ts";
+import {RenderValuesCentralComponent} from "./chats/types.ts";
 
+// Props type definition for AppPageMainSideBar component
 type Props = {
   isOpenMainSideBar: boolean;
   changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
 };
 
+// Main side bar component for the application page
 const AppPageMainSideBar = ({
   isOpenMainSideBar,
   changeRenderCentralComponent,
@@ -56,23 +60,41 @@ const AppPageMainSideBar = ({
   const [isAccountsDropdownOpen, setIsAccountsDropdownOpen] = useState(false);
   const { theme, setTheme } = useCustomTheme();
   const themeMui = useTheme();
+  const [userAvatar, setUserAvatar] = useState<string | null>(null);
+  const userId = useSelector((state: RootState) => state.user.user?.userId);
 
+  // Handle avatar click to open profile modal
   const handleAvatarClick = () => {
     setOpenProfileModal(true); // Open profile modal
   };
-
 
   const ThemedListItemText = styled(ListItemText)(({ theme }) => ({
     color: theme.palette.mode === 'dark' ? '#fff' : '#000',
   }));
 
+  // Toggle the accounts dropdown menu
   const toggleAccountsDropdown = () => {
     setIsAccountsDropdownOpen(!isAccountsDropdownOpen);
   };
 
+  // Toggle the theme between light and dark
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
+
+  // Fetch the user's avatar
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      if (userId) {
+        const userAvatar = await getUserAvatar(userId);
+        if (typeof userAvatar === 'string') {
+          setUserAvatar(userAvatar);
+        }
+      }
+    };
+
+    fetchAvatar();
+  }, [userId]);
 
   return (
     <Box
@@ -99,14 +121,15 @@ const AppPageMainSideBar = ({
               display: 'flex',
             }}
           >
+            {/* User avatar */}
             <Avatar
-              src={avatar}
-              alt="avatar"
+              src={userAvatar || ''}
               sx={{
                 width: 50,
                 height: 50,
                 cursor: 'pointer',
                 position: 'relative',
+                backgroundColor: userAvatar ? (userAvatar.startsWith('#') ? userAvatar : undefined) : undefined
               }}
               onClick={handleAvatarClick}
             />
@@ -129,6 +152,7 @@ const AppPageMainSideBar = ({
               )}
             </ListItemButton>
           </Box>
+          {/* Accounts dropdown menu */}
           <Collapse in={isAccountsDropdownOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItemButton sx={{ pl: 4 }}>
@@ -150,7 +174,7 @@ const AppPageMainSideBar = ({
             open={openProfileModal}
             onClose={() => setOpenProfileModal(false)}
           />
-
+          {/* Sidebar navigation items */}
           <ListItem
             disablePadding
             onClick={() => changeRenderCentralComponent('home')}
@@ -344,7 +368,7 @@ const AppPageMainSideBar = ({
               <ThemedListItemText primary="Logout" />
             </ListItemButton>
           </ListItem>
-
+          {/* Project support and version information */}
           <Box
             sx={{
               position: 'absolute',

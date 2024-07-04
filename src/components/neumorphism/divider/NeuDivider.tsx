@@ -3,16 +3,24 @@ import { styled, useTheme, Theme, SxProps } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { Shadows } from '../../../types/types';
 
+// Define custom properties for the NeuDivider component
 interface NeuDividerProps {
-  baseColor?: string;
-  lightShadow?: string;
-  dense?: boolean;
-  elevated?: boolean;
-  sx?: SxProps<Theme>;
-  style?: React.CSSProperties;
+  baseColor?: string; // Custom base color for shadows
+  lightShadow?: string; // Custom light shadow color
+  dense?: boolean; // If true, reduces the height and adjusts shadows
+  elevated?: boolean; // If true, applies elevated shadows
+  sx?: SxProps<Theme>; // Custom styles using MUI's sx prop
+  style?: React.CSSProperties; // Inline styles
 }
 
-const getDividerStyles = (theme: Theme & { shadows: Shadows }, lightShadow:string | undefined, baseColor: string | undefined, dense: boolean, elevated: boolean) => {
+// Function to get custom divider styles based on the theme and props
+const getDividerStyles = (
+  theme: Theme & { shadows: Shadows },
+  lightShadow: string | undefined,
+  baseColor: string | undefined,
+  dense: boolean,
+  elevated: boolean
+) => {
   const isDark = theme.palette.mode === 'dark';
   const defaultBaseColor = isDark ? '#333333' : '#bebebe';
   const defaultLightShadow = isDark ? '#1a1a1a' : '#ffffff';
@@ -40,22 +48,32 @@ const getDividerStyles = (theme: Theme & { shadows: Shadows }, lightShadow:strin
   };
 };
 
-const StyledDivider = styled(Box)<NeuDividerProps>(({ theme, lightShadow, baseColor, dense = false, elevated = false }) => ({
-  ...getDividerStyles(theme as Theme & { shadows: Shadows },lightShadow, baseColor, dense, elevated),
-}));
+// Styled Box component with custom styles applied for the divider
+const StyledDivider = styled(Box)<NeuDividerProps>(
+  ({ theme, lightShadow, baseColor, dense = false, elevated = false }) => ({
+    ...getDividerStyles(theme as Theme & { shadows: Shadows }, lightShadow, baseColor, dense, elevated),
+  })
+);
 
-const NeuDivider: React.FC<NeuDividerProps> = ({ lightShadow, baseColor, dense = false, elevated = false, sx }) => {
+// Custom NeuDivider component
+const NeuDivider: React.FC<NeuDividerProps> = ({
+  lightShadow,
+  baseColor,
+  dense = false,
+  elevated = false,
+  sx,
+}) => {
   const theme = useTheme<Theme & { shadows: Shadows }>();
 
   return (
-      <StyledDivider
-          theme={theme}
-          baseColor={baseColor}
-          lightShadow={lightShadow}
-          dense={dense}
-          elevated={elevated}
-          sx={sx}
-      />
+    <StyledDivider
+      theme={theme}
+      baseColor={baseColor}
+      lightShadow={lightShadow}
+      dense={dense}
+      elevated={elevated}
+      sx={sx}
+    />
   );
 };
 

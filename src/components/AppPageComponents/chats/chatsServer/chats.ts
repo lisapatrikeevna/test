@@ -1,4 +1,4 @@
-import { store } from "../../../store/store";
+import { store } from "../../../../store/store.ts";
 
 export type ChatEvent = {
   event: string; // EVENT_TYPE see below
@@ -24,6 +24,7 @@ export const CONST = {
     return `ws://${this.host}/NeoX-chat/api/${this.accessToken()}`;
   },
   pageSize: 32,
+  maxCallBacks: 64,
 };
 
 export const EVENT_TYPE = {
@@ -54,6 +55,74 @@ const FIND_MODE = {
   default: 0,
 };
 
+type Stats = {
+  eventsProcessed: number;
+};
+
+const stats: Stats = {
+  eventsProcessed: 0,
+};
+
+interface HashTable<T> {
+  [key: string]: T;
+}
+
+type CallBack = (obj: object | null) => void;
+const NOP: CallBack = () => {};
+
+class CallBackManager {
+  private id: number;
+  private cbList: HashTable<CallBack>;
+
+  constructor() {
+    this.id = 0;
+    this.cbList = {};
+  }
+
+  public put(cb: CallBack, anId: string | null = null): string {
+    let key: string | null = anId;
+
+    if (key === null) {
+      ++this.id;
+      key = this.id.toString();
+    }
+
+    this.cbList[key] = cb;
+
+    return key;
+  }
+
+  public exec(id: string | null, data: string | null = null): void {
+    console.log('exec - event id', id)
+    if (id === null) throw "The callback ID cannot be null";
+
+    const cb: CallBack = this.cbList[id];
+
+    if (cb === undefined) {
+      console.log("Undefined callback for", id);
+
+      return;
+    }
+
+    // delete this.cbList[id];
+
+    let obj: object | null = null;
+
+    try {
+      console.log('exec - data', data)
+      if (data !== null) obj = JSON.parse(data);
+    } catch (e) {
+      console.log("JSON error:", e);
+      obj =  typeof data === 'string' ? {response: data} : null
+    }
+
+    cb(obj);
+  }
+}
+
+let chats: ChatService;
+let callBacks: CallBackManager;
+
 export class ChatService {
   private isLocalDebug: boolean = false;
 
@@ -61,19 +130,37 @@ export class ChatService {
   private userId: string = "";
   private isConnected: boolean = false;
   private isLogin: boolean = false;
-  private eventsProcessed: number = 0;
 
-  constructor() {}
+  constructor() {
+    chats = this;
+    callBacks = new CallBackManager();
+  }
 
-  public isOpen() : boolean {
+  public isOpen(): boolean {
     return this.isLogin;
   }
-  
-  public getUserId() : string {
+
+  public getUserId(): string {
     return this.userId;
   }
 
-  public async chatLogin() {
+  public onError(cb: CallBack): void {
+    callBacks.put(cb, EVENT_TYPE.error);
+  }
+
+  public onEchoReply(cb: CallBack): void {
+    callBacks.put(cb, EVENT_TYPE.echoReply);
+  }
+
+  public onContactList(cb: CallBack): void {
+    callBacks.put(cb, EVENT_TYPE.contactList);
+  }
+
+  public onMessage(cb: CallBack): void {
+    callBacks.put(cb, EVENT_TYPE.message);
+  }
+
+  public async chatLogin(cb: CallBack) {
     console.log("chatLogin -- start");
     const response = this.isLocalDebug
       ? await fetch(CONST.chatLoginURL(), {
@@ -101,6 +188,7 @@ export class ChatService {
       // console.log("The content is:", content);
       // ws = new WebSocket(WS_URL);
       // wsSetup();
+      callBacks.put(cb, EVENT_TYPE.hello);
       this.wsSetup();
     } else {
       console.log(
@@ -112,7 +200,7 @@ export class ChatService {
   public shutdown() {
     if (this.ws) this.ws.close();
   }
-  
+
   public wsSend(ev: ChatEvent): void {
     if (this.ws !== null) this.ws.send(JSON.stringify(ev));
   }
@@ -135,48 +223,25 @@ export class ChatService {
   }
 
   private wsEvents(event: MessageEvent<any>): void {
-    ++this.eventsProcessed;
+    ++stats.eventsProcessed;
     const response: ChatEvent = JSON.parse(event.data);
 
-    console.log("#", this.eventsProcessed, "got", response);
+    console.log("event#", stats.eventsProcessed, "got", response);
 
     switch (response.event) {
-      case EVENT_TYPE.error:
-        const reason = response.data;
-
-        console.log("Error:", reason);
-        break;
-
-      case EVENT_TYPE.found:
-        const data = JSON.parse(response.data);
-
-        console.log("found", data);
-        break;
-
       case EVENT_TYPE.hello:
         this.isLogin = true;
         this.userId = response.data;
         console.log("My User ID:", this.userId);
-        this.chatMain();
-        break;
-
-      case EVENT_TYPE.echoReply:
-        const reply = response.data;
-
-        console.log("Echo reply:", reply);
-        break;
-
-      case EVENT_TYPE.contactList:
-        break;
-
-      case EVENT_TYPE.message:
         break;
 
       default:
     }
+
+    callBacks.exec(response.event, response.data);
   }
 
-  private chatMain(): void {
+  public testRequest(): void {
     console.log("Started");
     // requestEcho("Hello!");
 
@@ -200,11 +265,13 @@ export class ChatService {
 
     // requestFind("@");
     // requestFind("voo");
-    this.requestFind("");
+    this.requestFind("@", (items) => {
+      console.log("found:", items);
+    });
   }
 
   // find a user/group
-  public requestFind(text: string): void {
+  public requestFind(text: string, cb: CallBack): void {
     const request = {
       find: text,
       mode: FIND_MODE.default,
@@ -217,6 +284,50 @@ export class ChatService {
       data: JSON.stringify(request),
     };
 
+    callBacks.put(cb, EVENT_TYPE.found);
     this.wsSend(requestEvent);
+  }
+
+//  method to create a user subscription
+  public requestUserSubscriptionCreate(userId: string, cb: CallBack): void {
+    const request = {
+      action: "create",
+      userId: userId,
+    };
+
+    const requestEvent: ChatEvent = {
+      event: EVENT_TYPE.subscription,
+      data: JSON.stringify(request),
+    };
+
+    callBacks.put(cb, EVENT_TYPE.subscription);
+    this.wsSend(requestEvent);
+  }
+
+
+//  method to create a group subscription
+  public requestGroupSubscriptionCreate(groupId: string, cb: CallBack): void {
+    const request = {
+      action: "create",
+      groupId: groupId,
+    };
+
+    const requestEvent: ChatEvent = {
+      event: EVENT_TYPE.subscription,
+      data: JSON.stringify(request),
+    };
+
+    callBacks.put(cb, EVENT_TYPE.subscription);
+    this.wsSend(requestEvent);
+  }
+
+  public requestEcho(text: string, cb: CallBack): void {
+    const request = {
+      event: EVENT_TYPE.echo,
+      data: text,
+    };
+
+    this.onEchoReply(cb);
+    this.wsSend(request);
   }
 }

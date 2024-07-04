@@ -1,21 +1,25 @@
-import { Box, Modal, Stack } from '@mui/material';
+import {Avatar, Box, Modal, Stack} from '@mui/material';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { data } from './utils';
-import Picture from './Picture';
 import Slider from 'react-slick';
+import {useEffect, useState} from "react";
+import {getUserAvatar} from "../getUserAvatar.tsx";
 
 type Props = {
   isOpenPhotoModal: boolean;
   handleClickOutside: () => void;
   handleClickInside: (e: React.MouseEvent) => void;
+  userId: string;
 };
 
 const SliderModal = ({
   isOpenPhotoModal,
   handleClickOutside,
   handleClickInside,
+    userId
 }: Props) => {
+  const [userAvatar, setUserAvatar] = useState<string | null>(null);
+  //#region settings for slider
   const settings = {
     dots: true,
     infinite: true,
@@ -53,6 +57,23 @@ const SliderModal = ({
       },
     ],
   };
+  //#endregion settings for slider
+
+  //#region useEffect for fetching user avatar
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      if (userId) {
+        const userAvatar = await getUserAvatar(userId);
+        if (typeof userAvatar === 'string') {
+          setUserAvatar(userAvatar);
+        }
+      }
+    };
+
+    fetchAvatar();
+  }, [userId]);
+  //#endregion useEffect for fetching user avatar
+
   return (
     <Stack>
       <Modal
@@ -76,9 +97,7 @@ const SliderModal = ({
           onClick={handleClickInside}
         >
           <Slider {...settings}>
-            {data.map((elem) => (
-              <Picture key={elem.id} {...elem} />
-            ))}
+            <Avatar src={userAvatar || ''}/>
           </Slider>
         </Box>
       </Modal>

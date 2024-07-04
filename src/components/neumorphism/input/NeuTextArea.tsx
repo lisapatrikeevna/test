@@ -2,12 +2,14 @@ import React, { ChangeEventHandler, useRef, useEffect } from 'react';
 import NeuTextField, { NeuTextFieldProps } from './NeuTextField';
 import { styled } from '@mui/system';
 
+// Define custom properties for the NeuTextArea component, extending NeuTextFieldProps
 interface NeuTextAreaProps extends NeuTextFieldProps {
-  autoExpand?: boolean;
-  inputStyles?: React.CSSProperties;
-  rows?: number;
+  autoExpand?: boolean; // If true, the textarea auto-expands as the user types
+  inputStyles?: React.CSSProperties; // Custom styles for the textarea
+  rows?: number; // Number of rows for the textarea
 }
 
+// Styled textarea with custom scrollbar and other styles
 const CustomTextareaAutosize = styled('textarea')({
   '&::-webkit-scrollbar': {
     width: '8px',
@@ -40,12 +42,14 @@ const CustomTextareaAutosize = styled('textarea')({
   backgroundColor: 'transparent', // Transparent background to match parent styling
 });
 
+// Custom NeuTextArea component
 const NeuTextArea: React.FC<NeuTextAreaProps> = (props) => {
   const { autoExpand, inputStyles, dense, rows, ...others } = props;
   const minHeight = dense ? 32 : 40;
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
+  // Handle input event to auto-expand the textarea
   const handleInput: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     if (!autoExpand) return;
     const textarea = e.target as HTMLTextAreaElement;

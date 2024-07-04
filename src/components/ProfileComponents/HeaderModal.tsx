@@ -11,7 +11,7 @@ type HeaderModalProps = {
 const HeaderModal = ({
   onClose,
   none,
-}: // setIsOpenSettingsModal,
+}:
 HeaderModalProps) => {
   return (
     <Stack

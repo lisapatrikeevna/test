@@ -5,6 +5,7 @@ import QrCode2Icon from '@mui/icons-material/QrCode2';
 import ShareIcon from '@mui/icons-material/Share';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
+//Info of profile of other Users
 const AboutModal = () => {
   return (
     <Stack sx={{ display: 'flex', gap: '7px' }}>

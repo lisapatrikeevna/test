@@ -52,21 +52,6 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
         setIsUpdateVideoModalOpen(true);
     };
 
-    const handleUploadVideo = (newVideo: VideoData) => {
-        setRows((prevRows) => {
-            // Check if the video already exists in the rows
-            const videoIndex = prevRows.findIndex(video => video.id === newVideo.id);
-            if (videoIndex !== -1) {
-                // Update the existing row with the new video data
-                const updatedRows = [...prevRows];
-                updatedRows[videoIndex] = newVideo;
-                return updatedRows;
-            }
-            // Add the new video row
-            return [...prevRows, newVideo];
-        });
-    };
-
     const handleAccessibilityChange = (videoId: string, value: string) => {
         const videoIndex = rows.findIndex(video => video.id === videoId);
         if (videoIndex !== -1) {
@@ -122,7 +107,7 @@ const VideoEditPage: React.FC<VideoEditPageProps> = () => {
                     Add Video
                 </Button>
             </Box>
-            <AddVideoModal isOpen={isAddVideoModalOpen} onClose={() => setIsAddVideoModalOpen(false)} onVideoUploaded={handleUploadVideo} />
+            <AddVideoModal isOpen={isAddVideoModalOpen} onClose={() => setIsAddVideoModalOpen(false)}/>
             <UpdateVideoModal isOpen={isUpdateVideoModalOpen} onClose={() => setIsUpdateVideoModalOpen(false)} video={editingVideo} />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">

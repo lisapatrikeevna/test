@@ -1,17 +1,17 @@
-// AppPageSideBar.tsx
-import { Box } from '@mui/material';
-import { RenderValues } from '../../pages/AppPage';
-import NeuButton from '../neumorphism/button/NeuButton';
-import { useTheme } from '@mui/material/styles';
+import { Box, Button } from '@mui/material';
 
+import { useTheme } from '@mui/material/styles';
+import {RenderValues} from "./chats/types.ts";
+
+// Props type definition for AppPageSideBar component
 type Props = {
   isOpenSideBar: boolean;
   changeRender: (value: RenderValues) => void;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  setIsOpenSideBar: Function;
+  setIsOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   openRightPanel: () => void;
 };
 
+// Sidebar component for the application page
 const AppPageSideBar = ({
   isOpenSideBar,
   changeRender,
@@ -23,7 +23,9 @@ const AppPageSideBar = ({
     openRightPanel();
     setIsOpenSideBar(false);
   };
+
   const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -42,33 +44,39 @@ const AppPageSideBar = ({
         backgroundColor: theme.palette.background.default,
       }}
     >
-      <NeuButton
+      {/* Button to switch to Comments view */}
+      <Button
         variant="contained"
         onClick={() => handleButtonClick('comments')}
       >
         Comments
-      </NeuButton>
-      <NeuButton variant="contained" onClick={() => handleButtonClick('chats')}>
+      </Button>
+      {/* Button to switch to Chats view */}
+      <Button variant="contained" onClick={() => handleButtonClick('chats')}>
         Chats
-      </NeuButton>
-      <NeuButton
+      </Button>
+      {/* Button to switch to Video search view */}
+      <Button
         variant="contained"
         onClick={() => handleButtonClick('videos')}
       >
         Search Video
-      </NeuButton>
-      <NeuButton
+      </Button>
+      {/* Button to switch to Calendar view */}
+      <Button
         variant="contained"
         onClick={() => handleButtonClick('calendar')}
       >
         Calendar
-      </NeuButton>
-      <NeuButton variant="contained" onClick={() => handleButtonClick('audio')}>
+      </Button>
+      {/* Button to switch to Audio (Music) view */}
+      <Button variant="contained" onClick={() => handleButtonClick('audio')}>
         Music
-      </NeuButton>
-      <NeuButton variant="contained" onClick={() => handleButtonClick('radio')}>
+      </Button>
+      {/* Button to switch to Radio view */}
+      <Button variant="contained" onClick={() => handleButtonClick('radio')}>
         Radio
-      </NeuButton>
+      </Button>
     </Box>
   );
 };
