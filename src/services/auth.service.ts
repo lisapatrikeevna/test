@@ -12,7 +12,7 @@ export const AuthService = {
   // Method for user registration
   async registration(userData: IUser): Promise<IResponseUserData> {
     const response: AxiosResponse<IResponseUserData> = await instanceAuth.post(
-      "registration",
+      "/registration",
       userData,
       { withCredentials: true }
     );
