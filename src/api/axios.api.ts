@@ -6,7 +6,8 @@ import { login } from "../store/user/userSlice";
 import { userSliceMapper } from "../store/user/utilits/userUtilits";
 
 // export const API_URL = "https://vibrant-lumiere.85-215-241-41.plesk.page:8030"; //Dev
-export const API_URL = "https://neoxonline.com:8030"; // CheckDev with Https
+// export const API_URL = "https://neoxonline.com:8030"; // CheckDev with Https
+export const API_URL = "https://neoxonline.com"; // CheckDev with Https
 // export const API_URL = "http://85.215.187.128:8030"; //Prod
 // export const API_URL = "https://212.132.99.188:8030"; // CheckNewAuth with Https
 
