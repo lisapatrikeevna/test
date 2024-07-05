@@ -48,6 +48,16 @@ const SearchField: FC<SearchFieldProps> = ({ onSearch }) => {
           </InputAdornment>
         ),
       }}
+      sx={{
+          '.MuiInputBase-input': {
+              height: '43px',
+               // Adjust padding as needed
+          },
+          '.MuiOutlinedInput-root': {
+              height: '43px',
+               // Ensure the input content is vertically centered
+          }
+      }}
     />
   );
 };

@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import { useEffect } from 'react';
-import AppPageMainSideBar from '../../components/AppPageComponents/AppPageMainSideBar.tsx';
+import AppPageMainSideBar from '../../components/AppPageComponents/chats/AppPageMainSideBar/AppPageMainSideBar.tsx';
 import styles from "./styles.ts"
 import {
     AppPageContainerHeader
