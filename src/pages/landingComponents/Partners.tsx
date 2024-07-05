@@ -76,6 +76,7 @@ const Partners: React.FC = memo(() => {
 
     return (
         <Container
+            id='Partners'
             sx={{
                 overflow: 'hidden',
                 display: 'flex',

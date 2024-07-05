@@ -58,6 +58,7 @@ const News = () => {
 
     return (
         <Container
+            id='News'
             maxWidth={false}
             sx={{
                 overflow: 'hidden',

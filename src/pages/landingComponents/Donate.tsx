@@ -42,7 +42,7 @@ const Donate: React.FC = () => {
     }, [isVisible, visibleCards.length]);
 
     return (
-        <Container sx={{  display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
+        <Container id='Donate' sx={{  display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }} ref={containerRef}>
             <Box sx={{ paddingLeft: '1vw' }}>
                 <Typography variant="h4" sx={{ paddingTop: '1.2vw', paddingBottom: "1.2vw" }}>
                     Dear users, thank you for your support of the project and our team, if you want to donate, you can use any convenient way. We are very grateful to you. Also for consideration of investment and participation in the project, you can get in touch with us at any convenient contact for you. Thank you.

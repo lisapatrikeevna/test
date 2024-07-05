@@ -1,6 +1,6 @@
 import React from 'react';
 
-type ActiveSectionContextType = {
+export type ActiveSectionContextType = {
     activeSection: string | null;
     setActiveSection: React.Dispatch<React.SetStateAction<string | null>>;
 };

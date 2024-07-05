@@ -103,7 +103,7 @@ const Contacts = () => {
     };
 
     return (
-        <>
+        <Box id='Contacts'>
             <Typography variant={'h5'}>
                 Dear users, thank you for your support of the project and our team, if you want to donate,
                 you can use any convenient way. We are very grateful to you. Also for consideration of
@@ -315,7 +315,7 @@ const Contacts = () => {
                     {message && <Typography variant="body1" sx={{ color: 'red', mt: 2 }}>{message}</Typography>}
                 </Box>
             </Box>
-        </>
+        </Box>
     );
 }
 

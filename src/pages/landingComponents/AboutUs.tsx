@@ -140,7 +140,9 @@ const AboutUsPage = () => {
     }, [activeStep]);
 
     return (
-        <Box sx={{
+        <Box
+            id="AboutUs"
+            sx={{
             width: '100%',
             paddingRight:{
             xs: theme.spacing(0),
