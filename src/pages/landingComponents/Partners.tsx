@@ -12,6 +12,7 @@ import JetBrains from '../../assets/partners/JetBrains_logo.svg';
 import VSCode from '../../assets/partners/VSCode-logo.png';
 import Reactlogo from '../../assets/partners/React-logo.svg';
 import Unity from '../../assets/partners/unity-logo.png';
+import {SECTION_PADDING_TOP_PX} from "./V2/constants.ts";
 
 const partners = [
     { logo: ionosLogo, link: 'https://acn.ionos.de/aff_c?offer_id=2&aff_id=7772' },
@@ -83,6 +84,7 @@ const Partners: React.FC = memo(() => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'relative',
+
             }}
             ref={containerRef}
         >

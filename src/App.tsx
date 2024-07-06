@@ -25,6 +25,7 @@ import Datenschutz from "./pages/landingComponents/Datenschutz.tsx";
 import Modal from './components/Modal';
 import Impressum from './pages/landingComponents/Impressum.tsx';
 import Footer from './pages/landingComponents/Footer';
+import {Landing} from "./pages/landingComponents/V2/landing/Landing.tsx";
 
 const App: FC = () => {
   // Initialize theme state with light theme as default
@@ -177,7 +178,8 @@ const HeaderAndMainPage: React.FC<{
         setIsDatenschutzModalOpen,
       }) => (
     <ActiveSectionContext.Provider value={{ activeSection, setActiveSection }}>
-      <Header />
+      <Landing/>
+      {/*<Header />*/}
       <MainPage />
       <Footer
           onImpressumClick={() => setIsImpressumModalOpen(true)}

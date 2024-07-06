@@ -11,6 +11,7 @@ import {
     useTheme
 } from "@mui/material";
 import { news } from '../../configs/newsConfig';
+import {SECTION_PADDING_TOP_PX} from "./V2/constants.ts";
 
 const News = () => {
     const scrollRef = useRef<HTMLDivElement | null>(null);

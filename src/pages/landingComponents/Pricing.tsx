@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/StarBorder';
+import {SECTION_PADDING_TOP_PX} from "./V2/constants.ts";
 
 interface Tier {
     title: string;
@@ -150,7 +151,7 @@ const Pricing = () => {
                 overflowY: 'auto',
                 justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'column'
+                flexDirection: 'column',
             }}>
             <Toolbar sx={{ flexWrap: 'wrap' }}>
                 <Typography variant="h4" color="inherit" noWrap sx={{ flexGrow: 1 }}>

@@ -8,6 +8,7 @@ import Fon5 from '../../assets/Fon5.jpg';
 import Fon6 from '../../assets/Fon.jpg';
 import { text, title } from '../../configs/ProjectConfig';
 import {Box} from "@mui/system";
+import {SECTION_PADDING_TOP_PX} from "./V2/constants.ts";
 
 const Project = () => {
     const theme = useTheme();
@@ -29,7 +30,7 @@ const Project = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
             }}>
             <Grid
                 container

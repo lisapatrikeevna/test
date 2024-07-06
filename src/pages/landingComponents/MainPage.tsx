@@ -29,8 +29,8 @@ const MainPage = () => {
                 scrollSnapType: 'y mandatory',
             }}
         >
-            <Home />
-            <AboutUs />
+            {/*<Home />*/}
+            {/*<AboutUs />*/}
             <Pricing />
             <Partners />
             <Contacts />
