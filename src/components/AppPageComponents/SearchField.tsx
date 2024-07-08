@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import {TextField, InputAdornment, IconButton, useTheme} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
+
 // import ClearIcon from '@mui/icons-material/Clear';
 
 // Props type definition for SearchField component
@@ -43,22 +44,23 @@ const SearchField: FC<SearchFieldProps> = ({ onSearch }) => {
             {/*</IconButton>*/}
             {/* Search button */}
               <IconButton onClick={handleSearch} size="small" style={{ fontSize: '16px' }}>
-                  <SearchIcon style={{ fontSize: 'inherit' }} />
+                  <SearchIcon style={{ fontSize: 'inherit', color: theme.palette.text.primary }} />
               </IconButton>
           </InputAdornment>
         ),
       }}
       sx={{
           '.MuiInputBase-input': {
-              height: '32px',
+              height: '16px',
               fontSize: '12px',
           },
           '.MuiOutlinedInput-root': {
               height: '32px',
-              width:'400px',
+              width: '400px',
               borderRadius: '16px',
                 backgroundColor: theme.palette.primary.light,
-          }
+          },
+
       }}
     />
   );

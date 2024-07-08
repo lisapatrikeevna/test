@@ -66,7 +66,7 @@ const lightThemeOptions: ThemeOptions = {
         secondary: {
             main: '#6247BD',
             dark: '#F8F8FE',
-            light: '#715AAE',
+            light: '#FFFFFF',
         },
     },
 };
