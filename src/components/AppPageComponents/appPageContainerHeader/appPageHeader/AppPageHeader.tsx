@@ -6,14 +6,13 @@ import {
     Typography,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import EmailIcon from '@mui/icons-material/Email';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import { useTheme as useCustomTheme } from '../../../../contexts/ThemeContext.tsx';
 import { useTheme } from '@mui/material/styles';
 import SearchField from "../../SearchField.tsx";
 import {AppPageSwitch} from "./AppPageSwitch.tsx";
+import {NotificationsOutlined} from "@mui/icons-material";
 
 // Props type definition for AppPageHeader component
 type Props = {
@@ -27,7 +26,6 @@ type Props = {
 const AppPageHeader = ({
                            setIsOpenSideBar,
                            setIsOpenMainSideBar,
-                           toggleChatsPanel,
                        }: Props) => {
     const [isOpenModalNotifications, setIsOpenModalNotifications] = useState(false);
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
@@ -73,7 +71,7 @@ const AppPageHeader = ({
                 zIndex: 1100,
                 position: 'relative',
                 padding: themeMui.spacing(2),
-                height: '85px',
+                height: '64px',
             }}
             style={{ backgroundColor: themeMui.palette.background.default }}
         >
@@ -82,10 +80,6 @@ const AppPageHeader = ({
                 <MenuIcon
                     cursor="pointer"
                     onClick={() => setIsOpenMainSideBar((prev) => !prev)}
-                />
-                <EmailIcon
-                    cursor="pointer"
-                    onClick={toggleChatsPanel}
                 />
             </Stack>
 
@@ -122,7 +116,7 @@ const AppPageHeader = ({
                         position: 'relative',
                         display: 'flex',
                         alignItems: 'center',
-                        marginLeft: themeMui.spacing(2),
+                        marginLeft: themeMui.spacing(5),
                         '@media (max-width: 930px)': {
                             width: '70px',
                         },
@@ -147,8 +141,10 @@ const AppPageHeader = ({
             {/* Right icons */}
             <Stack direction="row" spacing={2} alignItems="center">
 
-                <Badge badgeContent={10} color="primary" max={9}>
-                    <NotificationsIcon
+                <Badge
+                    // badgeContent={10}
+                    color="primary" max={9}>
+                    <NotificationsOutlined
                         cursor="pointer"
                         onClick={handleModal}
                         sx={{
@@ -168,7 +164,6 @@ const AppPageHeader = ({
                             padding: '15px',
                             borderRadius: '15px',
                             width: '300px',
-                            background: '#e0e0e0',
                             position: 'absolute',
                             top: modalPosition.top,
                             left: modalPosition.left,

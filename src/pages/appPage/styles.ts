@@ -9,12 +9,12 @@ export default {
         display: "flex",
         position: "relative",
         overflow: "auto",
-        height: "calc(100vh - 85px)",
-        marginTop: "85px"
+        height: "calc(100vh - 64px)",
+        marginTop: "64px"
     },
     sideBarContainer:{
         position:"fixed",
-        top:"85px",
+        top:"64px",
         bottom:0,
         left:0,
         zIndex:1000

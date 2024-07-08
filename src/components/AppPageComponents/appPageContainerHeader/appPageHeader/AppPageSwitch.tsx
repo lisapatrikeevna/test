@@ -8,8 +8,8 @@ interface AppPageSwitchProps extends SwitchProps {
 const StyledSwitch = styled((props: AppPageSwitchProps) => (
     <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
-    width: 37,
-    height: 24,
+    width: 28,
+    height: 18,
     padding: 0,
     '& .MuiSwitch-switchBase': {
         padding: 0,
@@ -17,7 +17,7 @@ const StyledSwitch = styled((props: AppPageSwitchProps) => (
         transform: 'translateY(-50%)',
         transitionDuration: '300ms',
         '&.Mui-checked': {
-            transform: 'translateX(150%) translateY(-50%)', // Сдвиг вправо для активного состояния
+            transform: 'translateX(170%) translateY(-50%)', // Сдвиг вправо для активного состояния
             color: '#fff',
             '& + .MuiSwitch-track': {
                 backgroundColor: theme.palette.secondary.main,
@@ -29,7 +29,7 @@ const StyledSwitch = styled((props: AppPageSwitchProps) => (
             },
         },
         '&:not(.Mui-checked)': {
-            transform: 'translateX(25%) translateY(-50%)', // Сдвиг влево для неактивного состояния
+            transform: 'translateX(50%) translateY(-50%)', // Сдвиг влево для неактивного состояния
         },
         '&.Mui-focusVisible .MuiSwitch-thumb': {
             border: '6px solid #fff',
@@ -43,8 +43,8 @@ const StyledSwitch = styled((props: AppPageSwitchProps) => (
     },
     '& .MuiSwitch-thumb': {
         boxSizing: 'border-box',
-        width: 13,
-        height: 13,
+        width: 8.62,
+        height: 8.62,
         color: theme.palette.background.default,
     },
     '& .MuiSwitch-track': {

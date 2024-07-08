@@ -1,6 +1,6 @@
 import {ImperativePanelHandle, Panel, PanelResizeHandle} from "react-resizable-panels";
 import Box from "@mui/material/Box";
-import Fon5 from "../../../assets/Fon5.jpg";
+
 import AppPageComments from "../AppPageComments.tsx";
 import VideoInSideBareAppPage from "../VideoInSideBareAppPage.tsx";
 import AppPageCalendar from "../AppPageCalendar.tsx";
@@ -22,7 +22,7 @@ export const AppPageRightSideBarPanel= ({renderValues}:AppPageChatsPanelProps) =
         <>
             <PanelResizeHandle
                 style={{
-                    width: '3px',
+                    width: '1px',
                     background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
                 }}
             />
@@ -32,10 +32,10 @@ export const AppPageRightSideBarPanel= ({renderValues}:AppPageChatsPanelProps) =
                 maxSize={50}
                 minSize={15}
                 collapsible
+                style={{backgroundColor: theme.palette.secondary.light}}
             >
                 <Box
                     height="100vh"
-                    style={{ backgroundImage: `url(${Fon5})` }}
                     padding="5px"
                 >
                     {renderValues === 'chats' && <AppPageChats currentUser={null} />}

@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
-import { TextField, InputAdornment, IconButton } from '@mui/material';
+import {TextField, InputAdornment, IconButton, useTheme} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import ClearIcon from '@mui/icons-material/Clear';
+// import ClearIcon from '@mui/icons-material/Clear';
 
 // Props type definition for SearchField component
 interface SearchFieldProps {
@@ -11,7 +11,7 @@ interface SearchFieldProps {
 // Search field component with clear and search buttons
 const SearchField: FC<SearchFieldProps> = ({ onSearch }) => {
   const [searchValue, setSearchValue] = useState('');
-
+  const theme = useTheme();
   // Handle the search action
   const handleSearch = () => {
     if (onSearch) {
@@ -20,12 +20,12 @@ const SearchField: FC<SearchFieldProps> = ({ onSearch }) => {
   };
 
   // Handle clearing the search input
-  const handleClear = () => {
-    setSearchValue('');
-    if (onSearch) {
-      onSearch('');
-    }
-  };
+  // const handleClear = () => {
+  //   setSearchValue('');
+  //   if (onSearch) {
+  //     onSearch('');
+  //   }
+  // };
 
   return (
     <TextField
@@ -38,24 +38,26 @@ const SearchField: FC<SearchFieldProps> = ({ onSearch }) => {
         endAdornment: (
           <InputAdornment position="end">
             {/* Clear button */}
-            <IconButton onClick={handleClear} size="small">
-              <ClearIcon />
-            </IconButton>
+            {/*<IconButton onClick={handleClear} size="small">*/}
+            {/*  <ClearIcon />*/}
+            {/*</IconButton>*/}
             {/* Search button */}
-            <IconButton onClick={handleSearch} size="small">
-              <SearchIcon />
-            </IconButton>
+              <IconButton onClick={handleSearch} size="small" style={{ fontSize: '16px' }}>
+                  <SearchIcon style={{ fontSize: 'inherit' }} />
+              </IconButton>
           </InputAdornment>
         ),
       }}
       sx={{
           '.MuiInputBase-input': {
-              height: '43px',
-               // Adjust padding as needed
+              height: '32px',
+              fontSize: '12px',
           },
           '.MuiOutlinedInput-root': {
-              height: '43px',
-               // Ensure the input content is vertically centered
+              height: '32px',
+              width:'400px',
+              borderRadius: '16px',
+                backgroundColor: theme.palette.primary.light,
           }
       }}
     />

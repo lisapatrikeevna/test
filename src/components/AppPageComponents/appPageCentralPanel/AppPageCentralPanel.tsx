@@ -35,7 +35,7 @@ export const AppPageCentralPanel= ({renderValuesCentralComponent, changeRenderCe
         <>
             <PanelResizeHandle
                 style={{
-                    width: '3px',
+                    width: '1px',
                     background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
                 }}
             />

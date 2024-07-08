@@ -16,7 +16,7 @@ export const AppPageChatsPanel = ({setIsChatPanelOpen,currentUser }:AppPagePanel
     const theme = useTheme();
 
     const panelResizeHandleStyles = {
-        width: '3px',
+        width: '1px',
         background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
     }
     return (

@@ -54,6 +54,7 @@ const lightThemeOptions: ThemeOptions = {
 
         text: {
             primary: '#212121',
+            secondary: '#AF9EC0'
         },
 
         primary: {
@@ -64,8 +65,8 @@ const lightThemeOptions: ThemeOptions = {
         },
         secondary: {
             main: '#6247BD',
-            dark: '#6247BD',
-            light: '#8C63FF',
+            dark: '#F8F8FE',
+            light: '#715AAE',
         },
     },
 };
@@ -83,15 +84,17 @@ const darkThemeOptions: ThemeOptions = {
 
         text: {
             primary: '#e0e0e0',
+            secondary: '#AF9EC0',
         },
 
         primary: {
-            main: '#212121',
+            main: '#211E2C',
+            light: '#363445',
         },
         secondary: {
             main: '#f3f3f3',
-            dark: '#211E2C',
-            light: '#E7E0EC',
+            dark: '#363445',
+            light: '#2A2B39',
         },
 
     },
