@@ -10,12 +10,10 @@ import {
     CSSObject
 } from '@mui/material';
 import styles from './styles';
-import {ICON_MAP, MENU_ITEMS} from "../constans.tsx";
+import {ICON_MAP, MENU_ITEMS} from "../constants.tsx";
 import {drawerLogoStyles} from "../styles.ts";
 import {styled} from "@mui/material/styles";
 import logo from "../../../../assets/partners/neox-logo.svg"
-
-
 
 const StyledListItem = styled(ListItem)<{
     isActiveSection: boolean;

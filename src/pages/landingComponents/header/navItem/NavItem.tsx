@@ -1,7 +1,7 @@
 import {ListItem, ListItemIcon, ListItemText, Link as MuiLink, CSSObject} from '@mui/material';
 import styles from './styles';
 import {forwardRef, Ref} from 'react';
-import {ICON_MAP} from "../constans.tsx";
+import {ICON_MAP} from "../constants.tsx";
 import {styled} from "@mui/material/styles";
 
 const StyledListItem = styled(ListItem)<{

@@ -9,7 +9,7 @@ const baseTheme = createTheme({
     },
     spacing: (factor: number) => factor * 8,
     typography: {
-        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif, "Space Grotesk"',
         fontSize: 14,
         fontWeightLight: 300,
         fontWeightRegular: 400,

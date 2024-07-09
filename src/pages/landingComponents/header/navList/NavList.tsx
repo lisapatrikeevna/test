@@ -3,7 +3,7 @@ import { useContext, useRef, useEffect } from 'react';
 
 import styles from "./styles.ts"
 import ActiveSectionContext from "../../../../contexts/ActiveSectionContext.tsx";
-import {MENU_ITEMS} from "../constans.tsx";
+import {MENU_ITEMS} from "../constants.tsx";
 import NavItem from "../navItem/NavItem.tsx";
 
 

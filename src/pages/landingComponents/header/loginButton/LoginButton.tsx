@@ -1,15 +1,14 @@
 import styles from './styles';
-import NeuButton from "../../../../components/neumorphism/button/NeuButton.tsx";
+import {Button} from "@mui/material";
 
 const LoginButton = ({ setIsLoginModalOpen }: { setIsLoginModalOpen: (open: boolean) => void }) => (
-    <NeuButton
-        rounded
+    <Button
         size='large'
         sx={styles.loginButton}
         onClick={() => setIsLoginModalOpen(true)}
     >
         Login
-    </NeuButton>
+    </Button>
 );
 
 export default LoginButton;
