@@ -4,7 +4,7 @@ import { grey } from '@mui/material/colors';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import banner from "../../assets/banner.jpg";
+import banner from "../../assets/banner.png";
 import VideoListHorizontal from "../../components/VideoComponents/VideoListHorizontal";
 import {getUserAvatar} from "../../components/getUserAvatar.tsx";
 import {useSelector} from "react-redux";

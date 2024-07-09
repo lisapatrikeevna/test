@@ -69,6 +69,7 @@ const AppPage = () => {
                     <AppPageMainSideBar
                         isOpenMainSideBar={isOpenMainSideBar}
                         changeRenderCentralComponent={changeRenderCentralComponent}
+                        currentCentralComponent={renderValuesCentralComponent}
                     />
                 </Box>
 
