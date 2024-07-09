@@ -23,12 +23,13 @@ const AppPageCalendar = () => {
                     },
                 }}
             >
-                <StaticDatePicker sx={{
+                <StaticDatePicker sx={{borderRadius: '23px',
                     '& .MuiDateCalendar-root': {
-                            backgroundColor: theme.palette.secondary.dark
+                            backgroundColor: theme.palette.secondary.dark,
+
                     },
                     '& .MuiPickersToolbar-root': {
-                        backgroundColor: theme.palette.secondary.dark
+                        backgroundColor: theme.palette.secondary.dark,
                     },
                     '& .MuiDialogActions-root': {
                         backgroundColor: theme.palette.secondary.dark

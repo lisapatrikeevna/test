@@ -7,17 +7,12 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import {
-  AccountCircleOutlined,
-  CallOutlined,
-  CampaignOutlined,
-  ForumOutlined,
+  ChatBubbleOutline, Close, GroupOutlined,
   HomeOutlined,
-  KeyboardArrowDownOutlined,
-  KeyboardArrowUpOutlined,
   // LogoutOutlined,
-  PeopleOutline,
-  PlayCircleOutline,
-  SettingsOutlined,
+  PermIdentity,
+  PlayCircleOutline, RemoveRedEyeOutlined,
+  SettingsOutlined, VideocamOutlined, WifiTethering,
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import {
@@ -51,7 +46,7 @@ const AppPageMainSideBar = ({
                               isOpenMainSideBar,
                               changeRenderCentralComponent,
                             }: Props) => {
-  const username = useAppSelector(selectUsername) || 'Guest';
+  const username = useAppSelector(selectUsername) || 'Name Surname';
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [isAccountsDropdownOpen, setIsAccountsDropdownOpen] = useState(false);
   const themeMui = useTheme();
@@ -66,6 +61,9 @@ const AppPageMainSideBar = ({
 
   const ThemedListItemText = styled(ListItemText)(({ theme }) => ({
     color: theme.palette.mode === 'dark' ? '#fff' : '#000',
+    '& .MuiListItemText-primary': {
+      fontSize: '14px',
+    },
   }));
 
   // Toggle the accounts dropdown menu
@@ -93,23 +91,23 @@ const AppPageMainSideBar = ({
       <Box
           sx={{
             height: '100vh',
-            width: isOpenMainSideBar ? '405px' : '0px',
+            width: isOpenMainSideBar ? '304px' : '0px',
             transition: 'width 0.5s ease',
             display: 'flex',
-            flexDirection: 'column',
-            gap: '2px',
             overflow: 'hidden',
-            background: getThemeBackground(customTheme.theme), // Apply the dynamic background here
+            borderTopRightRadius: '16px',
+            borderBottomRightRadius: '16px',
+            background: getThemeBackground(customTheme.theme), // Apply the gradient background here
           }}
       >
         {isOpenMainSideBar && (
-            <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems: 'flex-start'}}>
+            <Box sx={{display:'flex', flexDirection:'column', alignItems: 'flex-start'}}>
               <Box
                   sx={{
                     color: 'inherit',
                     textDecoration: 'none',
                     marginTop: themeMui.spacing(2),
-                    marginLeft: themeMui.spacing(7),
+                    marginLeft: themeMui.spacing(4),
                     display: 'flex',
                   }}
               >
@@ -117,48 +115,42 @@ const AppPageMainSideBar = ({
                 <Avatar
                     src={userAvatar || ''}
                     sx={{
-                      width: 53,
-                      height: 53,
+                      width: 40,
+                      height: 40,
                       cursor: 'pointer',
                       position: 'relative',
                       backgroundColor: userAvatar ? (userAvatar.startsWith('#') ? userAvatar : undefined) : undefined
                     }}
                     onClick={handleAvatarClick}
                 />
-                <ListItemButton onClick={toggleAccountsDropdown} disableRipple>
+                <ListItemButton onClick={toggleAccountsDropdown} >
                   <ThemedListItemText primary={username} />
-                  {isAccountsDropdownOpen ? (
-                      <KeyboardArrowUpOutlined
-                          sx={{
-                            color:
-                            themeMui.palette.background.default,
-                          }}
-                      />
-                  ) : (
-                      <KeyboardArrowDownOutlined
-                          sx={{
-                            color:
-                            themeMui.palette.background.default,
-                          }}
-                      />
-                  )}
+
                 </ListItemButton>
+                <Box sx={{display: 'flex', alignItems: 'top', marginLeft: themeMui.spacing(6)}}>
+                <Close
+                    sx={{
+                      color:
+                          '#FFFFFF', fontSize: 24
+                    }}
+                />
+                </Box>
               </Box>
               <MyModalProfile
                   open={openProfileModal}
                   onClose={() => setOpenProfileModal(false)}
               />
               {/* Sidebar navigation items */}
-              <Box sx={{marginLeft: themeMui.spacing(3), marginTop: themeMui.spacing(2)}}>
+              <Box sx={{marginTop: themeMui.spacing(2)}}>
                 <ListItem
                     onClick={() => changeRenderCentralComponent('home')}
                 >
-                  <ListItemButton disableRipple >
-                    <ListItemIcon>
+                  <ListItemButton >
+                    <ListItemIcon >
                       <HomeOutlined fontSize="large"
                                     sx={{
                                       color:
-                                      themeMui.palette.background.default,
+                                          '#FFFFFF', fontSize: 24
                                     }}
                       />
                     </ListItemIcon>
@@ -169,15 +161,15 @@ const AppPageMainSideBar = ({
                   <ListItemButton
                       component={Link}
                       to={contactsPath}
-                      disableRipple
+                      
 
                   >
                     <ListItemIcon>
-                      <AccountCircleOutlined fontSize="large"
-                                             sx={{
-                                               color:
-                                               themeMui.palette.background.default,
-                                             }}
+                      <PermIdentity fontSize="large"
+                                    sx={{
+                                      color:
+                                          '#FFFFFF', fontSize: 24
+                                    }}
                       />
                     </ListItemIcon>
                     <ThemedListItemText primary="Profile" />
@@ -187,15 +179,15 @@ const AppPageMainSideBar = ({
                   <ListItemButton
                       component={Link}
                       to={chatsPath}
-                      disableRipple
+                      
 
                   >
                     <ListItemIcon>
-                      <ForumOutlined fontSize="large"
-                                     sx={{
-                                       color:
-                                       themeMui.palette.background.default,
-                                     }}
+                      <ChatBubbleOutline fontSize="large"
+                                         sx={{
+                                           color:
+                                               '#FFFFFF', fontSize: 24
+                                         }}
                       />
                     </ListItemIcon>
                     <ThemedListItemText primary="Chat" />
@@ -205,13 +197,13 @@ const AppPageMainSideBar = ({
                   <ListItemButton
                       component={Link}
                       to={newGroupPath}
-                      disableRipple
+                      
                   >
                     <ListItemIcon>
-                      <PeopleOutline fontSize="large"
+                      <GroupOutlined fontSize="large"
                                      sx={{
                                        color:
-                                       themeMui.palette.background.default,
+                                           '#FFFFFF', fontSize: 24
                                      }}
                       />
                     </ListItemIcon>
@@ -222,15 +214,15 @@ const AppPageMainSideBar = ({
                   <ListItemButton
                       component={Link}
                       to={newChannelPath}
-                      disableRipple
+                      
 
                   >
                     <ListItemIcon>
-                      <CampaignOutlined fontSize="large"
-                                        sx={{
-                                          color:
-                                          themeMui.palette.background.default,
-                                        }}
+                      <WifiTethering fontSize="large"
+                                     sx={{
+                                       color:
+                                           '#FFFFFF', fontSize: 24
+                                     }}
                       />
                     </ListItemIcon>
                     <ThemedListItemText primary="Start a channel" />
@@ -240,26 +232,26 @@ const AppPageMainSideBar = ({
 
                     onClick={() => changeRenderCentralComponent('mevipa')}
                 >
-                  <ListItemButton disableRipple >
+                  <ListItemButton  >
                     <ListItemIcon>
                       <PlayCircleOutline fontSize="large"
                                          sx={{
                                            color:
-                                           themeMui.palette.background.default,
+                                               '#FFFFFF', fontSize: 24
                                          }}
                       />
                     </ListItemIcon>
                     <ThemedListItemText primary="Videos" />
                   </ListItemButton>
                 </ListItem>
-                <ListItem >
-                  <ListItemButton disableRipple >
+                <ListItem>
+                  <ListItemButton  >
                     <ListItemIcon>
-                      <CallOutlined fontSize="large"
-                                    sx={{
-                                      color:
-                                      themeMui.palette.background.default,
-                                    }}
+                      <VideocamOutlined fontSize="large"
+                                        sx={{
+                                          color:
+                                              '#FFFFFF', fontSize: 24
+                                        }}
                       />
                     </ListItemIcon>
                     <ThemedListItemText primary="Webinars" />
@@ -269,65 +261,57 @@ const AppPageMainSideBar = ({
 
                     onClick={() => changeRenderCentralComponent('VR')}
                 >
-                  <ListItemButton disableRipple >
+                  <ListItemButton  >
                     <ListItemIcon>
-                      <PlayCircleOutline fontSize="large"
+                      <RemoveRedEyeOutlined
                                          sx={{
                                            color:
-                                           themeMui.palette.background.default,
+                                               '#FFFFFF', fontSize: 24
                                          }}
                       />
                     </ListItemIcon>
                     <ThemedListItemText primary="VR" />
                   </ListItemButton>
                 </ListItem>
-
                 {/* Project support and version information */}
               </Box>
               <Box
                   sx={{
                     position: 'absolute',
-                    bottom: '10px',
-                    left: 0,
+                    bottom: themeMui.spacing(1),
                     width: '100%',
                     textAlign: 'left',
-                    paddingLeft: '20px',
                   }}
               >
                 <ListItem >
                   <ListItemButton
                       component={Link}
                       to={settingsPath}
-                      disableRipple
+                      
 
                   >
                     <ListItemIcon>
                       <SettingsOutlined fontSize="large"
                                         sx={{
                                           color:
-                                          themeMui.palette.background.default,
+                                              '#FFFFFF', fontSize: 24
                                         }}
                       />
                     </ListItemIcon>
                     <ThemedListItemText primary="Settings" />
                   </ListItemButton>
                 </ListItem>
-                <ListItem
-
-                    sx={{ paddingLeft: '17px' }}
-                >
-                </ListItem>
                 {/*<ListItem >*/}
                 {/*  <ListItemButton*/}
                 {/*      component={Link}*/}
                 {/*      to={'/'}*/}
-                {/*      disableRipple*/}
+                {/*      */}
                 {/*  >*/}
                 {/*    <ListItemIcon>*/}
                 {/*      <LogoutOutlined fontSize="large"*/}
                 {/*                      sx={{*/}
                 {/*                        color:*/}
-                {/*                        themeMui.palette.background.default,*/}
+                {/*                        '#FFFFFF', fontSize: 24*/}
                 {/*                      }}*/}
                 {/*      />*/}
                 {/*    </ListItemIcon>*/}

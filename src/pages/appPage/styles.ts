@@ -9,16 +9,14 @@ export default {
         display: "flex",
         position: "relative",
         overflow: "auto",
-        height: "calc(100vh - 64px)",
-        marginTop: "64px"
+        height: "calc(100vh - 60px)",
+        marginTop: "60px"
     },
     sideBarContainer:{
         position:"fixed",
-        top:"64px",
         bottom:0,
         left:0,
         zIndex:1000
-
     }
 
 } as CSSProperties<'mainContainer' | 'contentContainer' | 'sideBarContainer'>;

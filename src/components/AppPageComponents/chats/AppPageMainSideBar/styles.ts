@@ -1,7 +1,7 @@
 export const getThemeBackground = (theme: 'light' | 'dark') => {
     if (theme === 'light') {
-        return 'linear-gradient( #AE92FF 100%, #917AD8 100%)';
+        return 'linear-gradient(to right, #AE92FF, #917AD8)';
     } else {
-        return 'linear-gradient( #6F52C3 100%, #554199 100%)';
+        return 'linear-gradient(to right, #6F52C3, #554199)';
     }
 };
