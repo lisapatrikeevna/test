@@ -8,6 +8,7 @@ import {AppPageCentralPanel} from "../appPageCentralPanel/AppPageCentralPanel.ts
 import {AppPageChatsPanel} from "../appPageChatsPanel/AppPageChatsPanel.tsx";
 import {AppPageRightSideBarPanel} from "../appPageRightSideBarPanel/AppPageRightSideBarPanel.tsx";
 import {AppPageListCommunities} from "../appPageListCommunities/appPageListCommunities.tsx";
+import AppPageLeftSideBar from "../AppPageLeftSideBar/AppPageLeftSideBar.tsx";
 
 type AppPagePanelGroupProps = {
     renderValues: RenderValues
@@ -43,6 +44,10 @@ export const AppPagePanelGroup = ({renderValuesCentralComponent, renderValues, s
     return(
 
         <PanelGroup direction="horizontal" style={{flex:1}}>
+            <AppPageLeftSideBar
+                changeRenderCentralComponent={changeRenderCentralComponent}
+                currentCentralComponent={renderValuesCentralComponent}
+            />
             <AppPageListCommunities userAvatar={userAvatar}
                                     avatarAndNamesMinSizePercentage={avatarAndNamesMinSizePercentage}
                                     setCurrentUser={setCurrentUser}

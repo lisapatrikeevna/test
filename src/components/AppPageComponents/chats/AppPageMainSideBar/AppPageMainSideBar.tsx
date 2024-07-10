@@ -105,8 +105,9 @@ const AppPageMainSideBar = ({
                             color: 'inherit',
                             textDecoration: 'none',
                             marginTop: themeMui.spacing(2),
-                            marginLeft: themeMui.spacing(4),
+                            marginLeft: themeMui.spacing(3),
                             display: 'flex',
+                            marginBottom: themeMui.spacing(1),
                         }}
                     >
                         <Avatar
@@ -131,11 +132,17 @@ const AppPageMainSideBar = ({
                         open={openProfileModal}
                         onClose={() => setOpenProfileModal(false)}
                     />
-                    <Box sx={{ marginTop: themeMui.spacing(2) }}>
+                    <Box>
                         {sidebarItems.map(({ label, icon, component }) => (
-                            <ListItem key={label} onClick={() => changeRenderCentralComponent(component as RenderValuesCentralComponent)}>
+                            <ListItem key={label} onClick={() => changeRenderCentralComponent(component as RenderValuesCentralComponent)}
+                                      sx={{
+                                          padding: '10px 0px 0px 10px'
+                            }}
+                            >
                                 <ListItemButton
                                     sx={{
+                                        width: '272px',
+                                        height: '56px',
                                         borderRadius: '100px',
                                         backgroundColor: currentCentralComponent === component ? '#FFFFFF' : 'inherit',
                                         '&:hover': {
@@ -145,7 +152,7 @@ const AppPageMainSideBar = ({
                                         },
                                     }}
                                 >
-                                    <ListItemIcon sx={{ color: currentCentralComponent === component ? '#8C63FF' : '#FFFFFF', fontSize: 24 }}>
+                                    <ListItemIcon sx={{ color: currentCentralComponent === component ? '#8C63FF' : '#FFFFFF', fontSize: 24, minWidth: '36px' }}>
                                         {icon}
                                     </ListItemIcon>
                                     <ThemedListItemText primary={label} sx={{ color: currentCentralComponent === component ? '#8C63FF' : '#FFFFFF' }} />
