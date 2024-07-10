@@ -17,7 +17,7 @@ const StyledSwitch = styled((props: AppPageSwitchProps) => (
         transform: 'translateY(-50%)',
         transitionDuration: '300ms',
         '&.Mui-checked': {
-            transform: 'translateX(170%) translateY(-50%)', // Сдвиг вправо для активного состояния
+            transform: 'translateX(100%) translateY(-50%)', // Сдвиг вправо для активного состояния
             color: '#fff',
             '& + .MuiSwitch-track': {
                 backgroundColor: theme.palette.secondary.main,
@@ -27,9 +27,14 @@ const StyledSwitch = styled((props: AppPageSwitchProps) => (
             '&.Mui-disabled + .MuiSwitch-track': {
                 opacity: 0.5,
             },
+            '& .MuiSwitch-thumb': {
+                width: 12.92, // Change size of the thumb when checked
+                height: 12.92,
+            },
         },
         '&:not(.Mui-checked)': {
             transform: 'translateX(50%) translateY(-50%)', // Сдвиг влево для неактивного состояния
+
         },
         '&.Mui-focusVisible .MuiSwitch-thumb': {
             border: '6px solid #fff',

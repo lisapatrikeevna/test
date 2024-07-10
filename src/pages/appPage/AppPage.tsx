@@ -49,45 +49,52 @@ const AppPage = () => {
     // #endregion useEffect isOpenSideBar
 
     return (
-        <Box
-            sx={{
-                ...styles.mainContainer,
-                backgroundColor: theme.palette.background.default,
-            }}
-        >
+        <Box sx={{...styles.sideBarAndMainContainer,}}>
+            <AppPageLeftSideBar
+                changeRenderCentralComponent={changeRenderCentralComponent}
+                currentCentralComponent={renderValuesCentralComponent}
+                setIsOpenMainSideBar={setIsOpenMainSideBar}
+            />
+            <Box
+                sx={{
+                    ...styles.mainContainer,
+                    backgroundColor: theme.palette.background.default,
+                }}
+            >
+
                 <AppPageContainerHeader
                     setIsOpenSideBar={setIsOpenSideBar}
-                    setIsOpenMainSideBar={setIsOpenMainSideBar}
                     toggleChatsPanel={toggleChatsPanel}
                     setIsChatPanelOpen={setIsChatPanelOpen}
                 />
 
-            <Box
-                sx={styles.contentContainer}
-            >
+                <Box
+                    sx={styles.contentContainer}
+                >
 
-                <Box sx={styles.sideBarContainer}>
-                    <AppPageMainSideBar
-                        isOpenMainSideBar={isOpenMainSideBar}
-                        changeRenderCentralComponent={changeRenderCentralComponent}
-                        currentCentralComponent={renderValuesCentralComponent}
+                    <Box sx={styles.sideBarContainer}>
+                        <AppPageMainSideBar
+                            isOpenMainSideBar={isOpenMainSideBar}
+                            changeRenderCentralComponent={changeRenderCentralComponent}
+                            currentCentralComponent={renderValuesCentralComponent}
+                        />
+                    </Box>
+
+                    <AppPagePanelGroup renderValues={renderValues}
+                                       renderValuesCentralComponent={renderValuesCentralComponent}
+                                       selectedVideoId={selectedVideoId}
+                                       setIsChatPanelOpen={setIsChatPanelOpen}
+                                       changeRenderCentralComponent={changeRenderCentralComponent}
+                    />
+                    <AppPageSideBarContainer isOpenSideBar={isOpenSideBar}
+                                             isOpenMainSideBar={isOpenMainSideBar}
+                                             setIsOpenSideBar={setIsOpenSideBar}
+                                             setIsOpenMainSideBar={setIsOpenMainSideBar}
+                                             changeRender={changeRender}
+                                             isOverlayVisible={isOverlayVisible}
+                                             openRightPanel={openRightPanel}
                     />
                 </Box>
-
-                <AppPagePanelGroup renderValues={renderValues}
-                                   renderValuesCentralComponent={renderValuesCentralComponent}
-                                   selectedVideoId={selectedVideoId}
-                                   setIsChatPanelOpen={setIsChatPanelOpen}
-                                   changeRenderCentralComponent={changeRenderCentralComponent}
-                />
-                <AppPageSideBarContainer isOpenSideBar={isOpenSideBar}
-                                         isOpenMainSideBar={isOpenMainSideBar}
-                                         setIsOpenSideBar={setIsOpenSideBar}
-                                         setIsOpenMainSideBar={setIsOpenMainSideBar}
-                                         changeRender={changeRender}
-                                         isOverlayVisible={isOverlayVisible}
-                                         openRightPanel={openRightPanel}
-                />
             </Box>
         </Box>
     );

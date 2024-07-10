@@ -5,7 +5,7 @@ import {
     Stack,
     Typography,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import { useTheme as useCustomTheme } from '../../../../contexts/ThemeContext.tsx';
@@ -17,7 +17,6 @@ import {NotificationsOutlined} from "@mui/icons-material";
 // Props type definition for AppPageHeader component
 type Props = {
     setIsOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
-    setIsOpenMainSideBar: React.Dispatch<React.SetStateAction<boolean>>;
     toggleChatsPanel: () => void;
     setIsChatPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -25,7 +24,7 @@ type Props = {
 // Header component for the application page
 const AppPageHeader = ({
                            setIsOpenSideBar,
-                           setIsOpenMainSideBar,
+
                        }: Props) => {
     const [isOpenModalNotifications, setIsOpenModalNotifications] = useState(false);
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
@@ -68,47 +67,17 @@ const AppPageHeader = ({
             justifyContent="space-between"
             alignItems="center"
             sx={{
-                zIndex: 1100,
                 position: 'relative',
                 padding: themeMui.spacing(2),
                 height: '64px',
+                width: "calc(100vw - 80px)",
             }}
             style={{ backgroundColor: themeMui.palette.background.default }}
         >
-            {/* Left icons */}
-            <Stack direction="row" spacing={2} alignItems="center">
-                <MenuIcon
-                    cursor="pointer"
-                    onClick={() => setIsOpenMainSideBar((prev) => !prev)}
-                />
-            </Stack>
+            <Box flex={1} />
 
-            {/* Search bar */}
-            <Stack direction="row" >
-                {/*#region Previous Search bar*/}
-                {/*<TextField*/}
-                {/*  id="outlined-basic"*/}
-                {/*  label="Search"*/}
-                {/*  variant="outlined"*/}
-                {/*  size="small"*/}
-                {/*  sx={{display: 'flex', width: '400px', height: '32px'}}*/}
-                {/*  value={searchQuery}*/}
-                {/*  onChange={(e) => setSearchQuery(e.target.value)}*/}
-                {/*  onKeyPress={handleKeyPress}*/}
-                {/*  InputProps={{*/}
-                {/*    endAdornment: (*/}
-                {/*      <InputAdornment*/}
-                {/*        position="end"*/}
-
-                {/*        sx={{ display: 'flex', gap: '20px', alignItems: 'center' }}*/}
-                {/*      >*/}
-                {/*        /!*<KeyboardAltOutlinedIcon sx={{ cursor: 'pointer' }} />*!/*/}
-                {/*        <SearchOutlinedIcon cursor="pointer" onClick={handleSearch} />*/}
-                {/*      </InputAdornment>*/}
-                {/*    ),*/}
-                {/*  }}*/}
-                {/*/>*/}
-                {/*#endregion Previous Search bar*/}
+            {/* Centered Search bar and Theme Switch */}
+            <Stack direction="row" justifyContent="center" alignItems="center" flex={1} sx={{marginLeft: themeMui.spacing(9)}}>
                 <SearchField onSearch={handleSearch} />
                 <Box
                     sx={{
@@ -132,18 +101,11 @@ const AppPageHeader = ({
                         inputProps={{ 'aria-label': 'theme switch' }}
                     />
                 </Box>
-                {/*<KeyboardVoiceOutlinedIcon*/}
-                {/*  sx={{*/}
-                {/*    cursor: 'pointer',*/}
-                {/*  }}*/}
-                {/*/>*/}
             </Stack>
-            {/* Right icons */}
-            <Stack direction="row" spacing={2} alignItems="center">
 
-                <Badge
-                    // badgeContent={10}
-                    color="primary" max={9}>
+            {/* Right icons */}
+            <Stack direction="row" spacing={2} flex={1} justifyContent="flex-end">
+                <Badge color="primary" max={9}>
                     <NotificationsOutlined
                         cursor="pointer"
                         onClick={handleModal}
