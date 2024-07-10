@@ -21,6 +21,7 @@ export type RenderValuesCentralComponent =
     | 'mevipa'
     | 'webinars'
     | 'VR'
+    | 'settings'
     | 'videopage'
     | 'videoeditpage'
     | 'videochannel';

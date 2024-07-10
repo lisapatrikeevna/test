@@ -170,9 +170,12 @@ const AppPageMainSideBar = ({
                     >
                         <ListItem
                             // onClick={() => changeRenderCentralComponent('settings')}
+                            sx={{padding: '10px 0px 0px 10px'}}
                         >
                             <ListItemButton
                                 sx={{
+                                    width: '272px',
+                                    height: '56px',
                                     borderRadius: '100px',
                                     backgroundColor:
                                         // currentCentralComponent === 'settings' ? '#FFFFFF' :
@@ -186,7 +189,7 @@ const AppPageMainSideBar = ({
                             >
                                 <ListItemIcon sx={{ color:
                                         // currentCentralComponent === 'settings' ? '#8C63FF' :
-                                            '#FFFFFF', fontSize: 24 }}>
+                                            '#FFFFFF', fontSize: 24, minWidth: '36px' }}>
                                     <SettingsOutlined />
                                 </ListItemIcon>
                                 <ThemedListItemText primary="Settings" sx={{ color:

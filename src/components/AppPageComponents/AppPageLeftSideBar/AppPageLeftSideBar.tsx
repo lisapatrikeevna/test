@@ -16,9 +16,11 @@ import { useTheme } from '@mui/material/styles';
 import { RenderValuesCentralComponent } from "../chats/types.ts";
 import { getThemeBackground } from '../chats/AppPageMainSideBar/styles.ts';
 import {useTheme as useCustomTheme} from "../../../contexts/ThemeContext.tsx";
+import MenuIcon from "@mui/icons-material/Menu";
 
 // Props type definition for AppPageMainSideBar component
 type Props = {
+    setIsOpenMainSideBar: React.Dispatch<React.SetStateAction<boolean>>;
     changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
     currentCentralComponent: RenderValuesCentralComponent;
 };
@@ -28,6 +30,7 @@ type Props = {
 const AppPageLeftSideBar = ({
                                 changeRenderCentralComponent,
                                 currentCentralComponent,
+                                setIsOpenMainSideBar,
                             }: Props) => {
     const themeMui = useTheme();
     const customTheme = useCustomTheme(); // Assuming this returns { theme: 'light' | 'dark' }
@@ -46,6 +49,7 @@ const AppPageLeftSideBar = ({
     return (
         <Box
             sx={{
+                position: 'relative',
                 height: '100vh',
                 width: '80px',
                 display: 'flex',
@@ -55,8 +59,19 @@ const AppPageLeftSideBar = ({
                 background: getThemeBackground(customTheme.theme),
             }}
         >
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+
                     <Box sx={{ marginTop: themeMui.spacing(3) }}>
+                        <Box sx={{padding: '0px 0px 0px 26px'}}>
+                        <MenuIcon
+                            sx={{ color:
+                                    '#FFFFFF', fontSize: 24 }}
+                            cursor="pointer"
+                            onClick={() => setIsOpenMainSideBar((prev) => !prev)}
+                        />
+                        </Box>
+                        <Box sx={{marginTop: themeMui.spacing(3)}}>
                         {sidebarItems.map(({ label, icon, component }) => (
                             <ListItem key={label} onClick={() => changeRenderCentralComponent(component as RenderValuesCentralComponent)}
                                       sx={{
@@ -81,15 +96,16 @@ const AppPageLeftSideBar = ({
                             </ListItem>
                         ))}
                     </Box>
+                    </Box>
                     <Box
                         sx={{
-                            position: 'absolute',
-                            bottom: themeMui.spacing(1),
-                            width: '100%',
+                            marginTop: 'auto',
+                            marginBottom: themeMui.spacing(3),
                         }}
                     >
                         <ListItem
-                            // onClick={() => changeRenderCentralComponent('settings')}
+                            onClick={() => changeRenderCentralComponent('settings')}
+                            sx={{padding: '10px 0px 0px 10px'}}
                         >
                             <ListItemButton
                                 sx={{
@@ -97,7 +113,7 @@ const AppPageLeftSideBar = ({
                                     height: '56px',
                                     borderRadius: '100px',
                                     backgroundColor:
-                                    // currentCentralComponent === 'settings' ? '#FFFFFF' :
+                                    currentCentralComponent === 'settings' ? '#FFFFFF' :
                                         'inherit',
                                     '&:hover': {
                                         backgroundColor: '#FFFFFF',
@@ -106,8 +122,8 @@ const AppPageLeftSideBar = ({
                                 }}
                             >
                                 <ListItemIcon sx={{ color:
-                                    // currentCentralComponent === 'settings' ? '#8C63FF' :
-                                        '#FFFFFF', fontSize: 24 }}>
+                                    currentCentralComponent === 'settings' ? '#8C63FF' :
+                                        '#FFFFFF', fontSize: 24, minWidth: '36px' }}>
                                     <SettingsOutlined />
                                 </ListItemIcon>
                             </ListItemButton>
