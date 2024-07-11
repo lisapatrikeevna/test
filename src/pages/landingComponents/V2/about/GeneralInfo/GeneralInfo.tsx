@@ -5,7 +5,7 @@ import {DarkButton} from "../../components/DarkButton/DarkButton.tsx";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
 export const GeneralInfo = () => {
-    return <Container >
+    return <Container maxWidth={false}>
         <Grid container spacing={2} sx={styles.container}>
             <Grid item xs={12} md={6} sx={styles.descriptionSection}>
                 <Typography component='div' fontFamily={'Space Grotesk'} marginBottom='12px' variant='h2' fontWeight={500}>One platform to cover all your needs (and more)</Typography>

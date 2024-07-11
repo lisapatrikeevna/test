@@ -1,11 +1,13 @@
 import {CSSProperties} from "../../../../types/common.ts";
 
 export default {
-    mainWrapper: ({palette})=> {
-        console.log('palette', palette)
+    mainWrapper: ()=> {
         return {
             position: "fixed",
-            background: palette.primary.contrastText,
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            background: '#FFF',
             zIndex: 1,
         }
     },

@@ -32,9 +32,9 @@ const MainPage = () => {
             {/*<Home />*/}
             {/*<AboutUs />*/}
             <Pricing />
-            <Partners />
+            {/*<Partners />*/}
             <Contacts />
-            <News />
+            {/*<News />*/}
         </Container>
     );
 };
