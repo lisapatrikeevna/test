@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     ListItem,
     ListItemButton,
@@ -7,7 +8,6 @@ import { Box } from '@mui/system';
 import {
     ChatBubbleOutline, GroupOutlined,
     HomeOutlined,
-    // LogoutOutlined,
     PermIdentity,
     PlayCircleOutline, RemoveRedEyeOutlined,
     SettingsOutlined, VideocamOutlined, WifiTethering,
@@ -15,22 +15,21 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { RenderValuesCentralComponent } from "../chats/types.ts";
 import { getThemeBackground } from '../chats/AppPageMainSideBar/styles.ts';
-import {useTheme as useCustomTheme} from "../../../contexts/ThemeContext.tsx";
+import { useTheme as useCustomTheme } from "../../../contexts/ThemeContext.tsx";
 import MenuIcon from "@mui/icons-material/Menu";
 
-// Props type definition for AppPageMainSideBar component
 type Props = {
     setIsOpenMainSideBar: React.Dispatch<React.SetStateAction<boolean>>;
     changeRenderCentralComponent: (value: RenderValuesCentralComponent) => void;
     currentCentralComponent: RenderValuesCentralComponent;
+    isLeftSideBarOpen: boolean;
 };
 
-
-// Main side bar component for the application page
 const AppPageLeftSideBar = ({
                                 changeRenderCentralComponent,
                                 currentCentralComponent,
                                 setIsOpenMainSideBar,
+                                isLeftSideBarOpen,
                             }: Props) => {
     const themeMui = useTheme();
     const customTheme = useCustomTheme(); // Assuming this returns { theme: 'light' | 'dark' }
@@ -51,51 +50,51 @@ const AppPageLeftSideBar = ({
             sx={{
                 position: 'relative',
                 height: '100vh',
-                width: '80px',
+                width: isLeftSideBarOpen ? '80px' : '8px',
                 display: 'flex',
                 overflow: 'hidden',
                 borderTopRightRadius: '16px',
                 borderBottomRightRadius: '16px',
                 background: getThemeBackground(customTheme.theme),
+                zIndex: 3,
             }}
         >
 
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-
+                <Box sx={{ display: 'flex', flexDirection: 'column', zIndex: 1 }}>
                     <Box sx={{ marginTop: themeMui.spacing(3) }}>
-                        <Box sx={{padding: '0px 0px 0px 26px'}}>
-                        <MenuIcon
-                            sx={{ color:
-                                    '#FFFFFF', fontSize: 24 }}
-                            cursor="pointer"
-                            onClick={() => setIsOpenMainSideBar((prev) => !prev)}
-                        />
+                        <Box sx={{ padding: '0px 0px 0px 26px' }}>
+                            <MenuIcon
+                                sx={{ color: '#FFFFFF', fontSize: 24 }}
+                                cursor="pointer"
+                                onClick={() => setIsOpenMainSideBar((prev) => !prev)}
+                            />
                         </Box>
-                        <Box sx={{marginTop: themeMui.spacing(3)}}>
-                        {sidebarItems.map(({ label, icon, component }) => (
-                            <ListItem key={label} onClick={() => changeRenderCentralComponent(component as RenderValuesCentralComponent)}
-                                      sx={{
-                                          padding: '10px 0px 0px 10px'}}
-                            >
-                                <ListItemButton
-                                    sx={{
-                                        width: '56px',
-                                        height: '56px',
-                                        borderRadius: '1000px',
-                                        backgroundColor: currentCentralComponent === component ? '#FFFFFF' : 'inherit',
-                                        '&:hover': {
-                                            backgroundColor: '#FFFFFF',
-                                            '.MuiListItemIcon-root': { color: '#8C63FF' },
-                                        },
-                                    }}
+                        <Box sx={{ marginTop: themeMui.spacing(3) }}>
+                            {sidebarItems.map(({ label, icon, component }) => (
+                                <ListItem
+                                    key={label}
+                                    onClick={() => changeRenderCentralComponent(component as RenderValuesCentralComponent)}
+                                    sx={{ padding: '10px 0px 0px 10px' }}
                                 >
-                                    <ListItemIcon sx={{ color: currentCentralComponent === component ? '#8C63FF' : '#FFFFFF', fontSize: 24 }}>
-                                        {icon}
-                                    </ListItemIcon>
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </Box>
+                                    <ListItemButton
+                                        sx={{
+                                            width: '56px',
+                                            height: '56px',
+                                            borderRadius: '1000px',
+                                            backgroundColor: currentCentralComponent === component ? '#FFFFFF' : 'inherit',
+                                            '&:hover': {
+                                                backgroundColor: '#FFFFFF',
+                                                '.MuiListItemIcon-root': { color: '#8C63FF' },
+                                            },
+                                        }}
+                                    >
+                                        <ListItemIcon sx={{ color: currentCentralComponent === component ? '#8C63FF' : '#FFFFFF', fontSize: 24 }}>
+                                            {icon}
+                                        </ListItemIcon>
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
+                        </Box>
                     </Box>
                     <Box
                         sx={{
@@ -113,8 +112,8 @@ const AppPageLeftSideBar = ({
                                     height: '56px',
                                     borderRadius: '100px',
                                     backgroundColor:
-                                    currentCentralComponent === 'settings' ? '#FFFFFF' :
-                                        'inherit',
+                                        currentCentralComponent === 'settings' ? '#FFFFFF' :
+                                            'inherit',
                                     '&:hover': {
                                         backgroundColor: '#FFFFFF',
                                         '.MuiListItemIcon-root': { color: '#8C63FF' },
@@ -122,8 +121,8 @@ const AppPageLeftSideBar = ({
                                 }}
                             >
                                 <ListItemIcon sx={{ color:
-                                    currentCentralComponent === 'settings' ? '#8C63FF' :
-                                        '#FFFFFF', fontSize: 24, minWidth: '36px' }}>
+                                        currentCentralComponent === 'settings' ? '#8C63FF' :
+                                            '#FFFFFF', fontSize: 24, minWidth: '36px' }}>
                                     <SettingsOutlined />
                                 </ListItemIcon>
                             </ListItemButton>

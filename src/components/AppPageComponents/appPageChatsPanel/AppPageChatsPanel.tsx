@@ -1,15 +1,14 @@
 import {ImperativePanelHandle, Panel, PanelResizeHandle} from "react-resizable-panels";
 import {AppPageChats} from "./appPageChats/AppPageChats.tsx";
-import {Dispatch, SetStateAction, useRef} from "react";
+import React, {Dispatch, SetStateAction, useRef} from "react";
 import {useTheme} from "@mui/material/styles";
 import {UserType} from "../chats/types.ts";
-
 
 type AppPagePanelChatsProps = {
     currentUser:UserType | null
     setIsChatPanelOpen: Dispatch<SetStateAction<boolean>>
 }
-export const AppPageChatsPanel = ({setIsChatPanelOpen,currentUser }:AppPagePanelChatsProps) => {
+export const AppPageChatsPanel = ({setIsChatPanelOpen, currentUser }:AppPagePanelChatsProps) => {
     const chatsPanelRef = useRef<ImperativePanelHandle>(null);
     const chatMinSize = 370;
     const chatMinSizePercentage = (chatMinSize / window.innerWidth) * 100;
@@ -24,8 +23,6 @@ export const AppPageChatsPanel = ({setIsChatPanelOpen,currentUser }:AppPagePanel
             <PanelResizeHandle
                 style={panelResizeHandleStyles}
             />
-            {/* #endregion AppPageChatsComponent */}
-            {/* #region AppPageChats */}
             <Panel
                 ref={chatsPanelRef}
                 minSize={chatMinSizePercentage}

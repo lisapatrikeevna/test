@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import AppPageMainSideBar from '../../components/AppPageComponents/chats/AppPageMainSideBar/AppPageMainSideBar.tsx';
 import styles from "./styles.ts"
 import {
@@ -12,12 +12,20 @@ import {
 import {useApp} from "../../components/hooks/useApp.ts";
 import {useTheme} from "@mui/material/styles";
 import AppPageLeftSideBar from "../../components/AppPageComponents/AppPageLeftSideBar/AppPageLeftSideBar.tsx";
+import AppPageLeftSideBarToggle
+    from "../../components/AppPageComponents/AppPageLeftSideBar/AppPageLeftSideBarToggle/AppPageLeftSideBarToggle.tsx";
 // import {login} from "../../store/user/userSlice.ts";
 
 
 const AppPage = () => {
     const theme = useTheme();
+    const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(true);
+    const toggleLeftSidebar = () => {
+        setIsLeftSidebarOpen((prev) => !prev);
+    };
 
+
+    //#region consts = useApp
     const {
         isOpenSideBar,
         setIsOpenSideBar,
@@ -28,14 +36,14 @@ const AppPage = () => {
         renderValues,
         selectedVideoId,
         renderValuesCentralComponent,
-        toggleChatsPanel,
         openRightPanel,
         changeRenderCentralComponent,
         changeRender,
         setIsChatPanelOpen
     } = useApp();
+//#endregion consts  = useApp
 
-    // #region useEffect isOpenSideBar
+    //#region useEffect isOpenSideBar
     useEffect(() => {
         if (isOpenSideBar || isOpenMainSideBar) {
             setIsOverlayVisible(true);
@@ -46,7 +54,8 @@ const AppPage = () => {
             return () => clearTimeout(timeout);
         }
     }, [isOpenSideBar, isOpenMainSideBar, setIsOverlayVisible]);
-    // #endregion useEffect isOpenSideBar
+    //#endregion useEffect isOpenSideBar
+
 
     return (
         <Box sx={{...styles.sideBarAndMainContainer,}}>
@@ -54,7 +63,9 @@ const AppPage = () => {
                 changeRenderCentralComponent={changeRenderCentralComponent}
                 currentCentralComponent={renderValuesCentralComponent}
                 setIsOpenMainSideBar={setIsOpenMainSideBar}
+                isLeftSideBarOpen={isLeftSidebarOpen}
             />
+            <AppPageLeftSideBarToggle isLeftSideBarOpen={isLeftSidebarOpen} toggleLeftSideBar={toggleLeftSidebar} />
             <Box
                 sx={{
                     ...styles.mainContainer,
@@ -64,8 +75,7 @@ const AppPage = () => {
 
                 <AppPageContainerHeader
                     setIsOpenSideBar={setIsOpenSideBar}
-                    toggleChatsPanel={toggleChatsPanel}
-                    setIsChatPanelOpen={setIsChatPanelOpen}
+                    isLeftSideBarOpen={isLeftSidebarOpen}
                 />
 
                 <Box
