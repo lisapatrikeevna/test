@@ -8,6 +8,7 @@ import {AppPageCentralPanel} from "../appPageCentralPanel/AppPageCentralPanel.ts
 import {AppPageChatsPanel} from "../appPageChatsPanel/AppPageChatsPanel.tsx";
 import {AppPageRightSideBarPanel} from "../appPageRightSideBarPanel/AppPageRightSideBarPanel.tsx";
 import {AppPageListCommunities} from "../appPageListCommunities/appPageListCommunities.tsx";
+// import AppPageChatsToggle from "../appPageChatsPanel/appPageChats/AppPageChatsToggle/AppPageChatsToggle.tsx";
 
 
 type AppPagePanelGroupProps = {
@@ -22,6 +23,8 @@ export const AppPagePanelGroup = ({renderValuesCentralComponent, renderValues, s
     const [userAvatar, setUserAvatar] = useState<string | null>(null);
     const [currentUser, setCurrentUser] = useState<UserType | null>(null);
     const userId = useSelector(currentUserId);
+
+
     //#region Finding size of panels, for correct collapsing and viewing them, based on minimum Pixels
     const avatarAndNamesMinSize = 260;
     const avatarAndNamesMinSizePercentage = (avatarAndNamesMinSize / window.innerWidth) * 100;
@@ -40,6 +43,7 @@ export const AppPagePanelGroup = ({renderValuesCentralComponent, renderValues, s
 
         fetchAvatar();
     }, [userId]);
+    //#endregion useEffect for fetching user avatar
 
     return(
 
@@ -51,6 +55,7 @@ export const AppPagePanelGroup = ({renderValuesCentralComponent, renderValues, s
             />
 
             <AppPageChatsPanel setIsChatPanelOpen={setIsChatPanelOpen} currentUser={currentUser}/>
+            {/*<AppPageChatsToggle setIsChatPanelOpen={setIsChatPanelOpen}/>*/}
             <AppPageCentralPanel changeRenderCentralComponent={changeRenderCentralComponent}
                                  renderValuesCentralComponent={renderValuesCentralComponent}
                                  selectedVideoId={selectedVideoId}/>

@@ -17,14 +17,13 @@ import {NotificationsOutlined} from "@mui/icons-material";
 // Props type definition for AppPageHeader component
 type Props = {
     setIsOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
-    toggleChatsPanel: () => void;
-    setIsChatPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    isLeftSideBarOpen: boolean;
 };
 
 // Header component for the application page
 const AppPageHeader = ({
                            setIsOpenSideBar,
-
+    isLeftSideBarOpen,
                        }: Props) => {
     const [isOpenModalNotifications, setIsOpenModalNotifications] = useState(false);
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
@@ -70,14 +69,15 @@ const AppPageHeader = ({
                 position: 'relative',
                 padding: themeMui.spacing(2),
                 height: '64px',
-                width: "calc(100vw - 80px)",
+                width: isLeftSideBarOpen ? "calc(100vw - 80px)" : "calc(100vw - 8px)",
+                transition: 'none',
             }}
             style={{ backgroundColor: themeMui.palette.background.default }}
         >
             <Box flex={1} />
 
             {/* Centered Search bar and Theme Switch */}
-            <Stack direction="row" justifyContent="center" alignItems="center" flex={1} sx={{marginLeft: themeMui.spacing(9)}}>
+            <Stack direction="row" justifyContent="center" alignItems="center" flex={1}>
                 <SearchField onSearch={handleSearch} />
                 <Box
                     sx={{
