@@ -16,14 +16,12 @@ import AppPageLeftSideBarToggle
     from "../../components/AppPageComponents/AppPageLeftSideBar/AppPageLeftSideBarToggle/AppPageLeftSideBarToggle.tsx";
 // import {login} from "../../store/user/userSlice.ts";
 
-
 const AppPage = () => {
     const theme = useTheme();
     const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(true);
     const toggleLeftSidebar = () => {
         setIsLeftSidebarOpen((prev) => !prev);
     };
-
 
     //#region consts = useApp
     const {
@@ -39,7 +37,14 @@ const AppPage = () => {
         openRightPanel,
         changeRenderCentralComponent,
         changeRender,
-        setIsChatPanelOpen
+        setIsChatPanelOpen,
+        setIsRightSideBarPanelOpen,
+        isChatPanelOpen,
+        isRightSideBarPanelOpen,
+        toggleChatsPanel,
+        toggleRightSideBarPanel,
+        chatsPanelRef,
+        rightPanelRef,
     } = useApp();
 //#endregion consts  = useApp
 
@@ -55,7 +60,6 @@ const AppPage = () => {
         }
     }, [isOpenSideBar, isOpenMainSideBar, setIsOverlayVisible]);
     //#endregion useEffect isOpenSideBar
-
 
     return (
         <Box sx={{...styles.sideBarAndMainContainer,}}>
@@ -94,7 +98,14 @@ const AppPage = () => {
                                        renderValuesCentralComponent={renderValuesCentralComponent}
                                        selectedVideoId={selectedVideoId}
                                        setIsChatPanelOpen={setIsChatPanelOpen}
+                                       setIsRightSideBarPanelOpen={setIsRightSideBarPanelOpen}
                                        changeRenderCentralComponent={changeRenderCentralComponent}
+                                       toggleChatsPanel={toggleChatsPanel}
+                                       toggleRightSideBarPanel={toggleRightSideBarPanel}
+                                       isChatPanelOpen={isChatPanelOpen}
+                                       isRightSideBarPanelOpen={isRightSideBarPanelOpen}
+                                       chatsPanelRef={chatsPanelRef}
+                                       rightPanelRef={rightPanelRef}
                     />
                     <AppPageSideBarContainer isOpenSideBar={isOpenSideBar}
                                              isOpenMainSideBar={isOpenMainSideBar}

@@ -60,75 +60,75 @@ const AppPageLeftSideBar = ({
             }}
         >
 
-                <Box sx={{ display: 'flex', flexDirection: 'column', zIndex: 1 }}>
-                    <Box sx={{ marginTop: themeMui.spacing(3) }}>
-                        <Box sx={{ padding: '0px 0px 0px 26px' }}>
-                            <MenuIcon
-                                sx={{ color: '#FFFFFF', fontSize: 24 }}
-                                cursor="pointer"
-                                onClick={() => setIsOpenMainSideBar((prev) => !prev)}
-                            />
-                        </Box>
-                        <Box sx={{ marginTop: themeMui.spacing(3) }}>
-                            {sidebarItems.map(({ label, icon, component }) => (
-                                <ListItem
-                                    key={label}
-                                    onClick={() => changeRenderCentralComponent(component as RenderValuesCentralComponent)}
-                                    sx={{ padding: '10px 0px 0px 10px' }}
-                                >
-                                    <ListItemButton
-                                        sx={{
-                                            width: '56px',
-                                            height: '56px',
-                                            borderRadius: '1000px',
-                                            backgroundColor: currentCentralComponent === component ? '#FFFFFF' : 'inherit',
-                                            '&:hover': {
-                                                backgroundColor: '#FFFFFF',
-                                                '.MuiListItemIcon-root': { color: '#8C63FF' },
-                                            },
-                                        }}
-                                    >
-                                        <ListItemIcon sx={{ color: currentCentralComponent === component ? '#8C63FF' : '#FFFFFF', fontSize: 24 }}>
-                                            {icon}
-                                        </ListItemIcon>
-                                    </ListItemButton>
-                                </ListItem>
-                            ))}
-                        </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', zIndex: 1 }}>
+                <Box sx={{ marginTop: themeMui.spacing(3) }}>
+                    <Box sx={{ padding: '0px 0px 0px 26px' }}>
+                        <MenuIcon
+                            sx={{ color: '#FFFFFF', fontSize: 24 }}
+                            cursor="pointer"
+                            onClick={() => setIsOpenMainSideBar((prev) => !prev)}
+                        />
                     </Box>
-                    <Box
-                        sx={{
-                            marginTop: 'auto',
-                            marginBottom: themeMui.spacing(3),
-                        }}
-                    >
-                        <ListItem
-                            onClick={() => changeRenderCentralComponent('settings')}
-                            sx={{padding: '10px 0px 0px 10px'}}
-                        >
-                            <ListItemButton
-                                sx={{
-                                    width: '56px',
-                                    height: '56px',
-                                    borderRadius: '100px',
-                                    backgroundColor:
-                                        currentCentralComponent === 'settings' ? '#FFFFFF' :
-                                            'inherit',
-                                    '&:hover': {
-                                        backgroundColor: '#FFFFFF',
-                                        '.MuiListItemIcon-root': { color: '#8C63FF' },
-                                    },
-                                }}
+                    <Box sx={{ marginTop: themeMui.spacing(3) }}>
+                        {sidebarItems.map(({ label, icon, component }) => (
+                            <ListItem
+                                key={label}
+                                onClick={() => changeRenderCentralComponent(component as RenderValuesCentralComponent)}
+                                sx={{ padding: '10px 0px 0px 10px' }}
                             >
-                                <ListItemIcon sx={{ color:
-                                        currentCentralComponent === 'settings' ? '#8C63FF' :
-                                            '#FFFFFF', fontSize: 24, minWidth: '36px' }}>
-                                    <SettingsOutlined />
-                                </ListItemIcon>
-                            </ListItemButton>
-                        </ListItem>
+                                <ListItemButton
+                                    sx={{
+                                        width: '56px',
+                                        height: '56px',
+                                        borderRadius: '1000px',
+                                        backgroundColor: currentCentralComponent === component ? '#FFFFFF' : 'inherit',
+                                        '&:hover': {
+                                            backgroundColor: '#FFFFFF',
+                                            '.MuiListItemIcon-root': { color: '#8C63FF' },
+                                        },
+                                    }}
+                                >
+                                    <ListItemIcon sx={{ color: currentCentralComponent === component ? '#8C63FF' : '#FFFFFF', fontSize: 24 }}>
+                                        {icon}
+                                    </ListItemIcon>
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
                     </Box>
                 </Box>
+                <Box
+                    sx={{
+                        marginTop: 'auto',
+                        marginBottom: themeMui.spacing(3),
+                    }}
+                >
+                    <ListItem
+                        onClick={() => changeRenderCentralComponent('settings')}
+                        sx={{padding: '10px 0px 0px 10px'}}
+                    >
+                        <ListItemButton
+                            sx={{
+                                width: '56px',
+                                height: '56px',
+                                borderRadius: '100px',
+                                backgroundColor:
+                                    currentCentralComponent === 'settings' ? '#FFFFFF' :
+                                        'inherit',
+                                '&:hover': {
+                                    backgroundColor: '#FFFFFF',
+                                    '.MuiListItemIcon-root': { color: '#8C63FF' },
+                                },
+                            }}
+                        >
+                            <ListItemIcon sx={{ color:
+                                    currentCentralComponent === 'settings' ? '#8C63FF' :
+                                        '#FFFFFF', fontSize: 24, minWidth: '36px' }}>
+                                <SettingsOutlined />
+                            </ListItemIcon>
+                        </ListItemButton>
+                    </ListItem>
+                </Box>
+            </Box>
         </Box>
     );
 };
