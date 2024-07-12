@@ -6,15 +6,16 @@ export const useApp = () => {
     const [isOpenSideBar, setIsOpenSideBar] = useState(false);
     const [isOverlayVisible, setIsOverlayVisible] = useState(false);
     const [isOpenMainSideBar, setIsOpenMainSideBar] = useState(false);
-    const [, setIsChatPanelOpen] = useState(false);
+    const [isChatPanelOpen, setIsChatPanelOpen] = useState(false);
     const [renderValues, setRenderValues] = useState<RenderValues>('calendar');
     const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+    const [isRightSideBarPanelOpen, setIsRightSideBarPanelOpen] = useState(false);
 
     const [renderValuesCentralComponent, setRenderValuesCentralComponent] =
         useState<RenderValuesCentralComponent>('home');
 
     const chatsPanelRef = useRef<ImperativePanelHandle>(null);
-    const rightPanel = useRef<ImperativePanelHandle>(null);
+    const rightPanelRef = useRef<ImperativePanelHandle>(null);
 
     const toggleChatsPanel = () => {
         setIsChatPanelOpen((prev) => {
@@ -24,12 +25,27 @@ export const useApp = () => {
             } else {
                 chatsPanelRef.current?.collapse();
             }
+            setIsChatPanelOpen(newIsOpen);
             return newIsOpen;
         });
     };
 
+    const toggleRightSideBarPanel = () => {
+        setIsRightSideBarPanelOpen((prev) => {
+            const newIsOpen = !prev;
+            if (newIsOpen) {
+                rightPanelRef.current?.expand();
+
+            } else {
+                rightPanelRef.current?.collapse();
+            }
+            setIsRightSideBarPanelOpen(newIsOpen);
+            return newIsOpen
+        });
+    };
+
     const openRightPanel = () => {
-        rightPanel.current?.expand();
+        rightPanelRef.current?.expand();
     };
 
     const changeRenderCentralComponent = (
@@ -60,11 +76,15 @@ export const useApp = () => {
         renderValuesCentralComponent,
         setRenderValuesCentralComponent,
         chatsPanelRef,
-        rightPanel,
+        rightPanelRef,
         toggleChatsPanel,
         openRightPanel,
         changeRenderCentralComponent,
         changeRender,
-        setIsChatPanelOpen
+        setIsChatPanelOpen,
+        isChatPanelOpen,
+        toggleRightSideBarPanel,
+        setIsRightSideBarPanelOpen,
+        isRightSideBarPanelOpen,
     };
 };

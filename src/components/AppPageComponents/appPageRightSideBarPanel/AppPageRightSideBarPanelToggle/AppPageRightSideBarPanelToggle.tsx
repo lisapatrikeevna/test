@@ -4,11 +4,12 @@ import {ArrowBackIosNewOutlined, ArrowForwardIosOutlined} from '@mui/icons-mater
 import { Box } from '@mui/system';
 
 type ChatsToggleProps = {
-    toggleChatsPanel: () => void;
-    isChatPanelOpen: boolean;
+    toggleRightSideBarPanel: () => void;
+    isRightSideBarPanelOpen: boolean;
 };
 
-const AppPageChatsToggle = ({ toggleChatsPanel, isChatPanelOpen }: ChatsToggleProps) => {
+const AppPageChatsToggle = ({ toggleRightSideBarPanel, isRightSideBarPanelOpen }: ChatsToggleProps) => {
+
     return (
         <Box
             sx={{
@@ -23,7 +24,7 @@ const AppPageChatsToggle = ({ toggleChatsPanel, isChatPanelOpen }: ChatsTogglePr
             }}
         >
             <IconButton
-                onClick={toggleChatsPanel}
+                onClick={toggleRightSideBarPanel}
                 sx={{
                     width: '24px',
                     height: '24px',
@@ -35,14 +36,14 @@ const AppPageChatsToggle = ({ toggleChatsPanel, isChatPanelOpen }: ChatsTogglePr
                     alignItems: 'center',
                 }}
             >
-                {isChatPanelOpen ? (
-                    <ArrowBackIosNewOutlined
+                {isRightSideBarPanelOpen ? (
+                    <ArrowForwardIosOutlined
                         sx={{
                             fontSize: '12px',
                         }}
                     />
                 ) : (
-                    <ArrowForwardIosOutlined
+                    <ArrowBackIosNewOutlined
                         sx={{
                             fontSize: '12px',
                         }}

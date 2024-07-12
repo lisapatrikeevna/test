@@ -14,9 +14,9 @@ export const AppPageContainerHeader = ({setIsOpenSideBar, isLeftSideBarOpen}:App
     return (
         <Box sx={styles.container}>
             <AppPageHeader
-              setIsOpenSideBar={setIsOpenSideBar}
-              isLeftSideBarOpen={isLeftSideBarOpen}
-             />
+                setIsOpenSideBar={setIsOpenSideBar}
+                isLeftSideBarOpen={isLeftSideBarOpen}
+            />
             <Divider />
         </Box>
     )
