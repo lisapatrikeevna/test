@@ -19,4 +19,3 @@ export default {
         }
     }
 } as CSSProperties<'container'|'descriptionSection' | 'videoSection'>;
-

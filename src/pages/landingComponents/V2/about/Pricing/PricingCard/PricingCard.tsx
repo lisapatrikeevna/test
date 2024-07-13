@@ -1,26 +1,24 @@
 import React, {ReactNode} from 'react';
-import {Box, Typography} from "@mui/material";
+import {Box, Button, Typography} from "@mui/material";
 import styles from "./styles.ts";
 
 export interface PricingCardProps {
     title?: string;
     icon?: ReactNode,
-    price_M?: string;
-    price_Y?: string;
+    price_M?: number;
     features?: string[];
     button?: string;
-    onClick?: () => void;
+    onButtonClick?: () => void;
 }
 
-export const PricingCard = ({title, icon, price_M, price_Y, features, button}: PricingCardProps) => {
+export const PricingCard = ({title, icon, price_M,  features, button}: PricingCardProps) => {
     return <Box sx={styles.pricingBox}>
-        <Typography variant={'h1'}>{title}</Typography>
+        <Typography variant={'h3'}>{title}</Typography>
         <Box>{icon}</Box>
-        <Typography variant={'h2'}>{price_M}</Typography>
-        <Typography variant={'h2'}>{price_Y}</Typography>
+        <Typography variant={'h3'}>{price_M}</Typography>
         {features?.map((feature ) => (
-            <Typography variant={'h3'}>{feature}</Typography>
+            <Typography variant={'body1'} textAlign={'start'}>{feature}</Typography>
         ))}
-        <Typography variant={'h4'}>{button}</Typography>
+        <Button>{button}</Button>
     </Box>
 }

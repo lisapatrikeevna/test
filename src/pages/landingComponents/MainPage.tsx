@@ -1,10 +1,5 @@
 import {Container, useTheme} from '@mui/material';
-import Home from './Home';
-import Partners from './Partners.tsx';
-import Pricing from './Pricing.tsx';
 import Contacts from './Contacts';
-import News from "./News.tsx";
-import AboutUs from "./AboutUs.tsx";
 
 const MainPage = () => {
     const theme = useTheme();
@@ -31,7 +26,7 @@ const MainPage = () => {
         >
             {/*<Home />*/}
             {/*<AboutUs />*/}
-            <Pricing />
+            {/*<Pricing />*/}
             {/*<Partners />*/}
             <Contacts />
             {/*<News />*/}

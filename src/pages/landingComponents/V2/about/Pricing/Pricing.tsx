@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Container, FormControlLabel, Grid, Switch, Toolbar, Typography} from "@mui/material";
 import styles from "./styles.ts";
-import {PricingCard} from "./PricingCard/PricingCard.tsx";
+import {PricingCard, PricingCardProps} from "./PricingCard/PricingCard.tsx";
+import {PRICING_ITEMS} from "./constants.tsx";
 
 export const Pricing = () => {
     const [isYearly, setIsYearly] = useState(false);
@@ -41,32 +42,22 @@ export const Pricing = () => {
         <Typography variant="h5" align="center" color="text.secondary" component="p" mt={'20px'}>
             Limits on gigabytes and chats are set until the end of beta testing. We also welcome your suggestions for changes or additions
         </Typography>
-        <PricingCard title={"Basic"}/>
 
         <Grid container spacing={2} alignItems="stretch" justifyContent='center' marginY='2vh'>
-            <Grid item xs={12} sm={6} md={3}>
-                <PricingCard title={"Basic"}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-                <PricingCard title={"Basic"}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-                <PricingCard title={"Basic"}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-                <PricingCard title={"Basic"}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-                <PricingCard title={"Basic"}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-                <PricingCard title={"Basic"}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-                <PricingCard title={"Basic"}/>
-            </Grid>
-
-
+            {PRICING_ITEMS.map((item:PricingCardProps) => (
+                item.icon == null ?(
+                    <Grid item xs={12} sm={6} md={3}>
+                        <PricingCard title={item.title}
+                        price_M={item.price_M}
+                        features={item.features}
+                        button={item.button}
+                        onButtonClick={item.onButtonClick}
+                        />
+                    </Grid>
+                ):(<Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+                    <PricingCard icon={item.icon}/>
+                </Grid>)
+            ))}
         </Grid>
     </Container>
 }

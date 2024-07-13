@@ -82,13 +82,12 @@ const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
         mode: "all",
       });
 
+
       const getDataFromInputs = (data:any) => {
         dispatch(postRequest(data))
         console.log(data);
         reset();
       }
-
-
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} width="500px">

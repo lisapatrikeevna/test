@@ -1,8 +1,7 @@
 import styles from "./styles.ts";
 import Box from "@mui/material/Box";
 import {ReactNode} from "react";
-import {CSSObject, Typography} from "@mui/material";
-import {styled} from "@mui/system";
+import { Typography} from "@mui/material";
 import {ToolCardSize} from "../types.ts";
 
 export interface ToolCardProps {

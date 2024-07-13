@@ -5,7 +5,7 @@ import {deepmerge} from "@mui/utils";
 // Base Theme
 const baseTheme = createTheme({
     shape: {
-        borderRadius: 10,
+        borderRadius: 4,
     },
     spacing: (factor: number) => factor * 8,
     typography: {
