@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ReactElement} from "react";
 import {Box, Card, IconButton, Typography, useTheme} from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
@@ -6,8 +6,8 @@ export interface SupportUsCardProps {
     BIC?: string;
     IBAN?: string;
     email?: string;
-    icon_1?: string,
-    icon_2?: string,
+    icon_1?: ReactElement,
+    icon_2?: ReactElement,
 }
 
 const copyToClipboard = (text: string) => {
@@ -36,8 +36,8 @@ export const SupportUsCard = ({BIC, IBAN, email, icon_1, icon_2}: SupportUsCardP
                      justifyContent: 'space-between',
                  }}>
         <Box display={'flex'} flexDirection={'column'} alignItems={'end'} >
-            <img src={icon_1} alt={'Sparkasse'} height={useTheme().spacing(4)}/>
-            <img src={icon_2} alt={'MasterCard'} height={useTheme().spacing(4)}/>
+            {icon_1}
+            {icon_2}
         </Box>
         <Box display={'flex'} flexDirection={'column'} alignItems={'start'} justifyContent={'end'} >
             {BIC?
