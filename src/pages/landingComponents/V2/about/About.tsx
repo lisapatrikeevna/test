@@ -5,6 +5,7 @@ import {ProductOffer} from "./ProductOffer/ProductOffer.tsx";
 import {Pricing} from "./Pricing/Pricing.tsx";
 import {Container} from "@mui/material";
 import {Partners} from './Partners/Partners.tsx';
+import {SupportUs} from "./SupportUs/SupportUs.tsx";
 import React from "react";
 
 export const About = () => {
@@ -14,5 +15,6 @@ export const About = () => {
         <ProductOffer/>
         <Pricing/>
         <Partners/>
+        <SupportUs/>
     </Container>
 }

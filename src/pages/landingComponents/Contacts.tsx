@@ -1,53 +1,11 @@
 import React, { useState} from 'react';
-import {Typography, Box, Grid, FormControl, IconButton, Card, CardHeader, CardContent, useTheme} from '@mui/material';
+import {Typography, Box, FormControl, } from '@mui/material';
 import { FeedbackService } from '../../services/feedback.service';
 import Captcha from '../../components/Captcha';
 import NeuTextField from '../../components/neumorphism/input/NeuTextField';
 import NeuButton from '../../components/neumorphism/button/NeuButton';
 import NeuTextArea from '../../components/neumorphism/input/NeuTextArea';
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
-import SparkasseLogo from '../../assets/donate/Sparkasse.png';
-import PostBankLogo from '../../assets/donate/Postbank-Logo.svg';
-import MasterCardLogo from '../../assets/donate/MasterCard_Logo.svg';
-import MaestroLogo from '../../assets/donate/Maestro_Logo.svg';
-import VisaLogo from '../../assets/donate/Visa_Inc._logo.svg';
-import RevolutLogo from '../../assets/donate/revolute-logo.png';
-import PaypalLogo from '../../assets/donate/Paypal_logo.svg';
-import BinanceLogo from '../../assets/donate/Binance_logo.svg';
-
-const cardsData = [
-    {
-        title: "Sparkasse",
-        titleImage: SparkasseLogo,
-        cardType: "Mastercard",
-        cardTypeImage: MasterCardLogo,
-        bic: "BIC: COKSDE33XXX",
-        iban: "IBAN: DE46370502991329072051"
-    },
-    {
-        title: "PostBank",
-        titleImage: PostBankLogo,
-        cardType: "Maestro",
-        cardTypeImage: MaestroLogo,
-        bic: "BIC: PBNKDEFF",
-        iban: "IBAN: DE25100100100754785135"
-    },
-    {
-        title: "Revolut",
-        titleImage: RevolutLogo,
-        cardType: "Visa",
-        cardTypeImage: VisaLogo,
-        bic: "BIC: REVOLT21",
-        iban: "IBAN: LT843250050964665543"
-    },
-    {
-        title: "Paypal / Paypal",
-        titleImage: PaypalLogo,
-        cardTypeImage: BinanceLogo,
-        email: "incomgrp@outlook.com"
-    },
-];
 
 const Contacts = () => {
     const [message, setMessage] = useState('');
@@ -57,18 +15,8 @@ const Contacts = () => {
     const [userMsg, setUserMsg] = useState('');
     const [captchaPassed, setCaptchaPassed] = useState(false);
     const [resetCaptcha, setResetCaptcha] = useState(false);
-    const theme = useTheme();
 
-    const copyToClipboard = (text: string) => {
-        const colonIndex = text.indexOf(': ');
 
-        if (colonIndex !== -1 && colonIndex !== text.length - 1) {
-            const textToCopy = text.substring(colonIndex + 1);
-            navigator.clipboard.writeText(textToCopy);
-        } else {
-            navigator.clipboard.writeText(text);
-        }
-    };
 
     const handleCaptchaResult = (result: boolean) => {
         setCaptchaPassed(result);
@@ -119,106 +67,6 @@ const Contacts = () => {
                     alignItems: 'start',
                     flexDirection: 'row'
                 }}>
-
-                <Grid container spacing={2}>
-                    {cardsData.map((card, index) => (
-                        <Grid item key={index} xs={6} md={6}>
-                            <Card
-                                sx={{
-                                    padding: "0",
-                                    margin: "16px",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: 'start',
-                                }}
-                            >
-                                <CardHeader
-                                    title={
-                                        <Box sx={{ display: 'flex', alignItems: 'center', height: '30px' }}>
-                                            {card.titleImage ? (
-                                                <img src={card.titleImage} alt={card.title} style={{ width: 'auto', height: '30px', maxWidth: '100%' }} />
-                                            ) : (
-                                                <Typography variant="h6" sx={{ maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                    {card.title}
-                                                </Typography>
-                                            )}
-                                            {card.cardTypeImage && (
-                                                <img src={card.cardTypeImage} alt={card.cardType} style={{ width: 'auto', height: '30px', maxWidth: '100%', marginLeft: '10px' }} />
-                                            )}
-                                        </Box>
-                                    }
-                                    sx={{ textAlign: 'center', alignItems: 'flex-end', justifyContent: 'center',
-                                        backgroundColor: theme.palette.primary.light, width: '100%' }}
-                                />
-                                <CardContent sx={{ justifyContent: 'start', alignItems: 'start', flexDirection: 'column', display: 'flex' }}>
-                                    {card.bic && (
-                                        <Box sx={{ display: 'flex',  flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
-                                            <Typography
-                                                variant="body1"
-                                                color="text.secondary"
-                                                sx={{ flexGrow: 1}}
-                                            >
-                                                {card.bic}
-                                            </Typography>
-                                            <IconButton
-                                                sx={{
-                                                    fontSize: "inherit",
-                                                    padding: 0,
-                                                    marginLeft: '10px'
-                                                }}
-                                                onClick={() => copyToClipboard(card.bic)}
-                                            >
-                                                <ContentCopyIcon />
-                                            </IconButton>
-                                        </Box>
-                                    )}
-                                    {card.iban && (
-                                        <Box sx={{ display: 'flex', flexDirection: 'row', marginBottom: '16px' }}>
-                                            <Typography
-                                                variant="body1"
-                                                color="text.secondary"
-                                                sx={{ flexGrow: 1 }}
-                                            >
-                                                {card.iban}
-                                            </Typography>
-                                            <IconButton
-                                                sx={{
-                                                    fontSize: "inherit",
-                                                    padding: 0,
-                                                    marginLeft: '10px'
-                                                }}
-                                                onClick={() => copyToClipboard(card.iban)}
-                                            >
-                                                <ContentCopyIcon />
-                                            </IconButton>
-                                        </Box>
-                                    )}
-                                    {card.email && (
-                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                            <Typography
-                                                variant="body1"
-                                                color="text.secondary"
-                                                sx={{ flexGrow: 1}}
-                                            >
-                                                {card.email}
-                                            </Typography>
-                                            <IconButton
-                                                sx={{
-                                                    fontSize: "inherit",
-                                                    padding: 0,
-                                                    marginLeft: '10px'
-                                                }}
-                                                onClick={() => copyToClipboard(card.email)}
-                                            >
-                                                <ContentCopyIcon />
-                                            </IconButton>
-                                        </Box>
-                                    )}
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
 
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Typography variant="h4" sx={{ mb: 2 }}>Send us a message</Typography>
