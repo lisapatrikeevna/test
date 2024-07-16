@@ -5,29 +5,25 @@ import {
     Stack,
     Typography,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import EmailIcon from '@mui/icons-material/Email';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import { useTheme as useCustomTheme } from '../../../../contexts/ThemeContext.tsx';
 import { useTheme } from '@mui/material/styles';
 import SearchField from "../../SearchField.tsx";
 import {AppPageSwitch} from "./AppPageSwitch.tsx";
+import {NotificationsOutlined} from "@mui/icons-material";
 
 // Props type definition for AppPageHeader component
 type Props = {
     setIsOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
-    setIsOpenMainSideBar: React.Dispatch<React.SetStateAction<boolean>>;
-    toggleChatsPanel: () => void;
-    setIsChatPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    isLeftSideBarOpen: boolean;
 };
 
 // Header component for the application page
 const AppPageHeader = ({
                            setIsOpenSideBar,
-                           setIsOpenMainSideBar,
-                           toggleChatsPanel,
+    isLeftSideBarOpen,
                        }: Props) => {
     const [isOpenModalNotifications, setIsOpenModalNotifications] = useState(false);
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
@@ -70,51 +66,18 @@ const AppPageHeader = ({
             justifyContent="space-between"
             alignItems="center"
             sx={{
-                zIndex: 1100,
                 position: 'relative',
                 padding: themeMui.spacing(2),
-                height: '85px',
+                height: '64px',
+                width: isLeftSideBarOpen ? "calc(100vw - 80px)" : "calc(100vw - 8px)",
+                transition: 'none',
             }}
             style={{ backgroundColor: themeMui.palette.background.default }}
         >
-            {/* Left icons */}
-            <Stack direction="row" spacing={2} alignItems="center">
-                <MenuIcon
-                    cursor="pointer"
-                    onClick={() => setIsOpenMainSideBar((prev) => !prev)}
-                />
-                <EmailIcon
-                    cursor="pointer"
-                    onClick={toggleChatsPanel}
-                />
-            </Stack>
+            <Box flex={1} />
 
-            {/* Search bar */}
-            <Stack direction="row" >
-                {/*#region Previous Search bar*/}
-                {/*<TextField*/}
-                {/*  id="outlined-basic"*/}
-                {/*  label="Search"*/}
-                {/*  variant="outlined"*/}
-                {/*  size="small"*/}
-                {/*  sx={{display: 'flex', width: '400px', height: '32px'}}*/}
-                {/*  value={searchQuery}*/}
-                {/*  onChange={(e) => setSearchQuery(e.target.value)}*/}
-                {/*  onKeyPress={handleKeyPress}*/}
-                {/*  InputProps={{*/}
-                {/*    endAdornment: (*/}
-                {/*      <InputAdornment*/}
-                {/*        position="end"*/}
-
-                {/*        sx={{ display: 'flex', gap: '20px', alignItems: 'center' }}*/}
-                {/*      >*/}
-                {/*        /!*<KeyboardAltOutlinedIcon sx={{ cursor: 'pointer' }} />*!/*/}
-                {/*        <SearchOutlinedIcon cursor="pointer" onClick={handleSearch} />*/}
-                {/*      </InputAdornment>*/}
-                {/*    ),*/}
-                {/*  }}*/}
-                {/*/>*/}
-                {/*#endregion Previous Search bar*/}
+            {/* Centered Search bar and Theme Switch */}
+            <Stack direction="row" justifyContent="center" alignItems="center" flex={1}>
                 <SearchField onSearch={handleSearch} />
                 <Box
                     sx={{
@@ -122,7 +85,7 @@ const AppPageHeader = ({
                         position: 'relative',
                         display: 'flex',
                         alignItems: 'center',
-                        marginLeft: themeMui.spacing(2),
+                        marginLeft: themeMui.spacing(5),
                         '@media (max-width: 930px)': {
                             width: '70px',
                         },
@@ -138,17 +101,12 @@ const AppPageHeader = ({
                         inputProps={{ 'aria-label': 'theme switch' }}
                     />
                 </Box>
-                {/*<KeyboardVoiceOutlinedIcon*/}
-                {/*  sx={{*/}
-                {/*    cursor: 'pointer',*/}
-                {/*  }}*/}
-                {/*/>*/}
             </Stack>
-            {/* Right icons */}
-            <Stack direction="row" spacing={2} alignItems="center">
 
-                <Badge badgeContent={10} color="primary" max={9}>
-                    <NotificationsIcon
+            {/* Right icons */}
+            <Stack direction="row" spacing={2} flex={1} justifyContent="flex-end">
+                <Badge color="primary" max={9}>
+                    <NotificationsOutlined
                         cursor="pointer"
                         onClick={handleModal}
                         sx={{
@@ -168,7 +126,6 @@ const AppPageHeader = ({
                             padding: '15px',
                             borderRadius: '15px',
                             width: '300px',
-                            background: '#e0e0e0',
                             position: 'absolute',
                             top: modalPosition.top,
                             left: modalPosition.left,

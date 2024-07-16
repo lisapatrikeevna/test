@@ -14,8 +14,15 @@ export type RenderValues =
 
 export type RenderValuesCentralComponent =
     | 'home'
+    | 'profile'
+    | 'chat'
+    | 'newGroup'
+    | 'newChannel'
     | 'mevipa'
+    | 'webinars'
     | 'VR'
+    | 'settings'
     | 'videopage'
     | 'videoeditpage'
     | 'videochannel';
+

@@ -10,6 +10,7 @@ import {MessageActionsMenu} from "./messageActionsMenu/MessageActionMenu.tsx";
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import {useChat} from "./messageActionsMenu/useChat.ts";
+import {useTheme} from "@mui/material/styles";
 
 type AppPageChatsProps = {
   currentUser: UserType | null;
@@ -36,6 +37,8 @@ export const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
     handleCloseMenu,
     handleDeleteMessage,
   } = useChat();
+
+  const theme = useTheme();
 
   useEffect(() => {
     const newChatService = new ChatService();
@@ -65,11 +68,11 @@ export const AppPageChats = ({ currentUser }: AppPageChatsProps) => {
 
   // If no user is selected, prompt to select a user
   if (!currentUser) {
-    return <Stack>Select a user to start chatting</Stack>;
+    return <Stack direction='row' sx={{ ...styles.mainContainer, backgroundColor: theme.palette.secondary.light }}>Select a user to start chatting</Stack>;
   }
 
   return (
-    <Stack  direction='row' sx={styles.mainContainer}>
+      <Stack direction='row' sx={{ ...styles.mainContainer, backgroundColor: theme.palette.secondary.light }}>
       <Divider sx={styles.divider} />
       <Stack sx={styles.chatContainer}>
         <Stack sx={styles.headerMessageContainer}>

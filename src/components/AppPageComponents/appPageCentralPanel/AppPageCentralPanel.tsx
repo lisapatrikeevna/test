@@ -1,5 +1,6 @@
 import {Panel, PanelResizeHandle} from "react-resizable-panels";
-import Fon3 from "../../../assets/Fon3.jpg";
+import CentralDark from "../../../assets/CentralDark.png"
+import CentralLight from "../../../assets/CentralLight.png"
 import VideosMainPage from "../../../pages/Videos/VideosMainPage.tsx";
 import VideoEditPage from "../../../pages/Videos/VideoEditPage.tsx";
 import ChannelPage from "../../../pages/Videos/ChannelPage.tsx";
@@ -30,12 +31,13 @@ export const AppPageCentralPanel= ({renderValuesCentralComponent, changeRenderCe
     const [showOptionsButton, setShowOptionsButton] = useState(false);
     // Transfer panelWidth to other central components
     const [centralPanelWidth, setCentralPanelWidth] = useState(window.innerWidth);
+    const backgroundImageUrl = theme.palette.mode === 'dark' ? CentralDark : CentralLight;
 
     return (
         <>
             <PanelResizeHandle
                 style={{
-                    width: '3px',
+                    width: '0px',
                     background: theme.palette.mode === 'dark' ? '#bebebe' : '#333333',
                 }}
             />
@@ -44,7 +46,7 @@ export const AppPageCentralPanel= ({renderValuesCentralComponent, changeRenderCe
             <Panel
                 onResize={(width) => setCentralPanelWidth(width)}
                 style={{
-                    backgroundImage: `url(${Fon3})`,
+                    backgroundImage: `url(${backgroundImageUrl})`,
                     padding: theme.spacing(1),
                     position: 'relative',
                     overflowY: 'auto',

@@ -6,21 +6,17 @@ import styles from "./styles.ts"
 
 type  AppPageContainerHeaderProps = {
     setIsOpenSideBar: Dispatch<SetStateAction<boolean>>;
-    setIsOpenMainSideBar: Dispatch<SetStateAction<boolean>>;
-    toggleChatsPanel: () => void;
-    setIsChatPanelOpen: Dispatch<SetStateAction<boolean>>;
+    isLeftSideBarOpen: boolean;
 };
 
-export const AppPageContainerHeader = ({setIsOpenSideBar, setIsOpenMainSideBar, toggleChatsPanel, setIsChatPanelOpen}:AppPageContainerHeaderProps) => {
+export const AppPageContainerHeader = ({setIsOpenSideBar, isLeftSideBarOpen}:AppPageContainerHeaderProps) => {
 
     return (
         <Box sx={styles.container}>
             <AppPageHeader
-              setIsOpenSideBar={setIsOpenSideBar}
-              setIsOpenMainSideBar={setIsOpenMainSideBar}
-              toggleChatsPanel={toggleChatsPanel}
-              setIsChatPanelOpen={setIsChatPanelOpen}
-             />
+                setIsOpenSideBar={setIsOpenSideBar}
+                isLeftSideBarOpen={isLeftSideBarOpen}
+            />
             <Divider />
         </Box>
     )

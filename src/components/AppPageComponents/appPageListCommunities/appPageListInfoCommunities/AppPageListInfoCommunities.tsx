@@ -8,6 +8,7 @@ import { useRef} from "react";
 import styles from "./styles.ts"
 import {CommunityItem} from "../communityItem/CommunityItem.tsx";
 import Avatar from "@mui/material/Avatar";
+import { useTheme } from '@mui/material/styles';
 
 type AppPageListInfoCommunities = {
     userAvatar: string | null
@@ -22,6 +23,9 @@ export const AppPageListInfoCommunities =({communities, setCurrentUser, avatarAn
     const avatarAndNamesPanelRef = useRef<ImperativePanelHandle>(null);
     const backgroundColorUserAvatar = userAvatar ? (userAvatar.startsWith('#') ? userAvatar : undefined) : undefined
     const size = 3.48
+
+    const theme = useTheme();
+
     return(
         <Panel
             ref={avatarAndNamesPanelRef}
@@ -29,6 +33,7 @@ export const AppPageListInfoCommunities =({communities, setCurrentUser, avatarAn
             collapsedSize={size}
             defaultSize={size}
             minSize={size}
+            style={{backgroundColor: theme.palette.secondary.light}}
         >
             <Stack sx={styles.stack}>
                 <Box sx={styles.avatarAndSearchContainer}>

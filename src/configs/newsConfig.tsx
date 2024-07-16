@@ -1,14 +1,9 @@
-import Fon1 from '../assets/Fon.jpg';
-
-
 export interface NewsItem {
     id: string;
     title: string;
     content: string;
     fullContent: string;
-    image: string; // новое поле для URL изображения
 }
-
 export const news: NewsItem[] = [
     {
         id: "1",
@@ -21,7 +16,7 @@ export const news: NewsItem[] = [
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    image: Fon1,
+    
     },
     {
         id: "2",
@@ -34,7 +29,7 @@ export const news: NewsItem[] = [
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    image: Fon1, 
+     
     },
     {
         id: "3",
@@ -47,7 +42,7 @@ export const news: NewsItem[] = [
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    image: Fon1, 
+     
     },
     {
         id: "4",
@@ -60,7 +55,7 @@ export const news: NewsItem[] = [
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    image: Fon1, 
+     
     },
     {
         id: "5",
@@ -73,7 +68,7 @@ export const news: NewsItem[] = [
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    image: Fon1, 
+     
     },
     {
         id: "6",
@@ -86,7 +81,7 @@ export const news: NewsItem[] = [
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    image: Fon1, 
+     
     },
     {
         id: "7",
@@ -99,7 +94,7 @@ export const news: NewsItem[] = [
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    image: Fon1, 
+     
     },
     {
         id: "8",
@@ -112,7 +107,7 @@ export const news: NewsItem[] = [
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    image: Fon1, 
+     
     },
     {
         id: "9",
@@ -125,7 +120,7 @@ export const news: NewsItem[] = [
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor.
     Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`,
-    image: Fon1, 
+     
     },
 
     ];

@@ -1,24 +1,29 @@
 import {CSSProperties} from "../../types/common.ts";
 
 export default {
+    sideBarAndMainContainer: {
+        display: "flex",
+        flexDirection: "row",
+    },
     mainContainer: {
         display: "flex",
-        flexDirection:"column"
+        flexDirection:"column",
+        width: "100%",
     },
+
     contentContainer: {
         display: "flex",
         position: "relative",
         overflow: "auto",
-        height: "calc(100vh - 85px)",
-        marginTop: "85px"
+        height: "calc(100vh - 60px)",
+
+        marginTop: "60px"
     },
     sideBarContainer:{
         position:"fixed",
-        top:"85px",
         bottom:0,
         left:0,
         zIndex:1000
-
     }
 
-} as CSSProperties<'mainContainer' | 'contentContainer' | 'sideBarContainer'>;
+} as CSSProperties<'sideBarAndMainContainer' | 'mainContainer' | 'contentContainer' | 'sideBarContainer'>;
