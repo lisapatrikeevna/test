@@ -7,5 +7,6 @@ export const Landing = () => {
     return <Box sx={styles.container} id={'Home'}>
         <Header/>
         <About/>
+
     </Box>
 }

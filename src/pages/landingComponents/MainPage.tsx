@@ -28,7 +28,7 @@ const MainPage = () => {
             {/*<AboutUs />*/}
             {/*<Pricing />*/}
             {/*<Partners />*/}
-            <Contacts />
+            {/*<Contacts />*/}
             {/*<News />*/}
         </Container>
     );

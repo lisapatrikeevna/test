@@ -6,6 +6,7 @@ import {Pricing} from "./Pricing/Pricing.tsx";
 import {Container} from "@mui/material";
 import {Partners} from './Partners/Partners.tsx';
 import {SupportUs} from "./SupportUs/SupportUs.tsx";
+import {ContactForm} from "./ContactForm/ContactForm.tsx";
 import React from "react";
 
 export const About = () => {
@@ -16,5 +17,6 @@ export const About = () => {
         <Pricing/>
         <Partners/>
         <SupportUs/>
+        <ContactForm/>
     </Container>
 }

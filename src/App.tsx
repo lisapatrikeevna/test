@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import AuthContext from './contexts/AuthContext';
 import AppPage from './pages/appPage/AppPage.tsx';
 import LoginModal from './components/LoginModal';
-import Header from './pages/landingComponents/header/Header.tsx';
+// import Header from './pages/landingComponents/header/Header.tsx';
 import MainPage from './pages/landingComponents/MainPage';
 import { useAppDispatch, useAppSelector } from './store/hooks.ts';
 import { AuthService } from './services/auth.service.ts';
