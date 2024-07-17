@@ -1,6 +1,6 @@
 import {useState} from "react";
 import LoginModal from "../../../../../components/LoginModal.tsx";
-import {DarkButton} from "../../components/DarkButton/DarkButton.tsx";
+import {Button} from "@mui/material";
 
 export const LoginButton = () => {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -10,7 +10,7 @@ export const LoginButton = () => {
     }
 
     return <>
-        <DarkButton onClick={handleLoginModalOpen(true)}>Login</DarkButton>
+        <Button variant={'black'} onClick={handleLoginModalOpen(true)}>Login</Button>
         <LoginModal isOpen={isLoginModalOpen} onClose={handleLoginModalOpen(false)} />
     </>
 }

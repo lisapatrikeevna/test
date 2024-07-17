@@ -1,6 +1,13 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 import {grey} from "@mui/material/colors";
 import {deepmerge} from "@mui/utils";
+// import {shape} from "@mui/system";
+
+declare module '@mui/material/Button' {
+    interface ButtonPropsVariantOverrides {
+        black: true;
+    }
+}
 
 // Base Theme
 const baseTheme = createTheme({
@@ -39,6 +46,51 @@ const baseTheme = createTheme({
             fontSize: '0.83rem', // default for xs
         },
     },
+    components: {
+        MuiButton: {
+            variants: [
+                {
+                    props: { variant: 'black' },
+                    style: {
+                        color: '#fff',
+                        backgroundColor: '#000',
+                        borderColor: '#000',
+                        borderRadius: 50,
+                        padding: '10px 30px',
+                        textTransform: 'none',
+                        fontWeight: 500,
+                        fontSize: '1rem',
+                        '&:hover': {
+                            backgroundColor: '#333',
+                        },
+                        '&:disabled': {
+                            color: '#fff',
+                            opacity: 0.6,
+                            cursor: 'not-allowed',
+                        },
+                    },
+                },
+            ],
+            styleOverrides: {
+                root: ({ ownerState, theme }) => ({
+                    ...(ownerState.variant === 'black' && {
+                        ...(ownerState.size === 'small' && {
+                            padding: theme.spacing(1),
+                            fontSize: '0.875rem',
+                        }),
+                        ...(ownerState.size === 'medium' && {
+                            padding: theme.spacing(1.5),
+                            fontSize: '1rem',
+                        }),
+                        ...(ownerState.size === 'large' && {
+                            padding: theme.spacing(2),
+                            fontSize: '1.25rem',
+                        }),
+                    }),
+                }),
+            },
+        },
+    },
 
 });
 
@@ -70,7 +122,7 @@ const lightThemeOptions: ThemeOptions = {
         },
     },
 };
-    
+
 const darkThemeOptions: ThemeOptions = {
 
     palette: {

@@ -1,7 +1,6 @@
 import styles from "./styles.ts";
 import Grid from "@mui/material/Grid";
-import {Container, Typography} from "@mui/material";
-import {DarkButton} from "../../components/DarkButton/DarkButton.tsx";
+import {Button, Container, Typography} from "@mui/material";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
 export const GeneralInfo = () => {
@@ -10,7 +9,7 @@ export const GeneralInfo = () => {
             <Grid item xs={12} md={6} sx={styles.descriptionSection}>
                 <Typography component='div' fontFamily={'Space Grotesk'} marginBottom='12px' variant='h2' fontWeight={500}>One platform to cover all your needs (and more)</Typography>
                 <Typography component='div' marginBottom='12px' variant='body2'>Learn, connect and grow with us - unlock your potential with NeoXonline!</Typography>
-                <DarkButton>Get started&nbsp;&nbsp;<ArrowOutwardIcon fontSize='small'/></DarkButton>
+                <Button variant={'black'}>Get started&nbsp;&nbsp;<ArrowOutwardIcon fontSize='small'/></Button>
             </Grid>
             <Grid item xs={12} md={6} sx={styles.videoSection}>
                 <iframe
