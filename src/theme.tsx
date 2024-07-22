@@ -101,7 +101,6 @@ const lightThemeOptions: ThemeOptions = {
         background: {
             default: "#F8F8FE",
             paper: grey[200],
-
         },
 
         text: {

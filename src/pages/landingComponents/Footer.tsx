@@ -8,8 +8,8 @@ import { Grid, Box } from '@mui/material';
 
 const FooterContainer = styled(Box)(({ theme }) => ({
     position: 'fixed',
-    '@media (max-width: 1280px)': 
-    { 
+    '@media (max-width: 1280px)':
+    {
         position: 'absolute',
     },
     bottom: 0,

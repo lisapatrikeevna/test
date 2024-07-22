@@ -180,11 +180,11 @@ const HeaderAndMainPage: React.FC<{
       <Landing/>
       <MainPage />
       {/*<AppPage/>*/}
-      <Footer
-          onImpressumClick={() => setIsImpressumModalOpen(true)}
-          onPrivacyPolicyClick={() => setIsPrivacyPolicyModalOpen(true)}
-          onDatenschutzClick={() => setIsDatenschutzModalOpen(true)}
-      />
+      {/*<Footer*/}
+      {/*    onImpressumClick={() => setIsImpressumModalOpen(true)}*/}
+      {/*    onPrivacyPolicyClick={() => setIsPrivacyPolicyModalOpen(true)}*/}
+      {/*    onDatenschutzClick={() => setIsDatenschutzModalOpen(true)}*/}
+      {/*/>*/}
     </ActiveSectionContext.Provider>
 );
 export default App;
