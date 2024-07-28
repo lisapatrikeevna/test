@@ -19,15 +19,8 @@ export const AppPageSideBarContainer = ({isOverlayVisible, setIsOpenSideBar, isO
     return (
         <>
             {isOverlayVisible && (
-                <Box
-                    position="fixed"
-                    top="60px"
-                    left={0}
-                    right={0}
-                    bottom={0}
-                    bgcolor="rgba(0, 0, 0, 0.2)"
-                    zIndex={999}
-                    onClick={() => {
+                <Box position="fixed" top="60px" left={0} right={0} bottom={0} bgcolor="rgba(0, 0, 0, 0.2)"
+                    zIndex={999} onClick={() => {
                         setIsOpenSideBar(false);
                         setIsOpenMainSideBar(false);
                     }}
@@ -39,19 +32,9 @@ export const AppPageSideBarContainer = ({isOverlayVisible, setIsOpenSideBar, isO
                     }}
                 />
             )}
-            <Box
-                position="fixed"
-                top="60px"
-                bottom={0}
-                right={0}
-                zIndex={isOpenSideBar ? 1000 : -1}
-            >
-                <AppPageSideBar
-                    openRightPanel={openRightPanel}
-                    isOpenSideBar={isOpenSideBar}
-                    changeRender={changeRender}
-                    setIsOpenSideBar={setIsOpenSideBar}
-                />
+            <Box position="fixed" top="60px" bottom={0} right={0} zIndex={isOpenSideBar ? 1000 : -1} >
+                <AppPageSideBar openRightPanel={openRightPanel} isOpenSideBar={isOpenSideBar}
+                    changeRender={changeRender} setIsOpenSideBar={setIsOpenSideBar} />
             </Box>
         </>
     )

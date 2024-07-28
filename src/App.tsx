@@ -177,9 +177,9 @@ const HeaderAndMainPage: React.FC<{
         setIsDatenschutzModalOpen,
       }) => (
     <ActiveSectionContext.Provider value={{ activeSection, setActiveSection }}>
-      <Landing/>
-      <MainPage />
-      {/*<AppPage/>*/}
+      {/*<Landing/>*/}
+      {/*<MainPage />*/}
+      <AppPage/>
       {/*<Footer*/}
       {/*    onImpressumClick={() => setIsImpressumModalOpen(true)}*/}
       {/*    onPrivacyPolicyClick={() => setIsPrivacyPolicyModalOpen(true)}*/}

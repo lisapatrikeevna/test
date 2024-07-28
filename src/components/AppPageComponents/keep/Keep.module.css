@@ -1,0 +1,42 @@
+.containerBox{
+    border: 2px solid red;
+    display: flex;
+}
+.centredBox{
+
+}
+.paper{
+    background-color: white;
+    padding: 10px 0;
+    max-width: 572px;
+    width: auto;
+    height: max-content;
+}
+.invitationBox{
+    border-bottom: 2px solid #EADDFF;
+}
+.boxHeading{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*border-bottom: 1px solid #EADDFF;*/
+}
+.boxHeadingBtn{
+    width: 100px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+}
+.css-oy01l3-MuiInputBase-root-MuiInput-root::before {
+    border-bottom: none;
+}
+.wrapInput{
+    /*background-color: red;*/
+    width: 100%;
+    border-bottom: 1px solid #EADDFF;
+}
+.shotMoreBoxList{
+
+}
+.longMoreBoxList{}
