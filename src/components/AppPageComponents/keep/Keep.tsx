@@ -14,6 +14,7 @@ import Paintbrush from "../../../assets/notes/Paintbrush.svg";
 
 import InvitationBoxFooter from "./appPageInvitationBoxFooter/InvitationBoxFooter.tsx";
 import KeeLeftBlock from "./keeLeftBlock/KeeLeftBlock.tsx";
+import NoteCreationPanel from "./noteCreationPanel/NoteCreationPanel.tsx";
 
 
 export const VisuallyHiddenInput = styled('input')({
@@ -81,38 +82,7 @@ const Keep = () => {
         <Paper square={false} pt={2} pb={2} className={cl.paper} style={{backgroundColor:noteBackgroundColor}}>
           {/*<Card variant="outlined" sx={{maxWidth: 360}} className={cl.paper} autoFocus onBlur={setText}>*/}
 
-
-          <Box className={cl.invitationBox}>
-            {/*-----basic block--------*/}
-            {isOpen &&<>
-              {newNoteImg && <img src={newNoteImg} alt={"img"}/>}
-              <Box className={cl.wrapInput}>
-                <TextField variant="standard" placeholder={'Введите заголовок'} style={{borderBottom:0}}
-                           value={newNoteTitle} fullWidth onChange={inputTitleHandler}/>
-              </Box></>}
-            {!isTodoList?
-                <Box className={cl.boxHeading}>
-                  <Box className={cl.wrapInput}>
-                    <TextField variant="standard" placeholder={'Заметка…'} value={newNote} fullWidth onChange={inputTexHandler} onFocus={handleFocus} style={{borderBottom:0}}/>
-                  </Box>
-                  {!isOpen && <Box className={cl.boxHeadingBtn}>
-                    {/*<BrushIcon/>*/}
-                    {/*<LibraryAddCheckIcon/>*/}
-                    <img src={Checkbox} alt="Checkbox"/>
-                    <img src={Paintbrush} alt="Paintbrush"/>
-
-                    <IconButton aria-label="download" tabIndex={-1} component="label">
-                      {/*<AddToPhotosIcon fontSize="inherit"/>*/}
-                      <img src={downloadImg} alt="downloadImg"/>
-                      <VisuallyHiddenInput type="file" onChange={inputImgHandler} onBlur={imgOnBlurHandler}/>
-                    </IconButton>
-                  </Box>}
-                </Box>:
-                <Box>todo</Box>
-            }
-
-          </Box>
-
+          <NoteCreationPanel imgOnBlurHandler={imgOnBlurHandler} inputImgHandler={inputImgHandler} inputTitleHandler={inputTitleHandler} inputTexHandler={inputTexHandler} newNote={newNote} newNoteImg={newNoteImg} newNoteTitle={newNoteTitle} isOpen={isOpen} isTodoList={isTodoList}/>
 
           {isOpen && <InvitationBoxFooter setText={setText} getBackground={backgroundHandler} getImg={imgOnBlurHandler}
                                           listOfShortcuts={listOfShortcuts} addNewShortcuts={listOfShortcutsHandler}
