@@ -6,8 +6,9 @@ import Paintbrush from "../../../../assets/notes/Paintbrush.svg";
 import downloadImg from "../../../../assets/notes/Image.svg";
 import {ChangeEvent} from "react";
 import {AddItemForm} from "../todoList/AddItemForm.tsx";
-import {VisuallyHiddenInput} from "../Keep.tsx";
-
+import {FilterValuesType, VisuallyHiddenInput} from "../Keep.tsx";
+import keepIcon from "../../../../assets/notes/keep.svg";
+import {Todolist} from "../todoList/TodoList.tsx";
 
 type propsType = {
    isOpen: boolean
@@ -22,6 +23,13 @@ type propsType = {
    addTodolist: () => void
    newNote: string
    newNoteTitle: string
+   updateTask:(todolistId: string, taskId: string, title: string)=>void
+   updateTodolist:(todolistId: string, title: string)=>void
+   changeTaskStatus:(taskId: string, taskStatus: boolean, todolistId: string)=>void
+   removeTodolist:(todolistId: string)=>void
+   changeTodoFilter:(filter: FilterValuesType, todolistId: string)=>void
+   removeTask:(taskId: string, todolistId: string)=>void
+   addTask:(title: string, todolistId: string)=>void
 }
 const NoteCreationPanel = ({isOpen, newNoteImg, isTodoList, ...props}: propsType) => {
 
@@ -52,16 +60,20 @@ const NoteCreationPanel = ({isOpen, newNoteImg, isTodoList, ...props}: propsType
                   {newNoteImg && <img src={newNoteImg} alt={"img"}/>}
                   <Box className={cl.wrapInput}>
                      <AddItemForm addItem={props.inputTitleHandler} fullWidth={true}/>
+                     <IconButton onClick={()=>alert('Make me')}><img src={keepIcon} alt={"keepIcon"}/> </IconButton>
                   </Box>
                </>
 
-               {!isTodoList &&
+               {!isTodoList ?
                    <Box className={cl.boxHeading}>
                        <Box className={cl.wrapInput}>
                            <AddItemForm addItem={props.inputTexHandler} fullWidth={true}
                                         placeholder={"Заметка…"} autoFocus/>
                        </Box>
-                   </Box>
+                   </Box>:
+                  <Todolist todoTitle={props.newNoteTitle} todolistId={"1233"} tasks={[]} removeTask={props.removeTask} addTask={props.addTask}
+                            changeTaskStatus={props.changeTaskStatus} removeTodolist={props.removeTodolist} updateTask={props.updateTask} updateTodolist={props.updateTodolist}
+                            />
                }
 
             </Box>

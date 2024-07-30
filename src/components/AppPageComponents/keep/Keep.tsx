@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import { Button, Card, Container, Grid, IconButton, Paper, TextField, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import cl from "./Keep.module.css";
@@ -26,10 +26,10 @@ export type TaskType = {
   title: string
   isDone: boolean
 }
-export type FilterValuesType = 'all' | 'active' | 'completed'
-type TodolistType = {
+export type FilterValuesType = 'fixed' | 'archive' | 'none'
+export type TodolistType = {
   id: string
-  title: string
+  title?: string
   filter?: FilterValuesType
 }
 export type TasksStateType = {
@@ -44,11 +44,13 @@ const Keep = () => {
   const [arrNotes, setArrNotes] = useState<Array<noteType>>([{id: 1, text: 'some text', titleNote: '', img: null, paint: null,background:null}])
   const [newNoteImg, setNewNoteImg] = useState<string|null>(null)
   const [newNote, setNewNote] = useState('')
-  const [newNoteTitle, setNewNoteTitle] = useState('')
-  const [isOpen, setOpen] = useState(false)
   const [noteBackgroundColor, setNoteBackgroundColor] = useState<string>("#fff")
-  const [listOfShortcuts, setListOfShortcuts] = useState<Array<shortcutsType>>([])
+  const [newNoteTitle, setNewNoteTitle] = useState('')
+
+  const [isOpen, setOpen] = useState(false)
   const [isTodoList,setIsTodoList] = useState(false)
+
+  const [listOfShortcuts, setListOfShortcuts] = useState<Array<shortcutsType>>([])
   const [archive, setToArchive]=useState<Array<any>>([])
 
   // let todolistID1 = v1()
@@ -57,8 +59,8 @@ const Keep = () => {
   let todolistID2 = "v1()"
 
   let [todolists, setTodolists] = useState<TodolistType[]>([
-    {id: todolistID1, title: 'What to learn', filter: 'all'},
-    {id: todolistID2, title: 'What to buy', filter: 'all'},
+    {id: todolistID1, title: 'What to learn', filter: 'none'},
+    {id: todolistID2, title: 'What to buy', filter: 'none'},
   ])
 
   let [tasks, setTasks] = useState<TasksStateType>({
@@ -83,10 +85,7 @@ const Keep = () => {
   })
 
 
-  const inputTexHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("inputTexHandler");
-    setNewNote(e.currentTarget.value)
-  }
+  const inputTexHandler = (e: ChangeEvent<HTMLInputElement>) => setNewNote(e.currentTarget.value)
   const inputTitleHandler = (e: ChangeEvent<HTMLInputElement>) => setNewNoteTitle(e.currentTarget.value)
   const inputImgHandler = (e: ChangeEvent<HTMLInputElement>) => setNewNoteImg(e.currentTarget.value)
   const imgOnBlurHandler=()=>setOpen(true)
@@ -128,7 +127,11 @@ const Keep = () => {
     setListOfShortcuts([...listOfShortcuts, newObj])
   }
   const isTodoHandler=()=>setIsTodoList(!isTodoList)
-
+  useEffect(() => {
+    if (isTodoList) {
+      addTodolist()
+    }
+  }, [isTodoList]);
 
   const removeTask = (taskId: string, todolistId: string) => {
     const newTodolistTasks = {...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)}
@@ -156,8 +159,9 @@ const Keep = () => {
     delete tasks[todolistId]
     setTasks({...tasks})
   }
-  const addTodolist = (title: string="new todoList") => {
-    const todolistId = "v1()bhjk"+title[-1]
+  const addTodolist = () => {
+    const title = newNoteTitle
+    const todolistId = "v1()bhjk"+todolists.length
     const newTodolist: TodolistType = {id: todolistId, title: title}
     // const newTodolist: TodolistType = {id: todolistId, title: title, filter: 'all'}
     setTodolists([newTodolist, ...todolists])
@@ -197,7 +201,9 @@ const mausHandl=()=>{
           <NoteCreationPanel isOpen={isOpen} isTodoList={isTodoList} handleFocus={handleFocus} isTodoHandler={isTodoHandler}
                              imgOnBlurHandler={imgOnBlurHandler} inputImgHandler={inputImgHandler} inputTitleHandler={inputTitleHandler}
                              inputTexHandler={inputTexHandler} newNoteImg={newNoteImg} addTodolist={addTodolist}
-                             newNoteTitle={newNoteTitle} newNote={newNote}/>
+                             newNoteTitle={newNoteTitle} newNote={newNote} updateTodolist={updateTodolist} updateTask={updateTask} addTask={addTask}
+                             removeTask={removeTask} changeTodoFilter={changeFilter} changeTaskStatus={changeTaskStatus} removeTodolist={removeTodolist}
+          />
 
           {isOpen && <InvitationBoxFooter setText={setText} getBackground={backgroundHandler} getImg={inputImgHandler}
                                           listOfShortcuts={listOfShortcuts} addNewShortcuts={listOfShortcutsHandler}
