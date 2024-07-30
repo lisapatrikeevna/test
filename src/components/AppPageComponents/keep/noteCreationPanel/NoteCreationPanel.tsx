@@ -6,7 +6,7 @@ import Paintbrush from "../../../../assets/notes/Paintbrush.svg";
 import downloadImg from "../../../../assets/notes/Image.svg";
 import {ChangeEvent} from "react";
 import {AddItemForm} from "../todoList/AddItemForm.tsx";
-import {FilterValuesType, VisuallyHiddenInput} from "../Keep.tsx";
+import {FilterValuesType, TaskType, VisuallyHiddenInput} from "../Keep.tsx";
 import keepIcon from "../../../../assets/notes/keep.svg";
 import {Todolist} from "../todoList/TodoList.tsx";
 
@@ -29,15 +29,18 @@ type propsType = {
    removeTodolist:(todolistId: string)=>void
    changeTodoFilter:(filter: FilterValuesType, todolistId: string)=>void
    removeTask:(taskId: string, todolistId: string)=>void
-   addTask:(title: string, todolistId: string)=>void
+   addTask:( todolistId: string)=>void
+   todolistId:string
+   tasks:Array<TaskType>
 }
 const NoteCreationPanel = ({isOpen, newNoteImg, isTodoList, ...props}: propsType) => {
 
    return (
       <Box className={cl.invitationBox}>
          {/*-----basic block--------*/}
-         {!isOpen ? <Box style={{width:"100%", display:"flex"}}>
 
+         {!isOpen && !isTodoList ? <Box style={{width:"100%", display:"flex"}}>
+               {/*-----block if close--------*/}
                <p onClick={props.handleFocus}>"Заметка…"</p>
                <Box className={cl.boxHeadingBtn}>
                   <IconButton aria-label="Checkbox" onClick={props.isTodoHandler}>
@@ -56,75 +59,35 @@ const NoteCreationPanel = ({isOpen, newNoteImg, isTodoList, ...props}: propsType
             </Box> :
 
             <Box>
-               <>
+               {/*-----block if open--------*/}
+               {/*<>*/}
                   {newNoteImg && <img src={newNoteImg} alt={"img"}/>}
-                  <Box className={cl.wrapInput}>
-                     <AddItemForm addItem={props.inputTitleHandler} fullWidth={true}/>
-                     <IconButton onClick={()=>alert('Make me')}><img src={keepIcon} alt={"keepIcon"}/> </IconButton>
-                  </Box>
-               </>
+               {/*   <Box className={cl.wrapInput}>*/}
+               {/*      <AddItemForm addItem={props.inputTitleHandler} fullWidth={true}/>*/}
+               {/*      <IconButton onClick={()=>alert('Make me')}><img src={keepIcon} alt={"keepIcon"}/> </IconButton>*/}
+               {/*   </Box>*/}
+               {/*</>*/}
 
                {!isTodoList ?
                    <Box className={cl.boxHeading}>
+                      <Box className={cl.wrapInput}>
+                         <AddItemForm addItem={props.inputTitleHandler} fullWidth={true}/>
+                         <IconButton onClick={()=>alert('Make me')}><img src={keepIcon} alt={"keepIcon"}/> </IconButton>
+                      </Box>
                        <Box className={cl.wrapInput}>
                            <AddItemForm addItem={props.inputTexHandler} fullWidth={true}
                                         placeholder={"Заметка…"} autoFocus/>
                        </Box>
                    </Box>:
-                  <Todolist todoTitle={props.newNoteTitle} todolistId={"1233"} tasks={[]} removeTask={props.removeTask} addTask={props.addTask}
-                            changeTaskStatus={props.changeTaskStatus} removeTodolist={props.removeTodolist} updateTask={props.updateTask} updateTodolist={props.updateTodolist}
+                  <Todolist todoTitle={props.newNoteTitle} todolistId={props.todolistId} tasks={props.tasks} removeTask={props.removeTask} addTask={props.addTask}
+                            changeTaskStatus={props.changeTaskStatus} removeTodolist={props.removeTodolist} updateTask={props.updateTask}
+                            updateTodolist={props.updateTodolist} inputTexHandler={props.inputTexHandler}
                             />
                }
 
             </Box>
 
          }
-
-
-         {/*    :<Box>*/}
-         {/*        <p>'todo block'</p>*/}
-         {/*        <Box>*/}
-         {/*            /!*<Checkbox checked={true} onCange={() => alert('make my')}/>*!/*/}
-         {/*            <TextField value={'todo text'} onChange={() => {}}/>*/}
-         {/*            /!*<IconButton delet*!/*/}
-         {/*        </Box>*/}
-
-
-         {/*        /!*<div className="App">*!/*/}
-         {/*        /!*    <AddItemForm addItem={props.addTodolist}/>*!/*/}
-         {/*            /!*{todolists.map((tl) => {*!/*/}
-
-         {/*            /!*    const allTodolistTasks = tasks[tl.id]*!/*/}
-         {/*            /!*    let tasksForTodolist = allTodolistTasks*!/*/}
-
-         {/*            /!*    if (tl.filter === 'active') {*!/*/}
-         {/*            /!*        tasksForTodolist = allTodolistTasks.filter(task => !task.isDone)*!/*/}
-         {/*            /!*    }*!/*/}
-
-         {/*            /!*    if (tl.filter === 'completed') {*!/*/}
-         {/*            /!*        tasksForTodolist = allTodolistTasks.filter(task => task.isDone)*!/*/}
-         {/*            /!*    }*!/*/}
-
-         {/*            /!*    return <Todolist*!/*/}
-         {/*            /!*        key={tl.id}*!/*/}
-         {/*            /!*        todolistId={tl.id}*!/*/}
-         {/*            /!*        title={tl.title}*!/*/}
-         {/*            /!*        tasks={tasksForTodolist}*!/*/}
-         {/*            /!*        removeTask={removeTask}*!/*/}
-         {/*            /!*        changeFilter={changeFilter}*!/*/}
-         {/*            /!*        addTask={addTask}*!/*/}
-         {/*            /!*        changeTaskStatus={changeTaskStatus}*!/*/}
-         {/*            /!*        filter={tl.filter}*!/*/}
-         {/*            /!*        removeTodolist={removeTodolist}*!/*/}
-         {/*            /!*        updateTask={updateTask}*!/*/}
-         {/*            /!*        updateTodolist={updateTodolist}*!/*/}
-         {/*            /!*    />*!/*/}
-         {/*            /!*})}*!/*/}
-         {/*        /!*</div>*!/*/}
-
-
-         {/*    </Box>*/}
-         {/*}*/}
 
       </Box>
    );
