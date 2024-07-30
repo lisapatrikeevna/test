@@ -53,14 +53,15 @@ const VisuallyHiddenInput = styled('input')({
 type propsType={
     setText:()=>void
     getBackground:(bg:string)=>void
-    getImg:(bg:string)=>void
+    getImg:(e: ChangeEvent<HTMLInputElement>)=>void
     addNewShortcuts:(name:string)=>void
     listOfShortcuts:Array<shortcutsType>
     isTodoHandler:()=>void
+    toArchiveHandler:()=>void
 }
 
 
-const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,...props}:propsType) => {
+const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,toArchiveHandler,...props}:propsType) => {
     const [isOpenPaintPaletteModal, setPaintPaletteModal] = useState(false);
     const [isOpenMoreModal, setMoreModal] = useState(false);
     const [isOpenShortcutsModal, setShortcutsModal] = useState(false);
@@ -111,14 +112,16 @@ const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,...pr
                     <VisuallyHiddenInput type="file" onChange={getImg}/>
                 </IconButton>
 
-                <IconButton aria-label="delete" tabIndex={-1} title={"archive"}><img src={BoxSvg} alt={"archive"}/></IconButton>
+                <IconButton aria-label="delete" tabIndex={-1} title={"archive"} onClick={toArchiveHandler}>
+                    <img src={BoxSvg} alt={"archive"}/>
+                </IconButton>
 
                 <IconButton aria-label="delete" tabIndex={-1} title={"more"} onClick={moreModalHandler}>
                     <img src={Menu} alt={"more"}/>
                 </IconButton>
 
-                <IconButton aria-label="delete" tabIndex={-1} title={"undo"}><img src={RedoL} alt={"undo"}/></IconButton>
-                <IconButton aria-label="delete" tabIndex={-1} title={"redo"}><img src={RedoR} alt={"redo"}/></IconButton>
+                <IconButton aria-label="delete" tabIndex={-1} title={"undo"} onClick={()=>alert('Make me')}><img src={RedoL} alt={"undo"}/></IconButton>
+                <IconButton aria-label="delete" tabIndex={-1} title={"redo"} onClick={()=>alert('Make me')}><img src={RedoR} alt={"redo"}/></IconButton>
             </Box>
             <Button  variant="outlined" onClick={setText}>Close</Button>
         </Box>

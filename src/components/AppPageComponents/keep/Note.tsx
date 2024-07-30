@@ -6,7 +6,7 @@ type propsType={
 }
 const Note = ({itemNote}:propsType) => {
   return <>
-    <Paper elevation={4} style={{backgroundColor:itemNote.background}}>
+    <Paper elevation={4} style={{backgroundColor:itemNote.background , minHeight:'20px' ,minWidth: '50px'}} elevation={4}>
       {itemNote.img && <img src={itemNote.img} alt="img"/>}
       {itemNote.titleNote && <Typography>{itemNote.titleNote}</Typography>}
       {itemNote.text && <Typography>{itemNote.text}</Typography>}
