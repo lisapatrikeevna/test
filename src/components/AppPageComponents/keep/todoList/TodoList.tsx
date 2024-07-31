@@ -1,16 +1,14 @@
-// import { FilterValuesType, TaskType } from "./App";
 import {ChangeEvent} from "react";
-import {FilterValuesType, TaskType} from "../Keep.tsx";
+import {FilterValuesType, TaskType, TodolistType} from "../Keep.tsx";
 import {AddItemForm} from "./AddItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
 import {Box, Button, Paper, Typography} from "@mui/material";
-// import { AddItemForm } from "./AddItemForm";
-// import { EditableSpan } from "./EditableSpan";
-
+import keepIcon from "./../../../../assets/notes/keep.svg"
 
 type PropsType = {
-   todoTitle: string
-   todolistId: string
+   // todoTitle: string
+   // todolistId: string
+   todo: TodolistType
    tasks: TaskType[]
    removeTask: (taskId: string, todolistId: string) => void
    // changeFilter: (filter: FilterValuesType, todolistId: string) => void
@@ -22,81 +20,98 @@ type PropsType = {
    updateTodolist: (todolistId: string, title: string) => void
    inputTexHandler: (e: ChangeEvent<HTMLInputElement>) => void
    newNote: string
+   newNoteImg: string | null
+   isTodoList: boolean
+   updatePinnedNotes: (noteId: string) => void
 }
 
 export const Todolist = (props: PropsType) => {
    const {
-      todoTitle,
+      todo,
       tasks,
-      filter,
       removeTask,
       addTask,
       changeTaskStatus,
-      todolistId,
       removeTodolist,
       updateTask,
       updateTodolist,
       inputTexHandler,
+      newNoteImg,
+      isTodoList,
    } = props
 
    // const changeFilterTasksHandler = (filter: FilterValuesType) => {
    //     changeFilter(filter, props.todolistId)
    // }
-
+   console.log("task", tasks);
+   // console.log("task",tasks.length);
    const removeTodolistHandler = () => {
-      removeTodolist(todolistId)
+      removeTodolist(todo.id)
    }
 
    const addTaskCallback = () => {
-      addTask(props.todolistId)
+      addTask(todo.id)
    }
 
    const updateTodolistHandler = (updatedTodoTitle: string) => {
-      updateTodolist(props.todolistId, updatedTodoTitle)
+      updateTodolist(todo.id, updatedTodoTitle)
+   }
+   const updatePinnedNotesHandler = () => {
+      props.updatePinnedNotes(todo.id)
    }
 
+
    return (<Paper style={{background: "pink"}}>
-      <div className={"todolist-title-container"}>
-         <Typography variant={'h3'}>
-            <EditableSpan value={todoTitle} onChange={updateTodolistHandler} placeholder={"example todo title"}/>
+      {newNoteImg && <img src={newNoteImg} alt={"img"}/>}
+      <div className={"todolist-title-container"} style={{display: 'flex', justifyContent: 'space-between'}}>
+         <Typography variant={'h4'}>
+            <EditableSpan value={todo.title} onChange={updateTodolistHandler} placeholder={"enter title"}/>
          </Typography>
-         <Button title={'delete'} onClick={removeTodolistHandler}>x</Button>
+         <Button title={'pin a note'} onClick={updatePinnedNotesHandler}>
+            <img src={keepIcon} alt={"keepIcon"}/>
+         </Button>
+         {/*<Button title={'delete'} onClick={removeTodolistHandler}>x</Button>*/}
       </div>
 
-      {tasks.length === 0 ?
-         <Box>
-            <AddItemForm addItem={inputTexHandler} text={props.newNote} placeholder={"new task"}/>
-            <Button title={'add'} onClick={addTaskCallback}>+</Button>
+      {tasks.length < 1 && !isTodoList && todo.filter === "forEditing" ?
+         <Box style={{border: "2px solid red"}}>
+            <p>+</p>
+            <input addItem={inputTexHandler} text={props.newNote} placeholder={"new task"}/>
+            {/*<AddItemForm addItem={inputTexHandler} text={props.newNote} placeholder={"new task"}/>*/}
+            {/*<Button title={'add'} onClick={addTaskCallback}>+</Button>*/}
          </Box>
-         : <ul>
-            {tasks.map((task) => {
+         : <>
+            <ul>
+               {tasks.map((task) => {
+                  const removeTaskHandler = () => {
+                     removeTask(task.id, todo.id)
+                  }
+                  const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                     const newStatusValue = e.currentTarget.checked
+                     changeTaskStatus(task.id, newStatusValue, todo.id)
+                  }
+                  const changeTaskTitleHandler = (title: string) => {
+                     updateTask(todo.id, task.id, title)
+                  }
 
-               const removeTaskHandler = () => {
-                  removeTask(task.id, todolistId)
-               }
+                  return <>
+                     <li key={task.id} className={task.isDone ? 'is-done' : ''}>
+                        <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
+                        <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
+                        <Button onClick={removeTaskHandler} title={'x'}>x</Button>
+                     </li>
+                  </>
+               })}
+            </ul>
+            {todo.filter === "forEditing" &&
+                <Box style={{border: "2px solid blue"}}>
+                    <AddItemForm addItem={inputTexHandler} text={props.newNote} placeholder={"new task"}/>
+                    <Button title={'add'} onClick={addTaskCallback}>+</Button>
+                </Box>
+            }
 
-               const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                  const newStatusValue = e.currentTarget.checked
-                  changeTaskStatus(task.id, newStatusValue, todolistId)
-               }
-
-               const changeTaskTitleHandler = (title: string) => {
-                  updateTask(todolistId, task.id, title)
-               }
-
-               return <>
-                  <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-                     <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                     <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
-                     <Button onClick={removeTaskHandler} title={'x'}>x</Button>
-                  </li>
-                  <Box>
-                     <AddItemForm addItem={inputTexHandler} text={props.newNote} placeholder={"new task"}/>
-                     <Button title={'add'} onClick={addTaskCallback}>+</Button>
-                  </Box>
-               </>
-            })}
-         </ul>}
+         </>
+      }
       {/*<EditableSpan value={props.todoTitle} onChange={updateTodolistHandler}/>*/}
       {/*<AddItemForm addItem={addTaskCallback} text={props.todoTitle}/>*/}
       {/*<div>*/}

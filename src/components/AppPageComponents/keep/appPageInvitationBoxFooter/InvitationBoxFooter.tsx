@@ -51,13 +51,14 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 type propsType={
-    setText:()=>void
+    setText:( todoId:string)=>void
     getBackground:(bg:string)=>void
     getImg:(e: ChangeEvent<HTMLInputElement>)=>void
     addNewShortcuts:(name:string)=>void
     listOfShortcuts:Array<shortcutsType>
     isTodoHandler:()=>void
     toArchiveHandler:()=>void
+    todoId:string
 }
 
 
@@ -91,6 +92,9 @@ const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,toArc
         props.isTodoHandler()
         setMoreModal(!isOpenMoreModal)
     }
+    const updateTodo=()=>{
+        setText(props.todoId)
+    }
 
 
     return (<>
@@ -123,7 +127,7 @@ const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,toArc
                 <IconButton aria-label="delete" tabIndex={-1} title={"undo"} onClick={()=>alert('Make me')}><img src={RedoL} alt={"undo"}/></IconButton>
                 <IconButton aria-label="delete" tabIndex={-1} title={"redo"} onClick={()=>alert('Make me')}><img src={RedoR} alt={"redo"}/></IconButton>
             </Box>
-            <Button  variant="outlined" onClick={setText}>Close</Button>
+            <Button  variant="outlined" onClick={updateTodo}>Close</Button>
         </Box>
 
 
@@ -132,7 +136,7 @@ const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,toArc
         >
             <Box sx={style}>
                 <Box className={cl.boxColors}>
-                    {colorsArr.map((i, index) => (<Button key={i.color}><Box className={cl.itemColor} onClick={()=>getBackground(i.color)} style={{backgroundColor:i.color}}></Box></Button>))}
+                    {colorsArr.map((i, index) => (<Button key={index}><Box className={cl.itemColor} onClick={()=>getBackground(i.color)} style={{backgroundColor:i.color}}></Box></Button>))}
                 </Box>
             </Box>
         </Modal>
@@ -145,7 +149,7 @@ const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,toArc
                 <Box className={cl.moreBox}>
                     <Button onClick={openShortcutsModalHandler}>add shortcut</Button>
                     <Button onClick={()=>{}}>add picture</Button>
-                    <Button onClick={isTodoHandler}>as list</Button>
+                    <Button onClick={isTodoHandler} title={"as todoList"}>as list</Button>
                 </Box>
             } </Box>
         </Modal>
