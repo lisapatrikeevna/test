@@ -189,11 +189,6 @@ const Keep = () => {
       //    setListOfShortcuts([...listOfShortcuts, newObj])
    }
 
-   // const mausHandl = () => {
-   //    alert("mausHandl");
-   //    // setText()
-   //    alert("make my")
-   // }
    const isTodoHandler = () => setIsTodoList(!isTodoList)
 
    console.log("task", tasks[todolists[0].id].length);
@@ -220,6 +215,13 @@ const Keep = () => {
          return tl.id === todolistId ? {...tl, flag} : tl
       })
       setTodolists(newTodolists)
+   }
+   const mausHandl = () => {
+      alert("mausHandl make my");
+      // const todolistId=todolists[0].id
+      // const newTodolists = todolists.map(tl => tl.id === todolistId ? {...tl, filter: 'none'} : tl)
+      // setTodolists(newTodolists)
+      // setOpen(!isOpen)
    }
 
 
