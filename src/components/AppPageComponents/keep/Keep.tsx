@@ -1,5 +1,5 @@
 import {ChangeEvent, useState} from 'react';
-import { Grid, IconButton, Paper} from "@mui/material";
+import {Grid, IconButton, Paper} from "@mui/material";
 import {Box, styled} from "@mui/system";
 import cl from "./Keep.module.css";
 import InvitationBoxFooter from "./appPageInvitationBoxFooter/InvitationBoxFooter.tsx";
@@ -56,22 +56,22 @@ const Keep = () => {
          {id: "jhji", title: 'delete note component', filter: 'none', background: "#fff", flag: "note"},
       ])
    const [tasks, setTasks] = useState<TasksStateType[]>({
-         ["j123"]: [
-            {id: "12ml3", title: 'HTML&CSS', isDone: true},
-            {id: "19l0", title: 'JS', isDone: true},
-            {id: "nij", title: 'ReactJS', isDone: false},
-         ],
-         ["v1()"]: [
-            {id: "hbnjk", title: 'Rest API', isDone: true},
-            {id: "bjjh", title: 'GraphQL', isDone: false},
-         ],
-         ["jhji"]: []
-      })
+      ["j123"]: [
+         {id: "12ml3", title: 'HTML&CSS', isDone: true},
+         {id: "19l0", title: 'JS', isDone: true},
+         {id: "nij", title: 'ReactJS', isDone: false},
+      ],
+      ["v1()"]: [
+         {id: "hbnjk", title: 'Rest API', isDone: true},
+         {id: "bjjh", title: 'GraphQL', isDone: false},
+      ],
+      ["jhji"]: []
+   })
    const [imgLists, setImg] = useState<ImgStateType[]>({
-         ["j123"]: [],
-         ["v1()"]: ["https://k6.uzor.su/uploads/posts/2020-05/thumbs/1588356018_610x900_563.jpg"],
-         ["jhji"]: []
-      })
+      ["j123"]: [],
+      ["v1()"]: ["https://k6.uzor.su/uploads/posts/2020-05/thumbs/1588356018_610x900_563.jpg"],
+      ["jhji"]: []
+   })
    // useEffect(() => {
    //    localStorage.setItem('todolists', JSON.stringify(todolists));
    //    localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -132,18 +132,6 @@ const Keep = () => {
       const newTodolistTasks = {...tasks, [todolistId]: [newTask, ...tasks[todolistId]]}
       setTasks(newTodolistTasks)
    }
-   const changeFilter = (filter: FilterValuesType, todolistId: string) => {
-      const newTodolists = todolists.map(tl => {
-         return tl.id === todolistId ? {...tl, filter} : tl
-      })
-      setTodolists(newTodolists)
-   }
-   const changeFlag = (flag: FilterValuesType, todolistId: string) => {
-      const newTodolists = todolists.map(tl => {
-         return tl.id === todolistId ? {...tl, flag} : tl
-      })
-      setTodolists(newTodolists)
-   }
 
    const addTodolist = () => {
       const todolistId = "v1()bhjk" + todolists.length
@@ -169,6 +157,7 @@ const Keep = () => {
    }
 
    const changeTaskStatus = (taskId: string, taskStatus: boolean, todolistId: string) => {
+      alert("fix my")
       const newTodolistTasks = {
          ...tasks,
          [todolistId]: tasks[todolistId].map(t => t.id == taskId ? {...t, isDone: taskStatus} : t)
@@ -196,8 +185,8 @@ const Keep = () => {
 
    const listOfShortcutsHandler = (newShortcuts: string) => {
       alert("tested my")
-   //    const newObj = {id: listOfShortcuts.length + 1, name: newShortcuts}
-   //    setListOfShortcuts([...listOfShortcuts, newObj])
+      //    const newObj = {id: listOfShortcuts.length + 1, name: newShortcuts}
+      //    setListOfShortcuts([...listOfShortcuts, newObj])
    }
 
    // const mausHandl = () => {
@@ -220,6 +209,19 @@ const Keep = () => {
       const newTodolists = todolists.map(tl => tl.id === todolists[0].id ? {...tl, flag} : tl)
       setTodolists(newTodolists)
    }
+   const changeFilter = (filter: FilterValuesType, todolistId: string) => {
+      const newTodolists = todolists.map(tl => {
+         return tl.id === todolistId ? {...tl, filter} : tl
+      })
+      setTodolists(newTodolists)
+   }
+   const changeFlag = (flag: FilterValuesType, todolistId: string) => {
+      const newTodolists = todolists.map(tl => {
+         return tl.id === todolistId ? {...tl, flag} : tl
+      })
+      setTodolists(newTodolists)
+   }
+
 
    return <Box style={{padding: "20px 10px"}} className={cl.containerBox}>
       <KeeLeftBlock listOfShortcuts={listOfShortcuts}/>
@@ -238,7 +240,8 @@ const Keep = () => {
                            {/*-----block if close--------*/}
                            <p onClick={handleFocus}>"Заметка…"</p>
                            <Box className={cl.boxHeadingBtn}>
-                              <IconButton aria-label="Checkbox" onClick={() => setTodoFlag_3("todo")} title={"as todolist"}>
+                              <IconButton aria-label="Checkbox" onClick={() => setTodoFlag_3("todo")}
+                                          title={"as todolist"}>
                                  <img src={Checkbox} alt="Checkbox"/>
                               </IconButton>
                               <IconButton aria-label="Paintbrush" onClick={() => alert('реализуй меня')}>
@@ -260,7 +263,7 @@ const Keep = () => {
                                      todo={todolists[0]}
                                      addTask={addTask}
                                      updatePinnedNotes={updatePinnedNotes}
-                              // changeTaskStatus={props.changeTaskStatus}
+                                     changeTaskStatus={changeTaskStatus}
                                      removeTodolist={removeTodolist}
                                      updateTask={updateTask}
                                      newNoteImg={imgLists[todolists[0].id]}
@@ -301,7 +304,7 @@ const Keep = () => {
                            removeTask={removeTask}
                            // changeFilter={changeFilter}
                            addTask={addTask}
-                           // changeTaskStatus={changeTaskStatus}
+                           changeTaskStatus={changeTaskStatus}
                            removeTodolist={removeTodolist}
                            updateTask={updateTask}
                            newNoteImg={newNoteImg}
