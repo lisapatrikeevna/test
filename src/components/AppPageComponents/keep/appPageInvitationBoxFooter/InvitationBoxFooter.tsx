@@ -51,18 +51,19 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 type propsType={
-    setText:( todoId:string)=>void
-    getBackground:(bg:string)=>void
+    onClose:( todoId:string)=>void
+    getBackground:(todoId: string , bg:string)=>void
     getImg:(e: ChangeEvent<HTMLInputElement>)=>void
     addNewShortcuts:(name:string)=>void
     listOfShortcuts:Array<shortcutsType>
     isTodoHandler:()=>void
-    toArchiveHandler:()=>void
+    toArchiveHandler:(todoId:string)=>void
     todoId:string
+    removeTodolist: (todolistId: string) => void
 }
 
 
-const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,toArchiveHandler,...props}:propsType) => {
+const InvitationBoxFooter = ({onClose,getBackground,getImg,listOfShortcuts,toArchiveHandler,...props}:propsType) => {
     const [isOpenPaintPaletteModal, setPaintPaletteModal] = useState(false);
     const [isOpenMoreModal, setMoreModal] = useState(false);
     const [isOpenShortcutsModal, setShortcutsModal] = useState(false);
@@ -92,8 +93,11 @@ const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,toArc
         props.isTodoHandler()
         setMoreModal(!isOpenMoreModal)
     }
-    const updateTodo=()=>{
-        setText(props.todoId)
+    const onCloseCallback=()=>{
+        onClose(props.todoId)
+    }
+    const removeTodolistHandler = () => {
+        props.removeTodolist(props.todoId)
     }
 
 
@@ -116,7 +120,7 @@ const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,toArc
                     <VisuallyHiddenInput type="file" onChange={getImg}/>
                 </IconButton>
 
-                <IconButton aria-label="delete" tabIndex={-1} title={"archive"} onClick={toArchiveHandler}>
+                <IconButton aria-label="delete" tabIndex={-1} title={"archive"} onClick={()=>toArchiveHandler(props.todoId)}>
                     <img src={BoxSvg} alt={"archive"}/>
                 </IconButton>
 
@@ -127,7 +131,7 @@ const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,toArc
                 <IconButton aria-label="delete" tabIndex={-1} title={"undo"} onClick={()=>alert('Make me')}><img src={RedoL} alt={"undo"}/></IconButton>
                 <IconButton aria-label="delete" tabIndex={-1} title={"redo"} onClick={()=>alert('Make me')}><img src={RedoR} alt={"redo"}/></IconButton>
             </Box>
-            <Button  variant="outlined" onClick={updateTodo}>Close</Button>
+            <Button variant="outlined" onClick={onCloseCallback}>Close</Button>
         </Box>
 
 
@@ -136,7 +140,7 @@ const InvitationBoxFooter = ({setText,getBackground,getImg,listOfShortcuts,toArc
         >
             <Box sx={style}>
                 <Box className={cl.boxColors}>
-                    {colorsArr.map((i, index) => (<Button key={index}><Box className={cl.itemColor} onClick={()=>getBackground(i.color)} style={{backgroundColor:i.color}}></Box></Button>))}
+                    {colorsArr.map((i, index) => (<Button key={index}><Box className={cl.itemColor} onClick={()=>getBackground(props.todoId, i.color)} style={{backgroundColor:i.color}}></Box></Button>))}
                 </Box>
             </Box>
         </Modal>

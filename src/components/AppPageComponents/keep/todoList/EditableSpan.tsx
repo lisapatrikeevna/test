@@ -18,7 +18,6 @@ export const EditableSpan = ({value, onChange,placeholder="enter task"}: PropsTy
    const deactivateEditModeHandler = () => {
       setEditMode(false)
       onChange(title)
-      setTitle('')
    }
 
    const changeTextHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +27,6 @@ export const EditableSpan = ({value, onChange,placeholder="enter task"}: PropsTy
         if (event.key === 'Enter') {
            setEditMode(false)
            onChange(title)
-           setTitle('')
         }
     }
 
@@ -36,6 +34,6 @@ export const EditableSpan = ({value, onChange,placeholder="enter task"}: PropsTy
       {editMode ?
          <TextField value={title} onChange={changeTextHandler} onBlur={deactivateEditModeHandler} autoFocus
                     placeholder={placeholder} onKeyUp={addItemOnKeyUpHandler}/>
-         : <span onDoubleClick={activateEditModeHandler}>{value.length>0 ? value: placeholder}</span>}
+         : <span onDoubleClick={activateEditModeHandler} title={'Use Double Click to edit'}>{value.length>0 ? value: placeholder}</span>}
    </>);
 };

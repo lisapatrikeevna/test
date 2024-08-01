@@ -3,54 +3,46 @@ import {Button, TextField} from "@mui/material";
 
 
 type PropsType = {
-    addItem: (e: ChangeEvent<HTMLInputElement>) => void
+    addItem: (text:string) => void
     placeholder?:string
     fullWidth?:boolean
     variant?: string
-    text:string
 }& ComponentPropsWithoutRef<"input">
 
-export const AddItemForm = ({text,addItem,placeholder,fullWidth,variant,...props}: PropsType) => {
+export const AddItemForm = ({addItem,placeholder,fullWidth,variant="standard",...props}: PropsType) => {
 
-// const [text, setText] = useState('')
+const [text, setText] = useState('')
 // const [error, setError] = useState<string | null>(null)
-// const addItemHandler = () => {
-//         if (text.trim() !== '') {
-//             addItem(text.trim())
-//             setText('')
-//             console.log("addItemHandler");
-//         }
-//         // else {
-//         //     setError('Title is required')
-//         // }
-//     }
-// const changeItemHandler = (e: ChangeEvent<HTMLInputElement>) => {
-//         setText(e.currentTarget.value)
-//     }
-// const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-//         setError(null)
-//         if (event.key === 'Enter') {
-//             addItemHandler()
-//             console.log("addItemOnKeyUpHandler");
-//         }
-//     }
+const addItemHandler = () => {
+        if (text.trim() !== '') {
+            addItem(text.trim())
+            setText('')
+        }
+        // else {
+        //     setError('Title is required')
+        // }
+    }
+const changeItemHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setText(e.currentTarget.value)
+    }
+const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        // setError(null)
+        if (event.key === 'Enter') {
+            addItemHandler()
+            console.log("addItemOnKeyUpHandler");
+        }
+    }
 
     return (
         <>
-            {/*<input autoFocus={true} */}
-            {/*    className={error ? 'error' : ''}*/}
-            {/*    value={text}*/}
-            {/*    onChange={changeItemHandler}*/}
-            {/*    onKeyUp={addItemOnKeyUpHandler}*/}
-            {/*    */}
-            {/*/>*/}
-            <TextField variant={variant || "standard"} placeholder={placeholder || "Введите заголовок"}
+            <TextField variant={variant} placeholder={placeholder || "Введите заголовок"}
                        style={{borderBottom:0}} value={text} fullWidth={fullWidth || false}
-                       onChange={(e)=>addItem(e)}
-                       // onKeyUp={addItemOnKeyUpHandler}
+                       onChange={changeItemHandler}
+                       onKeyUp={addItemOnKeyUpHandler}
                        onFocus={props.onFocus}
+                       onBlur={addItemHandler}
                        {...props}/>
-            {/*<Button title={'+'} onClick={addItemHandler}/>*/}
+            <Button title={'+'} onClick={addItemHandler}/>
             {/*{error && <div className={'error-message'}>{error}</div>}*/}
         </>
     )
