@@ -61,7 +61,8 @@ export const Todolist = (props: PropsType) => {
    }
 
 
-   return (<Paper style={{background: "pink"}}>
+   return <Paper style={{background: "pink"}}>
+      {}
       {newNoteImg && <img src={newNoteImg} alt={"img"}/>}
       <div className={"todolist-title-container"} style={{display: 'flex', justifyContent: 'space-between'}}>
          <Typography variant={'h4'}>
@@ -119,5 +120,5 @@ export const Todolist = (props: PropsType) => {
       {/*    <Button className={filter === 'active' ? 'active-filter' : ''} title={'Active'} onClick={() => changeFilterTasksHandler('active')}/>*/}
       {/*    <Button className={filter === 'completed' ? 'active-filter' : ''} title={'Completed'} onClick={() => changeFilterTasksHandler('completed')}/>*/}
       {/*</div>*/}
-   </Paper>)
+   </Paper>
 }

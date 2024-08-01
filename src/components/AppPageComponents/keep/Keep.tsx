@@ -88,8 +88,13 @@ const Keep = () => {
    const updatePinnedNotes = (noteId: string) => setPinnedNotes([noteId, ...pinnedNotes])
    const inputTexHandler = (e: ChangeEvent<HTMLInputElement>) => setNewNote(e.currentTarget.value)
    const inputTitleHandler = (e: ChangeEvent<HTMLInputElement>) => setNewNoteTitle(e.currentTarget.value)
-   const inputImgHandler = (e: ChangeEvent<HTMLInputElement>) => setNewNoteImg(e.currentTarget.value)
-   const imgOnBlurHandler = () => setOpen(true)
+   const inputImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
+      setNewNoteImg(e.currentTarget.value)
+      addTodolist()
+   }
+   const imgOnBlurHandler = () => {
+      setOpen(true)
+   }
    const backgroundHandler = (bg: string) => setNoteBackgroundColor(bg)
 
 
@@ -251,6 +256,11 @@ const Keep = () => {
 
    console.log("task", tasks[todolists[0].id].length);
    console.log("todolists", todolists);
+
+
+
+
+
 
    return <Box style={{padding: "20px 10px"}} className={cl.containerBox}>
       <KeeLeftBlock listOfShortcuts={listOfShortcuts}/>
