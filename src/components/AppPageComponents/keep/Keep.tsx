@@ -1,6 +1,6 @@
 import {ChangeEvent, useState} from 'react';
-import {Grid, IconButton, Paper} from "@mui/material";
-import {Box, styled} from "@mui/system";
+import {Box, Grid, IconButton, Paper} from "@mui/material";
+import {styled} from "@mui/system";
 import cl from "./Keep.module.css";
 import InvitationBoxFooter from "./appPageInvitationBoxFooter/InvitationBoxFooter.tsx";
 import KeeLeftBlock from "./keeLeftBlock/KeeLeftBlock.tsx";
@@ -49,7 +49,7 @@ const Keep = () => {
    const [isTodoList, setIsTodoList] = useState(false)
    const [pinnedNotes, setPinnedNotes] = useState<Array<string>>([])
    const [listOfShortcuts, setListOfShortcuts] = useState<Array<shortcutsType>>([])
-   const [archive, setToArchive] = useState<Array<any>>([])
+   const [archive, setToArchive] = useState<Array<string>>([])
    const [todolists, setTodolists] = useState<TodolistType[]>(
       [{id: "j123", title: 'What to learn', filter: 'none', background: "#fff", flag: "todo"},
          {id: "v1()", title: 'What to buy', filter: 'none', background: "#fff", flag: "todo"},
@@ -90,18 +90,19 @@ const Keep = () => {
    }
    const addNewImg = (e: ChangeEvent<HTMLInputElement>) => {
       const newNoteImg = e.currentTarget.value
-      if (!isOpen) {
+      const todoId=todolists[0].id
+      if (!isOpen && todoId) {
          setOpen(true)
          addTodolist()
-         const newImglists = imgLists.map(il => il.id === todolists[0]!.id ? {...il, newNoteImg} : il)
-         setImg(newImglists)
+         setImg(prevImgLists => ({
+            ...prevImgLists,
+            [todolists[0]!.id]: [...(prevImgLists[todoId] || []), newNoteImg]}))
       } else {
-         console.log(imgLists[1]);
-         const newImglists = imgLists.map(il => {
-            let a = il
-            return il.id === todolists[0]!.id ? {...il, newNoteImg} : il
-         })
-         setImg(newImglists)
+         // console.log(imgLists[1]);
+         setImg(prevImgLists => ({
+            ...prevImgLists,
+            [todolists[0]!.id]: [...(prevImgLists[todoId] || []), newNoteImg]
+         }));
       }
    }
    // const imgOnBlurHandler = () => {
