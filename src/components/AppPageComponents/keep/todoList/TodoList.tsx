@@ -14,7 +14,7 @@ type PropsType = {
    changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void
    removeTodolist: (todolistId: string) => void
    updateTask: (todolistId: string, taskId: string, title: string) => void
-   newNoteImg: any
+   newNoteImg: Array<string>
    isTodoList: boolean
    updatePinnedNotes: (todoId: string) => void
    addTodoTitle: (todolistId: string, title: string) => void

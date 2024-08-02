@@ -12,21 +12,16 @@ type PropsType = {
 export const AddItemForm = ({addItem,placeholder,fullWidth,variant="standard",...props}: PropsType) => {
 
 const [text, setText] = useState('')
-// const [error, setError] = useState<string | null>(null)
 const addItemHandler = () => {
         if (text.trim() !== '') {
             addItem(text.trim())
             setText('')
         }
-        // else {
-        //     setError('Title is required')
-        // }
     }
 const changeItemHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setText(e.currentTarget.value)
     }
 const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        // setError(null)
         if (event.key === 'Enter') {
             addItemHandler()
             console.log("addItemOnKeyUpHandler");
@@ -35,7 +30,7 @@ const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
 
     return (
         <>
-            <TextField variant={variant} placeholder={placeholder || "Введите заголовок"}
+            <TextField variant placeholder={placeholder || "Введите заголовок"}
                        style={{borderBottom:0}} value={text} fullWidth={fullWidth || false}
                        onChange={changeItemHandler}
                        onKeyUp={addItemOnKeyUpHandler}
@@ -43,7 +38,6 @@ const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
                        onBlur={addItemHandler}
                        {...props}/>
             <Button title={'+'} onClick={addItemHandler}/>
-            {/*{error && <div className={'error-message'}>{error}</div>}*/}
         </>
     )
 }

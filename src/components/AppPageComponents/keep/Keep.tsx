@@ -1,7 +1,7 @@
 import {ChangeEvent, useState} from 'react';
 import {Box, Grid, IconButton, Paper} from "@mui/material";
 import {styled} from "@mui/system";
-import cl from "./Keep.module.css";
+import cl from "./style.ts";
 import InvitationBoxFooter from "./appPageInvitationBoxFooter/InvitationBoxFooter.tsx";
 import KeeLeftBlock from "./keeLeftBlock/KeeLeftBlock.tsx";
 import {Todolist} from "./todoList/TodoList.tsx";
@@ -56,7 +56,7 @@ const Keep = () => {
          {id: "jhji", title: 'delete note component', filter: 'none', background: "#fff", flag: "note"},
       ])
    const [tasks, setTasks] = useState<TasksStateType[]>({
-      ["j123"]: [
+      ["j12"]: [
          {id: "12ml3", title: 'HTML&CSS', isDone: true},
          {id: "19l0", title: 'JS', isDone: true},
          {id: "nij", title: 'ReactJS', isDone: false},
