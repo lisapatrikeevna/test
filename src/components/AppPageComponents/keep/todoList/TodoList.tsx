@@ -60,6 +60,7 @@ export const Todolist = (props: PropsType) => {
       props.addTodoTitle(todo.id, todoTitle)
    }
    console.log("todo", todo);
+   console.log("tasks", tasks);
    return <Box style={{ margin:"1px", border:"2px solid red"}}>
       {newNoteImg && newNoteImg.map(i=><Box style={{width:"50px"}}><img src={i} alt={'img'}/></Box>)}
       {todo.filter !== "new" ?
@@ -75,7 +76,7 @@ export const Todolist = (props: PropsType) => {
                {/*<Button title={'delete'} onClick={removeTodolistHandler}>x</Button>*/}
             </div>
             <ul>
-               {tasks.map((task) => {
+               {tasks?.map((task) => {
                   const removeTaskHandler = () => {
                      removeTask(task.id, todo.id)
                   }

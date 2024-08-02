@@ -24,8 +24,9 @@ export type TaskType = {
    isDone: boolean
 }
 export type FilterValuesType = 'fixed' | 'archive' | 'none' | 'forEditing' | 'new'
+
 export type TodolistType = {
-   background: string | null
+   background: string
    id: string
    title: string
    filter?: FilterValuesType
@@ -192,7 +193,6 @@ const Keep = () => {
 
    const isTodoHandler = () => setIsTodoList(!isTodoList)
 
-   console.log("task", tasks[todolists[0].id].length);
    console.log("todolists", todolists);
    const onClose = (todolistId: string) => {
       const newTodolists = todolists.map(tl => tl.id === todolistId ? {...tl, filter: 'none'} : tl)
