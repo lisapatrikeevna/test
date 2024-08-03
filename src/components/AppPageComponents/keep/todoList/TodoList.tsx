@@ -1,15 +1,18 @@
-import { TaskType, TodolistType} from "../Keep.tsx";
-import {AddItemForm} from "./AddItemForm.tsx";
-import {EditableSpan} from "./EditableSpan.tsx";
+import {flagType, TaskType, TodolistType} from "../Keep.tsx";
+import {AddItemForm} from "../AddItemForm.tsx";
+import {EditableSpan} from "../EditableSpan.tsx";
 import {Box, Button, Checkbox, Typography} from "@mui/material";
 import keepIcon from "./../../../../assets/notes/keep.svg"
-import {ChangeEvent} from "react";
+import {ChangeEvent, useEffect} from "react";
+import PushPinIcon from '@mui/icons-material/PushPin';
+import cl from "./style.ts"
 
 type PropsType = {
    todo: TodolistType
    tasks: TaskType[]
    removeTask: (taskId: string, todolistId: string) => void
    // changeFilter: (filter: FilterValuesType, todolistId: string) => void
+   changeFlag: (filter: flagType, todolistId: string) => void
    addTask: (todolistId: string) => void
    changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void
    removeTodolist: (todolistId: string) => void
@@ -34,9 +37,11 @@ export const Todolist = (props: PropsType) => {
       isTodoList,
    } = props
 
+
    // const changeFilterTasksHandler = (filter: FilterValuesType) => {
-   //     changeFilter(filter, props.todolistId)
+   //     changeFilter(filter,todo.id)
    // }
+
    const removeTodolistHandler = () => {
       removeTodolist(todo.id)
    }
@@ -53,28 +58,33 @@ export const Todolist = (props: PropsType) => {
       updateTask(todo.id, tasks[0].id, title)
    }
    const addPinnedNotesHandler = () => {
-      alert(`updatePinnedNotesHandler, ${todo.id}`)
       props.updatePinnedNotes(todo.id)
    }
    const addTodoTitleCallback = (todoTitle: string) => {
       props.addTodoTitle(todo.id, todoTitle)
    }
+   // const addNewField=()=>{
+   //
+   // }
    console.log("todo", todo);
    console.log("tasks", tasks);
    return <Box style={{ margin:"1px", border:"2px solid red"}}>
       {newNoteImg && newNoteImg.map(i=><Box style={{width:"50px"}}><img src={i} alt={'img'}/></Box>)}
       {todo.filter !== "new" ?
          <>
-            <div className={"todolist-title-container"} style={{display: 'flex', justifyContent: 'space-between'}}>
+            <Box className={"todolist-title-container"} style={{display: 'flex', justifyContent: 'space-between'}}>
                <Typography variant={'h4'}>
-                  <p>{todo.title}</p>
-                  {/*<EditableSpan value={todo.title} onChange={updateTodolistHandler} placeholder={"enter title"}/>*/}
+                  <EditableSpan value={todo.title} onChange={updateTodolistTitleCallback}/>
                </Typography>
                <Button title={'pin a note'} onClick={addPinnedNotesHandler}>
                   <img src={keepIcon} alt={"keepIcon"}/>
+                  {/*<PushPinIcon/>*/}
                </Button>
+               <p>{todo.id} ,</p>
+               <p>{todo.flag} ,</p>
+               <p>{todo.filter}</p>
                {/*<Button title={'delete'} onClick={removeTodolistHandler}>x</Button>*/}
-            </div>
+            </Box>
             <ul>
                {tasks?.map((task) => {
                   const removeTaskHandler = () => {
@@ -100,29 +110,35 @@ export const Todolist = (props: PropsType) => {
             </ul>
          </> :
          <>
+            <div style={{display: "flex"}}>
+               <p>{todo.id} ,</p>
+               <p>{todo.flag} ,</p>
+               <p>{todo.filter}</p>
+            </div>
             <div className={"todolist-title-container"} style={{display: 'flex', justifyContent: 'space-between'}}>
-                  <Typography variant={'h4'}>
-                     {todo.title?
+               <Typography variant={'h4'}>
+                  {todo.title ?
                      <EditableSpan value={todo.title} onChange={updateTodolistTitleCallback}/>
                      :
-                     <AddItemForm addItem={addTodoTitleCallback} />
-                     }
-                  </Typography>
+                     <AddItemForm addItem={addTodoTitleCallback}/>
+                  }
+               </Typography>
                <Button title={'pin a note'} onClick={addPinnedNotesHandler}>
                   <img src={keepIcon} alt={"keepIcon"}/>
                </Button>
                {/*<Button title={'delete'} onClick={removeTodolistHandler}>x</Button>*/}
             </div>
             {todo.flag === "note" ?
-                  <Typography>
-                     {!tasks[0]?
-                        <AddItemForm addItem={addTaskCallback} placeholder={"new note"}
-                                     style={{height: "30px", width: "100%"}}/>
-                        :
-                        <EditableSpan value={tasks[0].title} onChange={changeTaskTitleCallback}/>
-                     }
-                  </Typography>
-                : <>
+               <Typography>
+                  {!tasks[0] ?
+                     <AddItemForm addItem={addTaskCallback} placeholder={"new note"}
+                                  style={{height: "30px", width: "100%"}}/>
+                     :
+                     <EditableSpan value={tasks[0].title} onChange={changeTaskTitleCallback}/>
+                  }
+               </Typography>
+               :
+               <>
                   <p>todo</p>
                   <ul>
                      {tasks.map((task) => {
@@ -141,9 +157,9 @@ export const Todolist = (props: PropsType) => {
                         return <>
                            <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                               <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                              {!task.id?
-                                + <AddItemForm addItem={addTaskCallback} placeholder={"new note"}
-                                              style={{height: "30px", width: "100%"}}/>
+                              {!task.id ?
+                                 +<AddItemForm addItem={addTaskCallback} placeholder={"new note"}
+                                               style={{height: "30px", width: "100%"}}/>
                                  :
                                  <EditableSpan value={tasks[0].title} onChange={changeTaskTitleHandler}/>
                               }
@@ -153,7 +169,7 @@ export const Todolist = (props: PropsType) => {
                         </>
                      })}
                   </ul>
-                  <AddItemForm addItem={addTaskCallback} />
+                  <Box >+  <AddItemForm addItem={addTaskCallback}/> </Box>
                </>
             }
 

@@ -2,8 +2,15 @@ import {useState} from 'react';
 import {Button} from "@mui/material";
 import {Box} from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
-import cl from "./style.module.css"
+import cl from "./style.ts"
 import {shortcutsType} from "../Keep.tsx";
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import EditIcon from '@mui/icons-material/Edit';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+
+
+
 
 type propsType = {
     listOfShortcuts:Array<shortcutsType>
@@ -11,16 +18,16 @@ type propsType = {
 const KeeLeftBlock = (props:propsType) => {
     const [activeBlock,setActiveBlock]=useState("Заметки")
     const activeBlockStyle={
-        border:activeBlock? "1px solid #8683B4" : "none",
-        backgroundColor: activeBlock? "#8683B4" : "#fff",
+        border:activeBlock? "1px solid #EADDFF" : "none",
+        backgroundColor: activeBlock? "#EADDFF" : "#fff",
     }
     return (
-        <Box className={cl.mainContainer}>
-            <Button startIcon={<DeleteIcon />} style={activeBlockStyle}> Заметки</Button>
-            <Button startIcon={<DeleteIcon />} > Напоминания</Button>
-            <Button startIcon={<DeleteIcon />} > Изменения ярлыков</Button>
-            <Button startIcon={<DeleteIcon />} > Архив</Button>
-            <Button startIcon={<DeleteIcon />} > Корзина</Button>
+        <Box sx={cl.mainContainer}>
+            <Button startIcon={<StickyNote2Icon />} style={activeBlockStyle}sx={cl.btn}title={"Заметки"}>notes </Button>
+            <Button startIcon={<NotificationsActiveIcon />} sx={cl.btn} title={"Напоминания"}>reminder </Button>
+            <Button startIcon={<EditIcon />} sx={cl.btn} title={"Изменения ярлыков"}>change the label</Button>
+            <Button startIcon={<Inventory2Icon />} sx={cl.btn}title={"Архив"}>archive </Button>
+            <Button startIcon={<DeleteIcon />} sx={cl.btn} title={"Корзина"}>trash </Button>
              <>{props.listOfShortcuts.map(i=>{<Button key={i.id}> {i.name} </Button>} )}</>
         </Box>
     );

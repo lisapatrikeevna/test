@@ -9,7 +9,7 @@ type PropsType = {
     variant?: string
 }& ComponentPropsWithoutRef<"input">
 
-export const AddItemForm = ({addItem,placeholder,fullWidth,variant="standard",...props}: PropsType) => {
+export const AddItemForm = ({addItem,placeholder,fullWidth, variant = "standard",...props}: PropsType) => {
 
 const [text, setText] = useState('')
 const addItemHandler = () => {
@@ -30,7 +30,7 @@ const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
 
     return (
         <>
-            <TextField variant placeholder={placeholder || "Введите заголовок"}
+            <TextField variant={variant} placeholder={placeholder || "Введите заголовок"}
                        style={{borderBottom:0}} value={text} fullWidth={fullWidth || false}
                        onChange={changeItemHandler}
                        onKeyUp={addItemOnKeyUpHandler}

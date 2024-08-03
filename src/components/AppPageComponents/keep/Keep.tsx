@@ -1,14 +1,17 @@
 import {ChangeEvent, useState} from 'react';
-import {Box, Grid, IconButton, Paper} from "@mui/material";
+import {Box, Grid, IconButton, Paper, Typography} from "@mui/material";
 import {styled} from "@mui/system";
 import cl from "./style.ts";
 import InvitationBoxFooter from "./appPageInvitationBoxFooter/InvitationBoxFooter.tsx";
 import KeeLeftBlock from "./keeLeftBlock/KeeLeftBlock.tsx";
 import {Todolist} from "./todoList/TodoList.tsx";
 import Checkbox from "../../../assets/notes/Checkbox.svg";
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import Paintbrush from "../../../assets/notes/Paintbrush.svg";
+import BrushIcon from '@mui/icons-material/Brush';
 import downloadImg from "../../../assets/notes/Image.svg";
-import {title} from "../../../configs/ProjectConfig.tsx";
+import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
+// import {title} from "../../../configs/ProjectConfig.tsx";
 
 
 export const VisuallyHiddenInput = styled('input')({
@@ -57,7 +60,7 @@ const Keep = () => {
          {id: "jhji", title: 'delete note component', filter: 'none', background: "#fff", flag: "note"},
       ])
    const [tasks, setTasks] = useState<TasksStateType[]>({
-      ["j12"]: [
+      ["j123"]: [
          {id: "12ml3", title: 'HTML&CSS', isDone: true},
          {id: "19l0", title: 'JS', isDone: true},
          {id: "nij", title: 'ReactJS', isDone: false},
@@ -84,20 +87,30 @@ const Keep = () => {
    //    setTasks(tasks && JSON.parse(tasks))
    // }, []);
 
-   const updatePinnedNotes = (noteId: string) => setPinnedNotes([noteId, ...pinnedNotes])
+   const updatePinnedNotes = (noteId: string) => {
+      // setPinnedNotes([noteId, ...pinnedNotes])
+      setPinnedNotes(prevPinnedNotes => {
+         if (prevPinnedNotes.includes(noteId)) {
+            return prevPinnedNotes.filter(id => id !== noteId);
+         } else {
+            return [noteId, ...prevPinnedNotes];
+         }
+      });
+   }
    const backgroundHandler = (todolistId: string, bg: string) => {
       const newTodolists = todolists.map(tl => tl.id === todolistId ? {...tl, background: bg} : tl)
       setTodolists(newTodolists)
    }
    const addNewImg = (e: ChangeEvent<HTMLInputElement>) => {
       const newNoteImg = e.currentTarget.value
-      const todoId=todolists[0].id
+      const todoId = todolists[0].id
       if (!isOpen && todoId) {
          setOpen(true)
          addTodolist()
          setImg(prevImgLists => ({
             ...prevImgLists,
-            [todolists[0]!.id]: [...(prevImgLists[todoId] || []), newNoteImg]}))
+            [todolists[0]!.id]: [...(prevImgLists[todoId] || []), newNoteImg]
+         }))
       } else {
          // console.log(imgLists[1]);
          setImg(prevImgLists => ({
@@ -113,7 +126,6 @@ const Keep = () => {
       const updatedTodo = todolists.map(tl => tl.id == todolistId ? {...tl, title} : tl)
       setTodolists(updatedTodo)
    }
-
    const removeTodolist = (todolistId: string) => {
       const newTodolists = todolists.filter(tl => tl.id !== todolistId)
       setTodolists(newTodolists)
@@ -134,7 +146,6 @@ const Keep = () => {
       const newTodolistTasks = {...tasks, [todolistId]: [newTask, ...tasks[todolistId]]}
       setTasks(newTodolistTasks)
    }
-
    const addTodolist = () => {
       const todolistId = "v1()bhjk" + todolists.length
       const newTodolist: TodolistType = {
@@ -149,7 +160,6 @@ const Keep = () => {
       // localStorage.setItem("todolists", JSON.stringify(todolists));
       // localStorage.setItem("tasks", JSON.stringify(tasks));
    }
-
    const updateTask = (todolistId: string, taskId: string, title: string) => {
       const newTodolistTasks = {
          ...tasks,
@@ -157,7 +167,6 @@ const Keep = () => {
       }
       setTasks(newTodolistTasks)
    }
-
    const changeTaskStatus = (taskId: string, taskStatus: boolean, todolistId: string) => {
       alert("fix my")
       const newTodolistTasks = {
@@ -171,16 +180,13 @@ const Keep = () => {
       setTodolists(newTodolists)
    }
    const handleFocus = () => {
-      // alert("handleFocus")
       if (!isOpen) {
          setOpen(true)
          addTodolist()
       }
-      // newNoteTitle.length < 1 && setOpen(true)
-      // addTodolist()
    }
    const toArchiveHandler = (id: string) => {
-      alert("пока реализован только для заметок")
+      alert("test my")
       setToArchive([...archive, id])
       setOpen(!isOpen)
    }
@@ -191,18 +197,33 @@ const Keep = () => {
       //    setListOfShortcuts([...listOfShortcuts, newObj])
    }
 
-   const isTodoHandler = () => setIsTodoList(!isTodoList)
+   const isTodoHandler = () => {
+      setIsTodoList(!isTodoList)
+      if(!isOpen){
+         setOpen(!isOpen)
+         addTodolist()
+      }
+      isTodoList? changeFlag("todo", todolists[0].id):changeFlag("note", todolists[0].id)
+   }
+   const changeFlag = (flag: flagType, todolistId: string) => {
+      const newTodolists = todolists.map(tl => {
+         return tl.id === todolistId ? {...tl, flag} : tl
+      })
+      setTodolists(newTodolists)
+   }
 
    console.log("todolists", todolists);
+
    const onClose = (todolistId: string) => {
-      const newTodolists = todolists.map(tl => tl.id === todolistId ? {...tl, filter: 'none'} : tl)
+      // сделать проверку не пустой ли
+      const newTodolists = todolists.map(tl => tl.id === todolistId ? {...tl, filter: 'none'as FilterValuesType} : tl)
       setTodolists(newTodolists)
-      setOpen(!isOpen)
+      setOpen(false)
    }
    const setTodoFlag_3 = (flag: string) => {
       addTodolist()
       setIsTodoList(!isTodoList)
-      const newTodolists = todolists.map(tl => tl.id === todolists[0].id ? {...tl, flag} : tl)
+      const newTodolists = todolists.map(tl => tl.id === todolists[0].id ? {...tl, flag:flag as flagType} : tl)
       setTodolists(newTodolists)
    }
    const changeFilter = (filter: FilterValuesType, todolistId: string) => {
@@ -211,12 +232,7 @@ const Keep = () => {
       })
       setTodolists(newTodolists)
    }
-   const changeFlag = (flag: FilterValuesType, todolistId: string) => {
-      const newTodolists = todolists.map(tl => {
-         return tl.id === todolistId ? {...tl, flag} : tl
-      })
-      setTodolists(newTodolists)
-   }
+
    const mausHandl = () => {
       alert("mausHandl make my");
       // const todolistId=todolists[0].id
@@ -226,33 +242,36 @@ const Keep = () => {
    }
 
 
-   return <Box style={{padding: "20px 10px"}} className={cl.containerBox}>
+   return <Box sx={cl.containerBox} >
       <KeeLeftBlock listOfShortcuts={listOfShortcuts}/>
-      <Box className={cl.centredBox}>
+      <Box sx={cl.centredBox}>
          <Box>
-            <Paper square={false} pt={2} pb={2} className={cl.paper} style={{backgroundColor: todolists[0].background}}
+            <Paper square={false} sx={cl.paper} style={{backgroundColor: todolists[0].filter=="new"? todolists[0].background: "#fff"}}
                // onmouseleave={mausHandl} autoFocus onBlur={setText}>  sx={{maxWidth: 360}}
             >
                {todolists.length > 0 && todolists[0].id ?
 
-                  <Box className={cl.invitationBox}>
+                  <Box sx={cl.invitationBox}>
                      {/*-----basic block--------*/}
 
-                     {!isOpen && !isTodoList ?
-                        <Box style={{width: "100%", display: "flex"}}>
+                     {!isOpen ?
+                        <Box style={{width: "100%", display: "flex"}} sx={cl.closedBox}>
                            {/*-----block if close--------*/}
-                           <p onClick={handleFocus}>"Заметка…"</p>
-                           <Box className={cl.boxHeadingBtn}>
+                           <Typography variant={"h3"} onClick={handleFocus}>Note...</Typography>
+                           <Box sx={cl.boxHeadingBtn}>
                               <IconButton aria-label="Checkbox" onClick={() => setTodoFlag_3("todo")}
                                           title={"as todolist"}>
-                                 <img src={Checkbox} alt="Checkbox"/>
+                                 {/*<img src={Checkbox} alt="Checkbox"/>*/}
+                                 <CheckBoxOutlinedIcon color="inherit"/>
                               </IconButton>
                               <IconButton aria-label="Paintbrush" onClick={() => alert('реализуй меня')}>
-                                 <img src={Paintbrush} alt="Paintbrush"/>
+                                 {/*<img src={Paintbrush} alt="Paintbrush"/>*/}
+                                 <BrushIcon/>
                               </IconButton>
 
                               <IconButton aria-label="download" tabIndex={-1} component="label">
-                                 <img src={downloadImg} alt="downloadImg"/>
+                                 {/*<img src={downloadImg} alt="downloadImg"/>*/}
+                                 <AddPhotoAlternateOutlinedIcon/>
                                  <VisuallyHiddenInput type="file"
                                                       onChange={(e: ChangeEvent<HTMLInputElement>) => addNewImg(e)}
                                     // onBlur={() => imgOnBlurHandler}
@@ -294,9 +313,13 @@ const Keep = () => {
 
             {/*----- drawing todo sheets --------*/}
             <Grid container spacing={1} mt={3} style={{flexWrap: "wrap", gap: 20,}}>
+               {pinnedNotes.map(id=><p>{id}</p>)}
+            </Grid>
+            <Grid container spacing={1} mt={3} style={{flexWrap: "wrap", gap: 20,}}>
 
                {/*<Box style={{display: "flex"}}>*/}
                {todolists.map((tl) => {
+
                   const tasksForTodolist = tasks[tl.id]
                   const newNoteImg = imgLists[tl.id]
                   return (tl.filter != 'new' && tl.filter != 'archive') ?

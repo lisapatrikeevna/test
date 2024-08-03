@@ -11,6 +11,13 @@ import RedoL from "../../../../assets/notes/redo.svg";
 import RedoR from "../../../../assets/notes/redo (1).svg";
 import {ChangeEvent, useState} from "react";
 import {shortcutsType} from "../Keep.tsx";
+import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 
 
 
