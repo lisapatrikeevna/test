@@ -212,15 +212,6 @@ const Keep = () => {
       })
       setTodolists(newTodolists)
    }
-   const setTodoFlag_3 = (flag: string) => {
-      setOpen(!isOpen)
-      addTodolist()
-      setIsTodoList(!isTodoList)
-      const newTodolists = todolists.map(tl => tl.id === todolists[0].id ? {...tl, flag:flag as flagType, filter:"new"} : tl)
-      setTodolists(newTodolists)
-   }
-
-   // console.log("todolists", todolists);
 
    const onClose = (todolistId: string) => {
       // сделать проверку не пустой ли
@@ -336,14 +327,14 @@ const Keep = () => {
                            todo={tl}
                            tasks={tasksForTodolist}
                            removeTask={removeTask}
-                           // changeFilter={changeFilter}
                            addTask={addTask}
+                           updatePinnedNotes={updatePinnedNotes}
                            changeTaskStatus={changeTaskStatus}
                            removeTodolist={removeTodolist}
                            updateTask={updateTask}
-                           newNoteImg={newNoteImg}
+                           newNoteImg={imgLists[todolists[0].id]}
                            isTodoList={isTodoList}
-                           updatePinnedNotes={updatePinnedNotes}
+                           addTodoTitle={addTodoTitle}
                            updateTodolistTitle={updateTodolistTitle}
                         /> </Paper> : null
 

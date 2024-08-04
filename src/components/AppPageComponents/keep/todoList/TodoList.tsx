@@ -1,9 +1,9 @@
-import {flagType, TaskType, TodolistType} from "../Keep.tsx";
+import { TaskType, TodolistType} from "../Keep.tsx";
 import {AddItemForm} from "../AddItemForm.tsx";
 import {EditableSpan} from "../EditableSpan.tsx";
 import {Box, Button, Checkbox, Typography} from "@mui/material";
 import keepIcon from "./../../../../assets/notes/keep.svg"
-import {ChangeEvent, useEffect} from "react";
+import {ChangeEvent} from "react";
 import PushPinIcon from '@mui/icons-material/PushPin';
 import cl from "./style.ts"
 
@@ -12,7 +12,7 @@ type PropsType = {
    tasks: TaskType[]
    removeTask: (taskId: string, todolistId: string) => void
    // changeFilter: (filter: FilterValuesType, todolistId: string) => void
-   changeFlag: (filter: flagType, todolistId: string) => void
+   // changeFlag: (filter: flagType, todolistId: string) => void
    addTask: (todolistId: string,title:string) => void
    changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void
    removeTodolist: (todolistId: string) => void
@@ -30,7 +30,6 @@ export const Todolist = (props: PropsType) => {
       todo,
       tasks,
       removeTask,
-      // addTask,
       changeTaskStatus,
       removeTodolist,
       updateTask,
@@ -42,9 +41,9 @@ export const Todolist = (props: PropsType) => {
    //     changeFilter(filter,todo.id)
    // }
 
-   const removeTodolistHandler = () => {
-      removeTodolist(todo.id)
-   }
+   // const removeTodolistHandler = () => {
+   //    removeTodolist(todo.id)
+   // }
 
    const addTaskCallback = (title:string) => {
       props.addTask(todo.id,title)

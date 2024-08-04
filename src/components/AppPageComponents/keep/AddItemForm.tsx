@@ -1,13 +1,13 @@
-import {ChangeEvent, ComponentPropsWithoutRef, KeyboardEvent, useState} from "react";
-import {Button, TextField} from "@mui/material";
+import {ChangeEvent,  KeyboardEvent, useState} from "react";
+import {Button, TextField, TextFieldProps} from "@mui/material";
 
-
+type variantType= 'filled' | 'outlined' | 'standard'
 type PropsType = {
     addItem: (text:string) => void
     placeholder?:string
     fullWidth?:boolean
-    variant?: string
-}& ComponentPropsWithoutRef<"input">
+    variant?: variantType
+}& Omit<TextFieldProps, 'variant'> & React.InputHTMLAttributes<HTMLInputElement>
 
 export const AddItemForm = ({addItem,placeholder,fullWidth, variant = "standard",...props}: PropsType) => {
 
