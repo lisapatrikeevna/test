@@ -1,17 +1,13 @@
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import {Box, Grid, IconButton, Paper, Typography} from "@mui/material";
 import {styled} from "@mui/system";
 import cl from "./style.ts";
 import InvitationBoxFooter from "./appPageInvitationBoxFooter/InvitationBoxFooter.tsx";
 import KeeLeftBlock from "./keeLeftBlock/KeeLeftBlock.tsx";
 import {Todolist} from "./todoList/TodoList.tsx";
-import Checkbox from "../../../assets/notes/Checkbox.svg";
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
-import Paintbrush from "../../../assets/notes/Paintbrush.svg";
 import BrushIcon from '@mui/icons-material/Brush';
-import downloadImg from "../../../assets/notes/Image.svg";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
-// import {title} from "../../../configs/ProjectConfig.tsx";
 
 
 export const VisuallyHiddenInput = styled('input')({
@@ -59,19 +55,19 @@ const Keep = () => {
          {id: "v1()", title: 'What to buy', filter: 'none', background: "#fff", flag: "todo"},
          {id: "jhji", title: 'delete note component', filter: 'none', background: "#fff", flag: "note"},
       ])
-   const [tasks, setTasks] = useState<TasksStateType[]>({
-      ["j123"]: [
+   const [tasks, setTasks] = useState<TasksStateType>({
+      "j123": [
          {id: "12ml3", title: 'HTML&CSS', isDone: true},
          {id: "19l0", title: 'JS', isDone: true},
          {id: "nij", title: 'ReactJS', isDone: false},
       ],
-      ["v1()"]: [
+      "v1()": [
          {id: "hbnjk", title: 'Rest API', isDone: true},
          {id: "bjjh", title: 'GraphQL', isDone: false},
       ],
-      ["jhji"]: []
+      "jhji": []
    })
-   const [imgLists, setImg] = useState<ImgStateType[]>({
+   const [imgLists, setImg] = useState<ImgStateType>({
       ["j123"]: [],
       ["v1()"]: ["https://k6.uzor.su/uploads/posts/2020-05/thumbs/1588356018_610x900_563.jpg"],
       ["jhji"]: []
@@ -130,6 +126,7 @@ const Keep = () => {
       const newTodolists = todolists.filter(tl => tl.id !== todolistId)
       setTodolists(newTodolists)
       setOpen(false)
+      setIsTodoList(false)
       delete tasks[todolistId]
       setTasks({...tasks})
    }
@@ -137,7 +134,7 @@ const Keep = () => {
       const newTodolistTasks = {...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)}
       setTasks(newTodolistTasks)
    }
-   const addTask = (todolistId: string) => {
+   const addTask = (todolistId: string,title:string) => {
       const newTask = {
          id: "v1()hkj",
          title: title,
@@ -200,32 +197,39 @@ const Keep = () => {
    const isTodoHandler = () => {
       setIsTodoList(!isTodoList)
       if(!isOpen){
-         setOpen(!isOpen)
          addTodolist()
+         setOpen(!isOpen)
       }
-      isTodoList? changeFlag("todo", todolists[0].id):changeFlag("note", todolists[0].id)
    }
+   useEffect(() => {
+      // alert("changeFlag for todo")
+      isTodoList? changeFlag("todo", todolists[0].id):changeFlag("note", todolists[0].id)
+   }, [isTodoList]);
    const changeFlag = (flag: flagType, todolistId: string) => {
       const newTodolists = todolists.map(tl => {
-         return tl.id === todolistId ? {...tl, flag} : tl
+         return tl.id === todolistId ? {...tl, flag,filter:"new" as FilterValuesType} : tl
+         // return tl.id === todolistId ? {...tl, flag, filter:'new'} : tl
       })
       setTodolists(newTodolists)
    }
+   const setTodoFlag_3 = (flag: string) => {
+      setOpen(!isOpen)
+      addTodolist()
+      setIsTodoList(!isTodoList)
+      const newTodolists = todolists.map(tl => tl.id === todolists[0].id ? {...tl, flag:flag as flagType, filter:"new"} : tl)
+      setTodolists(newTodolists)
+   }
 
-   console.log("todolists", todolists);
+   // console.log("todolists", todolists);
 
    const onClose = (todolistId: string) => {
       // сделать проверку не пустой ли
       const newTodolists = todolists.map(tl => tl.id === todolistId ? {...tl, filter: 'none'as FilterValuesType} : tl)
       setTodolists(newTodolists)
       setOpen(false)
+      setIsTodoList(false)
    }
-   const setTodoFlag_3 = (flag: string) => {
-      addTodolist()
-      setIsTodoList(!isTodoList)
-      const newTodolists = todolists.map(tl => tl.id === todolists[0].id ? {...tl, flag:flag as flagType} : tl)
-      setTodolists(newTodolists)
-   }
+
    const changeFilter = (filter: FilterValuesType, todolistId: string) => {
       const newTodolists = todolists.map(tl => {
          return tl.id === todolistId ? {...tl, filter} : tl
@@ -259,7 +263,8 @@ const Keep = () => {
                            {/*-----block if close--------*/}
                            <Typography variant={"h3"} onClick={handleFocus}>Note...</Typography>
                            <Box sx={cl.boxHeadingBtn}>
-                              <IconButton aria-label="Checkbox" onClick={() => setTodoFlag_3("todo")}
+                              {/*<IconButton aria-label="Checkbox" onClick={() => setTodoFlag_3("todo")}*/}
+                              <IconButton aria-label="Checkbox" onClick={isTodoHandler}
                                           title={"as todolist"}>
                                  {/*<img src={Checkbox} alt="Checkbox"/>*/}
                                  <CheckBoxOutlinedIcon color="inherit"/>
@@ -301,7 +306,10 @@ const Keep = () => {
                                                 addNewShortcuts={listOfShortcutsHandler}
                                                 isTodoHandler={isTodoHandler}
                                                 toArchiveHandler={toArchiveHandler}
-                                                todoId={todolists[0].id}/>
+                                                todoId={todolists[0].id}
+                                                taskLength={tasks[todolists[0].id].length}
+                                                isTodoList={isTodoList}
+                           />
                         </>
                      }
                   </Box>

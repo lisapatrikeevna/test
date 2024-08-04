@@ -81,27 +81,27 @@ export const AppPageCentralPanel= ({renderValuesCentralComponent, changeRenderCe
                     <AppPageCentralComponent />
                 )}
                 {/* region OptionsPanel */}
-                <Box
-                    sx={styles.buttonsContainer}
-                >
-                    <Button
-                        variant="outlined"
-                        endIcon={
-                            showOptionsButton ? (
-                                <KeyboardArrowDownIcon />
-                            ) : (
-                                <KeyboardArrowUpIcon />
-                            )
-                        }
-                        sx={styles.optionsButtonContainer}
-                        onClick={() => setShowOptionsButton((prev) => !prev)}
-                    >
-                        Options
-                    </Button>
-                    <Collapse in={showOptionsButton}>
-                        <AppPageButtonsComponent />
-                    </Collapse>
-                </Box>
+                {/*<Box*/}
+                {/*    sx={styles.buttonsContainer}*/}
+                {/*>*/}
+                {/*    <Button*/}
+                {/*        variant="outlined"*/}
+                {/*        endIcon={*/}
+                {/*            showOptionsButton ? (*/}
+                {/*                <KeyboardArrowDownIcon />*/}
+                {/*            ) : (*/}
+                {/*                <KeyboardArrowUpIcon />*/}
+                {/*            )*/}
+                {/*        }*/}
+                {/*        sx={styles.optionsButtonContainer}*/}
+                {/*        onClick={() => setShowOptionsButton((prev) => !prev)}*/}
+                {/*    >*/}
+                {/*        Options*/}
+                {/*    </Button>*/}
+                {/*    <Collapse in={showOptionsButton}>*/}
+                {/*        <AppPageButtonsComponent />*/}
+                {/*    </Collapse>*/}
+                {/*</Box>*/}
                 {/* endregion OptionsPanel */}
             </Panel>
         </>

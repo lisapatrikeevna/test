@@ -10,7 +10,7 @@ import Menu from "../../../../assets/notes/Group 4.svg";
 import RedoL from "../../../../assets/notes/redo.svg";
 import RedoR from "../../../../assets/notes/redo (1).svg";
 import {ChangeEvent, useState} from "react";
-import {shortcutsType} from "../Keep.tsx";
+import {shortcutsType, TodolistType} from "../Keep.tsx";
 import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
@@ -66,7 +66,9 @@ type propsType={
     isTodoHandler:()=>void
     toArchiveHandler:(todoId:string)=>void
     todoId:string
+    taskLength:number
     removeTodolist: (todolistId: string) => void
+    isTodoList:boolean
 }
 
 
@@ -103,10 +105,10 @@ const InvitationBoxFooter = ({onClose,getBackground,getImg,listOfShortcuts,toArc
     const onCloseCallback=()=>{
         onClose(props.todoId)
     }
-    const removeTodolistHandler = () => {
+    const removeTodolistCallback = () => {
         props.removeTodolist(props.todoId)
     }
-
+    console.log("taskLength ",props.taskLength);
 
     return (<>
         <Box className={cl.buttonsWrap}>
@@ -135,8 +137,8 @@ const InvitationBoxFooter = ({onClose,getBackground,getImg,listOfShortcuts,toArc
                     <img src={Menu} alt={"more"}/>
                 </IconButton>
 
-                <IconButton aria-label="delete" tabIndex={-1} title={"undo"} onClick={()=>alert('Make me')}><img src={RedoL} alt={"undo"}/></IconButton>
-                <IconButton aria-label="delete" tabIndex={-1} title={"redo"} onClick={()=>alert('Make me')}><img src={RedoR} alt={"redo"}/></IconButton>
+                <IconButton aria-label="delete" title={"undo"} onClick={()=>alert('Make me')}><img src={RedoL} alt={"undo"}/></IconButton>
+                <IconButton aria-label="delete" title={"redo"} onClick={()=>alert('Make me')}><img src={RedoR} alt={"redo"}/></IconButton>
             </Box>
             <Button variant="outlined" onClick={onCloseCallback}>Close</Button>
         </Box>
@@ -160,7 +162,8 @@ const InvitationBoxFooter = ({onClose,getBackground,getImg,listOfShortcuts,toArc
                 <Box className={cl.moreBox}>
                     <Button onClick={openShortcutsModalHandler}>add shortcut</Button>
                     <Button onClick={()=>{}}>add picture</Button>
-                    <Button onClick={isTodoHandler} title={"as todoList"}>as list</Button>
+                    {props.taskLength==0 && <Button onClick={isTodoHandler} title={props.isTodoList?"as todoList":"as note"}>{!props.isTodoList?"as todoList":"as note"}</Button>}
+                    {props.taskLength>0 && <Button onClick={removeTodolistCallback} title={'delete note'}>delete note</Button>}
                 </Box>
             } </Box>
         </Modal>
