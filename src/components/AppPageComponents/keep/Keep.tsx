@@ -237,6 +237,20 @@ const Keep = () => {
    }
 
 
+   const getPinnedTodolists = () => {
+      return todolists.filter(todolist => pinnedNotes.includes(todolist.id));
+   };
+
+   // const getActiveTodolists = () => {
+   //    return todolists.filter(todolist => !archive.includes(todolist.id) && todolist.filter !== 'archive');
+   // };
+   const getActiveTodolists = () => {
+      return todolists.filter(todolist => !archive.includes(todolist.id) && !pinnedNotes.includes(todolist.id) && todolist.filter !== 'archive');
+   };
+
+   const pinnedTodolists = getPinnedTodolists();
+   const activeTodolists = getActiveTodolists();
+
    return <Box sx={cl.containerBox} >
       <KeeLeftBlock listOfShortcuts={listOfShortcuts}/>
       <Box sx={cl.centredBox}>
@@ -313,11 +327,7 @@ const Keep = () => {
             {/*----- drawing todo sheets --------*/}
             <Grid container spacing={1} mt={3} style={{flexWrap: "wrap", gap: 20,}}>
                {pinnedNotes.map(id=><p>{id}</p>)}
-            </Grid>
-            <Grid container spacing={1} mt={3} style={{flexWrap: "wrap", gap: 20,}}>
-
-               {/*<Box style={{display: "flex"}}>*/}
-               {todolists.map((tl) => {
+               {pinnedTodolists.map((tl) => {
 
                   const tasksForTodolist = tasks[tl.id]
                   const newNoteImg = imgLists[tl.id]
@@ -332,7 +342,33 @@ const Keep = () => {
                            changeTaskStatus={changeTaskStatus}
                            removeTodolist={removeTodolist}
                            updateTask={updateTask}
-                           newNoteImg={imgLists[todolists[0].id]}
+                           newNoteImg={newNoteImg}
+                           isTodoList={isTodoList}
+                           addTodoTitle={addTodoTitle}
+                           updateTodolistTitle={updateTodolistTitle}
+                        /> </Paper> : null
+
+               })}
+            </Grid>
+            <Grid container spacing={1} mt={3} style={{flexWrap: "wrap", gap: 20,}}>
+
+               {/*<Box style={{display: "flex"}}>*/}
+               {activeTodolists.map((tl) => {
+
+                  const tasksForTodolist = tasks[tl.id]
+                  const newNoteImg = imgLists[tl.id]
+                  return (tl.filter != 'new' && tl.filter != 'archive') ?
+                     <Paper key={tl.id} style={{backgroundColor: tl.background, width: "240px"}}>
+                        <Todolist
+                           todo={tl}
+                           tasks={tasksForTodolist}
+                           removeTask={removeTask}
+                           addTask={addTask}
+                           updatePinnedNotes={updatePinnedNotes}
+                           changeTaskStatus={changeTaskStatus}
+                           removeTodolist={removeTodolist}
+                           updateTask={updateTask}
+                           newNoteImg={newNoteImg}
                            isTodoList={isTodoList}
                            addTodoTitle={addTodoTitle}
                            updateTodolistTitle={updateTodolistTitle}
