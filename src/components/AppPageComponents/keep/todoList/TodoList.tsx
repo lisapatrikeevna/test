@@ -1,9 +1,9 @@
 import { TaskType, TodolistType} from "../Keep.tsx";
 import {AddItemForm} from "../AddItemForm.tsx";
 import {EditableSpan} from "../EditableSpan.tsx";
-import {Box, Button, Checkbox, Typography} from "@mui/material";
+import {Box, Button, Checkbox, ImageList, ImageListItem, List, ListItem, Typography} from "@mui/material";
 import keepIcon from "./../../../../assets/notes/keep.svg"
-import {ChangeEvent} from "react";
+import React, {ChangeEvent} from "react";
 import PushPinIcon from '@mui/icons-material/PushPin';
 import cl from "./style.ts"
 
@@ -65,26 +65,37 @@ export const Todolist = (props: PropsType) => {
 
    // console.log("todo", todo);
    // console.log("tasks", tasks);
-   return <Box style={{margin: "1px", border: "2px solid red"}}>
-      {newNoteImg && newNoteImg.map(i => <Box style={{width: "50px"}}><img src={i} alt={'img'}/></Box>)}
+   return <Box sx={cl.container}>
+      {/*{newNoteImg && <ImageList sx={{ width: 500, height: 450 }} cols={3} variant="masonry">*/}
+      {newNoteImg && <ImageList variant="woven">
+         {newNoteImg.map((imgPath, i) => <ImageListItem key={i} style={{width: "50px"}}>
+            <img
+               srcSet={`${imgPath}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+               src={`${imgPath}?w=164&h=164&fit=crop&auto=format`}
+               alt={'img'}
+               loading="lazy"
+            />
+         </ImageListItem>)}
+      </ImageList>}
+      {/*{newNoteImg && newNoteImg.map(i => <Box style={{width: "100px"}}><img src={i} alt={'img'} style={{width:'100%'}}/></Box>)}*/}
       {todo.filter !== "new" ?
          <>
             <div>
                <p>{todo.id} , </p>
                <p>{todo.flag} , {todo.filter}</p>
             </div>
-            <Box className={"todolist-title-container"} style={{display: 'flex', justifyContent: 'space-between'}}>
+            <Box sx={cl.todoTitleContainer} >
                <Typography variant={'h4'}>
                   <EditableSpan value={todo.title} onChange={updateTodolistTitleCallback}/>
                </Typography>
-               <Button title={'pin a note'} onClick={addPinnedNotesHandler}>
+               <Button title={'pin a note'} onClick={addPinnedNotesHandler} sx={cl.btnPinned}>
                   <img src={keepIcon} alt={"keepIcon"}/>
                   {/*<PushPinIcon/>*/}
                </Button>
                {/*<Button title={'delete'} onClick={removeTodolistHandler}>x</Button>*/}
             </Box>
             <>{tasks.length>0 ?
-               <ul>
+               <List>
                   {tasks.map((task) => {
                      const removeTaskHandler = () => {
                         removeTask(task.id, todo.id)
@@ -99,15 +110,15 @@ export const Todolist = (props: PropsType) => {
                      }
 
                      return <>
-                        <li key={task.id} className={task.isDone ? 'is-done' : ''}>
+                        <ListItem key={task.id} className={task.isDone ? 'is-done' : ''}>
                            <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
                            <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
                            <Button onClick={removeTaskHandler} title={'x'}>x</Button>
-                        </li>
+                        </ListItem>
                      </>
                   })
                   }
-               </ul>
+               </List>
                : <Box style={{border: "2px solid #000"}}> <AddItemForm addItem={addTaskCallback}
                                                                        placeholder={"+ add task"}/> </Box>
             }
@@ -143,8 +154,7 @@ export const Todolist = (props: PropsType) => {
                </Typography>
                :
                <>
-                  <p>todo</p>
-                  <ul>
+                  <List sx={cl.ul}>
                      {tasks.map((task) => {
                         const removeTaskHandler = () => {
                            removeTask(task.id, todo.id)
@@ -159,21 +169,19 @@ export const Todolist = (props: PropsType) => {
                         }
 
                         return <>
-                           <li key={task.id} className={task.isDone ? 'is-done' : ''}>
+                           <ListItem key={task.id} className={task.isDone ? 'is-done' : ''}>
+                              <p>{task.id}</p>
                               <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                              {!task.id ?
-                                 +<AddItemForm addItem={addTaskCallback} placeholder={"new note"}
-                                               style={{height: "30px", width: "100%"}}/>
-                                 :
-                                 <EditableSpan value={tasks[0].title} onChange={changeTaskTitleHandler}/>
-                              }
+                                 <div style={{border:"2px solid red"}}>EditableSpan
+                                 <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
+                                 </div>
                               {/*<EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>*/}
                               <Button onClick={removeTaskHandler} title={'x'}>x</Button>
-                           </li>
+                           </ListItem>
                         </>
                      })}
-                  </ul>
-                  <Box>+ <AddItemForm addItem={addTaskCallback}/> </Box>
+                  </List>
+                  <Box>+ <AddItemForm addItem={addTaskCallback} placeholder={'new task value'}/> </Box>
                </>
             }
 
@@ -182,3 +190,6 @@ export const Todolist = (props: PropsType) => {
 
    </Box>
 }
+
+
+

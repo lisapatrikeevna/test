@@ -1,4 +1,4 @@
-import {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Box, Grid, IconButton, Paper, Typography} from "@mui/material";
 import {styled} from "@mui/system";
 import cl from "./style.ts";
@@ -50,6 +50,7 @@ const Keep = () => {
    const [pinnedNotes, setPinnedNotes] = useState<Array<string>>([])
    const [listOfShortcuts, setListOfShortcuts] = useState<Array<shortcutsType>>([])
    const [archive, setToArchive] = useState<Array<string>>([])
+   const [initialized, setInitialized] = useState(false)
    const [todolists, setTodolists] = useState<TodolistType[]>(
       [{id: "j123", title: 'What to learn', filter: 'none', background: "#fff", flag: "todo"},
          {id: "v1()", title: 'What to buy', filter: 'none', background: "#fff", flag: "todo"},
@@ -68,8 +69,8 @@ const Keep = () => {
       "jhji": []
    })
    const [imgLists, setImg] = useState<ImgStateType>({
-      ["j123"]: [],
-      ["v1()"]: ["https://k6.uzor.su/uploads/posts/2020-05/thumbs/1588356018_610x900_563.jpg"],
+      ["j123"]: ["https://images.unsplash.com/photo-1516802273409-68526ee1bdd6"],
+      ["v1()"]: ["https://images.unsplash.com/photo-1551963831-b3b1ca40c98e","https://images.unsplash.com/photo-1551782450-a2132b4ba21d","https://images.unsplash.com/photo-1471357674240-e1a485acb3e1"],
       ["jhji"]: []
    })
    // useEffect(() => {
@@ -136,7 +137,7 @@ const Keep = () => {
    }
    const addTask = (todolistId: string,title:string) => {
       const newTask = {
-         id: "v1()hkj",
+         id: "v1()hkj"+tasks[todolistId].length,
          title: title,
          isDone: false
       }
@@ -200,16 +201,27 @@ const Keep = () => {
          addTodolist()
          setOpen(!isOpen)
       }
+      // changeFlag(todolists[0].id)
    }
    useEffect(() => {
-      // alert("changeFlag for todo")
-      isTodoList? changeFlag("todo", todolists[0].id):changeFlag("note", todolists[0].id)
+      addTodolist();
+   }, []);
+   useEffect(() => {
+      changeFlag(todolists[0].id)
    }, [isTodoList]);
-   const changeFlag = (flag: flagType, todolistId: string) => {
-      const newTodolists = todolists.map(tl => {
-         return tl.id === todolistId ? {...tl, flag,filter:"new" as FilterValuesType} : tl
-         // return tl.id === todolistId ? {...tl, flag, filter:'new'} : tl
-      })
+   // useEffect(() => {
+   //    // alert("changeFlag for todo")
+   //    // isTodoList? changeFlag("todo", todolists[0].id):changeFlag("note", todolists[0].id)
+   //    if (initialized) {
+   //       isTodoList ? changeFlag("todo", todolists[0].id) : changeFlag("note", todolists[0].id)
+   //    } else {
+   //       setInitialized(true);
+   //    }
+   // }, [ isTodoList]);
+
+   const changeFlag = (todolistId: string) => {
+      const flag = isTodoList ? "todo" : "note";
+      const newTodolists=todolists.map(tl => tl.id !== todolistId ? {...tl, flag: flag as flagType, filter: "new" as FilterValuesType} : tl )
       setTodolists(newTodolists)
    }
 
@@ -251,6 +263,8 @@ const Keep = () => {
    const pinnedTodolists = getPinnedTodolists();
    const activeTodolists = getActiveTodolists();
 
+
+   console.log(todolists);
    return <Box sx={cl.containerBox} >
       <KeeLeftBlock listOfShortcuts={listOfShortcuts}/>
       <Box sx={cl.centredBox}>
@@ -325,14 +339,18 @@ const Keep = () => {
 
 
             {/*----- drawing todo sheets --------*/}
+            <>
+               <Typography variant={"h3"}>Pinned notes </Typography>
+               {todolists.map(t=><Box>{t.id}, {t.filter} , {t.title}</Box>)}
             <Grid container spacing={1} mt={3} style={{flexWrap: "wrap", gap: 20,}}>
-               {pinnedNotes.map(id=><p>{id}</p>)}
+               {pinnedNotes.map(id => <p>{id}</p>)}
                {pinnedTodolists.map((tl) => {
 
                   const tasksForTodolist = tasks[tl.id]
                   const newNoteImg = imgLists[tl.id]
                   return (tl.filter != 'new' && tl.filter != 'archive') ?
-                     <Paper key={tl.id} style={{backgroundColor: tl.background, width: "240px"}}>
+                     <Paper key={tl.id} style={{backgroundColor: tl.background}} sx={cl.todoWrap}>
+                     {/*<Paper key={tl.id} style={{backgroundColor: tl.background, width: "240px"}}>*/}
                         <Todolist
                            todo={tl}
                            tasks={tasksForTodolist}
@@ -350,6 +368,8 @@ const Keep = () => {
 
                })}
             </Grid>
+            </>
+
             <Grid container spacing={1} mt={3} style={{flexWrap: "wrap", gap: 20,}}>
 
                {/*<Box style={{display: "flex"}}>*/}
@@ -387,3 +407,17 @@ const Keep = () => {
 };
 
 export default Keep;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

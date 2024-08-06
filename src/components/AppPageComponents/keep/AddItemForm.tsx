@@ -31,13 +31,13 @@ const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     return (
         <>
             <TextField variant={variant} placeholder={placeholder || "Введите заголовок"}
-                       style={{borderBottom:0}} value={text} fullWidth={fullWidth || false}
+                       style={{borderBottom:0, width:"100%"}} value={text} fullWidth={fullWidth || false}
                        onChange={changeItemHandler}
                        onKeyUp={addItemOnKeyUpHandler}
                        onFocus={props.onFocus}
                        onBlur={addItemHandler}
                        {...props}/>
-            <Button title={'+'} onClick={addItemHandler}/>
+            <Button title={'+'} onClick={addItemHandler}> + </Button>
         </>
     )
 }
