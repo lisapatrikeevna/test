@@ -79,7 +79,6 @@ export default {
       height:"max-content",
       borderRadius: "8px",
       overflow: "hidden",
-      // /* Vector 13 */
       // // width: 22.38px;
       // // height: 20.96px;
       // // background: #8683B4;

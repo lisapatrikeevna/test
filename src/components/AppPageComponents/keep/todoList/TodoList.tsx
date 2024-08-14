@@ -63,8 +63,6 @@ export const Todolist = (props: PropsType) => {
       props.addTodoTitle(todo.id, todoTitle)
    }
 
-   // console.log("todo", todo);
-   // console.log("tasks", tasks);
    return <Box sx={cl.container}>
       {/*{newNoteImg && <ImageList sx={{ width: 500, height: 450 }} cols={3} variant="masonry">*/}
       {newNoteImg && <ImageList variant="woven">
