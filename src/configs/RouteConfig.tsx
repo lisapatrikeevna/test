@@ -1,0 +1,7 @@
+export const chatsPath = "/chats"
+export const settingsPath = "/settings"
+export const appPagePath = "/"
+export const certificatePath = "/certificate"
+export const newGroupPath = "/newgroup"
+export const newChannelPath = "/newchannel"
+export const contactsPath = "/contacts"

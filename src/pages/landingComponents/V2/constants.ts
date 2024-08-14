@@ -1,0 +1,1 @@
+export const SECTION_PADDING_TOP_PX = '168px'

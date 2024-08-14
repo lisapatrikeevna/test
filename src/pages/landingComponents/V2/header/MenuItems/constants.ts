@@ -1,0 +1,1 @@
+export const MENU_ITEMS=["Home", "About", "Product", "Pricing", "Partners", "Contact", "News"]

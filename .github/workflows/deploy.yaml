@@ -1,0 +1,76 @@
+name: Deploy to Plesk
+
+on:
+  push:
+    branches:
+      - develop
+      - release
+
+jobs:
+  deploy-dev:
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Clear old assets if exists in dev
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.PLESK_DEV_HOST }}
+        username: ${{ secrets.PLESK_DEV_USERNAME }}
+        password: ${{ secrets.PLESK_DEV_PASSWORD }}
+        script: |
+          if [ -d "/var/www/vhosts/vibrant-lumiere.85-215-241-41.plesk.page/httpdocs/assets" ]; then
+          rm -rf /var/www/vhosts/vibrant-lumiere.85-215-241-41.plesk.page/httpdocs/assets/*
+          fi
+
+    - name: Deploy to dev Plesk
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.PLESK_DEV_HOST }}
+        username: ${{ secrets.PLESK_DEV_USERNAME }}
+        password: ${{ secrets.PLESK_DEV_PASSWORD }}
+        source: "dist/**,dist/*.*" 
+        target: "/var/www/vhosts/vibrant-lumiere.85-215-241-41.plesk.page/httpdocs"
+        strip_components: 1
+
+  deploy-prod:
+    if: github.ref == 'refs/heads/release'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Clear old assets if exists in prod
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.PLESK_PROD_HOST }}
+        username: ${{ secrets.PLESK_PROD_USERNAME }}
+        password: ${{ secrets.PLESK_PROD_PASSWORD }}
+        script: |
+          if [ -d "/var/www/vhosts/neoxonline.com/httpdocs/assets" ]; then
+          rm -rf /var/www/vhosts/neoxonline.com/httpdocs/assets/*
+          fi
+
+    - name: Deploy to prod Plesk
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.PLESK_PROD_HOST }}
+        username: ${{ secrets.PLESK_PROD_USERNAME }}
+        password: ${{ secrets.PLESK_PROD_PASSWORD }}
+        source: "dist/**,dist/*.*" 
+        target: "/var/www/vhosts/neoxonline.com/httpdocs"
+        strip_components: 1
